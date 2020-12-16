@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import marked from 'marked'
+import PropTypes from 'prop-types'
 import axios_inst from '../../js/backend'
+import { withRouter } from "react-router";
 
-export default class ExercisePage extends Component {
+class ExercisePage extends Component {
   state = {
     title: "",
     task: "",
@@ -15,16 +17,23 @@ export default class ExercisePage extends Component {
 
   getTask() {
     const taskid = this.props.match.params.taskid;
-    axios_inst.get("/tasks?id=" + taskid).then(
-      res => {
-        this.setState({
-          title: res.data[0].name,
-          task: res.data[0].task,
-          solved: res.data[0].solved,
-          taskid: res.data[0].taskid,
-        })
+    var exercise;
+    for (let key in this.props.categories) {
+      for (let i in this.props.categories[key].exerciseList) {
+        let ex = this.props.categories[key].exerciseList[i];
+        if (parseInt(ex.taskid) === parseInt(taskid)) {
+          exercise = ex;
+        }
       }
-    );
+    }
+    if (exercise !== undefined) {
+      this.setState({
+        title: exercise.name,
+        task: exercise.task,
+        solved: exercise.solved,
+        taskid: exercise.taskid,
+      })
+    }
   }
 
   render() {
@@ -38,3 +47,9 @@ export default class ExercisePage extends Component {
     )
   }
 }
+
+ExercisePage.propTypes = {
+  categories: PropTypes.array.isRequired,
+}
+
+export default withRouter(ExercisePage);

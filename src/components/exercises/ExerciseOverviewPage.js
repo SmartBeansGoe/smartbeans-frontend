@@ -3,6 +3,7 @@ import axios_inst from '../../js/backend'
 import ExerciseCategoryOverview from './ExerciseCategoryOverview'
 
 export default class ExerciseOverviewPage extends Component {
+  /*
   state = {
     categories: [
       {
@@ -97,11 +98,12 @@ export default class ExerciseOverviewPage extends Component {
       })
     });
   };
+  */
 
   render() {
     return (
       <React.Fragment>
-        {this.state.categories.map((c) => (
+        {this.props.categories.map((c) => (
           <ExerciseCategoryOverview
             key={c.title}
             title={c.title}
