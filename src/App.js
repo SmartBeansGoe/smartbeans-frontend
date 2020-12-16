@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import axios_inst from './js/backend'
 import NavBar from './components/navigation/NavBar'
-import { BrowserRouter as Router, matchPath, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import LeaderboardPage from './components/leaderboard/LeaderboardPage'
 import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage'
 import Bean from './components/character/Bean'
@@ -23,11 +22,10 @@ export default class App extends Component {
           {
             title: "",
             subtitle: "",
-            progressValue: 0,
             exerciseList: [],
           }      
         ]
-      }
+      },
     };
   }
 
@@ -81,40 +79,31 @@ export default class App extends Component {
         return el.shortname[0] === "K";
       });
       this.setState({
-        user: {
-          username: this.state.user.username,
-          nickname: this.state.user.nickname,
-        },
         exercises: {
           categories: [
             {
               title: "Bronze",
               subtitle: "Basis Aufgaben",
-              progressValue: 0,
               exerciseList: bronze,
             },
             {
               title: "Silver",
               subtitle: "Einsteiger Aufgaben",
-              progressValue: 0,
               exerciseList: silver,
             },
             {
               title: "Gold",
               subtitle: "Fortgeschrittenen Aufgaben",
-              progressValue: 0,
               exerciseList: gold,
             },
             {
               title: "Platin",
               subtitle: "Klausurniveau Aufgaben",
-              progressValue: 0,
               exerciseList: platin,
             },
             {
               title: "Diamond",
               subtitle: "Overkill Aufgaben",
-              progressValue: 0,
               exerciseList: diamond,
             },
           ]  
@@ -143,7 +132,7 @@ export default class App extends Component {
                 <Route 
                   exact
                   path="/exercises"
-                  render={() => <ExerciseOverviewPage categories={this.state.exercises.categories} />}
+                  component={() => <ExerciseOverviewPage categories={this.state.exercises.categories} />}
                 />
             </React.Fragment>
             <div className="tile is-vertical is-2 is-parent">

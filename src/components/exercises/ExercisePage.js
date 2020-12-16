@@ -36,6 +36,9 @@ class ExercisePage extends Component {
     }
   }
 
+  submitSolution() {
+  }
+
   render() {
     return (
       <div className="tile is-parent is-10 is-vertical">
