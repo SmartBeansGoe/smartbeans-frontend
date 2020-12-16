@@ -24,7 +24,10 @@ export default class NavBar extends Component {
               Leaderboard
             </Link>
             <Link className="navbar-item is-hoverable" to="/statistics">
-              Statistik
+              Statistic
+            </Link>
+            <Link className="navbar-item is-hoverable" to="/character">
+              Character
             </Link>
           </div>
   
