@@ -132,7 +132,11 @@ export default class App extends Component {
                 <Route 
                   exact
                   path="/exercises"
-                  component={() => <ExerciseOverviewPage categories={this.state.exercises.categories} />}
+                  render={() => (
+                    <div className="tile is-parent is-vertical">
+                      <ExerciseOverviewPage categories={this.state.exercises.categories} />
+                    </div>
+                  )}
                 />
             </React.Fragment>
             <div className="tile is-vertical is-2 is-parent">

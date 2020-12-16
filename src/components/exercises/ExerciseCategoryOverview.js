@@ -7,36 +7,34 @@ export default class ExerciseCategoryOverview extends Component {
     const progress = this.props.exerciseList.filter(ex => ex.solved === true);
 
     return (
-      <div className="tile is-parent is-vertical">
-        <div className="tile is-child box">
-          <span className="icon is-small">
-            <a className="fas fa-expand-arrows-alt" id="bronzeSeeMore"></a>
-          </span>
-          <div className="title">
-            <p>
-              {this.props.title}
-            </p>
+      <div className="tile is-child box">
+        <span className="icon is-small">
+          <a className="fas fa-expand-arrows-alt" id="bronzeSeeMore"></a>
+        </span>
+        <div className="title">
+          <p>
+            {this.props.title}
+          </p>
+        </div>
+        <p className="subtitle mb-0">{this.props.subtitle}</p>
+        <div className="columns mt-0">
+          <div className="column is-two-thirds pt-2">
+            <progress className="progress is-success is-small pt-0" value={progress.length} max="100"/>
           </div>
-          <p className="subtitle mb-0">{this.props.subtitle}</p>
-          <div className="columns mt-0">
-            <div className="column is-two-thirds pt-2">
-              <progress className="progress is-success is-small pt-0" value={progress.length} max="100"></progress>
-            </div>
-            <div className="column is-hidden-mobile pt-0">
-              { progress.length} / { this.props.exerciseList.length }
-            </div>
+          <div className="column is-hidden-mobile pt-0">
+            { progress.length} / { this.props.exerciseList.length }
           </div>
-          <div className="content">
-            <ul>
-              {this.props.exerciseList.map((e) => {
-                return (
-                  <li key={e.taskid}>
-                    <Link to={"/exercises/" + e.taskid}>{e.name}</Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+        </div>
+        <div className="content">
+          <ul>
+            {this.props.exerciseList.map((e) => {
+              return (
+                <li key={e.taskid}>
+                  <Link className={e.solved ? "has-text-success" : "has-text-grey"} to={"/exercises/" + e.taskid}>{e.name}</Link>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     )
