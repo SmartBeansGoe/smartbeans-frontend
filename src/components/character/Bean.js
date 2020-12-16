@@ -3,6 +3,7 @@ import Body from './Body'
 import Face from './Face'
 import Shirt from './Shirt'
 import PropTypes from 'prop-types'
+import Pants from './Pants'
 
 
 export default class Bean extends Component {
@@ -16,6 +17,7 @@ export default class Bean extends Component {
         >
           <Body color={this.props.body_color}/>
           <Face/>
+          <Pants/>
           <Shirt/>
         </svg>
       </div>
