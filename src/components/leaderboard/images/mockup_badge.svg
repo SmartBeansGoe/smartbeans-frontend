@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100mm"
+   height="80mm"
+   viewBox="0 0 100 80"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="mockup_badge.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="-165.98394"
+     inkscape:cy="196.39205"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       position="166.30952,147.69941"
+       orientation="0,-1"
+       id="guide843" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       transform="matrix(0.72306757,0,0,0.72306757,-23.654963,-62.898332)"
+       id="g853">
+      <g
+         id="g868">
+        <path
+           id="path855"
+           style="fill:#e72f44;fill-opacity:1;stroke:none;stroke-width:1.48341;stroke-linecap:round"
+           d="m 520.78516,535.28516 v 29 h 93.64062 l 28.50195,-29 z"
+           transform="scale(0.26458333)" />
+        <path
+           d="m 137.79107,156.97337 v -7.67292 h 24.77575 l 7.54114,7.67292 z"
+           style="fill:#e72f44;fill-opacity:1;stroke:none;stroke-width:0.392486;stroke-linecap:round"
+           id="path858" />
+        <path
+           style="fill:#d1182d;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 153.17483,150.43451 -15.3836,6.87907 v -6.97447 z"
+           id="path841" />
+      </g>
+      <g
+         transform="matrix(-1,0,0,1,203.72913,-7.2265623e-7)"
+         id="g876">
+        <path
+           transform="scale(0.26458333)"
+           d="m 520.78516,535.28516 v 29 h 93.64062 l 28.50195,-29 z"
+           style="fill:#e72f44;fill-opacity:1;stroke:none;stroke-width:1.48341;stroke-linecap:round"
+           id="path870" />
+        <path
+           id="path872"
+           style="fill:#e72f44;fill-opacity:1;stroke:none;stroke-width:0.392486;stroke-linecap:round"
+           d="m 137.79107,156.97337 v -7.67292 h 24.77575 l 7.54114,7.67292 z" />
+        <path
+           id="path874"
+           d="m 153.17483,150.43451 -15.3836,6.87907 v -6.97447 z"
+           style="fill:#d1182d;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      </g>
+      <circle
+         r="47.247025"
+         cy="142.30804"
+         cx="101.86457"
+         id="path833"
+         style="fill:#efcd75;fill-opacity:1;stroke:#eabd4a;stroke-width:1;stroke-linecap:round;stroke-opacity:1" />
+      <rect
+         ry="0"
+         y="134.7485"
+         x="50.554302"
+         height="15.686011"
+         width="102.62054"
+         id="rect837"
+         style="fill:#ea4a5c;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round" />
+      <circle
+         style="fill:#eabd4a;fill-opacity:1;stroke:none;stroke-width:0.836;stroke-linecap:round"
+         id="circle835"
+         cx="101.86457"
+         cy="142.30804"
+         r="39.498512" />
+    </g>
+  </g>
+</svg>
