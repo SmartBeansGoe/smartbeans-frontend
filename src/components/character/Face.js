@@ -3,11 +3,10 @@ import React, { Component } from 'react'
 export default class Face extends Component {
   render() {
     return (
-      <g>
+      <g id="debug_face">
         <ellipse
           fill="#000000"
           strokeWidth="0.264583"
-          id="path90"
           cx="80.957985"
           cy="94.239716"
           rx="7.9174061"
@@ -15,7 +14,6 @@ export default class Face extends Component {
         <ellipse
           fill="#000000"
           strokeWidth="0.264583"
-          id="path92"
           cx="132.67834"
           cy="93.337196"
           rx="12.247429"
@@ -23,7 +21,6 @@ export default class Face extends Component {
         <ellipse
           fill="#000000"
           strokeWidth="0.264583"
-          id="path94"
           cx="101.6119"
           cy="140.84663"
           rx="40.719944"
