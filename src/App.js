@@ -9,6 +9,7 @@ import Bean from './components/character/Bean'
 import ExercisePage from './components/exercises/ExercisePage';
 import CharacterBuildingPage from './components/character/CharacterBuildingPage';
 
+import { SHIRTS, PANTS, HATS, FACES } from './js/constants'
 
 export default class App extends Component {
 
@@ -20,18 +21,30 @@ export default class App extends Component {
         nickname: "Thomas",
       },
       character: {
-        body_color: "#f6b73c",
-        shirt_id: "",
-        face_id: "",     
+        body_color: "#E7C27A",
+        shirt_id: "shirt001",
+        face_id: "face001",
+        pants_id: "pants001",
+        hats_id: "default",
+      },
+      clothes: {
+        shirts: ["shirt001", "shirt002", "shirt003", "shirt004", "shirt005", "shirt006", "default"],
+        pants: ["pants001", "default"],
+        hats: ["default"],
       }
     };
     this.onBodyColorChange = this.onBodyColorChange.bind(this);
-    console.log(this.state.character.body_color);
+    this.onAssetChange = this.onAssetChange.bind(this);
+    this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
   }
 
   componentDidMount() {
     this.checkLogin();
     this.loadUser();
+  }
+
+  componentDidUpdate() {
+    this.checkLogin();
   }
 
   checkLogin() {
@@ -56,27 +69,58 @@ export default class App extends Component {
         user: {
           username: response.data.username,
           nickname: this.state.user.nickname, // TODO: backend
-        },
-        character: {
-          body_color: this.state.character.body_color,
-          shirt_id: this.state.character.shirt_id,
-          face_id: this.state.character.face_id,
         }
-      }));
+    }));
+  }
+
+  componentDidUpdate() {
+    console.log(this.state.character);
   }
 
   onBodyColorChange = color => {
+    console.log("SAVE COLOR");
+    this.setCharacterBodyColor(color);
+  }
+
+  setCharacterBodyColor = (body_color) => {
+    this.setCharacter(body_color, this.state.character.shirt_id, this.state.character.face_id, this.state.character.pants_id, this.state.character.hat_id);
+  }
+
+  setCharacterShirt = (shirt_id) => {
+    this.setCharacter(this.state.character.body_color, shirt_id, this.state.character.face_id, this.state.character.pants_id, this.state.character.hat_id);
+  }
+  setCharacterFace = (face_id) => {
+    this.setCharacter(this.state.character.body_color, this.state.character.shirt_id, face_id, this.state.character.pants_id, this.state.character.hat_id);
+  }
+  setCharacterPants = (pants_id) => {
+    this.setCharacter(this.state.character.body_color, this.state.character.shirt_id, this.state.character.face_id, pants_id, this.state.character.hat_id);
+  }
+  setCharacterHat = (hat_id) => {
+    this.setCharacter(this.state.character.body_color, this.state.character.shirt_id, this.state.character.face_id, this.state.character.pants_id, hat_id);
+  }
+
+  setCharacter = (body_color, shirt_id, face_id, pants_id, hats_id) => {
     this.setState({
-      user: {
-        username: this.state.user.username,
-        nickname: this.state.user.nickname,
-      },
       character: {
-        body_color: color,
-        shirt_id: this.state.character.shirt_id,
-        face_id: this.state.character.face_id,
-      }
+        body_color: body_color,
+        shirt_id: shirt_id,
+        face_id: face_id,
+        pants_id: pants_id,
+        hats_id: hats_id
+      },
     });
+  }
+
+  onSaveCharacterProperties = (body_color, shirt_id, pants_id, hat_id) => {
+    this.setCharacter(body_color, shirt_id, this.state.character.face_id, pants_id, hat_id);
+  }
+  onAssetChange = (asset_category, asset_id) => {
+    switch (asset_category) {
+      case SHIRTS: this.setCharacterShirt(asset_id); break;
+      case PANTS: this.setCharacterPants(asset_id); break;
+      case HATS: this.setCharacterHat(asset_id); break;
+      case FACES: this.setCharacterFace(asset_id); break;
+    }
   }
 
   render() {
@@ -92,7 +136,12 @@ export default class App extends Component {
               render={() => 
                 <CharacterBuildingPage 
                   body_color={this.state.character.body_color}
-                  onBodyColorChange={this.onBodyColorChange} />
+                  face_id={this.state.character.face_id}
+                  pants_id={this.state.character.pants_id}
+                  shirt_id={this.state.character.shirt_id}
+                  clothes={this.state.clothes}
+                  onSaveCharacterProperties={this.onSaveCharacterProperties}
+                />
               }
             />
             <React.Fragment>
@@ -119,7 +168,13 @@ export default class App extends Component {
                 <p className="title has-text-centered has-background-success-light">
                   { this.state.user.nickname }
                 </p>
-                <Bean body_color={this.state.character.body_color}/>
+                <Bean 
+                  width="auto"
+                  height="auto"                      
+                  body_color={this.state.character.body_color}
+                  face_id={this.state.character.face_id}
+                  pants_id={this.state.character.pants_id}
+                  shirt_id={this.state.character.shirt_id}/>
               </div>
             </div>
             </React.Fragment>

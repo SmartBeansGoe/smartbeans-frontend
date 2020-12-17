@@ -1,0 +1,18 @@
+* {
+  box-sizing: border-box;
+}
+.table .row {
+  display: flex;
+  flex-wrap: wrap;
+  list-style:none
+}
+
+.table .row li {
+  text-align: center;
+  is-hoverable: #333000;
+}
+
+.table .row :hover{
+  background-color: #E3E3E3;
+  cursor: pointer;
+}

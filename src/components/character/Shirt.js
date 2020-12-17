@@ -1,11 +1,7 @@
-import React, { Component } from 'react'
+import Asset from './Asset'
 
-export default class Shirt extends Component {
-  render() {
-    return (
-      <g>
-        
-      </g>
-    )
+export default class Shirt extends Asset {
+  constructor(props) {
+    super("shirts", props.id)
   }
 }

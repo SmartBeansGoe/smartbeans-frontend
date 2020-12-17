@@ -1,11 +1,7 @@
-import React, { Component } from 'react'
+import Asset from './Asset';
 
-export default class Pants extends Component {
-  render() {
-    return (
-      <div>
-        
-      </div>
-    )
+export default class Pants extends Asset {
+  constructor(props) {
+    super("pants", props.id);
   }
 }

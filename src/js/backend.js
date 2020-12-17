@@ -11,7 +11,6 @@ if(auth_cookie !== undefined)
 else
   auth_token = "not logged in"
 
-console.log(backend_url);
 axios.defaults.headers.common['Authorization'] = "Bearer " + auth_token;
 
 const axios_inst = axios.create({
