@@ -121,8 +121,10 @@ export default class CharacterBuildingPage extends Component {
             <ul className="row">
             {this.props.clothes[this.state.category].map(asset => {
               return (
-                <li key={asset} className="box" onClick={() => this.setAsset(asset)}>
+                <li key={asset} onClick={() => this.setAsset(asset)}>
+                  <div className="box">
                   <svg viewBox="0 0 77.707 108.77" height="150" width="auto" dangerouslySetInnerHTML={{__html: assets[this.state.category][asset]} }/>
+                  </div>
                 </li>
               );
             })}

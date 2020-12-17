@@ -28,7 +28,7 @@ export default class App extends Component {
         hats_id: "default",
       },
       clothes: {
-        shirts: ["shirt001", "shirt002", "shirt003", "shirt004", "shirt005", "shirt006", "default"],
+        shirts: ["shirt001", "granny_smith_shirt", "default"],
         pants: ["pants001", "default"],
         hats: ["default"],
       }

@@ -8,8 +8,8 @@
 }
 
 .table .row li {
+  width: 33%;
   text-align: center;
-  is-hoverable: #333000;
 }
 
 .table .row :hover{
