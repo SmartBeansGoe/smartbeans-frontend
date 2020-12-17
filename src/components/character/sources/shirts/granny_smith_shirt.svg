@@ -162,32 +162,6 @@
          d="m 101.80019,100.47158 -3.179792,0.6637 3.012232,0.78445 z"
          id="path947" />
     </g>
-    <g transform="translate(0 7.2829)">
-     <circle cx="76.957" cy="99.468" r="1.6206" fill="#cebcb6" stroke="#9d786c" stroke-linecap="round" stroke-width=".5" style="paint-order:stroke fill markers"/>
-     <g fill="#9d786c">
-      <circle cx="76.46" cy="99.047" r=".15381" style="paint-order:stroke fill markers"/>
-      <circle cx="77.519" cy="99.047" r=".15381" style="paint-order:stroke fill markers"/>
-      <circle cx="76.46" cy="99.889" r=".15381" style="paint-order:stroke fill markers"/>
-      <circle cx="77.519" cy="99.889" r=".15381" style="paint-order:stroke fill markers"/>
-     </g>
-    </g>
-    <g transform="translate(0 11.655)">
-     <circle cx="76.957" cy="99.468" r="1.6206" fill="#cebcb6" stroke="#9d786c" stroke-linecap="round" stroke-width=".5" style="paint-order:stroke fill markers"/>
-     <g fill="#9d786c">
-      <circle cx="76.46" cy="99.047" r=".15381" style="paint-order:stroke fill markers"/>
-      <circle cx="77.519" cy="99.047" r=".15381" style="paint-order:stroke fill markers"/>
-      <circle cx="76.46" cy="99.889" r=".15381" style="paint-order:stroke fill markers"/>
-      <circle cx="77.519" cy="99.889" r=".15381" style="paint-order:stroke fill markers"/>
-     </g>
-    </g>
-    <path transform="matrix(.26458 0 0 .26458 38.136 44.878)" d="m53.115 185.07c-3.7052 3.5858 10.882 5.0782 14.76 8.1754 4.6228 3.6923 7.9946 9.558 13.625 11.375 5.5656 1.7961 11.766-2.3976 17.5-1.25 6.8153 1.3639 11.718 8.6033 18.625 9.375 6.699 0.74838 12.883-4.9652 19.623-4.8828 8.3397 0.10189 15.813 7.2965 24.127 6.6328 5.1054-0.40758 8.9366-5.4933 13.982-6.3711 6.7669-1.1773 13.869 3.3702 20.533 1.709 6.2384-1.555 10.257-8.0357 16.223-10.434 5.6113-2.2556 12.341-0.8874 17.807-3.4766 4.1298-1.9564 8.6395-2.6584 11.624-5.5192 2.0655-1.9796-1.4413-6.1869-3.967-7.3764-4.1759-1.9666-13.579 2.7119-13.579 2.7119-11.552 3.9606-33.764 11.564-47.838 13.537-9.6864 1.3577-29.437 2.1562-29.437 2.1562s-19.393-0.86144-29.079-2.2191c-19.211-2.6927-51.203-14.276-51.203-14.276-3.4623-1.2883-6.0422-2.12-7.7297-2.4426-2.5254-0.21738-4.0599 1.0882-5.5964 2.5752z" fill="#ded2ce" stroke="#9d786c" stroke-width="1.8898"/>
-   </g>
-   <g fill="#1e3148">
-    <path d="m52.425 96.934 2.5707 0.19752-3.2032 0.70269z"/>
-    <path d="m52.449 101 2.9981-0.18677-3.0896 1.6674z"/>
-    <path d="m101.98 95.929-3.0214 1.2944 2.5274-0.28928z"/>
-    <path d="m101.8 100.47-3.1798 0.6637 3.0122 0.78445z"/>
-   </g>
   </g>
   <g
      id="layer4" />
