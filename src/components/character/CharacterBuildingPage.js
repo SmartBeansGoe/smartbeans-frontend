@@ -90,7 +90,7 @@ export default class CharacterBuildingPage extends Component {
         </div>
         <div className="tabs">
           <ul>
-            <li id="tab_hats">
+            <li id={"tab_" + HATS}>
               <a onClick={() => this.tab(HATS)}>
                 <span className="icon is-small">
                 <Icon path={mdiHatFedora} />
@@ -98,7 +98,7 @@ export default class CharacterBuildingPage extends Component {
                 <span>Hats</span>
               </a>
             </li>
-            <li id="tab_shirts" className="is-active">
+            <li id={"tab_" + SHIRTS} className="is-active">
               <a onClick={() => this.tab(SHIRTS)}>
                 <span className="icon is-small">
                 <Icon path={mdiTshirtCrew} />
@@ -106,7 +106,7 @@ export default class CharacterBuildingPage extends Component {
                 <span>Shirts</span>
               </a>
             </li>
-            <li id="tab_pants">
+            <li id={"tab_" + PANTS}>
               <a onClick={() => this.tab(PANTS)}>
                 <span className="icon is-small">
                   <img src={pants} alt=""/>
@@ -120,10 +120,12 @@ export default class CharacterBuildingPage extends Component {
           <div className="table">
             <ul className="row">
             {this.props.clothes[this.state.category].map(asset => {
+              var asset_id_type = (this.state.category === SHIRTS ? this.state.shirt_id :
+                                  (this.state.category === PANTS ? this.state.pants_id : this.state.hat_id));
               return (
                 <li key={asset} onClick={() => this.setAsset(asset)}>
-                  <div className="box">
-                  <svg viewBox="0 0 77.707 108.77" height="150" width="auto" dangerouslySetInnerHTML={{__html: assets[this.state.category][asset]} }/>
+                  <div className={"box" + (asset_id_type === asset ?" my-active" : "")}>
+                  <svg viewBox="0 0 77.707 108.77" height="auto" width="auto" dangerouslySetInnerHTML={{__html: assets[this.state.category][asset]} }/>
                   </div>
                 </li>
               );
