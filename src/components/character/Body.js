@@ -9,7 +9,9 @@ export default class Body extends Component {
     var value = require('color-convert');
     let hsv = value.rgb.hsv(r, g, b);
     let rgb = value.hsv.rgb(hsv[0], hsv[1]-20, hsv[2]);
+    let rgb_spot = value.hsv.rgb(hsv[0], hsv[1]-50, hsv[2]);
 
+    var spot_color = "rgb(" + rgb_spot[0] + ", " + rgb_spot[1] + ", " + rgb_spot[2] + ")";
     var body_color = "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")";
     
     return (
@@ -38,7 +40,7 @@ export default class Body extends Component {
         </g>
         <path
           d="M30.448 14.222c-4.216 2.213-4.137 5.204-6.849 5.07-2.436-.122-.148-4.19 3.137-6.4 3.442-2.316 6.368-3.65 8.55-3.052 2.818.77-3.335 3.593-4.838 4.382z"
-          fill="#fff9d5"
+          fill={spot_color}
         />
         <path
           d="M28.563 85.392l1.59.872c.464.256 1.263 1.858 1.26 2.648l-.03 12.007c-.002.79-.395 1.426-.886 1.426H29.45c-.491 0-.887-.636-.887-1.426V85.392c0-.79-.465-.255 0 0z"
