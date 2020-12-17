@@ -5,13 +5,6 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:export-ydpi="300"
-   inkscape:export-xdpi="300"
-   inkscape:export-filename="C:\Users\johan\Bohne.png"
-   sodipodi:docname="granny_smith_shirt.svg"
-   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
    id="svg8"
    version="1.1"
    viewBox="0 0 77.706579 108.77032"
@@ -19,46 +12,6 @@
    width="293.69418">
   <defs
      id="defs2" />
-  <sodipodi:namedview
-     inkscape:snap-object-midpoints="true"
-     units="px"
-     fit-margin-bottom="20"
-     fit-margin-right="20"
-     fit-margin-left="20"
-     fit-margin-top="20"
-     lock-margins="false"
-     inkscape:window-maximized="1"
-     inkscape:window-y="-8"
-     inkscape:window-x="-8"
-     inkscape:window-height="1017"
-     inkscape:window-width="1920"
-     inkscape:snap-nodes="true"
-     inkscape:object-paths="true"
-     inkscape:snap-smooth-nodes="true"
-     showgrid="false"
-     inkscape:document-rotation="0"
-     inkscape:current-layer="layer2"
-     inkscape:document-units="mm"
-     inkscape:cy="206.95831"
-     inkscape:cx="-5.2606181"
-     inkscape:zoom="2"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     borderopacity="1.0"
-     bordercolor="#666666"
-     pagecolor="#ffffff"
-     id="base"
-     showguides="true"
-     inkscape:guide-bbox="true">
-    <sodipodi:guide
-       position="7.5406243,38.920321"
-       orientation="0,-1"
-       id="guide899" />
-    <sodipodi:guide
-       id="guide881"
-       orientation="1,0"
-       position="38.820489,102.42969" />
-  </sodipodi:namedview>
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -67,22 +20,19 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      transform="translate(-38.136244,-44.878254)"
      style="display:inline"
-     id="layer1"
-     inkscape:groupmode="layer"
-     inkscape:label="Body">
+     id="layer1">
     <g
        id="g1033">
       <g
          id="g975">
         <path
-           sodipodi:nodetypes="scccsccsccccccccccccccscccccscscs"
            transform="matrix(0.26458333,0,0,0.26458333,38.136244,44.878254)"
            d="m 58.048828,183.64844 c -0.692416,0.0178 -1.373172,0.1852 -2.005859,0.56445 -1.205726,0.84445 -2.487388,1.47164 -3.072266,2.9668 -1.273814,1.64166 -1.220446,3.83223 -0.832031,5.76758 0.03704,1.47034 1.976794,2.39223 1.867187,3.79882 -0.107678,1.38201 -1.597929,2.26314 -2.390625,3.40235 -1.08757,2.00672 -1.499983,4.34647 -1.537109,6.60742 0.612729,2.19351 3.505888,3.19731 4.015625,5.375 0.267061,1.14085 -0.758519,2.22142 -0.634766,3.45898 -0.14691,2.09658 1.043225,4.0868 2.488282,5.51172 1.031746,0.98846 2.117303,1.80423 3.455078,2.31836 0.477229,0.29707 1.63847,0.26569 1.757812,0.29102 L 60.886719,264 h 85.835941 85.83593 l -0.27343,-40.28906 c 0.11934,-0.0253 1.28059,0.006 1.75781,-0.29102 1.3378,-0.51413 2.42334,-1.3299 3.45508,-2.31836 1.44506,-1.42492 2.6353,-3.41514 2.48828,-5.51172 0.12374,-1.23756 -0.90198,-2.31813 -0.63477,-3.45898 0.50975,-2.17769 3.40289,-3.18151 4.01563,-5.375 -0.0372,-2.26095 -0.44952,-4.60071 -1.53711,-6.60742 -0.79268,-1.13921 -2.28291,-2.02034 -2.39063,-3.40235 -0.1096,-1.40659 1.8294,-2.32848 1.86719,-3.79882 0.38842,-1.93535 0.44178,-4.12592 -0.83203,-5.76758 -0.58488,-1.49516 -1.86656,-2.12235 -3.07227,-2.9668 -0.63269,-0.37925 -1.31345,-0.54669 -2.00586,-0.56445 -1.154,-0.0297 -2.33972,0.35357 -3.37695,0.85156 0,0 -36.7418,13.30727 -55.95312,16 -9.68644,1.35769 -29.34375,2 -29.34375,2 0,0 -19.65731,-0.64231 -29.34375,-2 -19.211327,-2.69273 -55.953129,-16 -55.953129,-16 -1.037227,-0.49799 -2.222926,-0.88123 -3.376953,-0.85156 z"
            style="fill:#355882;stroke:#1e3148;stroke-width:3.77953;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -190,7 +140,6 @@
              r="0.15381339" />
         </g>
         <path
-           sodipodi:nodetypes="ssssssssssssacscsccs"
            transform="matrix(0.26458333,0,0,0.26458333,38.136244,44.878254)"
            d="m 53.115308,185.07457 c -3.705199,3.58581 10.881935,5.07824 14.759692,8.17543 4.622823,3.69228 7.994566,9.55796 13.625,11.375 5.565555,1.7961 11.765504,-2.39759 17.5,-1.25 6.81534,1.36388 11.7175,8.60333 18.625,9.375 6.69897,0.74838 12.88291,-4.96516 19.62305,-4.88281 8.33974,0.10189 15.81304,7.29653 24.12695,6.63281 5.1054,-0.40758 8.93657,-5.49326 13.98242,-6.37109 6.76694,-1.17726 13.86854,3.37023 20.5332,1.70898 6.23836,-1.55495 10.25734,-8.03571 16.22266,-10.43359 5.61133,-2.25559 12.34121,-0.8874 17.80664,-3.47657 4.12978,-1.95641 8.6395,-2.65836 11.62444,-5.51916 2.06548,-1.97958 -1.44128,-6.18689 -3.96703,-7.37635 -4.17592,-1.96657 -13.57928,2.71192 -13.57928,2.71192 -11.55218,3.96059 -33.76355,11.5644 -47.83789,13.53711 -9.68644,1.35769 -29.43705,2.15625 -29.43705,2.15625 0,0 -19.39259,-0.86144 -29.07903,-2.21913 -19.211336,-2.69273 -51.202608,-14.27643 -51.202608,-14.27643 -3.462286,-1.28827 -6.042177,-2.12005 -7.729731,-2.44255 -2.525363,-0.21738 -4.059923,1.08817 -5.596433,2.57518 z"
            style="fill:#ded2ce;stroke:#9d786c;stroke-width:1.88976;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -215,18 +164,12 @@
     </g>
   </g>
   <g
-     inkscape:label="Gesicht"
-     id="layer4"
-     inkscape:groupmode="layer" />
+     id="layer4" />
   <g
      transform="translate(-38.136244,-44.878254)"
      style="display:inline"
-     inkscape:label="Shirt"
-     id="layer2"
-     inkscape:groupmode="layer" />
+     id="layer2" />
   <g
      transform="translate(-38.136244,-44.878254)"
-     inkscape:label="Hose"
-     id="layer3"
-     inkscape:groupmode="layer" />
+     id="layer3" />
 </svg>
