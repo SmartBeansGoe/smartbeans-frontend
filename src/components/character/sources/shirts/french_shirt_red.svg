@@ -1,0 +1,24 @@
+<svg width="293.69" height="411.1" version="1.1" viewBox="0 0 77.707 108.77" xmlns="http://www.w3.org/2000/svg">
+ <g transform="translate(-38.136 -44.878)">
+  <path d="m68.584 59.1c-4.2164 2.2128-4.1374 5.2036-6.8489 5.0691-2.4357-0.1208-0.14844-4.19 3.1366-6.3996 3.4423-2.3153 6.3684-3.6487 8.5508-3.0515 2.817 0.77079-3.3356 3.5933-4.8385 4.3821z" fill="#fff"/>
+ </g>
+ <g transform="translate(-38.136 -44.878)">
+  <g transform="translate(38.136 44.878)">
+   <g>
+    <path transform="scale(.26458)" d="m62.301 178-25.213 52.135 13 11.75 10.193-17.379c0.70226 13.698 0.2828 27.818 4.2416 39.494h164.71c2.9242-12.78 2.6836-26.296 3.9342-39.494l10.191 17.379 13-11.75-24.624-52.135c-22.045 13.288-50.078 19.544-85.011 22.125-34.933-2.5811-62.377-8.8372-84.422-22.125z" fill="#fffaff" stroke="#d8315b" stroke-width="3.7795"/>
+    <g fill="none" stroke-width="1.7">
+     <path d="m14.354 51.792s16.186 4.3227 24.467 4.2995c8.344-0.02341 24.63-4.4707 24.63-4.4707" stroke="#3e90cc"/>
+     <g stroke="#d8315b">
+      <path d="m13.117 54.164s17.423 4.7024 25.704 4.6792c8.344-0.02341 25.688-4.8757 25.688-4.8757"/>
+      <path d="m11.987 56.606s18.553 5.0122 26.834 4.989c8.344-0.02341 26.864-5.0315 26.864-5.0315"/>
+      <path d="m10.978 58.797s19.562 5.5726 27.842 5.5494c8.344-0.02341 27.974-5.3281 27.974-5.3281"/>
+      <path d="m16.094 63.547s14.446 3.5748 22.727 3.5515c8.344-0.02341 22.636-3.9318 22.636-3.9318"/>
+      <path d="m14.354 51.792s16.186 4.3227 24.467 4.2995c8.344-0.02341 24.63-4.4707 24.63-4.4707"/>
+      <path d="m15.582 48.961s14.958 4.5078 23.239 4.4846c8.344-0.02341 23.522-4.1701 23.522-4.1701"/>
+     </g>
+    </g>
+   </g>
+   <path transform="scale(.26458)" d="m230.59 246.21s-53.318 14.487-83.873 14.572c-30.389 0.0853-84.213-12.926-84.213-12.926l-0.75586 3.1016c0.13906 1.1561 0.29703 2.3022 0.47852 3.4336 4.0943 0.98826 25.72 6.0996 49.004 9.6035h68.08c24.353-3.9478 47.576-10.119 51.762-11.256 0.12911-1.1422 0.26062-2.2836 0.36524-3.4316z" color="#000000" color-rendering="auto" dominant-baseline="auto" fill="#d8315b" image-rendering="auto" shape-rendering="auto" solid-color="#000000" stop-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;font-variation-settings:normal;inline-size:0;isolation:auto;mix-blend-mode:normal;shape-margin:0;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+  </g>
+ </g>
+</svg>
