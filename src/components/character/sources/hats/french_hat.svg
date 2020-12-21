@@ -1,13 +1,10 @@
-<svg width="293.69" height="411.1" version="1.1" viewBox="0 0 77.707 108.77" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="293.69" height="411.1" version="1.1" viewBox="0 0 77.707 108.77" xmlns="http://www.w3.org/2000/svg">
  <defs>
   <linearGradient id="linearGradient1064" x1="49.065" x2="66.157" y1="5.136" y2="5.1857" gradientUnits="userSpaceOnUse">
    <stop stop-color="#39332d" offset="0"/>
    <stop stop-color="#0b0a09" offset="1"/>
   </linearGradient>
  </defs>
- <g transform="translate(-38.136 -44.878)">
-  <path d="m68.584 59.1c-4.2164 2.2128-4.1374 5.2036-6.8489 5.0691-2.4357-0.1208-0.14844-4.19 3.1366-6.3996 3.4423-2.3153 6.3684-3.6487 8.5508-3.0515 2.817 0.77079-3.3356 3.5933-4.8385 4.3821z" fill="#fff"/>
- </g>
  <g>
   <g>
    <ellipse transform="matrix(.9805 .19653 -.23453 .97211 0 0)" cx="44.867" cy="5.1857" rx="20.243" ry="10.148" fill="url(#linearGradient1064)" stroke="#0b0a09" stroke-width="2.095"/>
