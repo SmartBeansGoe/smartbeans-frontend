@@ -36,9 +36,9 @@ export default class App extends Component {
         hats_id: "default",
       },
       clothes: {
-        shirts: ["granny_smith_shirt", "beanybuffer_dress", "gardener_shirts", "shirt_test", "summer_feelings_w_dress", "Summer_feelings_m_shirt", "shirt001", "ballerina_dress", "surferbohne_shirt", "bikini_shirt"],
-        pants: ["granny_smith_skirt", "bikini_pants", "Summer_feelings_m_pants", "pants001", "gardener_pants", "surferbohne_pants", "ballerina_legs"],
-        hats: ["beanybuffer_hat", "granny_smith_hair", "summer_feelings_w_hat"],
+        shirts: ["french_shirt_red", "french_shirt", "granny_smith_shirt", "beanybuffer_dress", "gardener_shirts", "shirt_test", "summer_feelings_w_dress", "Summer_feelings_m_shirt", "shirt001", "ballerina_dress", "surferbohne_shirt", "bikini_shirt"],
+        pants: ["french_pants_light_blue", "french_pants", "granny_smith_skirt", "bikini_pants", "Summer_feelings_m_pants", "pants001", "gardener_pants", "surferbohne_pants", "ballerina_legs"],
+        hats: ["french_hat", "beanybuffer_hat", "granny_smith_hair", "summer_feelings_w_hat"],
       }
     };
     this.onBodyColorChange = this.onBodyColorChange.bind(this);
