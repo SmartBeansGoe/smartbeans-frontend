@@ -13,9 +13,6 @@ export default class NavBar extends Component {
           <Link className="navbar-item" to="/">
             <img src={logo} width="60" height="60" />
           </Link>
-        </div>
-  
-        <div id="navbarBasicExample" className="navbar-menu">
           <div className="navbar-start">
             <Link className="navbar-item is-hoverable" to="/exercises">
               Exercises
@@ -30,12 +27,14 @@ export default class NavBar extends Component {
               Character
             </Link>
           </div>
+        </div>
   
+        <div className="navbar-menu">  
           <div className="navbar-end">
             <article className="navbar-item">
-            <p id="userbox">
-              Eingeloggt als: {this.props.username}
-            </p>
+              <p id="userbox">
+                Eingeloggt als: {this.props.username}
+              </p>
             </article>
           </div>
         </div>
