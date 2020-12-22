@@ -19,7 +19,7 @@ export default class ExerciseCategoryOverview extends Component {
         <p className="subtitle mb-0">{this.props.subtitle}</p>
         <div className="columns mt-0">
           <div className="column is-two-thirds pt-2">
-            <progress className="progress is-success is-small pt-0" value={progress.length} max="100"/>
+            <progress className="progress is-success is-small pt-0" value={progress.length} max={ this.props.exerciseList.length }/>
           </div>
           <div className="column is-hidden-mobile pt-0">
             { progress.length} / { this.props.exerciseList.length }
