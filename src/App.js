@@ -215,6 +215,7 @@ export default class App extends Component {
                   face_id={this.state.character.face_id}
                   pants_id={this.state.character.pants_id}
                   shirt_id={this.state.character.shirt_id}
+                  hat_id={this.state.character.hat_id}
                   clothes={this.state.clothes}
                   onSaveCharacterProperties={this.onSaveCharacterProperties}
                 />
