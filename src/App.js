@@ -45,7 +45,6 @@ export default class App extends Component {
                  "granny_smith_shirt",
                  "beanybuffer_dress",
                  "gardener_shirts",
-                 "shirt_test",
                  "summer_feelings_w_dress",
                  "Business_Bean_m_shirt",
                  "Business_Bean_m_shirt_2",
