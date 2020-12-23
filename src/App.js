@@ -124,14 +124,14 @@ export default class App extends Component {
     this.setCharacter(this.state.character.body_color, this.state.character.shirt_id, this.state.character.face_id, this.state.character.pants_id, hat_id);
   }
 
-  setCharacter = (body_color, shirt_id, face_id, pants_id, hats_id) => {
+  setCharacter = (body_color, shirt_id, face_id, pants_id, hat_id) => {
     this.setState({
       character: {
         body_color: body_color,
         shirt_id: shirt_id,
         face_id: face_id,
         pants_id: pants_id,
-        hats_id: hats_id
+        hat_id: hat_id
       },
     });
   }
