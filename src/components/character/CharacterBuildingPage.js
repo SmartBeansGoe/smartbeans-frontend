@@ -148,5 +148,6 @@ CharacterBuildingPage.propTypes = {
   face_id: PropTypes.string.isRequired,
   pants_id: PropTypes.string.isRequired,
   shirt_id: PropTypes.string.isRequired,
+  hat_id: PropTypes.string.isRequired,
 }
 
