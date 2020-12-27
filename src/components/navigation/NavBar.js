@@ -11,7 +11,7 @@ export default class NavBar extends Component {
       <nav className="navbar is-dark" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <Link className="navbar-item" to="/">
-            <img src={logo} width="60" height="60" />
+            <img src={logo} width="60" height="60" alt="" />
           </Link>
           <div className="navbar-start">
             <Link className="navbar-item is-hoverable" to="/exercises">
