@@ -8,6 +8,7 @@ import assets from './sources/assets.json'
 import './CharacterBuildingPage.css'
 
 import { SHIRTS, PANTS, HATS } from '../../js/constants'
+import axios_inst from '../../js/backend';
 
 export default class CharacterBuildingPage extends Component {
   constructor(props) {
@@ -26,7 +27,15 @@ export default class CharacterBuildingPage extends Component {
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
+    axios_inst.get("/character").then(response =>
+      this.setState({
+        body_color: response.data.body_color,
+        pants_id: response.data.pants_id,
+        shirt_id: response.data.shirt_id,
+        hat_id: response.data.hat_id,
+      }));
   }
+
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);

@@ -30,10 +30,10 @@ export default class App extends Component {
       },
       character: {
         body_color: "#E7C27A",
-        shirt_id: "shirt001",
+        shirt_id: "",
         face_id: "face001",
-        pants_id: "pants001",
-        hats_id: "default",
+        pants_id: "",
+        hat_id: "",
       },
       clothes: {
         shirts: ["sweater_w_blue",
@@ -57,7 +57,6 @@ export default class App extends Component {
         hats: ["egirl_kitten_band", "french_hat", "beanybuffer_hat", "granny_smith_hair", "summer_feelings_w_hat"],
       }
     };
-    this.onBodyColorChange = this.onBodyColorChange.bind(this);
     this.onAssetChange = this.onAssetChange.bind(this);
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
   }
@@ -65,11 +64,13 @@ export default class App extends Component {
   componentDidMount() {
     this.checkLogin();
     this.loadUser();
+    this.loadCharacter();
     this.loadExercises();
   }
 
   componentDidUpdate() {
-    this.checkLogin();
+    // console.log("App did update.")
+    // this.checkLogin();
   }
 
   checkLogin() {
@@ -98,30 +99,17 @@ export default class App extends Component {
     }));
   }
 
-  componentDidUpdate() {
-    console.log(this.state.character);
-  }
-
-  onBodyColorChange = color => {
-    console.log("SAVE COLOR");
-    this.setCharacterBodyColor(color);
-  }
-
-  setCharacterBodyColor = (body_color) => {
-    this.setCharacter(body_color, this.state.character.shirt_id, this.state.character.face_id, this.state.character.pants_id, this.state.character.hat_id);
-  }
-
-  setCharacterShirt = (shirt_id) => {
-    this.setCharacter(this.state.character.body_color, shirt_id, this.state.character.face_id, this.state.character.pants_id, this.state.character.hat_id);
-  }
-  setCharacterFace = (face_id) => {
-    this.setCharacter(this.state.character.body_color, this.state.character.shirt_id, face_id, this.state.character.pants_id, this.state.character.hat_id);
-  }
-  setCharacterPants = (pants_id) => {
-    this.setCharacter(this.state.character.body_color, this.state.character.shirt_id, this.state.character.face_id, pants_id, this.state.character.hat_id);
-  }
-  setCharacterHat = (hat_id) => {
-    this.setCharacter(this.state.character.body_color, this.state.character.shirt_id, this.state.character.face_id, this.state.character.pants_id, hat_id);
+  loadCharacter() {
+    axios_inst.get("/character")
+    .then(response => {
+      var data = response.data;
+      this.setCharacter(
+        data.body_color  === null ? "#E7C27A" : data.body_color,
+        data.shirt_id === null ? "" : data.shirt_id,
+        this.state.character.face_id,
+        data.pants_id === null ? "" : data.pants_id,
+        data.hat_id  === null ? "" : data.hat_id);
+    });
   }
 
   setCharacter = (body_color, shirt_id, face_id, pants_id, hat_id) => {
@@ -137,14 +125,29 @@ export default class App extends Component {
   }
 
   onSaveCharacterProperties = (body_color, shirt_id, pants_id, hat_id) => {
+    axios_inst.post('/character', {
+      body_color: body_color,
+      shirt_id: shirt_id,
+      face_id: this.state.character.face_id,
+      pants_id: pants_id,
+      hat_id: hat_id,
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
     this.setCharacter(body_color, shirt_id, this.state.character.face_id, pants_id, hat_id);
   }
+
   onAssetChange = (asset_category, asset_id) => {
     switch (asset_category) {
       case SHIRTS: this.setCharacterShirt(asset_id); break;
       case PANTS: this.setCharacterPants(asset_id); break;
       case HATS: this.setCharacterHat(asset_id); break;
       case FACES: this.setCharacterFace(asset_id); break;
+      default: Error("Could not find asset category"); break;
     }
   }
 

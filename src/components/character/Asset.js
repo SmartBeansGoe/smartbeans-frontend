@@ -19,12 +19,12 @@ export default class Asset extends Component {
   setAsset() {
     var svg = document.getElementById(this.asset);
     var as = assets[this.asset];
-    if (svg != null) {
+    if (svg !== null && this.props.id !== "") {
       if (as !== undefined) {
         if (as[this.props.id] !== undefined)
           svg.innerHTML = as[this.props.id];
         else {
-          svg.innerHTML = as["default"];
+          svg.innerHTML = "";
         }
       }
       else {
