@@ -17,6 +17,8 @@ class ExercisePage extends Component {
 
   getTask() {
     const taskid = this.props.match.params.taskid;
+    const task = this.props.location.state.task;
+    console.log(task);
     var exercise;
     for (let key in this.props.categories) {
       for (let i in this.props.categories[key].exerciseList) {
@@ -44,8 +46,8 @@ class ExercisePage extends Component {
     return (
       <div className="tile is-parent is-10 is-vertical">
         <div className="tile is-child box" >
-          <h1 className="title ml-3 mt-3">{ this.state.title }</h1>
-          <p className="m-3" dangerouslySetInnerHTML={ {__html: marked(this.state.task)} }/>
+          <h1 className="title ml-3 mt-3">{this.state.title}</h1>
+          <p className="m-3" dangerouslySetInnerHTML={{ __html: marked(this.state.task) }} />
         </div>
       </div>
     )

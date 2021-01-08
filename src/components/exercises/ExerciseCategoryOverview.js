@@ -30,7 +30,7 @@ export default class ExerciseCategoryOverview extends Component {
             {this.props.exerciseList.map((e) => {
               return (
                 <li key={e.taskid}>
-                  <Link className={e.solved ? "has-text-success" : "has-text-grey"} to={"/exercises/" + e.taskid}>{e.name}</Link>
+                  <Link className={e.solved ? "has-text-success" : "has-text-grey"} to={{ pathname: "/exercises/" + e.taskid, state: { task: e } }}>{e.name}</Link>
                 </li>
               );
             })}

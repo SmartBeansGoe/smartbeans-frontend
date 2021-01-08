@@ -25,7 +25,7 @@ export default class App extends Component {
             title: "",
             subtitle: "",
             exerciseList: [],
-          }      
+          }
         ]
       },
       character: {
@@ -37,22 +37,22 @@ export default class App extends Component {
       },
       clothes: {
         shirts: ["sweater_w_blue",
-                 "sweater_w_green",
-                 "sweater_w_mustard",
-                 "bicycle_shirt",
-                 "french_shirt_red",
-                 "french_shirt",
-                 "granny_smith_shirt",
-                 "beanybuffer_dress",
-                 "gardener_shirts",
-                 "summer_feelings_w_dress",
-                 "Business_Bean_m_shirt",
-                 "Business_Bean_m_shirt_2",
-                 "Summer_feelings_m_shirt",
-                 "shirt001",
-                 "ballerina_dress",
-                 "surferbohne_shirt",
-                 "bikini_shirt"],
+          "sweater_w_green",
+          "sweater_w_mustard",
+          "bicycle_shirt",
+          "french_shirt_red",
+          "french_shirt",
+          "granny_smith_shirt",
+          "beanybuffer_dress",
+          "gardener_shirts",
+          "summer_feelings_w_dress",
+          "Business_Bean_m_shirt",
+          "Business_Bean_m_shirt_2",
+          "Summer_feelings_m_shirt",
+          "shirt001",
+          "ballerina_dress",
+          "surferbohne_shirt",
+          "bikini_shirt"],
         pants: ["egirl_skirt_rose", "egirl_skirt_blue", "Business_Bean_m_pants", "Business_Bean_m_pants_2", "french_pants_light_blue", "french_pants", "granny_smith_skirt", "bikini_pants", "Summer_feelings_m_pants", "pants001", "gardener_pants", "surferbohne_pants", "ballerina_legs"],
         hats: ["egirl_kitten_band", "french_hat", "beanybuffer_hat", "granny_smith_hair", "summer_feelings_w_hat"],
       }
@@ -62,10 +62,12 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.checkLogin();
-    this.loadUser();
-    this.loadCharacter();
-    this.loadExercises();
+    let loginCheck = this.checkLogin();
+    if (loginCheck) {
+      this.loadUser();
+      this.loadCharacter();
+      this.loadExercises();
+    }
   }
 
   componentDidUpdate() {
@@ -75,41 +77,44 @@ export default class App extends Component {
 
   checkLogin() {
     axios_inst.get("/username")
-    .then(response => {})
-    .catch(error => {
-      var error_message;
-      if(error.response === undefined) {
-        error_message = "Keine Antwort vom Server erhalten.";
-      }
-      else {
-        error_message = "Du bist nicht eingeloggt.";
-      }
-      
-      document.getElementById("body").innerHTML = "<div class=\"notification is-danger is-light has-text-centered\">" + error_message + "</div>";
-    });
+      .then(response => {
+        return true;
+      })
+      .catch(error => {
+        var error_message;
+        if (error.response === undefined) {
+          error_message = "Keine Antwort vom Server erhalten.";
+        }
+        else {
+          error_message = "Du bist nicht eingeloggt.";
+        }
+
+        document.getElementById("body").innerHTML = "<div class=\"notification is-danger is-light has-text-centered\">" + error_message + "</div>";
+        return false;
+      });
   }
 
   loadUser() {
-    axios_inst.get("/username").then(response => 
+    axios_inst.get("/username").then(response =>
       this.setState({
         user: {
           username: response.data.username,
           nickname: this.state.user.nickname, // TODO: backend
         }
-    }));
+      }));
   }
 
   loadCharacter() {
     axios_inst.get("/character")
-    .then(response => {
-      var data = response.data;
-      this.setCharacter(
-        data.body_color  === null ? "#E7C27A" : data.body_color,
-        data.shirt_id === null ? "" : data.shirt_id,
-        this.state.character.face_id,
-        data.pants_id === null ? "" : data.pants_id,
-        data.hat_id  === null ? "" : data.hat_id);
-    });
+      .then(response => {
+        var data = response.data;
+        this.setCharacter(
+          data.body_color === null ? "#E7C27A" : data.body_color,
+          data.shirt_id === null ? "" : data.shirt_id,
+          this.state.character.face_id,
+          data.pants_id === null ? "" : data.pants_id,
+          data.hat_id === null ? "" : data.hat_id);
+      });
   }
 
   setCharacter = (body_color, shirt_id, face_id, pants_id, hat_id) => {
@@ -132,12 +137,12 @@ export default class App extends Component {
       pants_id: pants_id,
       hat_id: hat_id,
     })
-    .then(response => {
-      console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     this.setCharacter(body_color, shirt_id, this.state.character.face_id, pants_id, hat_id);
   }
 
@@ -196,8 +201,8 @@ export default class App extends Component {
               subtitle: "Overkill Aufgaben",
               exerciseList: diamond,
             },
-          ]  
-        } 
+          ]
+        }
       })
     });
   }
@@ -206,63 +211,63 @@ export default class App extends Component {
     return (
       <Router>
         <div className="App">
-          <NavBar username={ this.state.user.username }/>
+          <NavBar username={this.state.user.username} />
           <div id="body" className="tile is-ancestor">
             <Switch>
-            <Route
-              exact
-              path="/character"
-              render={() => 
-                <CharacterBuildingPage 
-                  body_color={this.state.character.body_color}
-                  face_id={this.state.character.face_id}
-                  pants_id={this.state.character.pants_id}
-                  shirt_id={this.state.character.shirt_id}
-                  hat_id={this.state.character.hat_id}
-                  clothes={this.state.clothes}
-                  onSaveCharacterProperties={this.onSaveCharacterProperties}
-                />
-              }
-            />
-            <React.Fragment>
-            <React.Fragment>
-                <Route 
-                  exact
-                  path="/leaderboard"
-                  component={LeaderboardPage}
-                />
-                <Route
-                  exact
-                  path="/exercises/:taskid"
-                  component={() => <ExercisePage categories={this.state.exercises.categories} />}
-                />
-                <Route 
-                  exact
-                  path="/exercises"
-                  render={() => (
-                    <div className="tile is-parent is-vertical">
-                      <ExerciseOverviewPage categories={this.state.exercises.categories} />
-                    </div>
-                  )}
-                />
-            </React.Fragment>
-            <div className="tile is-vertical is-2 is-parent">
-              <div className="tile is-child box">
-                <p className="title has-text-centered has-background-success-light">
-                  { this.state.user.nickname }
-                </p>
-                <Bean 
-                  width="auto"
-                  height="auto"                      
-                  body_color={this.state.character.body_color}
-                  face_id={this.state.character.face_id}
-                  pants_id={this.state.character.pants_id}
-                  hat_id={this.state.character.hat_id}
-                  shirt_id={this.state.character.shirt_id}/>
-              </div>
-            </div>
-            </React.Fragment>
-          </Switch>
+              <Route
+                exact
+                path="/character"
+                render={() =>
+                  <CharacterBuildingPage
+                    body_color={this.state.character.body_color}
+                    face_id={this.state.character.face_id}
+                    pants_id={this.state.character.pants_id}
+                    shirt_id={this.state.character.shirt_id}
+                    hat_id={this.state.character.hat_id}
+                    clothes={this.state.clothes}
+                    onSaveCharacterProperties={this.onSaveCharacterProperties}
+                  />
+                }
+              />
+              <React.Fragment>
+                <React.Fragment>
+                  <Route
+                    exact
+                    path="/leaderboard"
+                    component={LeaderboardPage}
+                  />
+                  <Route
+                    exact
+                    path="/exercises/:taskid"
+                    component={() => <ExercisePage categories={this.state.exercises.categories} />}
+                  />
+                  <Route
+                    exact
+                    path="/exercises"
+                    render={() => (
+                      <div className="tile is-parent is-vertical">
+                        <ExerciseOverviewPage categories={this.state.exercises.categories} />
+                      </div>
+                    )}
+                  />
+                </React.Fragment>
+                <div className="tile is-vertical is-2 is-parent">
+                  <div className="tile is-child box">
+                    <p className="title has-text-centered has-background-success-light">
+                      {this.state.user.nickname}
+                    </p>
+                    <Bean
+                      width="auto"
+                      height="auto"
+                      body_color={this.state.character.body_color}
+                      face_id={this.state.character.face_id}
+                      pants_id={this.state.character.pants_id}
+                      hat_id={this.state.character.hat_id}
+                      shirt_id={this.state.character.shirt_id} />
+                  </div>
+                </div>
+              </React.Fragment>
+            </Switch>
           </div>
         </div>
       </Router>
