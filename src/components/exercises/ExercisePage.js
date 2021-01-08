@@ -37,6 +37,7 @@ class ExercisePage extends Component {
   }
 
   submitSolution() {
+    // hier kommt mein code hin
   }
 
   render() {
