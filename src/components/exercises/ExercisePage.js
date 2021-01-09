@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import marked from 'marked'
-import PropTypes from 'prop-types'
 import axios_inst from '../../js/backend'
+import Submission from './Submission'
 import { withRouter } from "react-router";
 
 class ExercisePage extends Component {
@@ -9,38 +9,89 @@ class ExercisePage extends Component {
     title: "",
     task: "",
     solved: "",
+    taskid: -1,
+    submissions: [],
+    fileName: "Keine Datei ausgewählt",
+    selectedFile: null
   }
 
   componentDidMount() {
     this.getTask();
+    this.getSubmissions();
   }
 
   getTask() {
-    const taskid = this.props.match.params.taskid;
-    const task = this.props.location.state.task;
-    console.log(task);
-    var exercise;
-    for (let key in this.props.categories) {
-      for (let i in this.props.categories[key].exerciseList) {
-        let ex = this.props.categories[key].exerciseList[i];
-        if (parseInt(ex.taskid) === parseInt(taskid)) {
-          exercise = ex;
-        }
-      }
-    }
-    if (exercise !== undefined) {
-      this.setState({
-        title: exercise.name,
-        task: exercise.task,
-        solved: exercise.solved,
-        taskid: exercise.taskid,
-      })
+    if (this.props.location.state === undefined) {
+      this.loadTask();
+    } else {
+      this.addTaskToState(this.props.location.state.task);
     }
   }
 
-  submitSolution() {
-    // hier kommt mein code hin
+  loadTask() {
+    let taskid = this.props.match.params.taskid;
+    axios_inst.get(`/tasks?id=${taskid}`).then(res => {
+      let task = res.data[0];
+      this.addTaskToState(task);
+    });
   }
+
+  addTaskToState(exercise) {
+    this.setState({
+      title: exercise.name,
+      task: exercise.task,
+      solved: exercise.solved,
+      taskid: exercise.taskid,
+    })
+  }
+
+  getSubmissions() {
+    let taskid = this.props.match.params.taskid;
+    axios_inst.get("/submissions/" + taskid)
+      .then(response => {
+        let sub = response.data;
+        sub.reverse();
+        if (sub.length !== 0) {
+          this.setState({
+            submissions: sub
+          })
+        }
+      });
+  }
+
+  onChangeHandler = event => {
+    this.setState({
+      fileName: event.target.files[0].name,
+      selectedFile: event.target.files[0]
+    })
+  };
+
+  onClickHandler = event => {
+    let reader = new FileReader();
+    reader.readAsText(this.state.selectedFile);
+    reader.onload = () => {
+      axios_inst.post('/submit/' + this.state.taskid,
+        reader.result,
+        {
+          headers: {
+            'Content-Type': 'text/plain',
+          }
+        }
+      ).then(() => {
+        this.setState({
+          fileName: "Keine Datei ausgewählt",
+          selectedFile: null
+        })
+        this.getSubmissions();
+      }).catch(error => {
+        console.log(error);
+      });
+    }
+    reader.onerror = function (evt) {
+      // document.getElementById("fileContents").innerHTML = "error reading file";
+      // alert machen
+    }
+  };
 
   render() {
     return (
@@ -48,14 +99,41 @@ class ExercisePage extends Component {
         <div className="tile is-child box" >
           <h1 className="title ml-3 mt-3">{this.state.title}</h1>
           <p className="m-3" dangerouslySetInnerHTML={{ __html: marked(this.state.task) }} />
+          <div className="field is-grouped">
+            <div className="control">
+              <div className="file has-name ml-3 is-focused is-link is-light">
+                <label className="file-label">
+                  <input className="file-input ml-3" type="file" accept=".c" name="cfile" onChange={this.onChangeHandler} />
+                  <span className="file-cta">
+                    <span className="file-icon">
+                      <i className="fas fa-upload"></i>
+                    </span>
+                    <span className="file-label">
+                      Datei auswählen
+                      </span>
+                  </span>
+                  <span className="file-name">
+                    {this.state.fileName}
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div className="control">
+              <button className="button is-primary ml-6" disabled={this.state.selectedFile===null} type="button" onClick={this.onClickHandler}>Lösung
+                                hochladen </button>
+            </div>
+          </div>
         </div>
+        {this.state.submissions.map((submission, index) => (
+          <Submission
+            key={index}
+            id={index}
+            submission={submission}
+          />
+        ))}
       </div>
     )
   }
-}
-
-ExercisePage.propTypes = {
-  categories: PropTypes.array.isRequired,
 }
 
 export default withRouter(ExercisePage);
