@@ -3,6 +3,9 @@ import marked from 'marked'
 import axios_inst from '../../js/backend'
 import Submission from './Submission'
 import { withRouter } from "react-router";
+import { Collapse } from 'react-collapse';
+import { mdiChevronDown, mdiChevronUp } from '@mdi/js';
+import { Icon } from '@mdi/react';
 
 class ExercisePage extends Component {
   state = {
@@ -12,7 +15,8 @@ class ExercisePage extends Component {
     taskid: -1,
     submissions: [],
     fileName: "Keine Datei ausgewählt",
-    selectedFile: null
+    selectedFile: null,
+    submissionsOpen: false
   }
 
   componentDidMount() {
@@ -88,14 +92,13 @@ class ExercisePage extends Component {
       });
     }
     reader.onerror = function (evt) {
-      // document.getElementById("fileContents").innerHTML = "error reading file";
       // alert machen
     }
   };
 
   render() {
     return (
-      <div className="tile is-parent is-10 is-vertical">
+      <div className="tile is-parent is-vertical">
         <div className="tile is-child box" >
           <h1 className="title ml-3 mt-3">{this.state.title}</h1>
           <p className="m-3" dangerouslySetInnerHTML={{ __html: marked(this.state.task) }} />
@@ -105,9 +108,6 @@ class ExercisePage extends Component {
                 <label className="file-label">
                   <input className="file-input ml-3" type="file" accept=".c" name="cfile" onChange={this.onChangeHandler} />
                   <span className="file-cta">
-                    <span className="file-icon">
-                      <i className="fas fa-upload"></i>
-                    </span>
                     <span className="file-label">
                       Datei auswählen
                       </span>
@@ -119,18 +119,34 @@ class ExercisePage extends Component {
               </div>
             </div>
             <div className="control">
-              <button className="button is-primary ml-6" disabled={this.state.selectedFile===null} type="button" onClick={this.onClickHandler}>Lösung
+              <button className="button is-primary ml-6" disabled={this.state.selectedFile === null} type="button" onClick={this.onClickHandler}>Lösung
                                 hochladen </button>
             </div>
           </div>
         </div>
-        {this.state.submissions.map((submission, index) => (
-          <Submission
-            key={index}
-            id={index}
-            submission={submission}
-          />
-        ))}
+        <div className="card">
+          <header className="card-header">
+            <p className="card-header-title">Versuche {this.props.id}</p>
+            <a className="card-header-icon" onClick={() => { this.setState({ submissionsOpen: !this.state.submissionsOpen }) }} >
+              <span className="icon">
+              <Icon path={this.state.submissionsOpen?mdiChevronUp:mdiChevronDown} />
+              </span>
+            </a>
+          </header>
+          <Collapse transition={`height ${this.state.duration} cubic-bezier(.4, 0, .2, 1)`}
+            isOpened={this.state.submissionsOpen} className="Collapse">
+            <div className="card-content">
+              {this.state.submissions.map((submission, index) => (
+                <Submission
+                  key={index}
+                  id={index}
+                  submission={submission}
+                />
+              ))}
+            </div>
+          </Collapse>
+        </div>
+
       </div>
     )
   }
