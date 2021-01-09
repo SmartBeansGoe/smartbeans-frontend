@@ -4,42 +4,51 @@ import logo from '../../images/SmartBeans_logo_bw.svg'
 import { Link } from 'react-router-dom';
 
 export default class NavBar extends Component {
+  state = {
+    isActiv: false,
+    classActiv: "navbar-menu is-active",
+    classInActiv: "navbar-menu"
+  }
 
   render() {
     return (
       <div>
-      <nav className="navbar is-dark" role="navigation" aria-label="main navigation">
-        <div className="navbar-brand">
-          <Link className="navbar-item" to="/">
-            <img src={logo} width="60" height="60" alt="" />
-          </Link>
-          <div className="navbar-start">
-            <Link className="navbar-item is-hoverable" to="/exercises">
-              Exercises
+        <nav className="navbar is-dark" role="navigation" aria-label="main navigation">
+          <div className="navbar-brand">
+            <Link className="navbar-item" to="/">
+              <img src={logo} width="60" height="60" alt="" />
             </Link>
-            <Link className="navbar-item is-hoverable" to="/leaderboard">
-              Leaderboard
-            </Link>
-            <Link className="navbar-item is-hoverable" to="/statistics">
-              Statistic
-            </Link>
-            <Link className="navbar-item is-hoverable" to="/character">
-              Character
-            </Link>
+            <a role="button" onClick={() => { this.setState({ isActiv: !this.state.isActiv }) }} class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" id="burger">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
           </div>
-        </div>
-  
-        <div className="navbar-menu">  
-          <div className="navbar-end">
-            <article className="navbar-item">
-              <p id="userbox">
-                Eingeloggt als: {this.props.username}
-              </p>
-            </article>
+          <div className={this.state.isActiv ? this.state.classActiv : this.state.classInActiv} >
+            <div className="navbar-start">
+              <Link className="navbar-item is-hoverable" to="/exercises">
+                Exercises
+                </Link>
+              <Link className="navbar-item is-hoverable" to="/leaderboard">
+                Leaderboard
+                </Link>
+              <Link className="navbar-item is-hoverable" to="/statistics">
+                Statistic
+                </Link>
+              <Link className="navbar-item is-hoverable" to="/character">
+                Character
+                </Link>
+            </div>
+            <div className="navbar-end">
+              <article className="navbar-item">
+                <p id="userbox">
+                  Eingeloggt als: {this.props.username}
+                </p>
+              </article>
+            </div>
           </div>
-        </div>
         </nav>
-      </div>
+      </div >
     )
   }
 }
