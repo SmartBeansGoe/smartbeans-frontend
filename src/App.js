@@ -8,6 +8,8 @@ import Bean from './components/character/Bean'
 import ExercisePage from './components/exercises/ExercisePage';
 import CharacterBuildingPage from './components/character/CharacterBuildingPage';
 
+import "./App.css"
+
 import { SHIRTS, PANTS, HATS, FACES } from './js/constants'
 
 export default class App extends Component {
@@ -248,7 +250,7 @@ export default class App extends Component {
                     )}
                   />
                 </React.Fragment>
-                <div className="tile is-vertical is-hidden-mobile is-2 is-parent">
+                <div className="tile is-vertical is-hidden-touch is-2 is-parent">
                   <div className="tile is-child box">
                     <p className="title has-text-centered has-background-success-light">
                       {this.state.user.nickname}
