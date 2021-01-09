@@ -62,12 +62,10 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    let loginCheck = this.checkLogin();
-    if (loginCheck) {
-      this.loadUser();
-      this.loadCharacter();
-      this.loadExercises();
-    }
+    this.checkLogin();
+    this.loadUser();
+    this.loadCharacter();
+    this.loadExercises();
   }
 
   componentDidUpdate() {
@@ -78,7 +76,6 @@ export default class App extends Component {
   checkLogin() {
     axios_inst.get("/username")
       .then(response => {
-        return true;
       })
       .catch(error => {
         var error_message;
@@ -90,7 +87,7 @@ export default class App extends Component {
         }
 
         document.getElementById("body").innerHTML = "<div class=\"notification is-danger is-light has-text-centered\">" + error_message + "</div>";
-        return false;
+
       });
   }
 
@@ -239,7 +236,7 @@ export default class App extends Component {
                   <Route
                     exact
                     path="/exercises/:taskid"
-                    component={() => <ExercisePage categories={this.state.exercises.categories} />}
+                    component={ExercisePage}
                   />
                   <Route
                     exact
@@ -251,7 +248,7 @@ export default class App extends Component {
                     )}
                   />
                 </React.Fragment>
-                <div className="tile is-vertical is-2 is-parent">
+                <div className="tile is-vertical is-hidden-mobile is-2 is-parent">
                   <div className="tile is-child box">
                     <p className="title has-text-centered has-background-success-light">
                       {this.state.user.nickname}
