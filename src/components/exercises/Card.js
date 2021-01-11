@@ -33,20 +33,18 @@ export default class Card extends Component {
     render() {
         const { children } = this.props;
         return (
-            <div>
-                <div className="card" ref={this.cardRef}>
-                    <header className={`card-header ${this.state.isActive}`} onClick={this.toggle}>
-                        <p className="card-header-title">{this.props.title}</p>
-                        <div className="card-header-icon"  >
-                            <span className="icon">
-                                <Icon path={this.state.isOpen ? mdiChevronUp : mdiChevronDown} />
-                            </span>
-                        </div>
-                    </header>
-                    <div className="toCollapse" ref={this.submissionRef} style={{ maxHeight: `${this.state.isOpen ? this.props.componentHeight : 0}px` }}>
-                        <div className="card-content"  >
-                            {children()}
-                        </div>
+            <div className="card" ref={this.cardRef}>
+                <header className={`card-header ${this.state.isActive}`} onClick={this.toggle}>
+                    <p className="card-header-title">{this.props.title}</p>
+                    <div className="card-header-icon"  >
+                        <span className="icon">
+                            <Icon path={this.state.isOpen ? mdiChevronUp : mdiChevronDown} />
+                        </span>
+                    </div>
+                </header>
+                <div className="toCollapse" ref={this.submissionRef} style={{ maxHeight: `${this.state.isOpen ? this.props.componentHeight : 0}px` }}>
+                    <div className="card-content"  >
+                        {children()}
                     </div>
                 </div>
             </div>
