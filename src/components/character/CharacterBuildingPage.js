@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Scroll from 'react-scroll';
 import Bean from './Bean'
 import PropTypes from 'prop-types'
 import { mdiTshirtCrew, mdiHatFedora } from '@mdi/js';
@@ -72,7 +73,7 @@ export default class CharacterBuildingPage extends Component {
       <div className="tile is-child box is-4">
         <Bean 
           width="auto"
-          height={window.innerHeight * 0.8}
+          height="auto"
           body_color={this.state.body_color}
           face_id={this.props.face_id}
           pants_id={this.state.pants_id}
@@ -126,7 +127,14 @@ export default class CharacterBuildingPage extends Component {
           </ul>
         </div>
         <div>
-          <div className="table">
+          <div className="table" role="listbox">
+            <Scroll.Element className="element" style={{
+              position: 'relative',
+              height: document.documentElement.clientHeight *0.7,
+              overflow: 'scroll',
+              marginBottom: '100px'
+            }}>
+
             <ul className="row">
             {this.props.clothes[this.state.category].map(asset => {
               var asset_id_type = (this.state.category === SHIRTS ? this.state.shirt_id :
@@ -140,6 +148,7 @@ export default class CharacterBuildingPage extends Component {
               );
             })}
             </ul>
+            </Scroll.Element>
           </div>
         </div>
       </div>
