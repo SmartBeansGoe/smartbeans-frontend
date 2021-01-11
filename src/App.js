@@ -250,19 +250,21 @@ export default class App extends Component {
                     )}
                   />
                 </React.Fragment>
-                <div className="tile is-vertical is-hidden-touch is-2 is-parent">
-                  <div className="tile is-child box">
-                    <p className="title has-text-centered has-background-success-light">
-                      {this.state.user.nickname}
-                    </p>
-                    <Bean
-                      width="auto"
-                      height="auto"
-                      body_color={this.state.character.body_color}
-                      face_id={this.state.character.face_id}
-                      pants_id={this.state.character.pants_id}
-                      hat_id={this.state.character.hat_id}
-                      shirt_id={this.state.character.shirt_id} />
+                <div className="tile is-vertical is-hidden-touch is-2 is-parent" style={{ marginLeft: 0, paddingLeft: 0 }} >
+                  <div className="tile is-child box" style={{ flex: 0 }} >
+                    <div className="container">
+                      <p className="title has-text-centered has-background-success-light">
+                        {this.state.user.nickname}
+                      </p>
+                      <Bean
+                        width="auto"
+                        height="auto"
+                        body_color={this.state.character.body_color}
+                        face_id={this.state.character.face_id}
+                        pants_id={this.state.character.pants_id}
+                        hat_id={this.state.character.hat_id}
+                        shirt_id={this.state.character.shirt_id} />
+                    </div>
                   </div>
                 </div>
               </React.Fragment>
