@@ -7,30 +7,34 @@ export default class Card extends Component {
     constructor(props) {
         super(props);
         this.submissionRef = React.createRef();
+        this.cardRef = React.createRef();
     }
+
     state = {
         isOpen: false,
         isActive: "",
-        contentHeight: "0px",
+        contentHeight: 0,
+    }
+
+    componentDidMount() {
+        this.props.handler(0, this.cardRef.current.scrollHeight);
     }
 
     toggle = () => {
+
         this.setState({
             isOpen: !this.state.isOpen,
             isActive: !this.state.isOpen ? "active" : "",
-            contentHeight: !this.state.isOpen ? `${this.submissionRef.current.scrollHeight}px` : "0px"
+            contentHeight: !this.state.isOpen ? this.submissionRef.current.scrollHeight : 0
         })
-    }
-    getHeight = () =>{
-        console.log(this.state.isOpen)
-        return this.state.isOpen ? `${this.submissionRef.current.scrollHeight}px` : "0px";
+        this.props.handler(this.state.contentHeight, !this.state.isOpen ? this.submissionRef.current.scrollHeight : 0)
     }
 
     render() {
         const { children } = this.props;
         return (
             <div>
-                <div className="card">
+                <div className="card" ref={this.cardRef}>
                     <header className={`card-header ${this.state.isActive}`} onClick={this.toggle}>
                         <p className="card-header-title">{this.props.title}</p>
                         <div className="card-header-icon"  >
@@ -39,7 +43,7 @@ export default class Card extends Component {
                             </span>
                         </div>
                     </header>
-                    <div className="toCollapse" ref={this.submissionRef} style={{ maxHeight: `${this.getHeight()}` }}>
+                    <div className="toCollapse" ref={this.submissionRef} style={{ maxHeight: `${this.state.isOpen ? this.props.componentHeight : 0}px` }}>
                         <div className="card-content"  >
                             {children()}
                         </div>

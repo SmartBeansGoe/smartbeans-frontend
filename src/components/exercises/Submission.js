@@ -3,10 +3,21 @@ import PropTypes from 'prop-types';
 import Card from './Card';
 
 export default class Submission extends Component {
+    state = {
+        componentHeight: 0,
+    }
+
+    handler = (previousHeight, currentHeight) => {
+        this.setState({
+            componentHeight: currentHeight
+        });
+        this.props.handler(previousHeight, currentHeight);
+    }
+
     render() {
         return (
-            <div>
-                <Card title={`Versuch ${this.props.id}`} >
+            <React.Fragment>
+                <Card title={`Versuch ${this.props.id}`} componentHeight={this.state.componentHeight} handler={this.handler}>
                     {() => (
                         <React.Fragment>
                             <h1 className="title is-6">Quelltext</h1>
@@ -19,7 +30,7 @@ export default class Submission extends Component {
                         </React.Fragment>)
                     }
                 </Card>
-            </div>
+            </React.Fragment>
         )
     }
 }
