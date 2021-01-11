@@ -18,7 +18,7 @@ export default class NavBar extends Component {
             <Link className="navbar-item" to="/">
               <img src={logo} width="60" height="60" alt="" />
             </Link>
-            <a role="button" onClick={() => { this.setState({ isActiv: !this.state.isActiv }) }} class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" id="burger">
+            <a role="button" onClick={() => { this.setState({ isActiv: !this.state.isActiv }) }} className="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" id="burger">
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
