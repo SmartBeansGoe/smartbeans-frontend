@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import marked from 'marked'
 import axios_inst from '../../js/backend'
-import Submission from './Submission'
+import SubmissionOverview from './SubmissionOverview'
 import { withRouter } from "react-router";
-import { Collapse } from 'react-collapse';
-import { mdiChevronDown, mdiChevronUp } from '@mdi/js';
+import { mdiUpload } from '@mdi/js';
 import { Icon } from '@mdi/react';
 
 class ExercisePage extends Component {
@@ -12,11 +11,9 @@ class ExercisePage extends Component {
     title: "",
     task: "",
     solved: "",
-    taskid: -1,
     submissions: [],
     fileName: "Keine Datei ausgewählt",
     selectedFile: null,
-    submissionsOpen: false
   }
 
   componentDidMount() {
@@ -108,6 +105,9 @@ class ExercisePage extends Component {
                 <label className="file-label">
                   <input className="file-input ml-3" type="file" accept=".c" name="cfile" onChange={this.onChangeHandler} />
                   <span className="file-cta">
+                    <span className="file-icon">
+                      <Icon path={mdiUpload} />
+                    </span>
                     <span className="file-label">
                       Datei auswählen
                       </span>
@@ -124,29 +124,7 @@ class ExercisePage extends Component {
             </div>
           </div>
         </div>
-        <div className="card">
-          <header className="card-header">
-            <p className="card-header-title">Versuche {this.props.id}</p>
-            <a className="card-header-icon" onClick={() => { this.setState({ submissionsOpen: !this.state.submissionsOpen }) }} >
-              <span className="icon">
-              <Icon path={this.state.submissionsOpen?mdiChevronUp:mdiChevronDown} />
-              </span>
-            </a>
-          </header>
-          <Collapse transition={`height ${this.state.duration} cubic-bezier(.4, 0, .2, 1)`}
-            isOpened={this.state.submissionsOpen} className="Collapse">
-            <div className="card-content">
-              {this.state.submissions.map((submission, index) => (
-                <Submission
-                  key={index}
-                  id={index}
-                  submission={submission}
-                />
-              ))}
-            </div>
-          </Collapse>
-        </div>
-
+        {this.state.submissions.length !== 0 && <SubmissionOverview submissions={this.state.submissions} />}
       </div>
     )
   }
