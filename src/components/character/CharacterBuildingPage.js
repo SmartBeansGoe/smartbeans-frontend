@@ -28,13 +28,6 @@ export default class CharacterBuildingPage extends Component {
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
-    axios_inst.get("/character").then(response =>
-      this.setState({
-        body_color: response.data.body_color,
-        pants_id: response.data.pants_id,
-        shirt_id: response.data.shirt_id,
-        hat_id: response.data.hat_id,
-      }));
   }
 
 

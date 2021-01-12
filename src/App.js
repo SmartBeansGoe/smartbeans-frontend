@@ -104,7 +104,7 @@ export default class App extends Component {
     .then(response => {
       var data = response.data;
       this.setCharacter(
-        data.body_color  === null ? "#E7C27A" : data.body_color,
+        data.body_color === null ? "#E7C27A" : data.body_color,
         data.shirt_id === null ? "" : data.shirt_id,
         this.state.character.face_id,
         data.pants_id === null ? "" : data.pants_id,
