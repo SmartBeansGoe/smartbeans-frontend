@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Scroll from 'react-scroll';
 import Bean from './Bean'
 import PropTypes from 'prop-types'
 import { mdiTshirtCrew, mdiHatFedora } from '@mdi/js';
@@ -15,6 +14,7 @@ export default class CharacterBuildingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      height: window.innerHeight, // The height is needed for the scroll panel of the assets.
       body_color: this.props.body_color,
       shirt_id: this.props.shirt_id,
       pants_id: this.props.pants_id,
@@ -27,6 +27,7 @@ export default class CharacterBuildingPage extends Component {
 
   componentDidMount() {
     this.updateWindowDimensions();
+    // The height must be updated if the window size changes, therefore the Event Listener.
     window.addEventListener('resize', this.updateWindowDimensions);
 
     // This axios call is needed if the character page is reloaded.
@@ -49,7 +50,7 @@ export default class CharacterBuildingPage extends Component {
   }
   
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    this.setState({ height: window.innerHeight });
   }
 
   setBodyColor(color) {
@@ -134,14 +135,11 @@ export default class CharacterBuildingPage extends Component {
         </div>
         <div>
           <div className="table" role="listbox">
-            <Scroll.Element className="element" style={{
+            <ul className="row" style={{
               position: 'relative',
-              height: document.documentElement.clientHeight *0.7,
+              height: this.state.height - 250,
               overflow: 'scroll',
-              marginBottom: '100px'
             }}>
-
-            <ul className="row">
             {this.props.clothes[this.state.category].map(asset => {
               var asset_id_type = (this.state.category === SHIRTS ? this.state.shirt_id :
                                   (this.state.category === PANTS ? this.state.pants_id : this.state.hat_id));
@@ -154,7 +152,6 @@ export default class CharacterBuildingPage extends Component {
               );
             })}
             </ul>
-            </Scroll.Element>
           </div>
         </div>
       </div>
