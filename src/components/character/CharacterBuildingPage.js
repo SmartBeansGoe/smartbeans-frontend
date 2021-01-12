@@ -28,6 +28,10 @@ export default class CharacterBuildingPage extends Component {
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
+
+    // This axios call is needed if the character page is reloaded.
+    // Because then the App component is not mounted and the state is not initialized.
+    // Therefore the character information has to be reloaded from the backend.
     axios_inst.get("/character")
     .then(response => {
       var data = response.data;
