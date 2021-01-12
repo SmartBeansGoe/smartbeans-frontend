@@ -16,8 +16,8 @@ export default class CharacterBuildingPage extends Component {
     super(props);
     this.state = {
       body_color: this.props.body_color,
-      pants_id: this.props.pants_id,
       shirt_id: this.props.shirt_id,
+      pants_id: this.props.pants_id,
       hat_id: this.props.hat_id,
       category: SHIRTS,
     }
@@ -28,6 +28,15 @@ export default class CharacterBuildingPage extends Component {
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
+    axios_inst.get("/character")
+    .then(response => {
+      var data = response.data;
+      this.setState({
+        body_color: data.body_color === null ? this.props.body_color : data.body_color,
+        shirt_id: data.shirt_id === null ? this.props.shirt_id : data.shirt_id,
+        pants_id: data.pants_id === null ? this.props.pants_id : data.pants_id,
+        hat_id: data.hat_id  === null ? this.props.pants_id : data.hat_id});
+    });
   }
 
 
