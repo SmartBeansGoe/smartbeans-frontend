@@ -59,6 +59,13 @@ export default class CharacterBuildingPage extends Component {
     })
   }
 
+  isBodyChanged() {
+    return this.props.body_color !== this.state.body_color ||
+           this.props.shirt_id !== this.state.shirt_id ||
+           this.props.pants_id !== this.state.pants_id ||
+           this.props.hat_id !== this.state.hat_id;
+  }
+
   setAsset(asset_id) {
     switch (this.state.category) {
       case SHIRTS: this.setState({shirt_id: asset_id}); break;
@@ -95,14 +102,21 @@ export default class CharacterBuildingPage extends Component {
             <input className="button" type="color" id="body" name="body" value={this.state.body_color} onChange={(event) => this.setBodyColor(event.target.value)}/>
           </span>
           <span>
+            {this.isBodyChanged() ? 
             <button className="button is-success" onClick={() => 
               this.props.onSaveCharacterProperties(
                 this.state.body_color,
                 this.state.shirt_id,
                 this.state.pants_id,
                 this.state.hat_id)
-            
-          }>Save Configurations</button>
+            }>Save Configurations</button> :
+            <button className="button is-success" disabled onClick={() => 
+              this.props.onSaveCharacterProperties(
+                this.state.body_color,
+                this.state.shirt_id,
+                this.state.pants_id,
+                this.state.hat_id)
+            }>Save Configurations</button>}
           </span>
         </div>
         <div className="tabs">
