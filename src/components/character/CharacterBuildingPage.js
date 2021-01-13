@@ -96,21 +96,6 @@ export default class CharacterBuildingPage extends Component {
           />
       </div>
       <div className="tile is-child box is-vertical">
-        <div>
-          <span>
-            <label className="label" htmlFor="body">BodyColor</label>
-            <input className="button" type="color" id="body" name="body" value={this.state.body_color} onChange={(event) => this.setBodyColor(event.target.value)}/>
-          </span>
-          <span>
-            <button className="button is-success" disabled={!this.isBodyChanged()} onClick={() => 
-              this.props.onSaveCharacterProperties(
-                this.state.body_color,
-                this.state.shirt_id,
-                this.state.pants_id,
-                this.state.hat_id)
-            }>Save Configurations</button>
-          </span>
-        </div>
         <div className="tabs">
           <ul>
             <li id={"tab-" + HATS}>
@@ -140,24 +125,40 @@ export default class CharacterBuildingPage extends Component {
           </ul>
         </div>
         <div>
-          <div className="table" role="listbox">
-            <div className="flex-container" style={{
-              height: this.state.height-250
-            }}>
-            {this.props.clothes[this.state.category].map(asset => {
-              var asset_id_type = (this.state.category === SHIRTS ? this.state.shirt_id :
-                                  (this.state.category === PANTS ? this.state.pants_id : this.state.hat_id));
-              return (
-                <div key={asset} onClick={() => this.setAsset(asset)}>
-                  <div className={"box" + (asset_id_type === asset ?" my-active" : "")} style={{
-                    cursor: "pointer",
-                  }}>
-                  <svg viewBox="0 0 77.707 108.77" height={this.state.height/5} width="auto" dangerouslySetInnerHTML={{__html: assets[this.state.category][asset]} }/>
-                  </div>
+          <div className="flex-container scroll" style={{
+            height: this.state.height-250
+          }}>
+          {this.props.clothes[this.state.category].map(asset => {
+            var asset_id_type = (this.state.category === SHIRTS ? this.state.shirt_id :
+                                (this.state.category === PANTS ? this.state.pants_id : this.state.hat_id));
+            return (
+              <div key={asset} onClick={() => this.setAsset(asset)}>
+                <div className={"box" + (asset_id_type === asset ?" my-active" : "")} style={{
+                  cursor: "pointer",
+                }}>
+                <svg viewBox="0 0 77.707 108.77" height={this.state.height/5} width="auto" dangerouslySetInnerHTML={{__html: assets[this.state.category][asset]} }/>
                 </div>
-              );
-            })}
-            </div>
+              </div>
+            );
+          })}
+          </div>
+        </div>
+        <div className="tile is-parent">
+          <div className="tile is-child flex-container">
+            <input className="button" type="color" id="body" name="body" value={this.state.body_color} onChange={(event) => this.setBodyColor(event.target.value)}/>
+          </div>
+          <div className="tile is-child flex-container" style={{
+            justifyContent: "flex-end",
+          }}>
+            <span className="flex-container">
+              <button className="button is-success" disabled={!this.isBodyChanged()} onClick={() => 
+                this.props.onSaveCharacterProperties(
+                  this.state.body_color,
+                  this.state.shirt_id,
+                  this.state.pants_id,
+                  this.state.hat_id)
+              }>Save Configurations</button>
+            </span>
           </div>
         </div>
       </div>

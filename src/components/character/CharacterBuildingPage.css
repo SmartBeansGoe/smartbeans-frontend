@@ -5,6 +5,9 @@
 .flex-container {
   display: flex;
   flex-wrap: wrap;
+}
+
+.scroll {
   overflow: scroll;
   position: relative;
 }
