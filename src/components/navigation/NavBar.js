@@ -15,16 +15,16 @@ export default class NavBar extends Component {
           </Link>
           <div className="navbar-start">
             <Link className="navbar-item is-hoverable" to="/exercises">
-              Exercises
+              Aufgaben
             </Link>
             <Link className="navbar-item is-hoverable" to="/leaderboard">
-              Leaderboard
+              Hall of Fame
             </Link>
-            <Link className="navbar-item is-hoverable" to="/statistics">
-              Statistic
+            <Link className="navbar-item is-hoverable" to={"/users/" + this.props.username}>
+              Profil
             </Link>
             <Link className="navbar-item is-hoverable" to="/character">
-              Character
+              Charakter
             </Link>
           </div>
         </div>
