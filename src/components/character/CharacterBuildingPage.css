@@ -1,21 +1,10 @@
-* {
-  box-sizing: border-box;
+.my-active {
+  background-color: #7cff70;
 }
-.table .row {
+
+.flex-container {
   display: flex;
   flex-wrap: wrap;
-  list-style:none;
-}
-
-.table .row li {
-  width: 25%;
-  text-align: center;
-}
-
-.table .row li :hover{
-  cursor: pointer;
-}
-
-.my-active {
-  background-color: #88FF77;
+  overflow: scroll;
+  position: relative;
 }
