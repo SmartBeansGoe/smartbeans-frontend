@@ -20,7 +20,7 @@ export default class NavBar extends Component {
             <Link className="navbar-item is-hoverable" to="/leaderboard">
               Hall of Fame
             </Link>
-            <Link className="navbar-item is-hoverable" to={"/users/" + this.props.username}>
+            <Link className="navbar-item is-hoverable" to="/">
               Profil
             </Link>
             <Link className="navbar-item is-hoverable" to="/character">

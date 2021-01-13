@@ -9,6 +9,7 @@ import ExercisePage from './components/exercises/ExercisePage';
 import CharacterBuildingPage from './components/character/CharacterBuildingPage';
 
 import { SHIRTS, PANTS, HATS, FACES } from './js/constants'
+import ProfilePage from './components/profile/ProfilePage';
 
 export default class App extends Component {
 
@@ -231,6 +232,11 @@ export default class App extends Component {
             />
             <React.Fragment>
             <React.Fragment>
+                <Route 
+                  exact
+                  path="/"
+                  component={ProfilePage}
+                />
                 <Route 
                   exact
                   path="/leaderboard"
