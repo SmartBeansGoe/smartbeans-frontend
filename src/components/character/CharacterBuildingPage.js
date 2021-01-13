@@ -141,23 +141,23 @@ export default class CharacterBuildingPage extends Component {
         </div>
         <div>
           <div className="table" role="listbox">
-            <ul className="row" style={{
-              position: 'relative',
-              height: this.state.height - 250,
-              overflow: 'scroll',
+            <div className="flex-container" style={{
+              height: this.state.height-250
             }}>
             {this.props.clothes[this.state.category].map(asset => {
               var asset_id_type = (this.state.category === SHIRTS ? this.state.shirt_id :
                                   (this.state.category === PANTS ? this.state.pants_id : this.state.hat_id));
               return (
-                <li key={asset} onClick={() => this.setAsset(asset)}>
-                  <div className={"box" + (asset_id_type === asset ?" my-active" : "")}>
-                  <svg viewBox="0 0 77.707 108.77" height="auto" width="auto" dangerouslySetInnerHTML={{__html: assets[this.state.category][asset]} }/>
+                <div key={asset} onClick={() => this.setAsset(asset)}>
+                  <div className={"box" + (asset_id_type === asset ?" my-active" : "")} style={{
+                    cursor: "pointer",
+                  }}>
+                  <svg viewBox="0 0 77.707 108.77" height={this.state.height/5} width="auto" dangerouslySetInnerHTML={{__html: assets[this.state.category][asset]} }/>
                   </div>
-                </li>
+                </div>
               );
             })}
-            </ul>
+            </div>
           </div>
         </div>
       </div>
