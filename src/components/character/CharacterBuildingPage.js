@@ -75,8 +75,8 @@ export default class CharacterBuildingPage extends Component {
   }
 
   tab(cloth) {
-    ["tab_" + HATS, "tab_" + SHIRTS, "tab_" + PANTS].forEach(tab => document.getElementById(tab).classList.remove("is-active"));
-    document.getElementById("tab_" + cloth).classList.add("is-active");
+    ["tab-" + HATS, "tab-" + SHIRTS, "tab-" + PANTS].forEach(tab => document.getElementById(tab).classList.remove("is-active"));
+    document.getElementById("tab-" + cloth).classList.add("is-active");
     this.setState({category: cloth});
   }
 
@@ -113,7 +113,7 @@ export default class CharacterBuildingPage extends Component {
         </div>
         <div className="tabs">
           <ul>
-            <li id={"tab_" + HATS}>
+            <li id={"tab-" + HATS}>
               <a onClick={() => this.tab(HATS)}>
                 <span className="icon is-small">
                 <Icon path={mdiHatFedora} />
@@ -121,7 +121,7 @@ export default class CharacterBuildingPage extends Component {
                 <span>Hats</span>
               </a>
             </li>
-            <li id={"tab_" + SHIRTS} className="is-active">
+            <li id={"tab-" + SHIRTS} className="is-active">
               <a onClick={() => this.tab(SHIRTS)}>
                 <span className="icon is-small">
                 <Icon path={mdiTshirtCrew} />
@@ -129,7 +129,7 @@ export default class CharacterBuildingPage extends Component {
                 <span>Shirts</span>
               </a>
             </li>
-            <li id={"tab_" + PANTS}>
+            <li id={"tab-" + PANTS}>
               <a onClick={() => this.tab(PANTS)}>
                 <span className="icon is-small">
                   <img src={pants} alt=""/>
