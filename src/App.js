@@ -15,10 +15,8 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {
-        username: "",
-        nickname: "Thomas",
-      },
+      username: "",
+      charname: "",
       exercises: {
         categories: [
           {
@@ -65,12 +63,13 @@ export default class App extends Component {
     this.checkLogin();
     this.loadUser();
     this.loadCharacter();
+    //this.loadCharname();
     this.loadExercises();
   }
 
   componentDidUpdate() {
-    // console.log("App did update.")
-    // this.checkLogin();
+    //console.log("App did update.")
+    //this.checkLogin();
   }
 
   checkLogin() {
@@ -92,11 +91,17 @@ export default class App extends Component {
   loadUser() {
     axios_inst.get("/username").then(response => 
       this.setState({
-        user: {
-          username: response.data.username,
-          nickname: this.state.user.nickname, // TODO: backend
-        }
+        username: response.data.username,
     }));
+  }
+
+  loadCharname() {
+    axios_inst.get("/charname").then(response => {
+      console.log(response);
+      this.setState({
+        charname: response.data.charname,
+      });
+    });
   }
 
   loadCharacter() {
@@ -206,7 +211,7 @@ export default class App extends Component {
     return (
       <Router>
         <div className="App">
-          <NavBar username={ this.state.user.username }/>
+          <NavBar username={ this.state.username }/>
           <div id="body" className="tile is-ancestor">
             <Switch>
             <Route
@@ -249,7 +254,7 @@ export default class App extends Component {
             <div className="tile is-vertical is-2 is-parent">
               <div className="tile is-child box">
                 <p className="title has-text-centered has-background-success-light">
-                  { this.state.user.nickname }
+                  { this.state.charname }
                 </p>
                 <Bean 
                   width="auto"
