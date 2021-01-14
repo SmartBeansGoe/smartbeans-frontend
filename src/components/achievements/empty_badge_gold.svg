@@ -1,0 +1,11 @@
+<svg width="107.94mm" height="92.052mm" version="1.1" viewBox="0 0 107.94 92.052" xmlns="http://www.w3.org/2000/svg">
+ <g transform="translate(3.9857 -3.9741)">
+  <path d="m1.0143 70.674 5.7934 5.8395-5.7934 5.8395h23.463v-11.679z" fill="#c01c28" style="paint-order:stroke fill markers"/>
+  <path d="m9.7177 79.45 17.67 3.4745v-3.4745z" fill="#a51d2d"/>
+  <path d="m98.957 70.464-5.7934 5.8395 5.7934 5.8395h-23.463v-11.679z" fill="#c01c28" style="paint-order:stroke fill markers"/>
+  <path d="m90.282 79.45-17.67 3.4745v-3.4745z" fill="#a51d2d"/>
+  <circle cx="50" cy="50" r="41.026" fill="#f6d32d" style="paint-order:stroke fill markers"/>
+  <circle cx="50" cy="50" r="36.112" fill="#f8e45c" style="paint-order:stroke fill markers"/>
+  <rect x="9.7177" y="67.772" width="80.565" height="11.679" ry="0" fill="#e01b24" style="paint-order:stroke fill markers"/>
+ </g>
+</svg>
