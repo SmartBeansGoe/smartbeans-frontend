@@ -10,18 +10,15 @@ export default class SubmissionOverview extends Component {
     }
 
     handler = (previousHeight, currentHeight) => {
-        console.log("pre: ", previousHeight, "\tcur: ", currentHeight);
-        console.log("height before: ", this.state.componentsHeight);
         this.setState({
             componentsHeight: this.state.componentsHeight - previousHeight + currentHeight,
-        })
-        console.log("height after: ", this.state.componentsHeight);
+        });
     }
 
     render() {
         return (
             <div className="is-child tile">
-                <Card title="Versuche" componentHeight={this.state.componentsHeight} handler={this.handler}>
+                <Card title="Versuche" hasSymbol={false} componentHeight={this.state.componentsHeight} handler={this.handler}>
                     {() => (this.props.submissions.map((result, index) => (
                         <Submission
                             key={index}

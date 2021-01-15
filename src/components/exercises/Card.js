@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { mdiChevronDown, mdiChevronUp } from '@mdi/js';
+import { mdiChevronDown, mdiChevronUp, mdiCheckBold, mdiCancel } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import "./Card.css";
 
@@ -35,6 +35,10 @@ export default class Card extends Component {
         return (
             <div className="card" ref={this.cardRef}>
                 <header className={`card-header ${this.state.isActive}`} onClick={this.toggle}>
+                    {this.props.hasSymbol &&
+                        <span className={`icon ml-2 has-text-${this.props.isSuccess ? "success" : "danger"}`}>
+                            <Icon path={this.props.isSuccess ? mdiCheckBold : mdiCancel} />
+                        </span>}
                     <p className="card-header-title">{this.props.title}</p>
                     <div className="card-header-icon"  >
                         <span className="icon">
