@@ -214,7 +214,7 @@ export default class App extends Component {
     const id = setInterval(() => {
       axios_inst.get("/system_messages").then(res => {
         if (res.data.length !== 0) {
-          res.data.map((message, index) => {
+          res.data.forEach((message, index) => {
             this.context({
               type: "ADD_NOTIFICATION",
               payload: {
