@@ -1,10 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 export default class ProfilePage extends Component {
   render() {
-    return (
-      <div className="tile is-parent is-vertical box is-10">
-      </div>
-    )
+    return <div className="tile is-parent is-vertical box is-10"></div>;
   }
 }
+
+ProfilePage.propTypes = {
+  charname: PropTypes.string.isRequired,
+};
