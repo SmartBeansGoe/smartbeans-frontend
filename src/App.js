@@ -7,12 +7,14 @@ import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage'
 import Bean from './components/character/Bean'
 import ExercisePage from './components/exercises/ExercisePage';
 import CharacterBuildingPage from './components/character/CharacterBuildingPage';
+import { NotificationContext } from './components/notification/NotificationProvider';
 
-import "./App.css"
+import "./App.css";
 
-import { SHIRTS, PANTS, HATS, FACES } from './js/constants'
+import { SHIRTS, PANTS, HATS, FACES } from './js/constants';
 
 export default class App extends Component {
+  static contextType = NotificationContext
 
   constructor(props) {
     super(props);
@@ -57,7 +59,8 @@ export default class App extends Component {
           "bikini_shirt"],
         pants: ["egirl_skirt_rose", "egirl_skirt_blue", "Business_Bean_m_pants", "Business_Bean_m_pants_2", "french_pants_light_blue", "french_pants", "granny_smith_skirt", "bikini_pants", "Summer_feelings_m_pants", "pants001", "gardener_pants", "surferbohne_pants", "ballerina_legs"],
         hats: ["egirl_kitten_band", "french_hat", "beanybuffer_hat", "granny_smith_hair", "summer_feelings_w_hat"],
-      }
+      },
+      intervalID: null
     };
     this.onAssetChange = this.onAssetChange.bind(this);
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
@@ -68,6 +71,7 @@ export default class App extends Component {
     this.loadUser();
     this.loadCharacter();
     this.loadExercises();
+    this.getNotifications();
   }
 
   componentDidUpdate() {
@@ -206,6 +210,32 @@ export default class App extends Component {
     });
   }
 
+  getNotifications() {
+    const id = setInterval(() => {
+      axios_inst.get("/system_messages").then(res => {
+        if (res.data.length !== 0) {
+          res.data.map((message, index) => {
+            this.context({
+              type: "ADD_NOTIFICATION",
+              payload: {
+                id: message.id,
+                message: message.type === "achievement_unlocked" ? message.content.description : message.content,
+                title: message.type === "achievement_unlocked" ? message.content.name : "Du hast einen neue Nachricht!"
+              }
+            });
+          })
+        }
+      })
+    }, 6000)
+    this.setState({
+      intervalID: id
+    });
+  }
+
+  stopNotifications = () => {
+    clearInterval(this.state.intervalID);
+  }
+
   render() {
     return (
       <Router>
@@ -265,6 +295,7 @@ export default class App extends Component {
                         hat_id={this.state.character.hat_id}
                         shirt_id={this.state.character.shirt_id} />
                     </div>
+                    <button onClick={this.stopNotifications}>Stop this madness</button>
                   </div>
                 </div>
               </React.Fragment>

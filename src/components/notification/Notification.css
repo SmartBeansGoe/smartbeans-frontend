@@ -1,0 +1,48 @@
+.notification-wrapper {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  width: 25%;
+  min-width: 300px;
+  z-index: 999;
+}
+
+.notification-item {
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  border-radius: 8px;
+  animation: SlideLeft 0.4s;
+  animation-fill-mode: forwards;
+  min-width: 300px;
+  
+}
+
+@keyframes SlideLeft {
+  0% {
+    margin-left: 120%;
+  }
+  100% {
+    margin-left: 0;
+  }
+}
+
+@keyframes SlideRight {
+  0% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: 120%;
+  }
+}
+
+.notification-item.exit {
+  animation: SlideRight 0.4s;
+  animation-fill-mode: forwards;
+}
+
+.notification-item.progress {
+  padding-left: 0px;
+  padding-bottom: 0px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+}
