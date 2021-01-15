@@ -14,6 +14,8 @@ class ExercisePage extends Component {
     submissions: [],
     fileName: "Keine Datei ausgewählt",
     selectedFile: null,
+    isLoading: false,
+    isDisabled: true,
   }
 
   componentDidMount() {
@@ -63,11 +65,16 @@ class ExercisePage extends Component {
   onChangeHandler = event => {
     this.setState({
       fileName: event.target.files[0].name,
-      selectedFile: event.target.files[0]
+      selectedFile: event.target.files[0],
+      isDisabled: false
     })
   };
 
   onClickHandler = event => {
+    this.setState({
+      isLoading: true,
+      isDisabled: true,
+    })
     let reader = new FileReader();
     reader.readAsText(this.state.selectedFile);
     reader.onload = () => {
@@ -79,11 +86,12 @@ class ExercisePage extends Component {
           }
         }
       ).then(() => {
+        this.getSubmissions();
         this.setState({
           fileName: "Keine Datei ausgewählt",
-          selectedFile: null
+          selectedFile: null,
+          isLoading: false
         })
-        this.getSubmissions();
       }).catch(error => {
         console.log(error);
       });
@@ -119,7 +127,7 @@ class ExercisePage extends Component {
               </div>
             </div>
             <div className="control">
-              <button className="button is-primary ml-6" disabled={this.state.selectedFile === null} type="button" onClick={this.onClickHandler}>Lösung
+              <button className={`button is-primary ml-6 ${this.state.isLoading ? "is-loading" : ""}`} disabled={this.state.isDisabled} type="button" onClick={this.onClickHandler}>Lösung
                                 hochladen </button>
             </div>
           </div>
