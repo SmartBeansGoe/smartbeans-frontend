@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios_inst from '../../js/backend'
 import ExerciseCategoryOverview from './ExerciseCategoryOverview'
 
 export default class ExerciseOverviewPage extends Component {
