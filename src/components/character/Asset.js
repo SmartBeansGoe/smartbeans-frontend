@@ -36,7 +36,7 @@ export default class Asset extends Component {
   render() {
     return (
       <React.Fragment>
-        <g id={this.asset}></g>
+        <g id={this.category}></g>
       </React.Fragment>
     )
   }
