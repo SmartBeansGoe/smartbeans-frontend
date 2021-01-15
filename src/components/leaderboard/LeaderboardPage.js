@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Leaderboard from './Leaderboard'
-import axios_inst from '../../js/backend'
 
 export default class LeaderboardPage extends Component {
   state = {
