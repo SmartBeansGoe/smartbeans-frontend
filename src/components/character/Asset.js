@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import assets from './sources/assets.json'
 
 export default class Asset extends Component {
-  constructor(asset) {
+  constructor(category) {
     super();
-    this.asset = asset;
+    this.category = category;
   }
 
   componentDidMount() {
@@ -17,8 +17,8 @@ export default class Asset extends Component {
   }
 
   setAsset() {
-    var svg = document.getElementById(this.asset);
-    var as = assets[this.asset];
+    var svg = document.getElementById(this.category);
+    var as = assets[this.category];
     if (svg !== null && this.props.id !== "") {
       if (as !== undefined) {
         if (as[this.props.id] !== undefined)
