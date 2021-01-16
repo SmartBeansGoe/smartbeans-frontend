@@ -34,26 +34,11 @@ export default class App extends Component {
         pants_id: "",
         hat_id: "",
       },
-      clothes: {
-        shirts: ["sweater_w_blue",
-                 "sweater_w_green",
-                 "sweater_w_mustard",
-                 "bicycle_shirt",
-                 "french_shirt_red",
-                 "french_shirt",
-                 "granny_smith_shirt",
-                 "beanybuffer_dress",
-                 "gardener_shirts",
-                 "summer_feelings_w_dress",
-                 "Business_Bean_m_shirt",
-                 "Business_Bean_m_shirt_2",
-                 "Summer_feelings_m_shirt",
-                 "shirt001",
-                 "ballerina_dress",
-                 "surferbohne_shirt",
-                 "bikini_shirt"],
-        pants: ["egirl_skirt_rose", "egirl_skirt_blue", "Business_Bean_m_pants", "Business_Bean_m_pants_2", "french_pants_light_blue", "french_pants", "granny_smith_skirt", "bikini_pants", "Summer_feelings_m_pants", "pants001", "gardener_pants", "surferbohne_pants", "ballerina_legs"],
-        hats: ["egirl_kitten_band", "french_hat", "beanybuffer_hat", "granny_smith_hair", "summer_feelings_w_hat"],
+      assets: {
+        shirts: [],
+        pants: [],
+        faces: [],
+        hats: [],
       }
     };
     this.onAssetChange = this.onAssetChange.bind(this);
@@ -64,7 +49,8 @@ export default class App extends Component {
     this.checkLogin();
     this.loadUser();
     this.loadCharacter();
-    //this.loadCharname();
+    this.loadAssets();
+    this.loadCharname();
     this.loadExercises();
   }
 
@@ -98,7 +84,6 @@ export default class App extends Component {
 
   loadCharname() {
     axios_inst.get("/charname").then(response => {
-      console.log(response);
       this.setState({
         charname: response.data.charname,
       });
@@ -155,6 +140,15 @@ export default class App extends Component {
       case FACES: this.setCharacterFace(asset_id); break;
       default: Error("Could not find asset category"); break;
     }
+  }
+
+  loadAssets() {
+    axios_inst.get("/assets").then(response => {
+      this.setState({
+        'assets': response.data
+      });
+      console.log(this.state);
+    });
   }
 
   loadExercises() {
@@ -225,7 +219,7 @@ export default class App extends Component {
                   pants_id={this.state.character.pants_id}
                   shirt_id={this.state.character.shirt_id}
                   hat_id={this.state.character.hat_id}
-                  clothes={this.state.clothes}
+                  assets={this.state.assets}
                   onSaveCharacterProperties={this.onSaveCharacterProperties}
                 />
               }
