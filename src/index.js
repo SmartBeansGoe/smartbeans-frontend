@@ -6,7 +6,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import NotificationProvider from './components/notification/NotificationProvider';
 
-
 ReactDOM.render(
   <React.StrictMode>
     <NotificationProvider>

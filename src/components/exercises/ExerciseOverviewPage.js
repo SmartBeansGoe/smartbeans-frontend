@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import ExerciseCategoryOverview from './ExerciseCategoryOverview'
+import React, { Component } from 'react';
+import ExerciseCategoryOverview from './ExerciseCategoryOverview';
 
 export default class ExerciseOverviewPage extends Component {
   render() {
@@ -15,6 +15,6 @@ export default class ExerciseOverviewPage extends Component {
           />
         ))}
       </React.Fragment>
-    )
+    );
   }
 }

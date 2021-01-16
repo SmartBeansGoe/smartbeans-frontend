@@ -1,63 +1,48 @@
-import React, { Component } from 'react'
-import axios_inst from './js/backend'
-import NavBar from './components/navigation/NavBar'
+import React, { Component } from 'react';
+import axios_inst from './js/backend';
+import NavBar from './components/navigation/NavBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import LeaderboardPage from './components/leaderboard/LeaderboardPage'
-import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage'
-import Bean from './components/character/Bean'
+import LeaderboardPage from './components/leaderboard/LeaderboardPage';
+import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage';
+import Bean from './components/character/Bean';
 import ExercisePage from './components/exercises/ExercisePage';
 import CharacterBuildingPage from './components/character/CharacterBuildingPage';
 import { NotificationContext } from './components/notification/NotificationProvider';
 
-import "./App.css";
+import './App.css';
 
-import { SHIRTS, PANTS, HATS, FACES } from './js/constants'
+import { SHIRTS, PANTS, HATS, FACES } from './js/constants';
 import ProfilePage from './components/profile/ProfilePage';
 
 export default class App extends Component {
-  static contextType = NotificationContext
+  static contextType = NotificationContext;
 
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      charname: "",
+      username: '',
+      charname: '',
       exercises: {
         categories: [
           {
-            title: "",
-            subtitle: "",
+            title: '',
+            subtitle: '',
             exerciseList: [],
-          }
-        ]
+          },
+        ],
       },
       character: {
-        body_color: "#E7C27A",
-        shirt_id: "",
-        face_id: "face001",
-        pants_id: "",
-        hat_id: "",
+        body_color: '#E7C27A',
+        shirt_id: '',
+        face_id: 'face001',
+        pants_id: '',
+        hat_id: '',
       },
-      clothes: {
-        shirts: ["sweater_w_blue",
-          "sweater_w_green",
-          "sweater_w_mustard",
-          "bicycle_shirt",
-          "french_shirt_red",
-          "french_shirt",
-          "granny_smith_shirt",
-          "beanybuffer_dress",
-          "gardener_shirts",
-          "summer_feelings_w_dress",
-          "Business_Bean_m_shirt",
-          "Business_Bean_m_shirt_2",
-          "Summer_feelings_m_shirt",
-          "shirt001",
-          "ballerina_dress",
-          "surferbohne_shirt",
-          "bikini_shirt"],
-        pants: ["egirl_skirt_rose", "egirl_skirt_blue", "Business_Bean_m_pants", "Business_Bean_m_pants_2", "french_pants_light_blue", "french_pants", "granny_smith_skirt", "bikini_pants", "Summer_feelings_m_pants", "pants001", "gardener_pants", "surferbohne_pants", "ballerina_legs"],
-        hats: ["egirl_kitten_band", "french_hat", "beanybuffer_hat", "granny_smith_hair", "summer_feelings_w_hat"],
+      assets: {
+        shirts: [],
+        pants: [],
+        faces: [],
+        hats: [],
       },
       intervalID: null,
       // Dirty Fix counter for Message ID
@@ -71,7 +56,8 @@ export default class App extends Component {
     this.checkLogin();
     this.loadUser();
     this.loadCharacter();
-    //this.loadCharname();
+    this.loadAssets();
+    this.loadCharname();
     this.loadExercises();
     this.getNotifications();
   }
@@ -82,33 +68,34 @@ export default class App extends Component {
   }
 
   checkLogin() {
-    axios_inst.get("/username")
-      .then(response => {
-      })
-      .catch(error => {
+    axios_inst
+      .get('/username')
+      .then((response) => {})
+      .catch((error) => {
         var error_message;
         if (error.response === undefined) {
-          error_message = "Keine Antwort vom Server erhalten.";
-        }
-        else {
-          error_message = "Du bist nicht eingeloggt.";
+          error_message = 'Keine Antwort vom Server erhalten.';
+        } else {
+          error_message = 'Du bist nicht eingeloggt.';
         }
 
-        document.getElementById("body").innerHTML = "<div class=\"notification is-danger is-light has-text-centered\">" + error_message + "</div>";
-
+        document.getElementById('body').innerHTML =
+          '<div class="notification is-danger is-light has-text-centered">' +
+          error_message +
+          '</div>';
       });
   }
 
   loadUser() {
-    axios_inst.get("/username").then(response =>
+    axios_inst.get('/username').then((response) =>
       this.setState({
         username: response.data.username,
-      }));
+      })
+    );
   }
 
   loadCharname() {
-    axios_inst.get("/charname").then(response => {
-      console.log(response);
+    axios_inst.get('/charname').then((response) => {
       this.setState({
         charname: response.data.charname,
       });
@@ -116,16 +103,16 @@ export default class App extends Component {
   }
 
   loadCharacter() {
-    axios_inst.get("/character")
-      .then(response => {
-        var data = response.data;
-        this.setCharacter(
-          data.body_color === null ? "#E7C27A" : data.body_color,
-          data.shirt_id === null ? "" : data.shirt_id,
-          this.state.character.face_id,
-          data.pants_id === null ? "" : data.pants_id,
-          data.hat_id === null ? "" : data.hat_id);
-      });
+    axios_inst.get('/character').then((response) => {
+      var data = response.data;
+      this.setCharacter(
+        data.body_color === null ? '#E7C27A' : data.body_color,
+        data.shirt_id === null ? '' : data.shirt_id,
+        this.state.character.face_id,
+        data.pants_id === null ? '' : data.pants_id,
+        data.hat_id === null ? '' : data.hat_id
+      );
+    });
   }
 
   setCharacter = (body_color, shirt_id, face_id, pants_id, hat_id) => {
@@ -135,96 +122,122 @@ export default class App extends Component {
         shirt_id: shirt_id,
         face_id: face_id,
         pants_id: pants_id,
-        hat_id: hat_id
+        hat_id: hat_id,
       },
     });
-  }
+  };
 
   onSaveCharacterProperties = (body_color, shirt_id, pants_id, hat_id) => {
-    axios_inst.post('/character', {
-      body_color: body_color,
-      shirt_id: shirt_id,
-      face_id: this.state.character.face_id,
-      pants_id: pants_id,
-      hat_id: hat_id,
-    })
-      .then(response => {
+    axios_inst
+      .post('/character', {
+        body_color: body_color,
+        shirt_id: shirt_id,
+        face_id: this.state.character.face_id,
+        pants_id: pants_id,
+        hat_id: hat_id,
+      })
+      .then((response) => {
         console.log(response);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-    this.setCharacter(body_color, shirt_id, this.state.character.face_id, pants_id, hat_id);
-  }
+    this.setCharacter(
+      body_color,
+      shirt_id,
+      this.state.character.face_id,
+      pants_id,
+      hat_id
+    );
+  };
 
   onAssetChange = (asset_category, asset_id) => {
     switch (asset_category) {
-      case SHIRTS: this.setCharacterShirt(asset_id); break;
-      case PANTS: this.setCharacterPants(asset_id); break;
-      case HATS: this.setCharacterHat(asset_id); break;
-      case FACES: this.setCharacterFace(asset_id); break;
-      default: Error("Could not find asset category"); break;
+      case SHIRTS:
+        this.setCharacterShirt(asset_id);
+        break;
+      case PANTS:
+        this.setCharacterPants(asset_id);
+        break;
+      case HATS:
+        this.setCharacterHat(asset_id);
+        break;
+      case FACES:
+        this.setCharacterFace(asset_id);
+        break;
+      default:
+        Error('Could not find asset category');
+        break;
     }
+  };
+
+  loadAssets() {
+    axios_inst.get('/assets').then((response) => {
+      this.setState({
+        assets: response.data,
+      });
+      console.log(this.state);
+    });
   }
 
   loadExercises() {
-    axios_inst.get("/tasks").then(res => {
+    axios_inst.get('/tasks').then((res) => {
       var bronze = res.data.filter(function (el) {
-        return el.shortname[0] === "X";
+        return el.shortname[0] === 'X';
       });
       var silver = res.data.filter(function (el) {
-        return el.shortname[0] === "E";
+        return el.shortname[0] === 'E';
       });
       var gold = res.data.filter(function (el) {
-        return el.shortname[0] === "S";
+        return el.shortname[0] === 'S';
       });
       var platin = res.data.filter(function (el) {
-        return el.shortname[0] === "Z";
+        return el.shortname[0] === 'Z';
       });
       var diamond = res.data.filter(function (el) {
-        return el.shortname[0] === "K";
+        return el.shortname[0] === 'K';
       });
       this.setState({
         exercises: {
           categories: [
             {
-              title: "Bronze",
-              subtitle: "Basis Aufgaben",
+              title: 'Bronze',
+              subtitle: 'Basis Aufgaben',
               exerciseList: bronze,
             },
             {
-              title: "Silver",
-              subtitle: "Einsteiger Aufgaben",
+              title: 'Silver',
+              subtitle: 'Einsteiger Aufgaben',
               exerciseList: silver,
             },
             {
-              title: "Gold",
-              subtitle: "Fortgeschrittenen Aufgaben",
+              title: 'Gold',
+              subtitle: 'Fortgeschrittenen Aufgaben',
               exerciseList: gold,
             },
             {
-              title: "Platin",
-              subtitle: "Klausurniveau Aufgaben",
+              title: 'Platin',
+              subtitle: 'Klausurniveau Aufgaben',
               exerciseList: platin,
             },
             {
-              title: "Diamond",
-              subtitle: "Overkill Aufgaben",
+              title: 'Diamond',
+              subtitle: 'Overkill Aufgaben',
               exerciseList: diamond,
             },
-          ]
-        }
-      })
+          ],
+        },
+      });
     });
   }
 
   getNotifications() {
     const id = setInterval(() => {
-      axios_inst.get("/system_messages").then(res => {
+      axios_inst.get('/system_messages').then((res) => {
         if (res.data.length !== 0) {
           res.data.forEach((message, index) => {
             this.context({
-              type: "ADD_NOTIFICATION",
+              type: 'ADD_NOTIFICATION',
               payload: {
                 id: this.state.counter,
                 message: message.type === "achievement_unlocked" ? message.content.description : message.content,
@@ -240,13 +253,13 @@ export default class App extends Component {
       })
     }, 6000)
     this.setState({
-      intervalID: id
+      intervalID: id,
     });
   }
 
   stopNotifications = () => {
     clearInterval(this.state.intervalID);
-  }
+  };
 
   render() {
     return (
@@ -258,25 +271,21 @@ export default class App extends Component {
               <Route
                 exact
                 path="/character"
-                render={() =>
+                render={() => (
                   <CharacterBuildingPage
                     body_color={this.state.character.body_color}
                     face_id={this.state.character.face_id}
                     pants_id={this.state.character.pants_id}
                     shirt_id={this.state.character.shirt_id}
                     hat_id={this.state.character.hat_id}
-                    clothes={this.state.clothes}
+                    assets={this.state.assets}
                     onSaveCharacterProperties={this.onSaveCharacterProperties}
                   />
-                }
+                )}
               />
               <React.Fragment>
                 <React.Fragment>
-                  <Route
-                    exact
-                    path="/"
-                    component={ProfilePage}
-                  />
+                  <Route exact path="/" component={ProfilePage} />
                   <Route
                     exact
                     path="/leaderboard"
@@ -285,19 +294,28 @@ export default class App extends Component {
                   <Route
                     exact
                     path="/exercises/:taskid"
-                    component={() => <ExercisePage categories={this.state.exercises.categories} />}
+                    component={() => (
+                      <ExercisePage
+                        categories={this.state.exercises.categories}
+                      />
+                    )}
                   />
                   <Route
                     exact
                     path="/exercises"
                     render={() => (
                       <div className="tile is-parent is-vertical">
-                        <ExerciseOverviewPage categories={this.state.exercises.categories} />
+                        <ExerciseOverviewPage
+                          categories={this.state.exercises.categories}
+                        />
                       </div>
                     )}
                   />
                 </React.Fragment>
-                <div className="tile is-vertical is-2 is-hidden-touch is-parent" style={{ marginLeft: 0, paddingLeft: 0 }}>
+                <div
+                  className="tile is-vertical is-2 is-hidden-touch is-parent"
+                  style={{ marginLeft: 0, paddingLeft: 0 }}
+                >
                   <div className="tile is-child box" style={{ flex: 0 }}>
                     <p className="title has-text-centered has-background-success-light">
                       {this.state.charname}
@@ -309,15 +327,18 @@ export default class App extends Component {
                       face_id={this.state.character.face_id}
                       pants_id={this.state.character.pants_id}
                       hat_id={this.state.character.hat_id}
-                      shirt_id={this.state.character.shirt_id} />
+                      shirt_id={this.state.character.shirt_id}
+                    />
                   </div>
-                  <button onClick={this.stopNotifications}>Stop Notifications</button>
+                  <button onClick={this.stopNotifications}>
+                    Stop Notifications
+                  </button>
                 </div>
               </React.Fragment>
             </Switch>
           </div>
         </div>
       </Router>
-    )
+    );
   }
 }

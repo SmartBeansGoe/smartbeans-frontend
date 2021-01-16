@@ -7,22 +7,23 @@ const Notification = (props) => {
     setExit(true);
     setTimeout(() => {
       props.dispatch({
-        type: "REMOVE_NOTIFICATION",
+        type: 'REMOVE_NOTIFICATION',
         id: props.id,
-      })
-    }, 400)
+      });
+    }, 400);
   };
 
   return (
     <article className={`message notification-item is-success ${exit ? "exit" : ""}`}>
       <div className="message-header">
         <p>{props.title}</p>
-        <button className="delete" onClick={handleCloseNotification} aria-label="delete"></button>
-      </div>
-      <div className="message-body">
-        {props.message}
+        <button
+          className="delete"
+          onClick={handleCloseNotification}
+          aria-label="delete"
+        ></button>
       </div>
     </article>
-  )
-}
-export default Notification
+  );
+};
+export default Notification;

@@ -14,7 +14,6 @@
   animation: SlideLeft 0.4s;
   animation-fill-mode: forwards;
   min-width: 300px;
-  
 }
 
 @keyframes SlideLeft {

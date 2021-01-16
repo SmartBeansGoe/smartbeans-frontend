@@ -1,8 +1,8 @@
-import Asset from './Asset'
-import { FACES } from '../../js/constants.js'
+import Asset from './Asset';
+import { FACES } from '../../js/constants.js';
 
 export default class Face extends Asset {
   constructor(props) {
-    super(FACES, props.id)
+    super(FACES, props.id);
   }
 }

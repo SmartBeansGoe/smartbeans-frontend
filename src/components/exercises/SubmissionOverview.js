@@ -3,37 +3,43 @@ import PropTypes from 'prop-types';
 import Card from './Card';
 import Submission from './Submission';
 
-
 export default class SubmissionOverview extends Component {
   state = {
-    componentsHeight: 0
-  }
+    componentsHeight: 0,
+  };
 
   handler = (previousHeight, currentHeight) => {
     this.setState({
-      componentsHeight: this.state.componentsHeight - previousHeight + currentHeight,
+      componentsHeight:
+        this.state.componentsHeight - previousHeight + currentHeight,
     });
-  }
+  };
 
   render() {
     return (
       <div className="is-child tile">
-        <Card title="Versuche" hasSymbol={false} componentHeight={this.state.componentsHeight} handler={this.handler}>
-          {() => (this.props.submissions.map((result, index) => (
-            <Submission
-              key={result.timestamp}
-              id={this.props.submissions.length - index}
-              result={result}
-              handler={this.handler}
-            />
-          ))
-          )}
+        <Card
+          title="Versuche"
+          hasSymbol={false}
+          componentHeight={this.state.componentsHeight}
+          handler={this.handler}
+        >
+          {() =>
+            this.props.submissions.map((result, index) => (
+              <Submission
+                key={result.timestamp}
+                id={this.props.submissions.length - index}
+                result={result}
+                handler={this.handler}
+              />
+            ))
+          }
         </Card>
-      </div >
-    )
+      </div>
+    );
   }
 }
 
 SubmissionOverview.propTypes = {
   submissions: PropTypes.array.isRequired,
-}
+};

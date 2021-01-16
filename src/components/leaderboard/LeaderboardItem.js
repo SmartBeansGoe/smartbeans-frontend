@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class LeaderboardItem extends Component {
   render() {
@@ -11,7 +11,7 @@ export default class LeaderboardItem extends Component {
           <td>{this.props.points}</td>
         </tr>
       </React.Fragment>
-    )
+    );
   }
 }
 
@@ -19,4 +19,4 @@ LeaderboardItem.propTypes = {
   rank: PropTypes.number.isRequired,
   bean: PropTypes.string.isRequired,
   points: PropTypes.number.isRequired,
-}
+};
