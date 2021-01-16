@@ -38,7 +38,7 @@ export default class App extends Component {
         pants_id: "",
         hat_id: "",
       },
-      clothes: {
+      assets: {
         shirts: [],
         pants: [],
         faces: [],
@@ -253,7 +253,7 @@ export default class App extends Component {
                   pants_id={this.state.character.pants_id}
                   shirt_id={this.state.character.shirt_id}
                   hat_id={this.state.character.hat_id}
-                  clothes={this.state.clothes}
+                  assets={this.state.assets}
                   onSaveCharacterProperties={this.onSaveCharacterProperties}
                 />
               }
