@@ -128,15 +128,15 @@ export default class CharacterBuildingPage extends Component {
           <div className="flex-container scroll" style={{
             height: this.state.height-250
           }}>
-          {this.props.clothes[this.state.category].map(asset => {
+          {this.props.assets[this.state.category].map(asset => {
             var asset_id_type = (this.state.category === SHIRTS ? this.state.shirt_id :
                                 (this.state.category === PANTS ? this.state.pants_id : this.state.hat_id));
             return (
-              <div key={asset} onClick={() => this.setAsset(asset)}>
-                <div className={"box" + (asset_id_type === asset ?" my-active" : "")} style={{
+              <div key={asset.asset_id} onClick={() => this.setAsset(asset.asset_id)}>
+                <div className={"box" + (asset_id_type === asset.asset_id ?" my-active" : "")} style={{
                   cursor: "pointer",
                 }}>
-                <svg viewBox="0 0 77.707 108.77" height={this.state.height/5} width="auto" dangerouslySetInnerHTML={{__html: assets[this.state.category][asset]} }/>
+                <svg viewBox="0 0 77.707 108.77" height={this.state.height/5} width="auto" dangerouslySetInnerHTML={{__html: assets[this.state.category][asset.asset_id]} }/>
                 </div>
               </div>
             );
@@ -171,7 +171,7 @@ export default class CharacterBuildingPage extends Component {
 
 CharacterBuildingPage.propTypes = {
   body_color: PropTypes.string.isRequired,
-  clothes: PropTypes.object.isRequired,
+  assets: PropTypes.object.isRequired,
   onSaveCharacterProperties: PropTypes.func.isRequired,
   face_id: PropTypes.string.isRequired,
   pants_id: PropTypes.string.isRequired,
