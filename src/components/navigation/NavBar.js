@@ -26,16 +26,16 @@ export default class NavBar extends Component {
           </div>
           <div className={this.state.isActiv ? this.state.classActiv : this.state.classInActiv} >
             <div className="navbar-start">
-              <Link className="navbar-item is-hoverable" to="/exercises">
+              <Link className="navbar-item is-hoverable" to="/exercises" onClick={() => { this.setState({ isActiv: false }) }}>
                 Exercises
                 </Link>
-              <Link className="navbar-item is-hoverable" to="/leaderboard">
+              <Link className="navbar-item is-hoverable" to="/leaderboard" onClick={() => { this.setState({ isActiv: false }) }}>
                 Leaderboard
                 </Link>
-              <Link className="navbar-item is-hoverable" to="/statistics">
+              <Link className="navbar-item is-hoverable" to="/statistics" onClick={() => { this.setState({ isActiv: false }) }}>
                 Statistic
                 </Link>
-              <Link className="navbar-item is-hoverable" to="/character">
+              <Link className="navbar-item is-hoverable" to="/character" onClick={() => { this.setState({ isActiv: false }) }}>
                 Character
                 </Link>
             </div>
