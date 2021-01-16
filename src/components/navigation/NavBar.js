@@ -46,18 +46,42 @@ export default class NavBar extends Component {
             }
           >
             <div className="navbar-start">
-              <Link className="navbar-item is-hoverable" to="/exercises" onClick={() => { this.setState({ isActiv: false }) }}>
+              <Link
+                className="navbar-item is-hoverable"
+                to="/exercises"
+                onClick={() => {
+                  this.setState({ isActiv: false });
+                }}
+              >
                 Exercises
-                </Link>
-              <Link className="navbar-item is-hoverable" to="/leaderboard" onClick={() => { this.setState({ isActiv: false }) }}>
+              </Link>
+              <Link
+                className="navbar-item is-hoverable"
+                to="/leaderboard"
+                onClick={() => {
+                  this.setState({ isActiv: false });
+                }}
+              >
                 Leaderboard
-                </Link>
-              <Link className="navbar-item is-hoverable" to="/statistics" onClick={() => { this.setState({ isActiv: false }) }}>
+              </Link>
+              <Link
+                className="navbar-item is-hoverable"
+                to="/statistics"
+                onClick={() => {
+                  this.setState({ isActiv: false });
+                }}
+              >
                 Statistic
-                </Link>
-              <Link className="navbar-item is-hoverable" to="/character" onClick={() => { this.setState({ isActiv: false }) }}>
+              </Link>
+              <Link
+                className="navbar-item is-hoverable"
+                to="/character"
+                onClick={() => {
+                  this.setState({ isActiv: false });
+                }}
+              >
                 Character
-                </Link>
+              </Link>
             </div>
             <div className="navbar-end">
               <article className="navbar-item">

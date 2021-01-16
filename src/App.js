@@ -46,7 +46,7 @@ export default class App extends Component {
       },
       intervalID: null,
       // Dirty Fix counter for Message ID
-      counter: 0
+      counter: 0,
     };
     this.onAssetChange = this.onAssetChange.bind(this);
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
@@ -70,7 +70,7 @@ export default class App extends Component {
   checkLogin() {
     axios_inst
       .get('/username')
-      .then((response) => { })
+      .then((response) => {})
       .catch((error) => {
         var error_message;
         if (error.response === undefined) {
@@ -240,15 +240,20 @@ export default class App extends Component {
               type: 'ADD_NOTIFICATION',
               payload: {
                 id: message.timestamp + index,
-                message: message.type === "achievement_unlocked" ? message.content.description : message.content,
-                title: message.type === "achievement_unlocked" ? message.content.name : "Du hast einen neue Nachricht!"
-              }
+                message:
+                  message.type === 'achievement_unlocked'
+                    ? message.content.description
+                    : message.content,
+                title:
+                  message.type === 'achievement_unlocked'
+                    ? message.content.name
+                    : 'Du hast einen neue Nachricht!',
+              },
             });
-          })
+          });
         }
-
-      })
-    }, 6000)
+      });
+    }, 6000);
     this.setState({
       intervalID: id,
     });

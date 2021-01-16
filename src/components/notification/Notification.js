@@ -14,7 +14,9 @@ const Notification = (props) => {
   };
 
   return (
-    <article className={`message notification-item is-success ${exit ? "exit" : ""}`}>
+    <article
+      className={`message notification-item is-success ${exit ? 'exit' : ''}`}
+    >
       <div className="message-header">
         <p>{props.title}</p>
         <button
