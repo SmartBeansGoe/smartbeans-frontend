@@ -7,11 +7,15 @@ import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage'
 import Bean from './components/character/Bean'
 import ExercisePage from './components/exercises/ExercisePage';
 import CharacterBuildingPage from './components/character/CharacterBuildingPage';
+import { NotificationContext } from './components/notification/NotificationProvider';
+
+import "./App.css";
 
 import { SHIRTS, PANTS, HATS, FACES } from './js/constants'
 import ProfilePage from './components/profile/ProfilePage';
 
 export default class App extends Component {
+  static contextType = NotificationContext
 
   constructor(props) {
     super(props);
@@ -24,7 +28,7 @@ export default class App extends Component {
             title: "",
             subtitle: "",
             exerciseList: [],
-          }      
+          }
         ]
       },
       character: {
@@ -34,12 +38,13 @@ export default class App extends Component {
         pants_id: "",
         hat_id: "",
       },
-      assets: {
+      clothes: {
         shirts: [],
         pants: [],
         faces: [],
         hats: [],
-      }
+      },
+      intervalID: null
     };
     this.onAssetChange = this.onAssetChange.bind(this);
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
@@ -52,6 +57,7 @@ export default class App extends Component {
     this.loadAssets();
     this.loadCharname();
     this.loadExercises();
+    this.getNotifications();
   }
 
   componentDidUpdate() {
@@ -61,25 +67,27 @@ export default class App extends Component {
 
   checkLogin() {
     axios_inst.get("/username")
-    .then(response => {})
-    .catch(error => {
-      var error_message;
-      if(error.response === undefined) {
-        error_message = "Keine Antwort vom Server erhalten.";
-      }
-      else {
-        error_message = "Du bist nicht eingeloggt.";
-      }
-      
-      document.getElementById("body").innerHTML = "<div class=\"notification is-danger is-light has-text-centered\">" + error_message + "</div>";
-    });
+      .then(response => {
+      })
+      .catch(error => {
+        var error_message;
+        if (error.response === undefined) {
+          error_message = "Keine Antwort vom Server erhalten.";
+        }
+        else {
+          error_message = "Du bist nicht eingeloggt.";
+        }
+
+        document.getElementById("body").innerHTML = "<div class=\"notification is-danger is-light has-text-centered\">" + error_message + "</div>";
+
+      });
   }
 
   loadUser() {
-    axios_inst.get("/username").then(response => 
+    axios_inst.get("/username").then(response =>
       this.setState({
         username: response.data.username,
-    }));
+      }));
   }
 
   loadCharname() {
@@ -92,15 +100,15 @@ export default class App extends Component {
 
   loadCharacter() {
     axios_inst.get("/character")
-    .then(response => {
-      var data = response.data;
-      this.setCharacter(
-        data.body_color === null ? "#E7C27A" : data.body_color,
-        data.shirt_id === null ? "" : data.shirt_id,
-        this.state.character.face_id,
-        data.pants_id === null ? "" : data.pants_id,
-        data.hat_id  === null ? "" : data.hat_id);
-    });
+      .then(response => {
+        var data = response.data;
+        this.setCharacter(
+          data.body_color === null ? "#E7C27A" : data.body_color,
+          data.shirt_id === null ? "" : data.shirt_id,
+          this.state.character.face_id,
+          data.pants_id === null ? "" : data.pants_id,
+          data.hat_id === null ? "" : data.hat_id);
+      });
   }
 
   setCharacter = (body_color, shirt_id, face_id, pants_id, hat_id) => {
@@ -123,12 +131,12 @@ export default class App extends Component {
       pants_id: pants_id,
       hat_id: hat_id,
     })
-    .then(response => {
-      console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     this.setCharacter(body_color, shirt_id, this.state.character.face_id, pants_id, hat_id);
   }
 
@@ -196,17 +204,43 @@ export default class App extends Component {
               subtitle: "Overkill Aufgaben",
               exerciseList: diamond,
             },
-          ]  
-        } 
+          ]
+        }
       })
     });
+  }
+
+  getNotifications() {
+    const id = setInterval(() => {
+      axios_inst.get("/system_messages").then(res => {
+        if (res.data.length !== 0) {
+          res.data.forEach((message, index) => {
+            this.context({
+              type: "ADD_NOTIFICATION",
+              payload: {
+                id: message.id,
+                message: message.type === "achievement_unlocked" ? message.content.description : message.content,
+                title: message.type === "achievement_unlocked" ? message.content.name : "Du hast einen neue Nachricht!"
+              }
+            });
+          })
+        }
+      })
+    }, 6000)
+    this.setState({
+      intervalID: id
+    });
+  }
+
+  stopNotifications = () => {
+    clearInterval(this.state.intervalID);
   }
 
   render() {
     return (
       <Router>
         <div className="App">
-          <NavBar username={ this.state.username }/>
+          <NavBar username={this.state.username} />
           <div id="body" className="tile is-ancestor">
             <Switch>
             <Route
@@ -219,7 +253,7 @@ export default class App extends Component {
                   pants_id={this.state.character.pants_id}
                   shirt_id={this.state.character.shirt_id}
                   hat_id={this.state.character.hat_id}
-                  assets={this.state.assets}
+                  clothes={this.state.clothes}
                   onSaveCharacterProperties={this.onSaveCharacterProperties}
                 />
               }
@@ -251,23 +285,24 @@ export default class App extends Component {
                   )}
                 />
             </React.Fragment>
-            <div className="tile is-vertical is-2 is-parent">
-              <div className="tile is-child box">
-                <p className="title has-text-centered has-background-success-light">
-                  { this.state.charname }
-                </p>
-                <Bean 
-                  width="auto"
-                  height="auto"                      
-                  body_color={this.state.character.body_color}
-                  face_id={this.state.character.face_id}
-                  pants_id={this.state.character.pants_id}
-                  hat_id={this.state.character.hat_id}
-                  shirt_id={this.state.character.shirt_id}/>
-              </div>
-            </div>
-            </React.Fragment>
-          </Switch>
+            <div className="tile is-vertical is-2 is-hidden-touch is-parent" style={{ marginLeft: 0, paddingLeft: 0 }}>
+                  <div className="tile is-child box" style={{ flex: 0 }}>
+                    <p className="title has-text-centered has-background-success-light">
+                      {this.state.charname}
+                    </p>
+                    <Bean
+                      width="auto"
+                      height="auto"
+                      body_color={this.state.character.body_color}
+                      face_id={this.state.character.face_id}
+                      pants_id={this.state.character.pants_id}
+                      hat_id={this.state.character.hat_id}
+                      shirt_id={this.state.character.shirt_id} />
+                  </div>
+                  <button onClick={this.stopNotifications}>Stop Notifications</button>
+                </div>
+              </React.Fragment>
+            </Switch>
           </div>
         </div>
       </Router>

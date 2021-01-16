@@ -2,11 +2,11 @@ import axios from 'axios'
 import backend_url from './config'
 
 const auth_cookie = document.cookie
-.split('; ')
-.find(row => row.startsWith('auth_token'));
+  .split('; ')
+  .find(row => row.startsWith('auth_token'));
 
 var auth_token;
-if(auth_cookie !== undefined)
+if (auth_cookie !== undefined)
   auth_token = auth_cookie.split('=')[1];
 else
   auth_token = "not logged in"

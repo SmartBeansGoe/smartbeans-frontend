@@ -11,7 +11,7 @@ export default class Leaderboard extends Component {
           <div className="tile is-child box">
             <p className="title has-text-centered">{this.props.title}</p>
 						<p className="has-text-centered">
-						 <img src={ mockup_badge } width="150" height="150" />
+						 <img src={ mockup_badge } width="150" height="150" alt="Badge" />
 						</p>
 						<p className="has-text-centered has-background-primary-light">{this.props.description}</p>
 						<table className="table is-fullwidth is-hoverable has-text-centered">
