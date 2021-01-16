@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default class Body extends Component {
   render() {
-    var shape_color = "#FF4455";//this.props.color;
+    var shape_color = this.props.color;
     var r = Number("0x" + shape_color.slice(1,3));
     var g = Number("0x" + shape_color.slice(3,5));
     var b = Number("0x" + shape_color.slice(5,7));
