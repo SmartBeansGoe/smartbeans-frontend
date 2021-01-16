@@ -59,7 +59,9 @@ export default class App extends Component {
         pants: ["egirl_skirt_rose", "egirl_skirt_blue", "Business_Bean_m_pants", "Business_Bean_m_pants_2", "french_pants_light_blue", "french_pants", "granny_smith_skirt", "bikini_pants", "Summer_feelings_m_pants", "pants001", "gardener_pants", "surferbohne_pants", "ballerina_legs"],
         hats: ["egirl_kitten_band", "french_hat", "beanybuffer_hat", "granny_smith_hair", "summer_feelings_w_hat"],
       },
-      intervalID: null
+      intervalID: null,
+      // Dirty Fix counter for Message ID
+      counter: 0
     };
     this.onAssetChange = this.onAssetChange.bind(this);
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
@@ -224,13 +226,17 @@ export default class App extends Component {
             this.context({
               type: "ADD_NOTIFICATION",
               payload: {
-                id: message.id,
+                id: this.state.counter,
                 message: message.type === "achievement_unlocked" ? message.content.description : message.content,
                 title: message.type === "achievement_unlocked" ? message.content.name : "Du hast einen neue Nachricht!"
               }
             });
+            this.setState({
+              counter: this.state.counter + 1
+            })
           })
         }
+
       })
     }, 6000)
     this.setState({
