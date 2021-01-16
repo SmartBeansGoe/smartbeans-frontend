@@ -27,17 +27,17 @@ export default class NavBar extends Component {
           <div className={this.state.isActiv ? this.state.classActiv : this.state.classInActiv} >
             <div className="navbar-start">
               <Link className="navbar-item is-hoverable" to="/exercises">
-                Exercises
-                </Link>
+                Aufgaben
+              </Link>
               <Link className="navbar-item is-hoverable" to="/leaderboard">
-                Leaderboard
-                </Link>
-              <Link className="navbar-item is-hoverable" to="/statistics">
-                Statistic
-                </Link>
+                Hall of Fame
+              </Link>
+              <Link className="navbar-item is-hoverable" to="/">
+                Profil
+              </Link>
               <Link className="navbar-item is-hoverable" to="/character">
-                Character
-                </Link>
+                Charakter
+              </Link>
             </div>
             <div className="navbar-end">
               <article className="navbar-item">
