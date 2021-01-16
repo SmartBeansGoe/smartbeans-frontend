@@ -14,9 +14,10 @@ export default class CharacterBuildingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      height: window.innerHeight, // The height is needed for the scroll panel of the assets.
       body_color: this.props.body_color,
-      pants_id: this.props.pants_id,
       shirt_id: this.props.shirt_id,
+      pants_id: this.props.pants_id,
       hat_id: this.props.hat_id,
       category: SHIRTS,
     }
@@ -26,14 +27,21 @@ export default class CharacterBuildingPage extends Component {
 
   componentDidMount() {
     this.updateWindowDimensions();
+    // The height must be updated if the window size changes, therefore the Event Listener.
     window.addEventListener('resize', this.updateWindowDimensions);
-    axios_inst.get("/character").then(response =>
+
+    // This axios call is needed if the character page is reloaded.
+    // Because then the App component is not mounted and the state is not initialized.
+    // Therefore the character information has to be reloaded from the backend.
+    axios_inst.get("/character")
+    .then(response => {
+      var data = response.data;
       this.setState({
-        body_color: response.data.body_color,
-        pants_id: response.data.pants_id,
-        shirt_id: response.data.shirt_id,
-        hat_id: response.data.hat_id,
-      }));
+        body_color: data.body_color === null ? this.props.body_color : data.body_color,
+        shirt_id: data.shirt_id === null ? this.props.shirt_id : data.shirt_id,
+        pants_id: data.pants_id === null ? this.props.pants_id : data.pants_id,
+        hat_id: data.hat_id  === null ? this.props.pants_id : data.hat_id});
+    });
   }
 
 
@@ -42,13 +50,20 @@ export default class CharacterBuildingPage extends Component {
   }
   
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    this.setState({ height: window.innerHeight });
   }
 
   setBodyColor(color) {
     this.setState({
       body_color: color,
     })
+  }
+
+  isBodyChanged() {
+    return this.props.body_color !== this.state.body_color ||
+           this.props.shirt_id !== this.state.shirt_id ||
+           this.props.pants_id !== this.state.pants_id ||
+           this.props.hat_id !== this.state.hat_id;
   }
 
   setAsset(asset_id) {
@@ -60,8 +75,8 @@ export default class CharacterBuildingPage extends Component {
   }
 
   tab(cloth) {
-    ["tab_" + HATS, "tab_" + SHIRTS, "tab_" + PANTS].forEach(tab => document.getElementById(tab).classList.remove("is-active"));
-    document.getElementById("tab_" + cloth).classList.add("is-active");
+    ["tab-" + HATS, "tab-" + SHIRTS, "tab-" + PANTS].forEach(tab => document.getElementById(tab).classList.remove("is-active"));
+    document.getElementById("tab-" + cloth).classList.add("is-active");
     this.setState({category: cloth});
   }
 
@@ -72,7 +87,7 @@ export default class CharacterBuildingPage extends Component {
       <div className="tile is-child box is-4">
         <Bean 
           width="auto"
-          height={window.innerHeight * 0.8}
+          height="auto"
           body_color={this.state.body_color}
           face_id={this.props.face_id}
           pants_id={this.state.pants_id}
@@ -87,19 +102,18 @@ export default class CharacterBuildingPage extends Component {
             <input className="button" type="color" id="body" name="body" value={this.state.body_color} onChange={(event) => this.setBodyColor(event.target.value)}/>
           </span>
           <span>
-            <button className="button is-success" onClick={() => 
+            <button className="button is-success" disabled={!this.isBodyChanged()} onClick={() => 
               this.props.onSaveCharacterProperties(
                 this.state.body_color,
                 this.state.shirt_id,
                 this.state.pants_id,
                 this.state.hat_id)
-            
-          }>Save Configurations</button>
+            }>Save Configurations</button>
           </span>
         </div>
         <div className="tabs">
           <ul>
-            <li id={"tab_" + HATS}>
+            <li id={"tab-" + HATS}>
               <a onClick={() => this.tab(HATS)}>
                 <span className="icon is-small">
                 <Icon path={mdiHatFedora} />
@@ -107,7 +121,7 @@ export default class CharacterBuildingPage extends Component {
                 <span>Hats</span>
               </a>
             </li>
-            <li id={"tab_" + SHIRTS} className="is-active">
+            <li id={"tab-" + SHIRTS} className="is-active">
               <a onClick={() => this.tab(SHIRTS)}>
                 <span className="icon is-small">
                 <Icon path={mdiTshirtCrew} />
@@ -115,7 +129,7 @@ export default class CharacterBuildingPage extends Component {
                 <span>Shirts</span>
               </a>
             </li>
-            <li id={"tab_" + PANTS}>
+            <li id={"tab-" + PANTS}>
               <a onClick={() => this.tab(PANTS)}>
                 <span className="icon is-small">
                   <img src={pants} alt=""/>
@@ -126,20 +140,24 @@ export default class CharacterBuildingPage extends Component {
           </ul>
         </div>
         <div>
-          <div className="table">
-            <ul className="row">
+          <div className="table" role="listbox">
+            <div className="flex-container" style={{
+              height: this.state.height-250
+            }}>
             {this.props.clothes[this.state.category].map(asset => {
               var asset_id_type = (this.state.category === SHIRTS ? this.state.shirt_id :
                                   (this.state.category === PANTS ? this.state.pants_id : this.state.hat_id));
               return (
-                <li key={asset} onClick={() => this.setAsset(asset)}>
-                  <div className={"box" + (asset_id_type === asset ?" my-active" : "")}>
-                  <svg viewBox="0 0 77.707 108.77" height="auto" width="auto" dangerouslySetInnerHTML={{__html: assets[this.state.category][asset]} }/>
+                <div key={asset} onClick={() => this.setAsset(asset)}>
+                  <div className={"box" + (asset_id_type === asset ?" my-active" : "")} style={{
+                    cursor: "pointer",
+                  }}>
+                  <svg viewBox="0 0 77.707 108.77" height={this.state.height/5} width="auto" dangerouslySetInnerHTML={{__html: assets[this.state.category][asset]} }/>
                   </div>
-                </li>
+                </div>
               );
             })}
-            </ul>
+            </div>
           </div>
         </div>
       </div>

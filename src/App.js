@@ -11,7 +11,8 @@ import { NotificationContext } from './components/notification/NotificationProvi
 
 import "./App.css";
 
-import { SHIRTS, PANTS, HATS, FACES } from './js/constants';
+import { SHIRTS, PANTS, HATS, FACES } from './js/constants'
+import ProfilePage from './components/profile/ProfilePage';
 
 export default class App extends Component {
   static contextType = NotificationContext
@@ -19,10 +20,8 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {
-        username: "",
-        nickname: "Thomas",
-      },
+      username: "",
+      charname: "",
       exercises: {
         categories: [
           {
@@ -70,13 +69,14 @@ export default class App extends Component {
     this.checkLogin();
     this.loadUser();
     this.loadCharacter();
+    //this.loadCharname();
     this.loadExercises();
     this.getNotifications();
   }
 
   componentDidUpdate() {
-    // console.log("App did update.")
-    // this.checkLogin();
+    //console.log("App did update.")
+    //this.checkLogin();
   }
 
   checkLogin() {
@@ -100,11 +100,17 @@ export default class App extends Component {
   loadUser() {
     axios_inst.get("/username").then(response =>
       this.setState({
-        user: {
-          username: response.data.username,
-          nickname: this.state.user.nickname, // TODO: backend
-        }
+        username: response.data.username,
       }));
+  }
+
+  loadCharname() {
+    axios_inst.get("/charname").then(response => {
+      console.log(response);
+      this.setState({
+        charname: response.data.charname,
+      });
+    });
   }
 
   loadCharacter() {
@@ -240,7 +246,7 @@ export default class App extends Component {
     return (
       <Router>
         <div className="App">
-          <NavBar username={this.state.user.username} />
+          <NavBar username={this.state.username} />
           <div id="body" className="tile is-ancestor">
             <Switch>
               <Route
@@ -262,13 +268,18 @@ export default class App extends Component {
                 <React.Fragment>
                   <Route
                     exact
+                    path="/"
+                    component={ProfilePage}
+                  />
+                  <Route
+                    exact
                     path="/leaderboard"
                     component={LeaderboardPage}
                   />
                   <Route
                     exact
                     path="/exercises/:taskid"
-                    component={ExercisePage}
+                    component={() => <ExercisePage categories={this.state.exercises.categories} />}
                   />
                   <Route
                     exact
@@ -280,23 +291,21 @@ export default class App extends Component {
                     )}
                   />
                 </React.Fragment>
-                <div className="tile is-vertical is-hidden-touch is-2 is-parent" style={{ marginLeft: 0, paddingLeft: 0 }} >
-                  <div className="tile is-child box" style={{ flex: 0 }} >
-                    <div className="container">
-                      <p className="title has-text-centered has-background-success-light">
-                        {this.state.user.nickname}
-                      </p>
-                      <Bean
-                        width="auto"
-                        height="auto"
-                        body_color={this.state.character.body_color}
-                        face_id={this.state.character.face_id}
-                        pants_id={this.state.character.pants_id}
-                        hat_id={this.state.character.hat_id}
-                        shirt_id={this.state.character.shirt_id} />
-                    </div>
-                    <button onClick={this.stopNotifications}>Stop this madness</button>
+                <div className="tile is-vertical is-2 is-hidden-touch is-parent" style={{ marginLeft: 0, paddingLeft: 0 }}>
+                  <div className="tile is-child box" style={{ flex: 0 }}>
+                    <p className="title has-text-centered has-background-success-light">
+                      {this.state.charname}
+                    </p>
+                    <Bean
+                      width="auto"
+                      height="auto"
+                      body_color={this.state.character.body_color}
+                      face_id={this.state.character.face_id}
+                      pants_id={this.state.character.pants_id}
+                      hat_id={this.state.character.hat_id}
+                      shirt_id={this.state.character.shirt_id} />
                   </div>
+                  <button onClick={this.stopNotifications}>Stop Notifications</button>
                 </div>
               </React.Fragment>
             </Switch>
