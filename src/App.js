@@ -70,7 +70,7 @@ export default class App extends Component {
   checkLogin() {
     axios_inst
       .get('/username')
-      .then((response) => {})
+      .then((response) => { })
       .catch((error) => {
         var error_message;
         if (error.response === undefined) {
@@ -239,14 +239,11 @@ export default class App extends Component {
             this.context({
               type: 'ADD_NOTIFICATION',
               payload: {
-                id: this.state.counter,
+                id: message.timestamp + index,
                 message: message.type === "achievement_unlocked" ? message.content.description : message.content,
                 title: message.type === "achievement_unlocked" ? message.content.name : "Du hast einen neue Nachricht!"
               }
             });
-            this.setState({
-              counter: this.state.counter + 1
-            })
           })
         }
 

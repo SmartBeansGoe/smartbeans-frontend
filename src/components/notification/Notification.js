@@ -23,6 +23,7 @@ const Notification = (props) => {
           aria-label="delete"
         ></button>
       </div>
+      <div className="message-body">{props.message}</div>
     </article>
   );
 };
