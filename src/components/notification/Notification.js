@@ -11,11 +11,10 @@ const Notification = (props) => {
         if (prev < 100) {
           return prev + 0.5;
         }
-        clearInterval(id)
+        clearInterval(id);
         return prev;
-
-      })
-    }, 20)
+      });
+    }, 20);
     setIntervalID(id);
   };
 
@@ -28,10 +27,10 @@ const Notification = (props) => {
     setExit(true);
     setTimeout(() => {
       props.dispatch({
-        type: "REMOVE_NOTIFICATION",
+        type: 'REMOVE_NOTIFICATION',
         id: props.id,
-      })
-    }, 400)
+      });
+    }, 400);
   };
 
   React.useEffect(() => {
@@ -45,16 +44,26 @@ const Notification = (props) => {
   }, []);
 
   return (
-    <article onMouseEnter={handlePauseTimer} onMouseLeave={handleStartTimer} className={`message notification-item is-success ${exit ? "exit" : ""}`}>
+    <article
+      onMouseEnter={handlePauseTimer}
+      onMouseLeave={handleStartTimer}
+      className={`message notification-item is-success ${exit ? 'exit' : ''}`}
+    >
       <div className="message-header">
         <p>{props.title}</p>
-        <button className="delete" onClick={handleCloseNotification} aria-label="delete"></button>
+        <button
+          className="delete"
+          onClick={handleCloseNotification}
+          aria-label="delete"
+        ></button>
       </div>
-      <div className="message-body">
-        {props.message}
-      </div>
-      <progress className="progress notification-bar is-success  is-small is-radiusless" value={`${progressPercent}`} max="100" />
+      <div className="message-body">{props.message}</div>
+      <progress
+        className="progress notification-bar is-success  is-small is-radiusless"
+        value={`${progressPercent}`}
+        max="100"
+      />
     </article>
-  )
-}
-export default Notification
+  );
+};
+export default Notification;

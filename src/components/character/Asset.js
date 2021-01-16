@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types' 
-import assets from './sources/assets.json'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import assets from './sources/assets.json';
 
 export default class Asset extends Component {
   constructor(category) {
@@ -19,16 +19,14 @@ export default class Asset extends Component {
   setAsset() {
     var svg = document.getElementById(this.category);
     var as = assets[this.category];
-    if (svg !== null && this.props.id !== "") {
+    if (svg !== null && this.props.id !== '') {
       if (as !== undefined) {
-        if (as[this.props.id] !== undefined)
-          svg.innerHTML = as[this.props.id];
+        if (as[this.props.id] !== undefined) svg.innerHTML = as[this.props.id];
         else {
-          svg.innerHTML = "";
+          svg.innerHTML = '';
         }
-      }
-      else {
-        svg.innerHTML = "";
+      } else {
+        svg.innerHTML = '';
       }
     }
   }
@@ -38,12 +36,10 @@ export default class Asset extends Component {
       <React.Fragment>
         <g id={this.category}></g>
       </React.Fragment>
-    )
+    );
   }
 }
 
-
 Asset.propTypes = {
   id: PropTypes.string.isRequired,
-}
-
+};
