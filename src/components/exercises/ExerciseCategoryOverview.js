@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-// import { mdiArrowExpand } from '@mdi/js';
-// import { Icon } from '@mdi/react';
 
 export default class ExerciseCategoryOverview extends Component {
   render() {
@@ -10,9 +8,6 @@ export default class ExerciseCategoryOverview extends Component {
 
     return (
       <div className="tile is-child box">
-        {/* <span className="icon is-small">
-          <Icon path={mdiArrowExpand} />
-        </span> */}
         <div className="title">
           <p>{this.props.title}</p>
         </div>
