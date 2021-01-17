@@ -10,7 +10,6 @@ import { NotificationContext } from './components/notification/NotificationProvi
 
 import './App.css';
 
-import { SHIRTS, PANTS, HATS, FACES } from './js/constants';
 import ProfilePage from './components/profile/ProfilePage';
 
 export default class App extends Component {
