@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import RadarChart from './RadarChart';
 import AchievementList from '../achievements/AchievementList';
 
 export default class ProfilePage extends Component {
@@ -13,6 +14,23 @@ export default class ProfilePage extends Component {
             </article>
             <article className="tile is-child notification box">
               <p className="title">Fähigkeiten</p>
+              <RadarChart
+                title=""
+                // TODO: Backend get request is needed for category_skill_values and titles.
+                category_skill_titles={[
+                  'IO',
+                  'STRING',
+                  'DATA',
+                  'CONTROL',
+                  'MATH',
+                  'POINTER',
+                  'ARRAYS',
+                  'MEMORY',
+                  'MODULE',
+                  'STRUCTS',
+                ]}
+                category_skill_values={[5, 3, 6, 3, 7, 2, 7, 3, 9, 3]}
+              />
             </article>
           </div>
           <div className="tile is-parent">
