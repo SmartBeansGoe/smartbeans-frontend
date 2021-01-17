@@ -8,33 +8,14 @@ export default class Asset extends Component {
     this.category = category;
   }
 
-  componentDidMount() {
-    this.setAsset();
-  }
-
-  componentDidUpdate() {
-    this.setAsset();
-  }
-
-  setAsset() {
-    var svg = document.getElementById(this.category);
-    var as = assets[this.category];
-    if (svg !== null && this.props.id !== '') {
-      if (as !== undefined) {
-        if (as[this.props.id] !== undefined) svg.innerHTML = as[this.props.id];
-        else {
-          svg.innerHTML = '';
-        }
-      } else {
-        svg.innerHTML = '';
-      }
-    }
-  }
-
   render() {
     return (
       <React.Fragment>
-        <g id={this.category}></g>
+        <g
+          dangerouslySetInnerHTML={{
+            __html: assets[this.category][this.props.id],
+          }}
+        />
       </React.Fragment>
     );
   }
