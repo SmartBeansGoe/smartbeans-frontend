@@ -31,17 +31,17 @@
   font-weight: bold;
 }
 
-.progress.is-small+.progress-value {
+.progress.is-small + .progress-value {
   font-size: calc(0.75rem / 1.5);
   line-height: 0.75rem;
 }
 
-.progress.is-medium+.progress-value {
+.progress.is-medium + .progress-value {
   font-size: calc(1.25rem / 1.5);
   line-height: 1.25rem;
 }
 
-.progress.is-large+.progress-value {
+.progress.is-large + .progress-value {
   font-size: calc(1.5rem / 1.5);
   line-height: 1.5rem;
 }
