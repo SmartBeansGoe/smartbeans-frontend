@@ -70,13 +70,19 @@ export default class CharacterBuildingPage extends Component {
   setAsset(asset_id) {
     switch (this.state.category) {
       case SHIRTS:
-        this.setState({ shirt_id: (asset_id === this.state.shirt_id ? "" : asset_id)});
+        this.setState({
+          shirt_id: asset_id === this.state.shirt_id ? '' : asset_id,
+        });
         break;
       case PANTS:
-        this.setState({ pants_id: (asset_id === this.state.pants_id ? "" : asset_id)});
+        this.setState({
+          pants_id: asset_id === this.state.pants_id ? '' : asset_id,
+        });
         break;
       case HATS:
-        this.setState({ hat_id: (asset_id === this.state.hat_id ? "" : asset_id)});
+        this.setState({
+          hat_id: asset_id === this.state.hat_id ? '' : asset_id,
+        });
         break;
     }
   }
