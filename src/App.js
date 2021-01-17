@@ -6,7 +6,6 @@ import LeaderboardPage from './components/leaderboard/LeaderboardPage';
 import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage';
 import Bean from './components/character/Bean';
 import ExercisePage from './components/exercises/ExercisePage';
-import CharacterBuildingPage from './components/character/CharacterBuildingPage';
 import { NotificationContext } from './components/notification/NotificationProvider';
 
 import './App.css';
@@ -47,7 +46,6 @@ export default class App extends Component {
       achievements: [],
       intervalID: null,
     };
-    this.onAssetChange = this.onAssetChange.bind(this);
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
   }
 
@@ -163,26 +161,6 @@ export default class App extends Component {
       pants_id,
       hat_id
     );
-  };
-
-  onAssetChange = (asset_category, asset_id) => {
-    switch (asset_category) {
-      case SHIRTS:
-        this.setCharacterShirt(asset_id);
-        break;
-      case PANTS:
-        this.setCharacterPants(asset_id);
-        break;
-      case HATS:
-        this.setCharacterHat(asset_id);
-        break;
-      case FACES:
-        this.setCharacterFace(asset_id);
-        break;
-      default:
-        Error('Could not find asset category');
-        break;
-    }
   };
 
   loadAssets() {
