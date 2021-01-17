@@ -102,7 +102,11 @@ export default class App extends Component {
 
   onSaveCharname = (charname) => {
     axios_inst
-      .post('/charname', charname)
+      .post('/charname', charname, {
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+      })
       .then((response) => {
         console.log(response);
       })
