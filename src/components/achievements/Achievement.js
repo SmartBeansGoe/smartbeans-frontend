@@ -10,7 +10,7 @@ export default function Achievement(props) {
         width="auto"
         height="100px"
         dangerouslySetInnerHTML={{
-          __html: achievements.find((el) => el.id == props.id)['svg'],
+          __html: achievements.find((el) => el.id === props.id)['svg'],
         }}
       />
       <div className="tooltiptext">
@@ -21,7 +21,7 @@ export default function Achievement(props) {
               width="auto"
               height="100px"
               dangerouslySetInnerHTML={{
-                __html: achievements.find((el) => el.id == props.id)['svg'],
+                __html: achievements.find((el) => el.id === props.id)['svg'],
               }}
             />
           </span>
