@@ -15,7 +15,7 @@ export default function AchievementList(props) {
         .map((achievement) => {
           return (
             <div
-              key={achievement}
+              key={achievement.id}
               style={{
                 width: '100px',
                 height: 'auto',
