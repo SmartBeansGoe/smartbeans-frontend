@@ -44,6 +44,7 @@ export default class App extends Component {
         faces: [],
         hats: [],
       },
+      achievements: [],
       intervalID: null,
     };
     this.onAssetChange = this.onAssetChange.bind(this);
@@ -54,8 +55,9 @@ export default class App extends Component {
     this.checkLogin();
     this.loadUser();
     this.loadCharacter();
-    this.loadAssets();
     this.loadCharname();
+    this.loadAchievements();
+    this.loadAssets();
     this.loadExercises();
     this.getNotifications();
   }
@@ -174,7 +176,6 @@ export default class App extends Component {
       this.setState({
         assets: response.data,
       });
-      console.log(this.state);
     });
   }
 
@@ -225,6 +226,14 @@ export default class App extends Component {
             },
           ],
         },
+      });
+    });
+  }
+
+  loadAchievements() {
+    axios_inst.get('/achievements').then((res) => {
+      this.setState({
+        achievements: res.data,
       });
     });
   }
@@ -285,7 +294,16 @@ export default class App extends Component {
               />
               <React.Fragment>
                 <React.Fragment>
-                  <Route exact path="/" component={ProfilePage} />
+                  <Route
+                    exact
+                    path="/"
+                    component={() => (
+                      <ProfilePage
+                        charname={this.state.charname}
+                        achievements={this.state.achievements}
+                      />
+                    )}
+                  />
                   <Route
                     exact
                     path="/leaderboard"
