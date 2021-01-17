@@ -32,7 +32,15 @@ export default class ProfilePage extends Component {
         <div className="tile">
           <div className="tile is-parent is-vertical">
             <article className="tile is-child notification box">
-              <p className="title">Level</p>
+              <p className="title">Level 1</p>
+              <div class="progress-wrapper">
+                <progress
+                  class="progress is-danger is-large"
+                  value="650"
+                  max="1000"
+                />
+                <p class="progress-value has-text-white">650/1000 Punkte</p>
+              </div>
             </article>
             <article className="tile is-child notification box">
               <p className="title">Fähigkeiten</p>
