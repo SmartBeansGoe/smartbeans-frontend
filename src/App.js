@@ -277,21 +277,6 @@ export default class App extends Component {
           <NavBar username={this.state.username} />
           <div id="body" className="tile is-ancestor">
             <Switch>
-              <Route
-                exact
-                path="/character"
-                render={() => (
-                  <CharacterBuildingPage
-                    body_color={this.state.character.body_color}
-                    face_id={this.state.character.face_id}
-                    pants_id={this.state.character.pants_id}
-                    shirt_id={this.state.character.shirt_id}
-                    hat_id={this.state.character.hat_id}
-                    assets={this.state.assets}
-                    onSaveCharacterProperties={this.onSaveCharacterProperties}
-                  />
-                )}
-              />
               <React.Fragment>
                 <React.Fragment>
                   <Route
@@ -300,7 +285,12 @@ export default class App extends Component {
                     component={() => (
                       <ProfilePage
                         charname={this.state.charname}
+                        character={this.state.character}
+                        assets={this.state.assets}
                         achievements={this.state.achievements}
+                        onSaveCharacterProperties={
+                          this.onSaveCharacterProperties
+                        }
                       />
                     )}
                   />

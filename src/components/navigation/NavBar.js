@@ -55,9 +55,6 @@ export default class NavBar extends Component {
               <Link className="navbar-item is-hoverable" to="/">
                 Profil
               </Link>
-              <Link className="navbar-item is-hoverable" to="/character">
-                Charakter
-              </Link>
             </div>
             <div className="navbar-end">
               <article className="navbar-item">

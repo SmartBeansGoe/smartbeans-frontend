@@ -5,7 +5,6 @@ import { mdiTshirtCrew, mdiHatFedora } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import pants from '../../images/pants.svg';
 import assets from './sources/assets.json';
-import './CharacterBuildingPage.css';
 
 import { SHIRTS, PANTS, HATS } from '../../js/constants';
 import axios_inst from '../../js/backend';
@@ -92,9 +91,9 @@ export default class CharacterBuildingPage extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <div className="tile is-parent is-horizontal">
-          <div className="tile is-child box is-4">
+      <div className="tile">
+        <div className="tile is-parent is-4">
+          <div className="tile is-child box">
             <Bean
               width="auto"
               height="auto"
@@ -105,7 +104,9 @@ export default class CharacterBuildingPage extends Component {
               hat_id={this.state.hat_id}
             />
           </div>
-          <div className="tile is-child box is-vertical">
+        </div>
+        <div className="tile is-parent is-vertical">
+          <div className="tile is-child box">
             <div className="tabs">
               <ul>
                 <li id={'tab-' + HATS}>
@@ -113,7 +114,7 @@ export default class CharacterBuildingPage extends Component {
                     <span className="icon is-small">
                       <Icon path={mdiHatFedora} />
                     </span>
-                    <span>Hats</span>
+                    <span>Kopfac­ces­soires</span>
                   </a>
                 </li>
                 <li id={'tab-' + SHIRTS} className="is-active">
@@ -121,7 +122,7 @@ export default class CharacterBuildingPage extends Component {
                     <span className="icon is-small">
                       <Icon path={mdiTshirtCrew} />
                     </span>
-                    <span>Shirts</span>
+                    <span>Shirts & Kleider</span>
                   </a>
                 </li>
                 <li id={'tab-' + PANTS}>
@@ -129,7 +130,7 @@ export default class CharacterBuildingPage extends Component {
                     <span className="icon is-small">
                       <img src={pants} alt="" />
                     </span>
-                    <span>Pants</span>
+                    <span>Hosen & Röcke</span>
                   </a>
                 </li>
               </ul>
@@ -138,7 +139,7 @@ export default class CharacterBuildingPage extends Component {
               <div
                 className="flex-container scroll"
                 style={{
-                  height: this.state.height - 250,
+                  height: this.state.height * 0.5,
                 }}
               >
                 {this.props.assets[this.state.category].map((asset) => {
@@ -213,7 +214,7 @@ export default class CharacterBuildingPage extends Component {
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
