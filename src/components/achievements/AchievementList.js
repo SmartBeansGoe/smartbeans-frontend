@@ -11,7 +11,11 @@ export default function AchievementList(props) {
       }}
     >
       {props.achievements
-        .filter((achievement) => achievement.completed === props.completed)
+        .filter((achievement) =>
+          props.completed
+            ? achievement.completed !== null
+            : achievement.completed === null
+        )
         .map((achievement) => {
           return (
             <div
