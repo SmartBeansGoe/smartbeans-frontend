@@ -180,7 +180,7 @@ ProfilePage.propTypes = {
   charname: PropTypes.string.isRequired,
   character: PropTypes.object.isRequired,
   assets: PropTypes.object.isRequired,
-  achievements: PropTypes.object.isRequired,
+  achievements: PropTypes.array.isRequired,
   onSaveCharacterProperties: PropTypes.func.isRequired,
   onSaveCharname: PropTypes.func.isRequired,
 };
