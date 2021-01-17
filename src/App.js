@@ -102,6 +102,20 @@ export default class App extends Component {
     });
   }
 
+  onSaveCharname = (charname) => {
+    axios_inst
+      .post('/charname', charname)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    this.setState({
+      charname: charname,
+    });
+  };
+
   loadCharacter() {
     axios_inst.get('/character').then((response) => {
       var data = response.data;
@@ -291,6 +305,7 @@ export default class App extends Component {
                         onSaveCharacterProperties={
                           this.onSaveCharacterProperties
                         }
+                        onSaveCharname={this.onSaveCharname}
                       />
                     )}
                   />

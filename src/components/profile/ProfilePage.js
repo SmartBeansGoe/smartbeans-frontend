@@ -4,12 +4,16 @@ import RadarChart from './RadarChart';
 import AchievementList from '../achievements/AchievementList';
 import CharacterBuildingPage from '../character/CharacterBuildingPage';
 import { Modal } from './Modal';
+import { mdiCheckBold } from '@mdi/js';
+import { Icon } from '@mdi/react';
 
 export default class ProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modalState: false,
+      charname: this.props.charname,
+      charnameSubmit: false,
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -84,7 +88,7 @@ export default class ProfilePage extends Component {
           </div>
         </div>
         <div className="tile">
-          <div className="tile is-parent">
+          <div className="tile is-parent is-6">
             <article
               className="tile is-child notification box"
               style={{
@@ -96,7 +100,7 @@ export default class ProfilePage extends Component {
               <div className="content"></div>
             </article>
           </div>
-          <div className="tile is-parent">
+          <div className="tile is-parent is-3">
             <article
               className="tile is-child notification is-danger box"
               onClick={this.toggleModal}
@@ -104,9 +108,51 @@ export default class ProfilePage extends Component {
                 cursor: 'pointer',
               }}
             >
-              <p className="title">Avatar bearbeiten</p>
-              <p className="subtitle"></p>
-              <div className="content"></div>
+              <center>
+                <p className="title">Avatar umkleiden</p>
+              </center>
+            </article>
+          </div>
+          <div className="tile is-parent is-3">
+            <article className="tile is-child notification box">
+              <p className="title">Avatarname</p>
+              <div
+                className="control"
+                style={{
+                  display: 'flow',
+                }}
+              >
+                <form
+                  onSubmit={() =>
+                    this.props.onSaveCharname(this.state.charname)
+                  }
+                >
+                  <input
+                    className="input is-danger"
+                    type="text"
+                    placeholder="Text input"
+                    value={this.state.charname}
+                    style={{ width: '140px' }}
+                    maxLength={15}
+                    onChange={(event) => {
+                      this.setState({
+                        charname: event.target.value,
+                        charnameSubmit:
+                          event.target.value !== this.props.charname,
+                      });
+                    }}
+                  />
+                  <button
+                    className="button is-danger"
+                    disabled={!this.state.charnameSubmit}
+                    type="submit"
+                  >
+                    <div className="icon is-right ">
+                      <Icon path={mdiCheckBold} />
+                    </div>
+                  </button>
+                </form>
+              </div>
             </article>
           </div>
         </div>
@@ -136,4 +182,5 @@ ProfilePage.propTypes = {
   assets: PropTypes.object.isRequired,
   achievements: PropTypes.object.isRequired,
   onSaveCharacterProperties: PropTypes.func.isRequired,
+  onSaveCharname: PropTypes.func.isRequired,
 };
