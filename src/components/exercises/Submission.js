@@ -23,23 +23,39 @@ export default class Submission extends Component {
   };
 
   componentDidMount() {
-    let feedback = '';
-    if (this.props.result.result.type === 'SUCCESS') {
-      feedback = 'Alles richtig!';
-    } else if (this.props.result.result.type === 'COMPILE_ERROR') {
-      feedback = 'Compilezeitfehler';
-    } else if (this.props.result.result.type === 'WRONG_ANSWER') {
-      feedback = 'Falsche Ausgabe\n';
-      this.props.result.result.feedback.forEach((testCase) => {
-        feedback +=
-          'Eingabe:\n' +
-          testCase.testCase.stdin +
-          '\nSoll-Ausgabe:\n' +
-          testCase.testCase.stdout +
-          '\nIst-Ausgabe:\n' +
-          testCase.testResult.stdout +
-          '\n';
-      });
+    let feedback = '<p>';
+    let endpTag = '</p>';
+    switch (this.props.result.result.type) {
+      case 'SUCCESS':
+        feedback = 'Erfolg!' + endpTag;
+        break;
+      case 'WRONG_ANSWER':
+        this.props.result.result.feedback.forEach((testCase) => {
+          feedback +=
+            '<pre> <code> <strong>Eingabe:</strong> <br>' +
+            testCase.testCase.stdin +
+            '\nSoll-Ausgabe:\n' +
+            testCase.testCase.stdout +
+            '\nIst-Ausgabe:\n' +
+            testCase.testResult.stdout +
+            '\n';
+        });
+        feedback += 'Falsche Ausgabe' + endpTag;
+        break;
+      case 'RUN_ERROR':
+        feedback = 'Laufzeitfehler' + endpTag;
+        break;
+      case 'COMPILE_ERROR':
+        feedback = 'Compilezeitfehler' + endpTag;
+        break;
+      case 'EVALUATION_ERROR':
+        feedback = 'Interner Fehler' + endpTag;
+        break;
+      case 'TIME_LIMIT':
+        feedback = 'Zeitüberschreitung' + endpTag;
+        break;
+      default:
+        feedback = 'unbekannter Fehler' + endpTag;
     }
 
     this.setState({
@@ -60,6 +76,7 @@ export default class Submission extends Component {
   }
 
   render() {
+    console.log(this.state.compileResult);
     return (
       <React.Fragment>
         <Card
@@ -82,11 +99,12 @@ export default class Submission extends Component {
                   </h1>
                   <pre>
                     <code>
-                      <div
+                      {this.state.compileResult}
+                      {/* <div
                         dangerouslySetInnerHTML={{
                           __html: this.state.compileResult,
                         }}
-                      ></div>
+                      ></div> */}
                     </code>
                   </pre>
                 </React.Fragment>
