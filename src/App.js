@@ -6,12 +6,10 @@ import LeaderboardPage from './components/leaderboard/LeaderboardPage';
 import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage';
 import Bean from './components/character/Bean';
 import ExercisePage from './components/exercises/ExercisePage';
-import CharacterBuildingPage from './components/character/CharacterBuildingPage';
 import { NotificationContext } from './components/notification/NotificationProvider';
 
 import './App.css';
 
-import { SHIRTS, PANTS, HATS, FACES } from './js/constants';
 import ProfilePage from './components/profile/ProfilePage';
 
 export default class App extends Component {
@@ -44,11 +42,11 @@ export default class App extends Component {
         faces: [],
         hats: [],
       },
+      achievements: [],
       intervalID: null,
       // Dirty Fix counter for Message ID
       counter: 0,
     };
-    this.onAssetChange = this.onAssetChange.bind(this);
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
   }
 
@@ -56,8 +54,9 @@ export default class App extends Component {
     this.checkLogin();
     this.loadUser();
     this.loadCharacter();
-    this.loadAssets();
     this.loadCharname();
+    this.loadAchievements();
+    this.loadAssets();
     this.loadExercises();
     this.getNotifications();
   }
@@ -101,6 +100,24 @@ export default class App extends Component {
       });
     });
   }
+
+  onSaveCharname = (charname) => {
+    axios_inst
+      .post('/charname', charname, {
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    this.setState({
+      charname: charname,
+    });
+  };
 
   loadCharacter() {
     axios_inst.get('/character').then((response) => {
@@ -151,32 +168,11 @@ export default class App extends Component {
     );
   };
 
-  onAssetChange = (asset_category, asset_id) => {
-    switch (asset_category) {
-      case SHIRTS:
-        this.setCharacterShirt(asset_id);
-        break;
-      case PANTS:
-        this.setCharacterPants(asset_id);
-        break;
-      case HATS:
-        this.setCharacterHat(asset_id);
-        break;
-      case FACES:
-        this.setCharacterFace(asset_id);
-        break;
-      default:
-        Error('Could not find asset category');
-        break;
-    }
-  };
-
   loadAssets() {
     axios_inst.get('/assets').then((response) => {
       this.setState({
         assets: response.data,
       });
-      console.log(this.state);
     });
   }
 
@@ -231,6 +227,14 @@ export default class App extends Component {
     });
   }
 
+  loadAchievements() {
+    axios_inst.get('/achievements').then((res) => {
+      this.setState({
+        achievements: res.data,
+      });
+    });
+  }
+
   getNotifications() {
     const id = setInterval(() => {
       axios_inst.get('/system_messages').then((res) => {
@@ -270,24 +274,24 @@ export default class App extends Component {
           <NavBar username={this.state.username} />
           <div id="body" className="tile is-ancestor">
             <Switch>
-              <Route
-                exact
-                path="/character"
-                render={() => (
-                  <CharacterBuildingPage
-                    body_color={this.state.character.body_color}
-                    face_id={this.state.character.face_id}
-                    pants_id={this.state.character.pants_id}
-                    shirt_id={this.state.character.shirt_id}
-                    hat_id={this.state.character.hat_id}
-                    assets={this.state.assets}
-                    onSaveCharacterProperties={this.onSaveCharacterProperties}
-                  />
-                )}
-              />
               <React.Fragment>
                 <React.Fragment>
-                  <Route exact path="/" component={ProfilePage} />
+                  <Route
+                    exact
+                    path="/"
+                    component={() => (
+                      <ProfilePage
+                        charname={this.state.charname}
+                        character={this.state.character}
+                        assets={this.state.assets}
+                        achievements={this.state.achievements}
+                        onSaveCharacterProperties={
+                          this.onSaveCharacterProperties
+                        }
+                        onSaveCharname={this.onSaveCharname}
+                      />
+                    )}
+                  />
                   <Route
                     exact
                     path="/leaderboard"

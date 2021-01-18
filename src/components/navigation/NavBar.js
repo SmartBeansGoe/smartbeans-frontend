@@ -73,15 +73,6 @@ export default class NavBar extends Component {
               >
                 Statistic
               </Link>
-              <Link
-                className="navbar-item is-hoverable"
-                to="/character"
-                onClick={() => {
-                  this.setState({ isActiv: false });
-                }}
-              >
-                Character
-              </Link>
             </div>
             <div className="navbar-end">
               <article className="navbar-item">
