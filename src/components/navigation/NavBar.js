@@ -53,7 +53,7 @@ export default class NavBar extends Component {
                   this.setState({ isActiv: false });
                 }}
               >
-                Exercises
+                Aufgaben
               </Link>
               <Link
                 className="navbar-item is-hoverable"
@@ -62,16 +62,16 @@ export default class NavBar extends Component {
                   this.setState({ isActiv: false });
                 }}
               >
-                Leaderboard
+                Hall of Fame
               </Link>
               <Link
                 className="navbar-item is-hoverable"
-                to="/statistics"
+                to="/"
                 onClick={() => {
                   this.setState({ isActiv: false });
                 }}
               >
-                Statistic
+                Profil
               </Link>
             </div>
             <div className="navbar-end">
