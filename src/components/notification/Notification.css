@@ -2,7 +2,7 @@
   position: fixed;
   right: 25px;
   bottom: 25px;
-  width: 25%;
+  width: 30%;
   min-width: 300px;
   z-index: 999;
 }
@@ -44,4 +44,9 @@
   padding-bottom: 0px;
   margin-left: 0px;
   margin-bottom: 0px;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
 }

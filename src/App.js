@@ -243,15 +243,23 @@ export default class App extends Component {
             this.context({
               type: 'ADD_NOTIFICATION',
               payload: {
-                id: message.timestamp + index,
+                id: message.id,
+                isAchievment: message.type === 'achievement_unlocked',
                 message:
                   message.type === 'achievement_unlocked'
                     ? message.content.description
                     : message.content,
                 title:
                   message.type === 'achievement_unlocked'
-                    ? message.content.name
+                    ? 'Triumph freigeschaltet'
                     : 'Du hast einen neue Nachricht!',
+                achievementId:
+                  message.type === 'achievement_unlocked'
+                    ? message.content.id
+                    : -1,
+                achievementName:
+                  message.type === 'achievement_unlocked'
+                    ? message.content.name : ''
               },
             });
           });
