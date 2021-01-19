@@ -63,7 +63,8 @@ export default class Submission extends Component {
           feedback += 'unbekannter Fehler' + endpTag;
       }
     } else {
-      feedback = "<pre><code>" + this.props.result.result.feedback.stdout + "</code></pre>";
+      feedback = '<article class="message is-info"><div class="message-body"> <strong>Hinweis zum Aufgabentyp:</strong> <br>Hier ist KEINE Eingabe und Ausgabe verlangt. Die Einsendung darf KEINE main-Funktion enthalten. <br>Dieser Aufgabentyp wird (noch) nicht ganz korrekt erkannt. Das betrifft vor allem auch das Bewertungsergebnis. Die Aufgabe ist richtig, wenn die Spalte "Failed" nur Nullen enthalten. Zusätzlich werden alle fehlerhaften Aufrufe über der Tabelle aufgelistet.</div></article>'
+      feedback += "<pre class='mt-0 pt-0'><code>" + this.props.result.result.feedback.stdout + "</code></pre>";
     }
 
     this.setState({
