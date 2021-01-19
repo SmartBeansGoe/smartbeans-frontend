@@ -1,0 +1,9 @@
+.exercise_page {
+  width: 80%;
+}
+
+@media only screen and (max-width: 768px) {
+  .exercise_page {
+    width: 100%;
+  }
+}

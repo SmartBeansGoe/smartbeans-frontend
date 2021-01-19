@@ -5,6 +5,7 @@ import SubmissionOverview from './SubmissionOverview';
 import { withRouter } from 'react-router';
 import { mdiUpload } from '@mdi/js';
 import { Icon } from '@mdi/react';
+import './ExercisePage.css';
 
 class ExercisePage extends Component {
   state = {
@@ -42,7 +43,7 @@ class ExercisePage extends Component {
   addTaskToState(exercise) {
     this.setState({
       title: exercise.name,
-      task: exercise.task,
+      task: marked(exercise.task),
       solved: exercise.solved,
       taskid: exercise.taskid,
     });
@@ -102,16 +103,15 @@ class ExercisePage extends Component {
 
   render() {
     return (
-      <div className="tile is-parent is-vertical">
-        <div className="tile is-child box">
+      <div className="tile is-parent is-vertical exercise_page" >
+        <div className="tile is-child box" >
           <h1 className="title ml-3 mt-3">{this.state.title}</h1>
-          <p
-            className="m-3"
-            dangerouslySetInnerHTML={{ __html: marked(this.state.task) }}
+          <div
+            dangerouslySetInnerHTML={{ __html: this.state.task }}
           />
-          <div className="field is-grouped">
-            <div className="control">
-              <div className="file has-name ml-3 is-focused is-link is-light">
+          <div className="field is-grouped " style={{ flexWrap: "wrap" }}>
+            <div className="control mr-6">
+              <div className="file has-name  mt-4 is-focused is-link is-light">
                 <label className="file-label">
                   <input
                     className="file-input ml-3"
@@ -132,9 +132,8 @@ class ExercisePage extends Component {
             </div>
             <div className="control">
               <button
-                className={`button is-primary ml-6 ${
-                  this.state.isLoading ? 'is-loading' : ''
-                }`}
+                className={`button is-primary  mt-4 ${this.state.isLoading ? 'is-loading' : ''
+                  }`}
                 disabled={this.state.isDisabled}
                 type="button"
                 onClick={this.onClickHandler}
