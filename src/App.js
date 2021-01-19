@@ -46,6 +46,7 @@ export default class App extends Component {
       intervalID: null,
     };
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
+    this.loadExercises = this.loadExercises.bind(this);
   }
 
   componentDidMount() {
@@ -301,6 +302,7 @@ export default class App extends Component {
                     component={() => (
                       <ExercisePage
                         categories={this.state.exercises.categories}
+                        loadExercises={this.loadExercises}
                       />
                     )}
                   />

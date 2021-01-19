@@ -90,6 +90,7 @@ class ExercisePage extends Component {
             selectedFile: null,
             isLoading: false,
           });
+          this.props.loadExercises();
         })
         .catch((error) => {
           console.log(error);
