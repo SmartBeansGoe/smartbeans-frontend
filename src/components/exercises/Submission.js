@@ -80,7 +80,7 @@ export default class Submission extends Component {
       isCompileResult:
         this.props.result.result.type === 'COMPILE_ERROR' ? true : false,
       feedback: feedback,
-      isSuccess: this.props.result.result.type === 'SUCCESS',
+      isSuccess: this.props.result.result.score === 1,
     });
   }
 
@@ -98,7 +98,9 @@ export default class Submission extends Component {
             <React.Fragment>
               <h1 className="title is-6  mb-3">Quelltext</h1>
               <pre>
-                <code dangerouslySetInnerHTML={{ __html: this.state.sourceCode }} />
+                <code>
+                  {this.state.sourceCode}
+                </code>
               </pre>
               {this.state.isCompileResult && (
                 <React.Fragment>

@@ -286,12 +286,7 @@ export default class App extends Component {
   };
 
   setTaskSolved = (taskid) => {
-    this.state.exercises.categories.forEach(categorie => {
-      let result = categorie.exerciseList.filter(ex => ex.taskid === taskid)
-      if (result.length === 1) {
-        result[0].solved = true;
-      }
-    })
+    this.loadExercises();
   }
 
   setAchievementCompleted = id => {

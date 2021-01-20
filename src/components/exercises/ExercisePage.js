@@ -6,22 +6,35 @@ import { withRouter } from 'react-router';
 import { mdiUpload } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import './ExercisePage.css';
+import { NotificationContext } from './../notification/NotificationProvider';
+import axios from 'axios';
 
 class ExercisePage extends Component {
-  state = {
-    title: '',
-    task: '',
-    solved: '',
-    submissions: [],
-    fileName: 'Keine Datei ausgewählt',
-    selectedFile: null,
-    isLoading: false,
-    isDisabled: true,
-  };
+  static contextType = NotificationContext;
+  constructor(props) {
+    super(props);
+    let CancelToken = axios.CancelToken;
+    let source = CancelToken.source();
+    this.state = {
+      title: '',
+      task: '',
+      solved: '',
+      submissions: [],
+      fileName: 'Keine Datei ausgewählt',
+      selectedFile: null,
+      isLoading: false,
+      isDisabled: true,
+      source: source,
+    };
+  }
 
   componentDidMount() {
     this.getTask();
     this.getSubmissions();
+  }
+
+  componentWillUnmount() {
+    this.state.source.cancel('Cancel submissions');
   }
 
   getTask() {
@@ -37,7 +50,9 @@ class ExercisePage extends Component {
     axios_inst.get(`/tasks?id=${taskid}`).then((res) => {
       let task = res.data[0];
       this.addTaskToState(task);
-    });
+    })
+      .catch(error => {
+      })
   }
 
   addTaskToState(exercise) {
@@ -51,15 +66,21 @@ class ExercisePage extends Component {
 
   getSubmissions() {
     let taskid = this.props.match.params.taskid;
-    axios_inst.get('/submissions/' + taskid).then((response) => {
-      let sub = response.data;
-      sub.reverse();
-      if (sub.length !== 0) {
-        this.setState({
-          submissions: sub,
-        });
-      }
-    });
+    axios_inst.get('/submissions/' + taskid, {
+      cancelToken: this.state.source.token
+    })
+      .then((response) => {
+        let sub = response.data;
+        sub.reverse();
+        if (sub.length !== 0) {
+          this.setState({
+            submissions: sub,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error getSubmissions: ", error);
+      })
   }
 
   onChangeHandler = (event) => {
@@ -85,21 +106,49 @@ class ExercisePage extends Component {
           },
         })
         .then(() => {
+          let oldLength = this.state.submissions.length;
           this.getSubmissions();
           this.setState({
             fileName: 'Keine Datei ausgewählt',
             selectedFile: null,
             isLoading: false,
           });
+          this.updateExercises(oldLength);
         })
         .catch((error) => {
           console.log(error);
         });
     };
     reader.onerror = function (evt) {
-      // alert machen
+      // this.context({
+      //   type: 'ADD_NOTIFICATION',
+      //   payload: {
+      //     id: message.id,
+      //     type: message.type,
+      //     message: messageBody,
+      //     title: title,
+      //     achievementId: pictureId,
+      //     achievementName: name,
+      //   },
+      // });
     };
   };
+
+  updateExercises(oldLength, tries) {
+    setTimeout(() => {
+      if (tries <= 20) {
+        if (oldLength !== this.state.submissions.length) {
+          if (this.state.submissions[0].result.score === 1) {
+            this.props.setTaskSolved(this.state.taskid);
+          }
+        } else {
+          tries++;
+          this.updateExercises(oldLength);
+        }
+      }
+    }, 500
+    );
+  }
 
   render() {
     return (
