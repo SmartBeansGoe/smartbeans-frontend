@@ -46,7 +46,7 @@ export default class App extends Component {
       intervalID: null,
     };
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
-    this.loadExercises = this.loadExercises.bind(this);
+    this.setTaskSolved = this.setTaskSolved.bind(this);
   }
 
   componentDidMount() {
@@ -236,27 +236,46 @@ export default class App extends Component {
 
   getNotifications() {
     const id = setInterval(() => {
-      axios_inst.get('/system_messages').then((res) => {
+      axios_inst.get('/system_messages')
+        .then((res) => {
         if (res.data.length !== 0) {
-          res.data.forEach((message, index) => {
+            res.data.forEach(message => {
+              let messageBody;
+              let title;
+              let name = '';
+              let pictureId = -1;
+              if (message.type === 'achievement_unlocked') {
+                messageBody = message.content.description;
+                title = 'Errungenschaft freigeschaltet!';
+                name = message.content.name;
+                pictureId = message.content.id;
+                pictureId = 4;
+                this.setAchievementCompleted(pictureId);
+              } else if (message.type === 'text') {
+                messageBody = message.content;
+                title = 'Du hast einen neue Nachricht!';
+              } else {
+                title = 'Kleidungsstück freigeschaltet!';
+                messageBody = 'Mal schauen was die API sagt';
+              }
             this.context({
               type: 'ADD_NOTIFICATION',
               payload: {
                 id: message.id,
-                message:
-                  message.type === 'achievement_unlocked'
-                    ? message.content.description
-                    : message.content,
-                title:
-                  message.type === 'achievement_unlocked'
-                    ? message.content.name
-                    : 'Du hast einen neue Nachricht!',
+                  type: message.type,
+                  message: messageBody,
+                  title: title,
+                  achievementId: pictureId,
+                  achievementName: name,
               },
             });
           });
         }
-      });
-    }, 6000);
+        })
+        .catch(error => {
+          console.log("error notifications: ", error);
+        })
+    }, 5000);
     this.setState({
       intervalID: id,
     });
@@ -265,6 +284,14 @@ export default class App extends Component {
   stopNotifications = () => {
     clearInterval(this.state.intervalID);
   };
+
+  setTaskSolved = (taskid) => {
+    this.loadExercises();
+  }
+
+  setAchievementCompleted = id => {
+    this.loadAchievements();
+  }
 
   render() {
     return (
@@ -301,8 +328,7 @@ export default class App extends Component {
                     path="/exercises/:taskid"
                     component={() => (
                       <ExercisePage
-                        categories={this.state.exercises.categories}
-                        loadExercises={this.loadExercises}
+                        setTaskSolved={this.setTaskSolved}
                       />
                     )}
                   />

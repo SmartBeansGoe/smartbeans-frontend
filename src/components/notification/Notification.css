@@ -45,3 +45,9 @@
   margin-left: 0px;
   margin-bottom: 0px;
 }
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  margin: 10px
+}

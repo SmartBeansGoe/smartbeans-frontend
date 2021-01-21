@@ -46,13 +46,31 @@ export default class NavBar extends Component {
             }
           >
             <div className="navbar-start">
-              <Link className="navbar-item is-hoverable" to="/exercises">
+              <Link
+                className="navbar-item is-hoverable"
+                to="/exercises"
+                onClick={() => {
+                  this.setState({ isActiv: false });
+                }}
+              >
                 Aufgaben
               </Link>
-              <Link className="navbar-item is-hoverable" to="/leaderboard">
+              <Link
+                className="navbar-item is-hoverable"
+                to="/leaderboard"
+                onClick={() => {
+                  this.setState({ isActiv: false });
+                }}
+              >
                 Hall of Fame
               </Link>
-              <Link className="navbar-item is-hoverable" to="/">
+              <Link
+                className="navbar-item is-hoverable"
+                to="/"
+                onClick={() => {
+                  this.setState({ isActiv: false });
+                }}
+              >
                 Profil
               </Link>
             </div>

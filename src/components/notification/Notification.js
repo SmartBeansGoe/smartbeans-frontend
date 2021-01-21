@@ -1,29 +1,10 @@
 import React, { useState } from 'react';
+import achievements from './../achievements/achievements.json';
 
 const Notification = (props) => {
   const [exit, setExit] = useState(false);
-  const [progressPercent, setProgressPercent] = useState(0);
-  const [intervalID, setIntervalID] = useState(null);
-
-  const handleStartTimer = () => {
-    const id = setInterval(() => {
-      setProgressPercent((prev) => {
-        if (prev < 100) {
-          return prev + 0.5;
-        }
-        clearInterval(id);
-        return prev;
-      });
-    }, 20);
-    setIntervalID(id);
-  };
-
-  const handlePauseTimer = () => {
-    clearInterval(intervalID);
-  };
 
   const handleCloseNotification = () => {
-    handlePauseTimer();
     setExit(true);
     setTimeout(() => {
       props.dispatch({
@@ -33,20 +14,8 @@ const Notification = (props) => {
     }, 400);
   };
 
-  React.useEffect(() => {
-    if (progressPercent === 100) {
-      handleCloseNotification();
-    }
-  }, [progressPercent]);
-
-  React.useEffect(() => {
-    handleStartTimer();
-  }, []);
-
   return (
     <article
-      onMouseEnter={handlePauseTimer}
-      onMouseLeave={handleStartTimer}
       className={`message notification-item is-success ${exit ? 'exit' : ''}`}
     >
       <div className="message-header">
@@ -57,12 +26,34 @@ const Notification = (props) => {
           aria-label="delete"
         ></button>
       </div>
-      <div className="message-body">{props.message}</div>
-      <progress
-        className="progress notification-bar is-success  is-small is-radiusless"
-        value={`${progressPercent}`}
-        max="100"
-      />
+      <div className="message-body p-0" >
+        {props.isAchievment &&
+          <div className="flex-container">
+            <span>
+              <svg
+                viewBox="0 0 110 110"
+                width="auto"
+                height="100px"
+                dangerouslySetInnerHTML={{
+                  __html: achievements.find((el) => el.id === props.achievementId)['svg'],
+                }}
+              />
+
+            </span>
+            <span>
+              <p className="subtitle margin-top">{props.achievementName}</p>
+              <p>{props.message}</p>
+            </span>
+
+          </div>}
+        {!props.isAchievment &&
+          <div className="container p-3">
+            <p>
+              {props.message}
+            </p>
+          </div>
+        }
+      </div>
     </article>
   );
 };
