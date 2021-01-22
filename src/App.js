@@ -305,7 +305,7 @@ export default class App extends Component {
                   <Route
                     exact
                     path="/"
-                    component={() => (
+                    render={() => (
                       <ProfilePage
                         charname={this.state.charname}
                         character={this.state.character}
@@ -321,12 +321,12 @@ export default class App extends Component {
                   <Route
                     exact
                     path="/leaderboard"
-                    component={LeaderboardPage}
+                    render={LeaderboardPage}
                   />
                   <Route
                     exact
                     path="/exercises/:taskid"
-                    component={() => (
+                    render={() => (
                       <ExercisePage
                         setTaskSolved={this.setTaskSolved}
                       />
