@@ -4,7 +4,7 @@ import NavBar from './components/navigation/NavBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LeaderboardPage from './components/leaderboard/LeaderboardPage';
 import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage';
-import Bean from './components/character/Bean';
+import BeanWrapper from './components/character/BeanWrapper';
 import ExercisePage from './components/exercises/ExercisePage';
 import { NotificationContext } from './components/notification/NotificationProvider';
 
@@ -336,36 +336,15 @@ export default class App extends Component {
                     exact
                     path="/exercises"
                     render={() => (
-                      <div className="tile is-parent is-vertical">
                         <ExerciseOverviewPage
                           categories={this.state.exercises.categories}
                         />
-                      </div>
                     )}
                   />
                 </React.Fragment>
-                <div
-                  className="tile is-vertical is-2 is-hidden-touch is-parent"
-                  style={{ marginLeft: 0, paddingLeft: 0 }}
-                >
-                  <div className="tile is-child box" style={{ flex: 0 }}>
-                    <p className="title has-text-centered has-background-success-light">
-                      {this.state.charname}
-                    </p>
-                    <Bean
-                      width="auto"
-                      height="auto"
-                      body_color={this.state.character.body_color}
-                      face_id={this.state.character.face_id}
-                      pants_id={this.state.character.pants_id}
-                      hat_id={this.state.character.hat_id}
-                      shirt_id={this.state.character.shirt_id}
-                    />
-                  </div>
-                  <button onClick={this.stopNotifications}>
-                    Stop Notifications
-                  </button>
-                </div>
+                <BeanWrapper
+                  charname={this.state.charname}
+                  character={this.state.character} />
               </React.Fragment>
             </Switch>
           </div>

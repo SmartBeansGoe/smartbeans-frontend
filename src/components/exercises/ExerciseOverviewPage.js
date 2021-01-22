@@ -4,7 +4,7 @@ import ExerciseCategoryOverview from './ExerciseCategoryOverview';
 export default class ExerciseOverviewPage extends Component {
   render() {
     return (
-      <React.Fragment>
+      <div className="tile is-parent is-vertical">
         {this.props.categories.map((c, index) => (
           <ExerciseCategoryOverview
             key={index}
@@ -14,7 +14,7 @@ export default class ExerciseOverviewPage extends Component {
             exerciseList={c.exerciseList}
           />
         ))}
-      </React.Fragment>
+      </div>
     );
   }
 }
