@@ -3,7 +3,6 @@
   right: 25px;
   bottom: 25px;
   width: 25%;
-  min-width: 300px;
   z-index: 999;
 }
 
@@ -14,6 +13,7 @@
   animation: SlideLeft 0.4s;
   animation-fill-mode: forwards;
   min-width: 300px;
+  min-height: 110px;
 }
 
 @keyframes SlideLeft {
@@ -49,5 +49,5 @@
 .flex-container {
   display: flex;
   flex-direction: row;
-  margin: 10px
+  margin: 10px;
 }

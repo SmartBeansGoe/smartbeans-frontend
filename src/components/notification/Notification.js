@@ -16,7 +16,7 @@ const Notification = (props) => {
 
   return (
     <article
-      className={`message notification-item is-success ${exit ? 'exit' : ''}`}
+      className={`message notification-item ${props.type} ${exit ? 'exit' : ''}`}
     >
       <div className="message-header">
         <p>{props.title}</p>
@@ -27,32 +27,24 @@ const Notification = (props) => {
         ></button>
       </div>
       <div className="message-body p-0" >
-        {props.isAchievment &&
-          <div className="flex-container">
+        <div className="flex-container">
+          {props.pictureId !== -1 &&
             <span>
               <svg
                 viewBox="0 0 110 110"
                 width="auto"
                 height="100px"
                 dangerouslySetInnerHTML={{
-                  __html: achievements.find((el) => el.id === props.achievementId)['svg'],
+                  __html: achievements.find((el) => el.id === props.pictureId)['svg'],
                 }}
               />
+            </span>}
+          <span>
+            {props.name !== null && <p className="subtitle margin-top">{props.name}</p>}
+            <p>{props.message}</p>
+          </span>
 
-            </span>
-            <span>
-              <p className="subtitle margin-top">{props.achievementName}</p>
-              <p>{props.message}</p>
-            </span>
-
-          </div>}
-        {!props.isAchievment &&
-          <div className="container p-3">
-            <p>
-              {props.message}
-            </p>
-          </div>
-        }
+        </div>
       </div>
     </article>
   );

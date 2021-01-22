@@ -44,6 +44,7 @@ export default class App extends Component {
       },
       achievements: [],
       intervalID: null,
+      errorResponseCounter: 0,
     };
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
     this.loadExercises = this.loadExercises.bind(this);
@@ -238,11 +239,14 @@ export default class App extends Component {
     const id = setInterval(() => {
       axios_inst.get('/system_messages')
         .then((res) => {
+          this.setState({
+            errorResponseCounter: 0
+          })
           if (res.data.length !== 0) {
             res.data.forEach(message => {
               let messageBody;
               let title;
-              let name = '';
+              let name = null;
               let pictureId = -1;
               if (message.type === 'achievement_unlocked') {
                 messageBody = message.content.description;
@@ -262,17 +266,24 @@ export default class App extends Component {
                 type: 'ADD_NOTIFICATION',
                 payload: {
                   id: message.id,
-                  type: message.type,
+                  type: "",
                   message: messageBody,
                   title: title,
-                  achievementId: pictureId,
-                  achievementName: name,
+                  pictureId: pictureId,
+                  name: name,
                 },
               });
             });
           }
         })
         .catch(error => {
+          if (this.state.errorResponseCounter > 12) {
+            // Umleiten auf error Page
+          } else {
+            this.setState({
+              errorResponseCounter: this.state.errorResponseCounter + 1
+            })
+          }
           console.log("error notifications: ", error);
         })
     }, 5000);
