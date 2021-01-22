@@ -113,7 +113,7 @@ class ExercisePage extends Component {
             selectedFile: null,
             isLoading: false,
           });
-          this.updateExercises(oldLength);
+          this.updateExercises(oldLength, 0);
         })
         .catch((error) => {
           console.log(error);
