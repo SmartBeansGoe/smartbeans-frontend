@@ -3,16 +3,19 @@ import PropTypes from 'prop-types';
 import Card from './Card';
 
 export default class Submission extends Component {
-  state = {
-    componentHeight: 0,
-    type: '',
-    timestamp: '',
-    isCunit: false,
-    sourceCode: '',
-    score: '',
-    compileResult: '',
-    feedback: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      componentHeight: 0,
+      type: '',
+      timestamp: '',
+      isCunit: false,
+      sourceCode: '',
+      score: '',
+      compileResult: '',
+      feedback: '',
+    };
+  }
 
   handler = (previousHeight, currentHeight) => {
     this.setState({
