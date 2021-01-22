@@ -25,6 +25,7 @@ class ExercisePage extends Component {
       isLoading: false,
       isDisabled: true,
       source: source,
+      isError: false,
     };
   }
 
@@ -88,6 +89,7 @@ class ExercisePage extends Component {
       fileName: event.target.files[0].name,
       selectedFile: event.target.files[0],
       isDisabled: false,
+      isError: false,
     });
   };
 
@@ -97,8 +99,8 @@ class ExercisePage extends Component {
       isDisabled: true,
     });
     let reader = new FileReader();
-    reader.readAsText(this.state.selectedFile);
-    reader.onload = () => {
+
+    reader.onload = (event) => {
       axios_inst
         .post('/submit/' + this.state.taskid, reader.result, {
           headers: {
@@ -117,21 +119,50 @@ class ExercisePage extends Component {
         })
         .catch((error) => {
           console.log(error);
+          this.setState({
+            fileName: 'Keine Datei ausgewählt',
+            selectedFile: null,
+            isLoading: false,
+            isError: true,
+            isDisabled: true,
+          });
+
+          this.context({
+            type: 'ADD_NOTIFICATION',
+            payload: {
+              id: new Date().toLocaleString(),
+              type: 'text',
+              message: 'Bitte versuchen Sie es später noch einmal',
+              title: 'Fehler beim Hochladen der Datei',
+              achievementId: -1,
+              achievementName: null,
+            },
+          });
         });
     };
-    reader.onerror = function (evt) {
-      // this.context({
-      //   type: 'ADD_NOTIFICATION',
-      //   payload: {
-      //     id: message.id,
-      //     type: message.type,
-      //     message: messageBody,
-      //     title: title,
-      //     achievementId: pictureId,
-      //     achievementName: name,
-      //   },
-      // });
+    reader.onerror = (event) => {
+      this.setState({
+        fileName: 'Keine Datei ausgewählt',
+        selectedFile: null,
+        isLoading: false,
+        isError: true,
+        isDisabled: true,
+      });
+      console.log("onerrorreader: ", event);
+      this.context({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: new Date().toLocaleString(),
+          type: 'is-danger',
+          message: 'Bitte versuchen Sie es später noch einmal',
+          title: 'Fehler beim Einlesen der Datei',
+          pictureId: -1,
+          name: null,
+        },
+      });
+      reader.abort();
     };
+    reader.readAsText(this.state.selectedFile);
   };
 
   updateExercises(oldLength, tries) {
@@ -159,9 +190,9 @@ class ExercisePage extends Component {
             dangerouslySetInnerHTML={{ __html: this.state.task }}
           />
           <div className="field is-grouped " style={{ flexWrap: "wrap" }}>
-            <div className="control mr-6">
+            <div className="control mr-6" >
               <div className="file has-name  mt-4 is-focused is-link is-light">
-                <label className="file-label">
+                <label className="file-label" >
                   <input
                     className="file-input ml-3"
                     type="file"
@@ -173,21 +204,21 @@ class ExercisePage extends Component {
                     <span className="file-icon">
                       <Icon path={mdiUpload} />
                     </span>
-                    <span className="file-label">Datei auswählen</span>
+                    <span className="file-label" >Datei auswählen</span>
                   </span>
-                  <span className="file-name">{this.state.fileName}</span>
+                  <span className="file-name" style={{ width: "200px" }}>{this.state.fileName}</span>
                 </label>
               </div>
             </div>
             <div className="control">
               <button
-                className={`button is-primary  mt-4 ${this.state.isLoading ? 'is-loading' : ''
+                className={`button ${this.state.isError ? "is-danger" : "is-primary"}  mt-4 ${this.state.isLoading ? 'is-loading' : ''
                   }`}
                 disabled={this.state.isDisabled}
                 type="button"
                 onClick={this.onClickHandler}
               >
-                Lösung hochladen{' '}
+                {this.state.isError ? "Fehler aufgetretten" : "Lösung hochladen"}
               </button>
             </div>
           </div>
