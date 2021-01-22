@@ -139,7 +139,7 @@ class ExercisePage extends Component {
       if (tries <= 20) {
         if (oldLength !== this.state.submissions.length) {
           if (this.state.submissions[0].result.score === 1) {
-            this.props.setTaskSolved(this.state.taskid);
+            this.props.loadExercises(this.state.taskid);
           }
         } else {
           tries++;
