@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 export default class ExerciseCategoryOverview extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const progress = this.props.exerciseList.filter((ex) => ex.solved === true);
 

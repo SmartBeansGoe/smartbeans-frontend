@@ -6,7 +6,7 @@ export default class Submission extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      componentHeight: 0,
+      componentHeight: 20000,
       type: '',
       timestamp: '',
       isCunit: false,
@@ -15,6 +15,7 @@ export default class Submission extends Component {
       compileResult: '',
       feedback: '',
     };
+    this.handler = this.handler.bind(this);
   }
 
   handler = (previousHeight, currentHeight) => {
@@ -96,6 +97,7 @@ export default class Submission extends Component {
           hasSymbol={true}
           componentHeight={this.state.componentHeight}
           handler={this.handler}
+          defaultOpen={this.props.defaultOpen}
         >
           {() => (
             <React.Fragment>

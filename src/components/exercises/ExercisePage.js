@@ -27,61 +27,46 @@ class ExercisePage extends Component {
       source: source,
       isError: false,
     };
+    this.findTask = this.findTask.bind(this);
   }
 
   componentDidMount() {
-    this.getTask();
-    this.getSubmissions();
+    this.findTask();
   }
 
   componentWillUnmount() {
     this.state.source.cancel('Cancel submissions');
   }
 
-  getTask() {
-    if (this.props.location.state === undefined) {
-      this.loadTask();
+  findTask() {
+    let taskid = parseInt(this.props.match.params.taskid);
+    let task;
+    this.props.exercises.categories.forEach(categorie => {
+      let result = categorie.exerciseList.filter(exercise => exercise.taskid === taskid);
+      if (result.length !== 0)
+        task = result[0];
+    })
+    if (task === undefined) {
+      setTimeout(this.findTask, 50);
     } else {
-      this.addTaskToState(this.props.location.state.task);
+      this.addTaskToState(task, 0);
     }
   }
 
-  loadTask() {
-    let taskid = this.props.match.params.taskid;
-    axios_inst.get(`/tasks?id=${taskid}`).then((res) => {
-      let task = res.data[0];
-      this.addTaskToState(task);
-    })
-      .catch(error => {
-      })
-  }
-
-  addTaskToState(exercise) {
-    this.setState({
-      title: exercise.name,
-      task: marked(exercise.task),
-      solved: exercise.solved,
-      taskid: exercise.taskid,
-    });
-  }
-
-  getSubmissions() {
-    let taskid = this.props.match.params.taskid;
-    axios_inst.get('/submissions/' + taskid, {
-      cancelToken: this.state.source.token
-    })
-      .then((response) => {
-        let sub = response.data;
-        sub.reverse();
-        if (sub.length !== 0) {
-          this.setState({
-            submissions: sub,
-          });
-        }
-      })
-      .catch((error) => {
-        console.log("error getSubmissions: ", error);
-      })
+  addTaskToState(exercise, tries) {
+    if (tries < 20) {
+      if (exercise.submissions === undefined) {
+        setTimeout(() => this.addTaskToState(exercise), 50)
+      } else {
+        this.setState({
+          title: exercise.name,
+          task: marked(exercise.task),
+          solved: exercise.solved,
+          taskid: exercise.taskid,
+          submissions: exercise.submissions,
+        });
+      }
+    }
   }
 
   onChangeHandler = (event) => {
@@ -93,7 +78,7 @@ class ExercisePage extends Component {
     });
   };
 
-  onClickHandler = (event) => {
+  onClickHandler = (e) => {
     this.setState({
       isLoading: true,
       isDisabled: true,
@@ -107,15 +92,17 @@ class ExercisePage extends Component {
             'Content-Type': 'text/plain',
           },
         })
-        .then(() => {
+        .then((res) => {
           let oldLength = this.state.submissions.length;
-          this.getSubmissions();
           this.setState({
             fileName: 'Keine Datei ausgewählt',
             selectedFile: null,
             isLoading: false,
+            // needs to be [res.data, ... this.state.submissions] -> backend error
+            submissions: [this.state.submissions[0], ...this.state.submissions],
           });
           this.updateExercises(oldLength, 0);
+          this.props.addSubmission(this.state.taskid, res.data)
         })
         .catch((error) => {
           console.log(error);
@@ -154,7 +141,7 @@ class ExercisePage extends Component {
         payload: {
           id: new Date().toLocaleString(),
           type: 'is-danger',
-          message: 'Bitte versuchen Sie es später noch einmal',
+          message: 'Bitte überprüfen Sie die Datei und probieren Sie das Hochladen noch einmal',
           title: 'Fehler beim Einlesen der Datei',
           pictureId: -1,
           name: null,

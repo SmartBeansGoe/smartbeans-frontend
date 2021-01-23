@@ -4,9 +4,13 @@ import Card from './Card';
 import Submission from './Submission';
 
 export default class SubmissionOverview extends Component {
-  state = {
-    componentsHeight: 0,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      componentsHeight: 0,
+    };
+    this.handler = this.handler.bind(this);
+  }
 
   handler = (previousHeight, currentHeight) => {
     this.setState({
@@ -18,19 +22,26 @@ export default class SubmissionOverview extends Component {
   render() {
     return (
       <div className="is-child tile">
+        <Submission
+          key={this.props.submissions[0].timestamp}
+          id={this.props.submissions.length} result={this.props.submissions[0]}
+          handler={() => { }}
+          defaultOpen={true}
+        />
         <Card
-          title="Versuche"
+          title="Vorherige Versuche"
           hasSymbol={false}
           componentHeight={this.state.componentsHeight}
           handler={this.handler}
         >
           {() =>
-            this.props.submissions.map((result, index) => (
+            this.props.submissions.slice(1).map((result, index) => (
               <Submission
                 key={result.timestamp}
-                id={this.props.submissions.length - index}
+                id={this.props.submissions.length - index - 1}
                 result={result}
                 handler={this.handler}
+                defaultOpen={false}
               />
             ))
           }

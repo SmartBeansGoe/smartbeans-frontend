@@ -48,6 +48,8 @@ export default class App extends Component {
     };
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
     this.loadExercises = this.loadExercises.bind(this);
+    this.putSubmissionsInState = this.putSubmissionsInState.bind(this);
+    this.addSubmission = this.addSubmission.bind(this);
   }
 
   componentDidMount() {
@@ -58,6 +60,7 @@ export default class App extends Component {
     this.loadAchievements();
     this.loadAssets();
     this.loadExercises();
+    this.loadSubmissions();
     this.getNotifications();
   }
 
@@ -227,6 +230,32 @@ export default class App extends Component {
     });
   }
 
+  loadSubmissions() {
+    axios_inst.get('/submissions/all')
+      .then(res => {
+        this.putSubmissionsInState(res.data, 0);
+      }
+      )
+  }
+
+  putSubmissionsInState(submissions, tries) {
+    if (tries < 20) {
+      if (this.state.exercises.length !== 0) {
+        this.state.exercises.categories.map(categorie => {
+          let kleinListe = categorie.exerciseList.map(exercise => {
+            let result = submissions.filter(submission => submission.taskid === exercise.taskid).sort(function (a, b) { return a.timestamp < b.timestamp });
+            exercise.submissions = result;
+            return exercise;
+          })
+          return kleinListe;
+        })
+      } else {
+        tries++;
+        setTimeout(() => this.putSubmissionsInState(submissions, tries), 50);
+      }
+    }
+  }
+
   loadAchievements() {
     axios_inst.get('/achievements').then((res) => {
       this.setState({
@@ -247,13 +276,13 @@ export default class App extends Component {
               let messageBody;
               let title;
               let name = null;
-              let pictureId = -1;
+              // Dirty fix until backend gives right ids
+              let pictureId = 4;
               if (message.type === 'achievement_unlocked') {
                 messageBody = message.content.description;
                 title = 'Errungenschaft freigeschaltet!';
                 name = message.content.name;
                 pictureId = message.content.id;
-                pictureId = 4;
                 this.loadAchievements();
               } else if (message.type === 'text') {
                 messageBody = message.content;
@@ -296,6 +325,18 @@ export default class App extends Component {
     clearInterval(this.state.intervalID);
   };
 
+  addSubmission = (taskid, submission) => {
+    this.setState({
+      exercises: this.state.exercises.categories.map(categorie =>
+        categorie.exerciseList.map(exercise => {
+          if (exercise.taskid === taskid)
+            exercise.submissions = [submission, ...exercise.submissions];
+          return exercise;
+        })
+      )
+    })
+  }
+
   render() {
     return (
       <Router>
@@ -332,6 +373,8 @@ export default class App extends Component {
                     render={() => (
                       <ExercisePage
                         loadExercises={this.loadExercises}
+                        addSubmission={this.addSubmission}
+                        exercises={this.state.exercises}
                       />
                     )}
                   />

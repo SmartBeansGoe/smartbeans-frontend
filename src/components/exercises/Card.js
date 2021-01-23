@@ -8,16 +8,15 @@ export default class Card extends Component {
     super(props);
     this.submissionRef = React.createRef();
     this.cardRef = React.createRef();
+    this.state = {
+      isOpen: this.props.defaultOpen,
+      isActive: '',
+      contentHeight: 0,
+    };
   }
 
-  state = {
-    isOpen: false,
-    isActive: '',
-    contentHeight: 0,
-  };
-
   componentDidMount() {
-    this.props.handler(0, this.cardRef.current.scrollHeight);
+    this.props.handler(0, this.props.defaultOpen ? 2000 : this.cardRef.current.scrollHeight);
   }
 
   toggle = () => {
@@ -44,9 +43,8 @@ export default class Card extends Component {
         >
           {this.props.hasSymbol && (
             <span
-              className={`icon ml-2 has-text-${
-                this.props.isSuccess ? 'success' : 'danger'
-              }`}
+              className={`icon ml-2 has-text-${this.props.isSuccess ? 'success' : 'danger'
+                }`}
             >
               <Icon path={this.props.isSuccess ? mdiCheckBold : mdiCancel} />
             </span>
@@ -62,9 +60,8 @@ export default class Card extends Component {
           className="toCollapse"
           ref={this.submissionRef}
           style={{
-            maxHeight: `${
-              this.state.isOpen ? this.props.componentHeight : 0
-            }px`,
+            maxHeight: `${this.state.isOpen ? this.props.componentHeight : 0
+              }px`,
           }}
         >
           <div className="card-content">{children()}</div>
