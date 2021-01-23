@@ -45,3 +45,7 @@
   font-size: calc(1.5rem / 1.5);
   line-height: 1.5rem;
 }
+
+html {
+  background-color: whitesmoke;
+}
