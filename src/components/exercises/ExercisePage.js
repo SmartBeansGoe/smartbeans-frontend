@@ -54,9 +54,10 @@ class ExercisePage extends Component {
   }
 
   addTaskToState(exercise, tries) {
-    if (tries < 20) {
+    if (tries < 500) {
       if (exercise.submissions === undefined) {
-        setTimeout(() => this.addTaskToState(exercise), 50)
+        tries++;
+        setTimeout(() => this.addTaskToState(exercise, tries), 50)
       } else {
         this.setState({
           title: exercise.name,

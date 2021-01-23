@@ -28,24 +28,25 @@ export default class SubmissionOverview extends Component {
           handler={() => { }}
           defaultOpen={true}
         />
-        <Card
-          title="Vorherige Versuche"
-          hasSymbol={false}
-          componentHeight={this.state.componentsHeight}
-          handler={this.handler}
-        >
-          {() =>
-            this.props.submissions.slice(1).map((result, index) => (
-              <Submission
-                key={result.timestamp}
-                id={this.props.submissions.length - index - 1}
-                result={result}
-                handler={this.handler}
-                defaultOpen={false}
-              />
-            ))
-          }
-        </Card>
+        {this.props.submissions.length > 1 &&
+          <Card
+            title="Vorherige Versuche"
+            hasSymbol={false}
+            componentHeight={this.state.componentsHeight}
+            handler={this.handler}
+          >
+            {() =>
+              this.props.submissions.slice(1).map((result, index) => (
+                <Submission
+                  key={result.timestamp}
+                  id={this.props.submissions.length - index - 1}
+                  result={result}
+                  handler={this.handler}
+                  defaultOpen={false}
+                />
+              ))
+            }
+          </Card>}
       </div>
     );
   }

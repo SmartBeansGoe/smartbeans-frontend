@@ -16,7 +16,7 @@ export default class Card extends Component {
   }
 
   componentDidMount() {
-    this.props.handler(0, this.props.defaultOpen ? 2000 : this.cardRef.current.scrollHeight);
+    this.props.handler(0, this.props.defaultOpen ? 20000 : this.cardRef.current.scrollHeight);
   }
 
   toggle = () => {
