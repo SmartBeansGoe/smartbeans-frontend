@@ -70,6 +70,26 @@ class ExercisePage extends Component {
     }
   }
 
+  getSubmissions() {
+    let taskid = this.props.match.params.taskid;
+    axios_inst.get('/submissions/' + taskid, {
+      cancelToken: this.state.source.token
+    })
+      .then((response) => {
+        let sub = response.data;
+        sub.reverse();
+        if (sub.length !== 0) {
+          this.setState({
+            submissions: sub,
+          });
+          this.props.addSubmission(this.state.taskid, sub)
+        }
+      })
+      .catch((error) => {
+        console.log("error getSubmissions: ", error);
+      })
+  }
+
   onChangeHandler = (event) => {
     this.setState({
       fileName: event.target.files[0].name,
@@ -99,11 +119,9 @@ class ExercisePage extends Component {
             fileName: 'Keine Datei ausgewählt',
             selectedFile: null,
             isLoading: false,
-            // needs to be [res.data, ... this.state.submissions] -> backend error
-            submissions: [this.state.submissions[0], ...this.state.submissions],
           });
           this.updateExercises(oldLength, 0);
-          this.props.addSubmission(this.state.taskid, res.data)
+          this.getSubmissions();
         })
         .catch((error) => {
           console.log(error);

@@ -325,12 +325,12 @@ export default class App extends Component {
     clearInterval(this.state.intervalID);
   };
 
-  addSubmission = (taskid, submission) => {
+  addSubmission = (taskid, submissions) => {
     this.setState({
       exercises: this.state.exercises.categories.map(categorie =>
         categorie.exerciseList.map(exercise => {
           if (exercise.taskid === taskid)
-            exercise.submissions = [submission, ...exercise.submissions];
+            exercise.submissions = submissions;
           return exercise;
         })
       )
