@@ -8,6 +8,8 @@ export default function AchievementList(props) {
         display: 'flex',
         flexDirection: 'row',
         overflow: 'scroll',
+        minWidth: '350px', // hotfix
+        maxWidth: '650px', // hotfix
       }}
     >
       {props.achievements

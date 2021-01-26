@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import './Achievement.css';
 
 export default function Achievement(props) {
+  var achievement = achievements.find((el) => el.id === props.id);
+  var svg;
+  if (achievement === undefined) {
+    svg = achievements.find((el) => el.id === "default").svg
+  }
+  else {
+    svg = achievement.svg;
+  }
   return (
     <div className="regular tooltip">
       <svg
@@ -10,7 +18,7 @@ export default function Achievement(props) {
         width="auto"
         height="100px"
         dangerouslySetInnerHTML={{
-          __html: achievements.find((el) => el.id === props.id)['svg'],
+          __html: svg,
         }}
       />
       <div className="tooltiptext">
@@ -21,7 +29,7 @@ export default function Achievement(props) {
               width="auto"
               height="100px"
               dangerouslySetInnerHTML={{
-                __html: achievements.find((el) => el.id === props.id)['svg'],
+                __html: svg,
               }}
             />
           </span>
