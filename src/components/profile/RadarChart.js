@@ -15,7 +15,7 @@ export default class RadarChart extends Component {
       ],
       options: {
         chart: {
-          height: 350,
+          height: 'auto',
           type: 'radar',
         },
         title: {
@@ -35,7 +35,7 @@ export default class RadarChart extends Component {
           options={this.state.options}
           series={this.state.series}
           type="radar"
-          height={350}
+          height={this.state.options.height}
         />
       </div>
     );
