@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Bean from './Bean';
+import Bean from './avatar/Bean';
 import PropTypes from 'prop-types';
 import { mdiTshirtCrew, mdiHatFedora } from '@mdi/js';
 import { Icon } from '@mdi/react';

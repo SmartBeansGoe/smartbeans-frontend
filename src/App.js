@@ -4,7 +4,7 @@ import NavBar from './components/navigation/NavBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LeaderboardPage from './components/leaderboard/LeaderboardPage';
 import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage';
-import Bean from './components/character/Bean';
+import Bean from './components/character/avatar/Bean';
 import ExercisePage from './components/exercises/ExercisePage';
 import { NotificationContext } from './components/notification/NotificationProvider';
 
