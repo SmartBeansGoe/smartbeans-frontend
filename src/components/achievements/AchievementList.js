@@ -3,15 +3,7 @@ import Achievement from './Achievement';
 
 export default function AchievementList(props) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        overflow: 'scroll',
-        minWidth: '350px', // hotfix
-        maxWidth: '650px', // hotfix
-      }}
-    >
+    <div className="flex-container">
       {props.achievements
         .filter((achievement) =>
           props.completed
