@@ -300,56 +300,46 @@ export default class App extends Component {
           <NavBar username={this.state.username} />
           <div id="body" className="tile is-ancestor">
             <Switch>
+              <Route
+                exact
+                path="/"
+                component={() => (
+                  <ProfilePage
+                    charname={this.state.charname}
+                    character={this.state.character}
+                    assets={this.state.assets}
+                    achievements={this.state.achievements}
+                    onSaveCharacterProperties={this.onSaveCharacterProperties}
+                    onSaveCharname={this.onSaveCharname}
+                  />
+                )}
+              />
               <React.Fragment>
-                <React.Fragment>
-                  <Route
-                    exact
-                    path="/"
-                    component={() => (
-                      <ProfilePage
-                        charname={this.state.charname}
-                        character={this.state.character}
-                        assets={this.state.assets}
-                        achievements={this.state.achievements}
-                        onSaveCharacterProperties={
-                          this.onSaveCharacterProperties
-                        }
-                        onSaveCharname={this.onSaveCharname}
+                <Route exact path="/leaderboard" component={LeaderboardPage} />
+                <Route
+                  exact
+                  path="/exercises/:taskid"
+                  component={() => (
+                    <ExercisePage
+                      categories={this.state.exercises.categories}
+                      loadExercises={this.loadExercises}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/exercises"
+                  render={() => (
+                    <div className="tile is-parent is-vertical">
+                      <ExerciseOverviewPage
+                        categories={this.state.exercises.categories}
                       />
-                    )}
-                  />
-                  <Route
-                    exact
-                    path="/leaderboard"
-                    component={LeaderboardPage}
-                  />
-                  <Route
-                    exact
-                    path="/exercises/:taskid"
-                    component={() => (
-                      <ExercisePage
-                        setTaskSolved={this.setTaskSolved}
-                      />
-                    )}
-                  />
-                  <Route
-                    exact
-                    path="/exercises"
-                    render={() => (
-                      <div className="tile is-parent is-vertical">
-                        <ExerciseOverviewPage
-                          categories={this.state.exercises.categories}
-                        />
-                      </div>
-                    )}
-                  />
-                </React.Fragment>
-                <div
-                  className="tile is-vertical is-2 is-hidden-touch is-parent"
-                  style={{ marginLeft: 0, paddingLeft: 0 }}
-                >
+                    </div>
+                  )}
+                />
+                <div className="tile is-vertical is-2 is-hidden-touch is-parent">
                   <div className="tile is-child box" style={{ flex: 0 }}>
-                    <p className="title has-text-centered has-background-success-light">
+                    <p className="title has-text-centered">
                       {this.state.charname}
                     </p>
                     <Bean

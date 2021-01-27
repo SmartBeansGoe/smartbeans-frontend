@@ -6,6 +6,7 @@ import CharacterBuildingPage from '../character/CharacterBuildingPage';
 import { Modal } from './Modal';
 import { mdiCheckBold } from '@mdi/js';
 import { Icon } from '@mdi/react';
+import Bean from '../character/avatar/Bean';
 
 export default class ProfilePage extends Component {
   constructor(props) {
@@ -32,9 +33,20 @@ export default class ProfilePage extends Component {
 
   render() {
     return (
-      <div className="tile is-vertical">
-        <div className="tile">
-          <div className="tile is-parent is-vertical">
+      <div className="tile">
+        <div
+          className="tile"
+          style={{
+            display: 'flex',
+            flexFlow: 'row wrap',
+          }}
+        >
+          <div
+            className="tile is-parent is-vertical"
+            style={{
+              minWidth: '50%',
+            }}
+          >
             <article className="tile is-child box">
               <p className="title">Level 1</p>
               <div className="progress-wrapper">
@@ -66,95 +78,157 @@ export default class ProfilePage extends Component {
                 category_skill_values={[5, 3, 6, 3, 7, 2, 7, 3, 9, 3]}
               />
             </article>
+
           </div>
-          <div className="tile is-parent">
-            <div className="tile is-vertical box">
+          
+          <div
+            className="tile is-parent is-vertical"
+            style={{
+              minWidth: '50%',
+            }}
+          >
+                        <div className="tile is-vertical box">
               <p className="title">Triumphe</p>
-              <article className="tile is-child box">
                 <p className="subtitle">Alle freigeschaltenen Erfolge</p>
                 <AchievementList
                   achievements={this.props.achievements}
                   completed={true}
                 />
-              </article>
-              <article className="tile is-child box">
                 <p className="subtitle">Noch freizuschaltene Erfolge</p>
                 <AchievementList
                   achievements={this.props.achievements}
                   completed={false}
                 />
+            </div>
+
+          </div>
+
+          <div
+            className="tile"
+            style={{
+              display: 'flex',
+              flexFlow: 'row wrap',
+            }}
+          >
+            <div
+              className="tile is-parent"
+              style={{
+                cursor: 'pointer',
+                minWidth: '300px',
+              }}
+            >
+              <article className="tile is-child box">
+                <p className="title">Leichte Aufgabe</p>
+                <p className="subtitle">Titel der Aufgabe</p>
+              </article>
+            </div>
+            <div
+              className="tile is-parent"
+              style={{
+                cursor: 'pointer',
+                minWidth: '300px',
+              }}
+            >
+              <article className="tile is-child box">
+                <p className="title">Mittlere Aufgabe</p>
+                <p className="subtitle">Titel der Aufgabe</p>
+              </article>
+            </div>
+            <div
+              className="tile is-parent"
+              style={{
+                cursor: 'pointer',
+                minWidth: '300px',
+              }}
+            >
+              <article className="tile is-child box">
+                <p className="title">Klausurniveau Aufgabe</p>
+                <p className="subtitle">Titel der Aufgabe</p>
+              </article>
+            </div>
+            <div
+              className="tile is-parent"
+              style={{
+                cursor: 'pointer',
+                minWidth: '300px',
+              }}
+            >
+              <article className="tile is-child box">
+                <p className="title">Schwere Aufgabe</p>
+                <p className="subtitle">Titel der Aufgabe</p>
               </article>
             </div>
           </div>
         </div>
-        <div className="tile">
-          <div className="tile is-parent is-6">
-            <article
-              className="tile is-child box"
+
+        <div className="tile is-vertical is-parent is-2">
+          <div className="tile is-child box" style={{ flex: 0 }}>
+            <p className="title has-text-centered">{this.props.charname}</p>
+            <Bean
+              width="auto"
+              height="auto"
+              body_color={this.props.character.body_color}
+              face_id={this.props.character.face_id}
+              pants_id={this.props.character.pants_id}
+              hat_id={this.props.character.hat_id}
+              shirt_id={this.props.character.shirt_id}
+            />
+          </div>
+          <article
+            className="tile is-child is-danger box"
+            onClick={this.toggleModal}
+            style={{
+              cursor: 'pointer',
+              flex: 0,
+            }}
+          >
+            <center>
+              <p className="title">Avatar umkleiden</p>
+            </center>
+          </article>
+          <article
+            className="tile is-child box"
+            style={{
+              flex: 0,
+            }}
+          >
+            <p className="title">Avatarname</p>
+            <div
+              className="control"
               style={{
-                cursor: 'pointer',
+                display: 'flow',
               }}
             >
-              <p className="title">Nächste Aufgabe</p>
-              <p className="subtitle">Titel der Aufgabe</p>
-              <div className="content"></div>
-            </article>
-          </div>
-          <div className="tile is-parent is-3">
-            <article
-              className="tile is-child box"
-              onClick={this.toggleModal}
-              style={{
-                cursor: 'pointer',
-              }}
-            >
-              <center>
-                <p className="title">Avatar umkleiden</p>
-              </center>
-            </article>
-          </div>
-          <div className="tile is-parent is-3">
-            <article className="tile is-child box">
-              <p className="title">Avatarname</p>
-              <div
-                className="control"
-                style={{
-                  display: 'flow',
-                }}
+              <form
+                onSubmit={() => this.props.onSaveCharname(this.state.charname)}
               >
-                <form
-                  onSubmit={() =>
-                    this.props.onSaveCharname(this.state.charname)
-                  }
+                <input
+                  className="input is-danger"
+                  type="text"
+                  placeholder="Text input"
+                  value={this.state.charname}
+                  style={{ width: '140px' }}
+                  maxLength={15}
+                  onChange={(event) => {
+                    this.setState({
+                      charname: event.target.value,
+                      charnameSubmit:
+                        event.target.value !== this.props.charname,
+                    });
+                  }}
+                />
+                <button
+                  className="button is-danger"
+                  disabled={!this.state.charnameSubmit}
+                  type="submit"
                 >
-                  <input
-                    className="input is-danger"
-                    type="text"
-                    placeholder="Text input"
-                    value={this.state.charname}
-                    style={{ width: '140px' }}
-                    maxLength={15}
-                    onChange={(event) => {
-                      this.setState({
-                        charname: event.target.value,
-                        charnameSubmit:
-                          event.target.value !== this.props.charname,
-                      });
-                    }}
-                  />
-                  <button
-                    className="button is-danger"
-                    disabled={!this.state.charnameSubmit}
-                    type="submit"
-                  >
-                    <div className="icon is-right ">
-                      <Icon path={mdiCheckBold} size={1} />
-                    </div>
-                  </button>
-                </form>
-              </div>
-            </article>
-          </div>
+                  <div className="icon is-right ">
+                    <Icon path={mdiCheckBold} size={1} />
+                  </div>
+                </button>
+              </form>
+            </div>
+          </article>
         </div>
         <Modal
           closeModal={this.toggleModal}
