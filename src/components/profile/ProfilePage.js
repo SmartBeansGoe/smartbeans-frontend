@@ -78,29 +78,27 @@ export default class ProfilePage extends Component {
                 category_skill_values={[5, 3, 6, 3, 7, 2, 7, 3, 9, 3]}
               />
             </article>
-
           </div>
-          
+
           <div
             className="tile is-parent is-vertical"
             style={{
               minWidth: '50%',
             }}
           >
-                        <div className="tile is-vertical box">
+            <div className="tile is-vertical box">
               <p className="title">Triumphe</p>
-                <p className="subtitle">Alle freigeschaltenen Erfolge</p>
-                <AchievementList
-                  achievements={this.props.achievements}
-                  completed={true}
-                />
-                <p className="subtitle">Noch freizuschaltene Erfolge</p>
-                <AchievementList
-                  achievements={this.props.achievements}
-                  completed={false}
-                />
+              <p className="subtitle">Alle freigeschaltenen Erfolge</p>
+              <AchievementList
+                achievements={this.props.achievements}
+                completed={true}
+              />
+              <p className="subtitle">Noch freizuschaltene Erfolge</p>
+              <AchievementList
+                achievements={this.props.achievements}
+                completed={false}
+              />
             </div>
-
           </div>
 
           <div
