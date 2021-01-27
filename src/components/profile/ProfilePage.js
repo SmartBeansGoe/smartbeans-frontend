@@ -148,7 +148,7 @@ export default class ProfilePage extends Component {
                     type="submit"
                   >
                     <div className="icon is-right ">
-                      <Icon path={mdiCheckBold} />
+                      <Icon path={mdiCheckBold} size={1} />
                     </div>
                   </button>
                 </form>

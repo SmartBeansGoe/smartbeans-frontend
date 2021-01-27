@@ -48,13 +48,19 @@ export default class Card extends Component {
                 this.props.isSuccess ? 'success' : 'danger'
               }`}
             >
-              <Icon path={this.props.isSuccess ? mdiCheckBold : mdiCancel} />
+              <Icon
+                path={this.props.isSuccess ? mdiCheckBold : mdiCancel}
+                size={1}
+              />
             </span>
           )}
           <p className="card-header-title">{this.props.title}</p>
           <div className="card-header-icon">
             <span className="icon">
-              <Icon path={this.state.isOpen ? mdiChevronUp : mdiChevronDown} />
+              <Icon
+                path={this.state.isOpen ? mdiChevronUp : mdiChevronDown}
+                size={1}
+              />
             </span>
           </div>
         </header>

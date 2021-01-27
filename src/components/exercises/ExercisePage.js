@@ -47,12 +47,13 @@ class ExercisePage extends Component {
 
   loadTask() {
     let taskid = this.props.match.params.taskid;
-    axios_inst.get(`/tasks?id=${taskid}`).then((res) => {
-      let task = res.data[0];
-      this.addTaskToState(task);
-    })
-      .catch(error => {
+    axios_inst
+      .get(`/tasks?id=${taskid}`)
+      .then((res) => {
+        let task = res.data[0];
+        this.addTaskToState(task);
       })
+      .catch((error) => {});
   }
 
   addTaskToState(exercise) {
@@ -66,9 +67,10 @@ class ExercisePage extends Component {
 
   getSubmissions() {
     let taskid = this.props.match.params.taskid;
-    axios_inst.get('/submissions/' + taskid, {
-      cancelToken: this.state.source.token
-    })
+    axios_inst
+      .get('/submissions/' + taskid, {
+        cancelToken: this.state.source.token,
+      })
       .then((response) => {
         let sub = response.data;
         sub.reverse();
@@ -79,8 +81,8 @@ class ExercisePage extends Component {
         }
       })
       .catch((error) => {
-        console.log("error getSubmissions: ", error);
-      })
+        console.log('error getSubmissions: ', error);
+      });
   }
 
   onChangeHandler = (event) => {
@@ -146,19 +148,16 @@ class ExercisePage extends Component {
           this.updateExercises(oldLength);
         }
       }
-    }, 500
-    );
+    }, 500);
   }
 
   render() {
     return (
-      <div className="tile is-parent is-vertical exercise_page" >
-        <div className="tile is-child box" >
+      <div className="tile is-parent is-vertical exercise_page">
+        <div className="tile is-child box">
           <h1 className="title ml-3 mt-3">{this.state.title}</h1>
-          <div
-            dangerouslySetInnerHTML={{ __html: this.state.task }}
-          />
-          <div className="field is-grouped " style={{ flexWrap: "wrap" }}>
+          <div dangerouslySetInnerHTML={{ __html: this.state.task }} />
+          <div className="field is-grouped " style={{ flexWrap: 'wrap' }}>
             <div className="control mr-6">
               <div className="file has-name  mt-4 is-focused is-link is-light">
                 <label className="file-label">
@@ -171,7 +170,7 @@ class ExercisePage extends Component {
                   />
                   <span className="file-cta">
                     <span className="file-icon">
-                      <Icon path={mdiUpload} />
+                      <Icon path={mdiUpload} size={1} />
                     </span>
                     <span className="file-label">Datei auswählen</span>
                   </span>
@@ -181,8 +180,9 @@ class ExercisePage extends Component {
             </div>
             <div className="control">
               <button
-                className={`button is-primary  mt-4 ${this.state.isLoading ? 'is-loading' : ''
-                  }`}
+                className={`button is-primary  mt-4 ${
+                  this.state.isLoading ? 'is-loading' : ''
+                }`}
                 disabled={this.state.isDisabled}
                 type="button"
                 onClick={this.onClickHandler}
