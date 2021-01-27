@@ -35,7 +35,7 @@ export default class ProfilePage extends Component {
       <div className="tile is-vertical">
         <div className="tile">
           <div className="tile is-parent is-vertical">
-            <article className="tile is-child notification box">
+            <article className="tile is-child box">
               <p className="title">Level 1</p>
               <div className="progress-wrapper">
                 <progress
@@ -46,7 +46,7 @@ export default class ProfilePage extends Component {
                 <p className="progress-value has-text-white">650/1000 Punkte</p>
               </div>
             </article>
-            <article className="tile is-child notification box">
+            <article className="tile is-child box">
               <p className="title">Fähigkeiten</p>
               <RadarChart
                 title=""
@@ -68,7 +68,7 @@ export default class ProfilePage extends Component {
             </article>
           </div>
           <div className="tile is-parent">
-            <div className="tile notification is-vertical box">
+            <div className="tile is-vertical box">
               <p className="title">Triumphe</p>
               <article className="tile is-child box">
                 <p className="subtitle">Alle freigeschaltenen Erfolge</p>
@@ -90,7 +90,7 @@ export default class ProfilePage extends Component {
         <div className="tile">
           <div className="tile is-parent is-6">
             <article
-              className="tile is-child notification box"
+              className="tile is-child box"
               style={{
                 cursor: 'pointer',
               }}
@@ -102,7 +102,7 @@ export default class ProfilePage extends Component {
           </div>
           <div className="tile is-parent is-3">
             <article
-              className="tile is-child notification is-danger box"
+              className="tile is-child box"
               onClick={this.toggleModal}
               style={{
                 cursor: 'pointer',
@@ -114,7 +114,7 @@ export default class ProfilePage extends Component {
             </article>
           </div>
           <div className="tile is-parent is-3">
-            <article className="tile is-child notification box">
+            <article className="tile is-child box">
               <p className="title">Avatarname</p>
               <div
                 className="control"
