@@ -60,11 +60,6 @@ export default class App extends Component {
     this.getNotifications();
   }
 
-  componentDidUpdate() {
-    //console.log("App did update.")
-    //this.checkLogin();
-  }
-
   checkLogin() {
     axios_inst
       .get('/username')
@@ -236,10 +231,11 @@ export default class App extends Component {
 
   getNotifications() {
     const id = setInterval(() => {
-      axios_inst.get('/system_messages')
+      axios_inst
+        .get('/system_messages')
         .then((res) => {
-        if (res.data.length !== 0) {
-            res.data.forEach(message => {
+          if (res.data.length !== 0) {
+            res.data.forEach((message) => {
               let messageBody;
               let title;
               let name = '';
@@ -258,23 +254,23 @@ export default class App extends Component {
                 title = 'Kleidungsstück freigeschaltet!';
                 messageBody = 'Mal schauen was die API sagt';
               }
-            this.context({
-              type: 'ADD_NOTIFICATION',
-              payload: {
-                id: message.id,
+              this.context({
+                type: 'ADD_NOTIFICATION',
+                payload: {
+                  id: message.id,
                   type: message.type,
                   message: messageBody,
                   title: title,
                   achievementId: pictureId,
                   achievementName: name,
-              },
+                },
+              });
             });
-          });
-        }
+          }
         })
-        .catch(error => {
-          console.log("error notifications: ", error);
-        })
+        .catch((error) => {
+          console.log('error notifications: ', error);
+        });
     }, 5000);
     this.setState({
       intervalID: id,
@@ -287,11 +283,11 @@ export default class App extends Component {
 
   setTaskSolved = (taskid) => {
     this.loadExercises();
-  }
+  };
 
-  setAchievementCompleted = id => {
+  setAchievementCompleted = (id) => {
     this.loadAchievements();
-  }
+  };
 
   render() {
     return (
