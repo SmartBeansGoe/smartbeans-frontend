@@ -48,14 +48,14 @@ export default class ProfilePage extends Component {
             }}
           >
             <article className="tile is-child box">
-              <p className="title">Level 1</p>
+              <p className="title">Stufe {this.props.level_data.level} von {this.props.level_data.max_level}</p>
               <div className="progress-wrapper">
                 <progress
                   className="progress is-danger is-large"
-                  value="650"
-                  max="1000"
+                  value={this.props.level_data.points}
+                  max={this.props.level_data.next_points}
                 />
-                <p className="progress-value has-text-white">650/1000 Punkte</p>
+                <p className="progress-value has-text-white">{this.props.level_data.points}/{this.props.level_data.next_points} Punkte</p>
               </div>
             </article>
             <article className="tile is-child box">
@@ -253,6 +253,7 @@ ProfilePage.propTypes = {
   character: PropTypes.object.isRequired,
   assets: PropTypes.object.isRequired,
   achievements: PropTypes.array.isRequired,
+  level_data: PropTypes.object.isRequired,
   onSaveCharacterProperties: PropTypes.func.isRequired,
   onSaveCharname: PropTypes.func.isRequired,
 };

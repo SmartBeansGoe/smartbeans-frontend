@@ -29,6 +29,19 @@ export default class App extends Component {
           },
         ],
       },
+      level_data: {
+        level: 0,
+        max_level: 0,
+        next_points: 0,
+        points: 0,
+        skills: [
+          {
+            name: '',
+            max_points: 0,
+            points: 0,
+          },
+        ],
+      },
       character: {
         body_color: '#E7C27A',
         shirt_id: '',
@@ -54,6 +67,7 @@ export default class App extends Component {
     this.loadUser();
     this.loadCharacter();
     this.loadCharname();
+    this.loadLevelData();
     this.loadAchievements();
     this.loadAssets();
     this.loadExercises();
@@ -221,6 +235,14 @@ export default class App extends Component {
     });
   }
 
+  loadLevelData() {
+    axios_inst.get('/level_data').then((res) => {
+      this.setState({
+        level_data: res.data,
+      });
+    });
+  }
+
   loadAchievements() {
     axios_inst.get('/achievements').then((res) => {
       this.setState({
@@ -305,6 +327,7 @@ export default class App extends Component {
                     character={this.state.character}
                     assets={this.state.assets}
                     achievements={this.state.achievements}
+                    level_data={this.state.level_data}
                     onSaveCharacterProperties={this.onSaveCharacterProperties}
                     onSaveCharname={this.onSaveCharname}
                   />
