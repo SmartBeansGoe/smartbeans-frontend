@@ -11,6 +11,7 @@ export default function AchievementList(props) {
             ? achievement.completed !== null
             : achievement.completed === null
         )
+        .sort((a, b) => a.frequency < b.frequency)
         .map((achievement) => {
           return (
             <div
