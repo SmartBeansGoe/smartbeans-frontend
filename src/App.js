@@ -342,11 +342,9 @@ export default class App extends Component {
                   exact
                   path="/exercises"
                   render={() => (
-                    <div className="tile is-parent is-vertical">
-                      <ExerciseOverviewPage
-                        categories={this.state.exercises.categories}
-                      />
-                    </div>
+                    <ExerciseOverviewPage
+                      categories={this.state.exercises.categories}
+                    />
                   )}
                 />
                 <div className="tile is-vertical is-2 is-hidden-touch is-parent">
