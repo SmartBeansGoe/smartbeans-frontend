@@ -29,23 +29,53 @@ export default class SkillGraph extends Component {
         ],
       },
       options: {
+        legend: {
+          display: false,
+        },
         scale: {
           angleLines: {
             display: true,
+            lineWidth: 5,
+          },
+          gridLines: {
+            display: true,
+            lineWidth: 5,
+          },
+
+          pointLabels: {
+            fontSize: 16,
           },
           ticks: {
             suggestedMin: 0,
             suggestedMax: 100,
             stepSize: 20,
+            fontSize: 16,
+          },
+        },
+        elements: {
+          line: {
+            tension: 0,
+            borderWidth: 4,
+          },
+          point: {
+            radius: 7,
+            borderWidth: 4,
+            hoverRadius: 9,
+            hoverBorderWidth: 5,
           },
         },
         tooltips: {
+          bodyFontSize: 16,
           callbacks: {
             title: function () {
               return '';
             },
             label: function (object, chart) {
-              return chart.labels[object.index] + ': ' + Math.round(object.value*100)/100;;
+              return (
+                chart.labels[object.index] +
+                ': ' +
+                Math.round(object.value * 100) / 100
+              );
             },
           },
         },
