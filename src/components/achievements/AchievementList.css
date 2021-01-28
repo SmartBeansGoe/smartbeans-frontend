@@ -1,0 +1,7 @@
+.achievement-list-container {
+  height: auto;
+  display: flex;
+  flex-flow: row wrap;
+  overflow-y: scroll;
+  max-height: 300px;
+}

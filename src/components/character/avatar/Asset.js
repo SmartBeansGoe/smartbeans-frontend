@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import assets from './sources/assets.json';
+import assets from '../sources/assets.json';
 
 export default class Asset extends Component {
   constructor(category) {

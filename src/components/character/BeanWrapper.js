@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Bean from './Bean';
+import Bean from './avatar/Bean';
 
 export default class BeanWrapper extends Component {
   render() {

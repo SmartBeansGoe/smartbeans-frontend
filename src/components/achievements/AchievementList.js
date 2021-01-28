@@ -1,23 +1,17 @@
 import PropTypes from 'prop-types';
 import Achievement from './Achievement';
+import './AchievementList.css';
 
 export default function AchievementList(props) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        overflow: 'scroll',
-        minWidth: '350px', // hotfix
-        maxWidth: '650px', // hotfix
-      }}
-    >
+    <div className="achievement-list-container">
       {props.achievements
         .filter((achievement) =>
           props.completed
             ? achievement.completed !== null
             : achievement.completed === null
         )
+        .sort((a, b) => a.frequency < b.frequency)
         .map((achievement) => {
           return (
             <div

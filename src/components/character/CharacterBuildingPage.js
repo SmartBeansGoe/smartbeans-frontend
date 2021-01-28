@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Bean from './Bean';
+import Bean from './avatar/Bean';
 import PropTypes from 'prop-types';
 import { mdiTshirtCrew, mdiHatFedora } from '@mdi/js';
 import { Icon } from '@mdi/react';
@@ -118,7 +118,7 @@ export default class CharacterBuildingPage extends Component {
                 <li id={'tab-' + HATS}>
                   <a onClick={() => this.tab(HATS)}>
                     <span className="icon is-small">
-                      <Icon path={mdiHatFedora} />
+                      <Icon path={mdiHatFedora} size={1} />
                     </span>
                     <span>Kopfac­ces­soires</span>
                   </a>
@@ -126,7 +126,7 @@ export default class CharacterBuildingPage extends Component {
                 <li id={'tab-' + SHIRTS} className="is-active">
                   <a onClick={() => this.tab(SHIRTS)}>
                     <span className="icon is-small">
-                      <Icon path={mdiTshirtCrew} />
+                      <Icon path={mdiTshirtCrew} size={1} />
                     </span>
                     <span>Shirts & Kleider</span>
                   </a>

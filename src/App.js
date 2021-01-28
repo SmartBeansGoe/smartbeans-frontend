@@ -10,7 +10,7 @@ import { NotificationContext } from './components/notification/NotificationProvi
 
 import './App.css';
 
-import ProfilePage from './components/profile/ProfilePage';
+import Dashboard from './components/dashboard/Dashboard';
 
 export default class App extends Component {
   static contextType = NotificationContext;
@@ -26,6 +26,19 @@ export default class App extends Component {
             title: '',
             subtitle: '',
             exerciseList: [],
+          },
+        ],
+      },
+      level_data: {
+        level: 0,
+        max_level: 0,
+        next_points: 0,
+        points: 0,
+        skills: [
+          {
+            name: '',
+            max_points: 0,
+            points: 0,
           },
         ],
       },
@@ -57,16 +70,12 @@ export default class App extends Component {
     this.loadUser();
     this.loadCharacter();
     this.loadCharname();
+    this.loadLevelData();
     this.loadAchievements();
     this.loadAssets();
     this.loadExercises();
     this.loadSubmissions();
     this.getNotifications();
-  }
-
-  componentDidUpdate() {
-    //console.log("App did update.")
-    //this.checkLogin();
   }
 
   checkLogin() {
@@ -229,7 +238,6 @@ export default class App extends Component {
       });
     });
   }
-
   loadSubmissions() {
     axios_inst.get('/submissions/all')
       .then(res => {
@@ -256,6 +264,14 @@ export default class App extends Component {
     }
   }
 
+  loadLevelData() {
+    axios_inst.get('/level_data').then((res) => {
+      this.setState({
+        level_data: res.data,
+      });
+    });
+  }
+
   loadAchievements() {
     axios_inst.get('/achievements').then((res) => {
       this.setState({
@@ -266,7 +282,8 @@ export default class App extends Component {
 
   getNotifications() {
     const id = setInterval(() => {
-      axios_inst.get('/system_messages')
+      axios_inst
+        .get('/system_messages')
         .then((res) => {
           this.setState({
             errorResponseCounter: 0
@@ -315,6 +332,9 @@ export default class App extends Component {
           }
           console.log("error notifications: ", error);
         })
+        .catch((error) => {
+          console.log('error notifications: ', error);
+        });
     }, 5000);
     this.setState({
       intervalID: id,
@@ -344,54 +364,49 @@ export default class App extends Component {
           <NavBar username={this.state.username} />
           <div id="body" className="tile is-ancestor">
             <Switch>
-              <React.Fragment>
-                <React.Fragment>
-                  <Route
-                    exact
-                    path="/"
-                    render={() => (
-                      <ProfilePage
-                        charname={this.state.charname}
-                        character={this.state.character}
-                        assets={this.state.assets}
-                        achievements={this.state.achievements}
-                        onSaveCharacterProperties={
-                          this.onSaveCharacterProperties
-                        }
-                        onSaveCharname={this.onSaveCharname}
-                      />
-                    )}
+              <Route
+                exact
+                path="/"
+                component={() => (
+                  <Dashboard
+                    charname={this.state.charname}
+                    character={this.state.character}
+                    assets={this.state.assets}
+                    achievements={this.state.achievements}
+                    level_data={this.state.level_data}
+                    onSaveCharacterProperties={this.onSaveCharacterProperties}
+                    onSaveCharname={this.onSaveCharname}
                   />
-                  <Route
-                    exact
-                    path="/leaderboard"
-                    render={LeaderboardPage}
+                )}
+              />
+              <Route
+                exact
+                path="/leaderboard"
+                render={LeaderboardPage}
+              />
+              <Route
+                exact
+                path="/exercises/:taskid"
+                render={() => (
+                  <ExercisePage
+                    loadExercises={this.loadExercises}
+                    addSubmission={this.addSubmission}
+                    exercises={this.state.exercises}
                   />
-                  <Route
-                    exact
-                    path="/exercises/:taskid"
-                    render={() => (
-                      <ExercisePage
-                        loadExercises={this.loadExercises}
-                        addSubmission={this.addSubmission}
-                        exercises={this.state.exercises}
-                      />
-                    )}
+                )}
+              />
+              <Route
+                exact
+                path="/exercises"
+                render={() => (
+                  <ExerciseOverviewPage
+                    categories={this.state.exercises.categories}
                   />
-                  <Route
-                    exact
-                    path="/exercises"
-                    render={() => (
-                      <ExerciseOverviewPage
-                        categories={this.state.exercises.categories}
-                      />
-                    )}
-                  />
-                </React.Fragment>
-                <BeanWrapper
-                  charname={this.state.charname}
-                  character={this.state.character} />
-              </React.Fragment>
+                )}
+              />
+              <BeanWrapper
+                charname={this.state.charname}
+                character={this.state.character} />
             </Switch>
           </div>
         </div>
