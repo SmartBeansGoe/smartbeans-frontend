@@ -10,7 +10,7 @@ import { NotificationContext } from './components/notification/NotificationProvi
 
 import './App.css';
 
-import ProfilePage from './components/profile/ProfilePage';
+import Dashboard from './components/dashboard/Dashboard';
 
 export default class App extends Component {
   static contextType = NotificationContext;
@@ -322,7 +322,7 @@ export default class App extends Component {
                 exact
                 path="/"
                 component={() => (
-                  <ProfilePage
+                  <Dashboard
                     charname={this.state.charname}
                     character={this.state.character}
                     assets={this.state.assets}

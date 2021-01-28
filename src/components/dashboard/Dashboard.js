@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import RadarChart from './RadarChart';
 import AchievementList from '../achievements/AchievementList';
 import CharacterBuildingPage from '../character/CharacterBuildingPage';
 import { Modal } from './Modal';
 import { mdiCheckBold } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import Bean from '../character/avatar/Bean';
+import SkillGraph from './SkillGraph';
 
 export default class ProfilePage extends Component {
   constructor(props) {
@@ -48,35 +48,25 @@ export default class ProfilePage extends Component {
             }}
           >
             <article className="tile is-child box">
-              <p className="title">Stufe {this.props.level_data.level} von {this.props.level_data.max_level}</p>
+              <p className="title">
+                Stufe {this.props.level_data.level} von{' '}
+                {this.props.level_data.max_level}
+              </p>
               <div className="progress-wrapper">
                 <progress
                   className="progress is-danger is-large"
                   value={this.props.level_data.points}
                   max={this.props.level_data.next_points}
                 />
-                <p className="progress-value has-text-white">{this.props.level_data.points}/{this.props.level_data.next_points} Punkte</p>
+                <p className="progress-value has-text-white">
+                  {this.props.level_data.points}/
+                  {this.props.level_data.next_points} Punkte
+                </p>
               </div>
             </article>
             <article className="tile is-child box">
               <p className="title">Fähigkeiten</p>
-              <RadarChart
-                title=""
-                // TODO: Backend get request is needed for category_skill_values and titles.
-                category_skill_titles={[
-                  'IO',
-                  'STRING',
-                  'DATA',
-                  'CONTROL',
-                  'MATH',
-                  'POINTER',
-                  'ARRAYS',
-                  'MEMORY',
-                  'MODULE',
-                  'STRUCTS',
-                ]}
-                category_skill_values={[5, 3, 6, 3, 7, 2, 7, 3, 9, 3]}
-              />
+              <SkillGraph skills={this.props.level_data.skills} />
             </article>
           </div>
 
