@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import Achievement from './Achievement';
+import './AchievementList.css';
 
 export default function AchievementList(props) {
   return (
-    <div className="flex-container">
+    <div className="achievement-list-container">
       {props.achievements
         .filter((achievement) =>
           props.completed
