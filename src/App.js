@@ -186,20 +186,18 @@ export default class App extends Component {
 
   loadExercises() {
     axios_inst.get('/tasks').then((res) => {
+      console.log(res.data);
       var bronze = res.data.filter(function (el) {
-        return el.shortname[0] === 'X';
+        return el.difficulty === 'einfach';
       });
       var silver = res.data.filter(function (el) {
-        return el.shortname[0] === 'E';
+        return el.difficulty === 'mittel';
       });
       var gold = res.data.filter(function (el) {
-        return el.shortname[0] === 'S';
+        return el.difficulty === 'schwierig';
       });
       var platin = res.data.filter(function (el) {
-        return el.shortname[0] === 'Z';
-      });
-      var diamond = res.data.filter(function (el) {
-        return el.shortname[0] === 'K';
+        return el.difficulty === 'klausur';
       });
       this.setState({
         exercises: {
@@ -223,11 +221,6 @@ export default class App extends Component {
               title: 'Platin',
               subtitle: 'Klausurniveau Aufgaben',
               exerciseList: platin,
-            },
-            {
-              title: 'Diamond',
-              subtitle: 'Overkill Aufgaben',
-              exerciseList: diamond,
             },
           ],
         },
