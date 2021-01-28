@@ -19,7 +19,6 @@ export default class SkillGraph extends Component {
         labels: this.props.skills.map((el) => el.name),
         datasets: [
           {
-            label: 'Skills',
             data: this.props.skills.map(
               (el) => (el.points / el.max_points) * 100
             ),
