@@ -16,12 +16,14 @@ export default class SkillGraph extends Component {
     new Chart(myChartRef, {
       type: 'radar',
       data: {
-        labels: this.props.skills.map((el) => el.name),
+        labels: this.props.skills
+          .sort((a, b) => a.name > b.name)
+          .map((el) => el.name),
         datasets: [
           {
-            data: this.props.skills.map(
-              (el) => (el.points / el.max_points) * 100
-            ),
+            data: this.props.skills
+              .sort((a, b) => a.name > b.name)
+              .map((el) => (el.points / el.max_points) * 100),
             backgroundColor: '#99ccff',
             borderColor: '#4da6ff',
           },
