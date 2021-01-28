@@ -7,6 +7,20 @@
   flex-wrap: wrap;
 }
 
+.flex-item-left {
+  flex: 50%;
+}
+
+.flex-item-right {
+  flex: 50%;
+}
+
+@media (max-width: 800px) {
+  .flex-item-right, .flex-item-left {
+    flex: 100%;
+  }
+}
+
 .scroll {
   overflow: scroll;
   position: relative;

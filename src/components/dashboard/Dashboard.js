@@ -34,15 +34,9 @@ export default class ProfilePage extends Component {
   render() {
     return (
       <div className="tile">
-        <div
-          className="tile"
-          style={{
-            display: 'flex',
-            flexFlow: 'row wrap',
-          }}
-        >
+        <div className="tile flex-container">
           <div
-            className="tile is-parent is-vertical"
+            className="tile is-parent is-vertical flex-item-left"
             style={{
               minWidth: '50%',
             }}
@@ -75,12 +69,7 @@ export default class ProfilePage extends Component {
             </div>
           </div>
 
-          <div
-            className="tile is-parent is-vertical"
-            style={{
-              minWidth: '50%',
-            }}
-          >
+          <div className="tile is-parent is-vertical flex-item-right">
             <div className="tile is-vertical box">
               <p className="title">Triumphe</p>
               <p className="subtitle">Alle freigeschaltenen Erfolge</p>
