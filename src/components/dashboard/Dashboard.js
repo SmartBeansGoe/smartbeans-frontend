@@ -47,7 +47,12 @@ export default class ProfilePage extends Component {
               minWidth: '50%',
             }}
           >
-            <article className="tile is-child box">
+            <div
+              className="tile is-child box"
+              style={{
+                maxHeight: 175,
+              }}
+            >
               <p className="title">
                 Stufe {this.props.level_data.level} von{' '}
                 {this.props.level_data.max_level}
@@ -63,11 +68,11 @@ export default class ProfilePage extends Component {
                   {this.props.level_data.next_points} Punkte
                 </p>
               </div>
-            </article>
-            <article className="tile is-child box">
+            </div>
+            <div className="tile is-child box">
               <p className="title">Fähigkeiten</p>
               <SkillGraph skills={this.props.level_data.skills} />
-            </article>
+            </div>
           </div>
 
           <div
