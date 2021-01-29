@@ -17,12 +17,16 @@ export default class SkillGraph extends Component {
       type: 'radar',
       data: {
         labels: this.props.skills
-          .sort((a, b) => a.name > b.name)
+          .sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+          })
           .map((el) => el.name),
         datasets: [
           {
             data: this.props.skills
-              .sort((a, b) => a.name > b.name)
+              .sort(function (a, b) {
+                return a.name.localeCompare(b.name);
+              })
               .map((el) => (el.points / el.max_points) * 100),
             backgroundColor: '#99ccff',
             borderColor: '#4da6ff',
