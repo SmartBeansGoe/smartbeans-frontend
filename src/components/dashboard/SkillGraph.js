@@ -36,11 +36,11 @@ export default class SkillGraph extends Component {
         scale: {
           angleLines: {
             display: true,
-            lineWidth: 5,
+            lineWidth: 4,
           },
           gridLines: {
             display: true,
-            lineWidth: 5,
+            lineWidth: 4,
           },
 
           pointLabels: {
@@ -50,19 +50,19 @@ export default class SkillGraph extends Component {
             suggestedMin: 0,
             suggestedMax: 100,
             stepSize: 20,
-            fontSize: 16,
+            fontSize: 14,
           },
         },
         elements: {
           line: {
             tension: 0,
-            borderWidth: 4,
+            borderWidth: 3,
           },
           point: {
-            radius: 7,
-            borderWidth: 4,
-            hoverRadius: 9,
-            hoverBorderWidth: 5,
+            radius: 4,
+            borderWidth: 3,
+            hoverRadius: 6,
+            hoverBorderWidth: 4,
           },
         },
         tooltips: {
