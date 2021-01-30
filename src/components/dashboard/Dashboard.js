@@ -111,7 +111,7 @@ export default class ProfilePage extends Component {
                 minWidth: '300px',
               }}
             >
-              <article className="tile is-child box">
+              <article className="tile is-child box glide__slide">
                 <p className="title">Mittlere Aufgabe</p>
                 <p className="subtitle">Titel der Aufgabe</p>
               </article>
@@ -124,7 +124,7 @@ export default class ProfilePage extends Component {
               }}
             >
               <article className="tile is-child box">
-                <p className="title">Klausurniveau Aufgabe</p>
+                <p className="title">Schwere Aufgabe</p>
                 <p className="subtitle">Titel der Aufgabe</p>
               </article>
             </div>
@@ -136,7 +136,7 @@ export default class ProfilePage extends Component {
               }}
             >
               <article className="tile is-child box">
-                <p className="title">Schwere Aufgabe</p>
+                <p className="title">Klausurniveau Aufgabe</p>
                 <p className="subtitle">Titel der Aufgabe</p>
               </article>
             </div>
