@@ -20,15 +20,7 @@ export default class App extends Component {
     this.state = {
       username: '',
       charname: '',
-      exercises: {
-        categories: [
-          {
-            title: '',
-            subtitle: '',
-            exerciseList: [],
-          },
-        ],
-      },
+      exercises: [],
       level_data: {
         level: 0,
         max_level: 0,
@@ -81,7 +73,7 @@ export default class App extends Component {
   checkLogin() {
     axios_inst
       .get('/username')
-      .then((response) => { })
+      .then((response) => {})
       .catch((error) => {
         var error_message;
         if (error.response === undefined) {
@@ -97,16 +89,16 @@ export default class App extends Component {
       });
   }
 
-  loadUser() {
-    axios_inst.get('/username').then((response) =>
+  async loadUser() {
+    await axios_inst.get('/username').then((response) =>
       this.setState({
         username: response.data.username,
       })
     );
   }
 
-  loadCharname() {
-    axios_inst.get('/charname').then((response) => {
+  async loadCharname() {
+    await axios_inst.get('/charname').then((response) => {
       this.setState({
         charname: response.data.charname,
       });
@@ -131,8 +123,8 @@ export default class App extends Component {
     });
   };
 
-  loadCharacter() {
-    axios_inst.get('/character').then((response) => {
+  async loadCharacter() {
+    await axios_inst.get('/character').then((response) => {
       var data = response.data;
       this.setCharacter(
         data.body_color === null ? '#E7C27A' : data.body_color,
@@ -190,73 +182,29 @@ export default class App extends Component {
 
   loadExercises() {
     axios_inst.get('/tasks').then((res) => {
-      var bronze = res.data.filter(function (el) {
-        return el.shortname[0] === 'X';
-      });
-      var silver = res.data.filter(function (el) {
-        return el.shortname[0] === 'E';
-      });
-      var gold = res.data.filter(function (el) {
-        return el.shortname[0] === 'S';
-      });
-      var platin = res.data.filter(function (el) {
-        return el.shortname[0] === 'Z';
-      });
-      var diamond = res.data.filter(function (el) {
-        return el.shortname[0] === 'K';
-      });
       this.setState({
-        exercises: {
-          categories: [
-            {
-              title: 'Bronze',
-              subtitle: 'Basis Aufgaben',
-              exerciseList: bronze,
-            },
-            {
-              title: 'Silver',
-              subtitle: 'Einsteiger Aufgaben',
-              exerciseList: silver,
-            },
-            {
-              title: 'Gold',
-              subtitle: 'Fortgeschrittenen Aufgaben',
-              exerciseList: gold,
-            },
-            {
-              title: 'Platin',
-              subtitle: 'Klausurniveau Aufgaben',
-              exerciseList: platin,
-            },
-            {
-              title: 'Diamond',
-              subtitle: 'Overkill Aufgaben',
-              exerciseList: diamond,
-            },
-          ],
-        },
+        exercises: res.data,
       });
     });
   }
   loadSubmissions() {
-    axios_inst.get('/submissions/all')
-      .then(res => {
-        this.putSubmissionsInState(res.data, 0);
-      }
-      )
+    axios_inst.get('/submissions/all').then((res) => {
+      this.putSubmissionsInState(res.data, 0);
+    });
   }
 
   putSubmissionsInState(submissions, tries) {
     if (tries < 20) {
       if (this.state.exercises.length !== 0) {
-        this.state.exercises.categories.map(categorie => {
-          let kleinListe = categorie.exerciseList.map(exercise => {
-            let result = submissions.filter(submission => submission.taskid === exercise.taskid).sort(function (a, b) { return a.timestamp < b.timestamp });
-            exercise.submissions = result;
+        this.setState({
+          exercises: this.state.exercises.map((exercise) => {
+            let submissionsForExercise = submissions.filter(
+              (submission) => submission.taskid === exercise.taskid
+            );
+            exercise.submissions = submissionsForExercise;
             return exercise;
-          })
-          return kleinListe;
-        })
+          }),
+        });
       } else {
         tries++;
         setTimeout(() => this.putSubmissionsInState(submissions, tries), 50);
@@ -285,11 +233,8 @@ export default class App extends Component {
       axios_inst
         .get('/system_messages')
         .then((res) => {
-          this.setState({
-            errorResponseCounter: 0
-          })
           if (res.data.length !== 0) {
-            res.data.forEach(message => {
+            res.data.forEach((message) => {
               let messageBody;
               let title;
               let name = null;
@@ -312,7 +257,7 @@ export default class App extends Component {
                 type: 'ADD_NOTIFICATION',
                 payload: {
                   id: message.id,
-                  type: "",
+                  type: '',
                   message: messageBody,
                   title: title,
                   pictureId: pictureId,
@@ -322,15 +267,15 @@ export default class App extends Component {
             });
           }
         })
-        .catch(error => {
+        .catch((error) => {
           if (this.state.errorResponseCounter > 12) {
             // Umleiten auf error Page
           } else {
             this.setState({
-              errorResponseCounter: this.state.errorResponseCounter + 1
-            })
+              errorResponseCounter: this.state.errorResponseCounter + 1,
+            });
           }
-          console.log("error notifications: ", error);
+          console.log('error notifications: ', error);
         })
         .catch((error) => {
           console.log('error notifications: ', error);
@@ -347,15 +292,14 @@ export default class App extends Component {
 
   addSubmission = (taskid, submissions) => {
     this.setState({
-      exercises: this.state.exercises.categories.map(categorie =>
-        categorie.exerciseList.map(exercise => {
-          if (exercise.taskid === taskid)
-            exercise.submissions = submissions;
-          return exercise;
-        })
-      )
-    })
-  }
+      exercises: this.state.exercises.map((exercise) => {
+        if (exercise.taskid === taskid) {
+          exercise.submissions = submissions;
+        }
+        return exercise;
+      }),
+    });
+  };
 
   render() {
     return (
@@ -379,34 +323,31 @@ export default class App extends Component {
                   />
                 )}
               />
-              <Route
-                exact
-                path="/leaderboard"
-                render={LeaderboardPage}
-              />
-              <Route
-                exact
-                path="/exercises/:taskid"
-                render={() => (
-                  <ExercisePage
-                    loadExercises={this.loadExercises}
-                    addSubmission={this.addSubmission}
-                    exercises={this.state.exercises}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/exercises"
-                render={() => (
-                  <ExerciseOverviewPage
-                    categories={this.state.exercises.categories}
-                  />
-                )}
-              />
-              <BeanWrapper
-                charname={this.state.charname}
-                character={this.state.character} />
+              <React.Fragment>
+                <Route exact path="/leaderboard" component={LeaderboardPage} />
+                <Route
+                  exact
+                  path="/exercises/:taskid"
+                  render={() => (
+                    <ExercisePage
+                      loadExercises={this.loadExercises}
+                      addSubmission={this.addSubmission}
+                      exercises={this.state.exercises}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/exercises"
+                  render={() => (
+                    <ExerciseOverviewPage exercises={this.state.exercises} />
+                  )}
+                />
+                <BeanWrapper
+                  charname={this.state.charname}
+                  character={this.state.character}
+                />
+              </React.Fragment>
             </Switch>
           </div>
         </div>
