@@ -13,10 +13,19 @@ const Notification = (props) => {
       });
     }, 400);
   };
+  var achievement = achievements.find((el) => el.id === props.id);
+  var svg;
+  if (achievement === undefined) {
+    svg = achievements.find((el) => el.id === 'default').svg;
+  } else {
+    svg = achievement.svg;
+  }
 
   return (
     <article
-      className={`message notification-item ${props.type} ${exit ? 'exit' : ''}`}
+      className={`message notification-item ${props.type} ${
+        exit ? 'exit' : ''
+      }`}
     >
       <div className="message-header">
         <p>{props.title}</p>
@@ -26,24 +35,26 @@ const Notification = (props) => {
           aria-label="delete"
         ></button>
       </div>
-      <div className="message-body p-0" >
+      <div className="message-body p-0">
         <div className="flex-container">
-          {props.pictureId !== -1 &&
+          {props.pictureId !== -1 && (
             <span>
               <svg
                 viewBox="0 0 110 110"
                 width="auto"
                 height="100px"
                 dangerouslySetInnerHTML={{
-                  __html: achievements.find((el) => el.id === props.pictureId)['svg'],
+                  __html: svg,
                 }}
               />
-            </span>}
+            </span>
+          )}
           <span>
-            {props.name !== null && <p className="subtitle margin-top">{props.name}</p>}
+            {props.name !== null && (
+              <p className="subtitle margin-top">{props.name}</p>
+            )}
             <p>{props.message}</p>
           </span>
-
         </div>
       </div>
     </article>
