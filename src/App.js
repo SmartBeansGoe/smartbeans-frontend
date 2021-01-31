@@ -89,16 +89,16 @@ export default class App extends Component {
       });
   }
 
-  async loadUser() {
-    await axios_inst.get('/username').then((response) =>
+  loadUser() {
+    axios_inst.get('/username').then((response) =>
       this.setState({
         username: response.data.username,
       })
     );
   }
 
-  async loadCharname() {
-    await axios_inst.get('/charname').then((response) => {
+  loadCharname() {
+    axios_inst.get('/charname').then((response) => {
       this.setState({
         charname: response.data.charname,
       });
@@ -123,8 +123,8 @@ export default class App extends Component {
     });
   };
 
-  async loadCharacter() {
-    await axios_inst.get('/character').then((response) => {
+  loadCharacter() {
+    axios_inst.get('/character').then((response) => {
       var data = response.data;
       this.setCharacter(
         data.body_color === null ? '#E7C27A' : data.body_color,
