@@ -7,6 +7,8 @@ import { mdiCheckBold } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import Bean from '../character/avatar/Bean';
 import SkillGraph from './SkillGraph';
+import { BLUE, LIGHTBLUE } from '../../js/constants';
+import './Dashboard.css';
 
 export default class ProfilePage extends Component {
   constructor(props) {
@@ -33,9 +35,7 @@ export default class ProfilePage extends Component {
 
   render() {
     return (
-      <div className="tile">
-        <div className="tile flex-container">
-          <div
+      <div
         className="tile"
         style={{
           margin: 10,
@@ -65,7 +65,7 @@ export default class ProfilePage extends Component {
               </p>
               <div className="progress-wrapper">
                 <progress
-                  className="progress is-danger is-large"
+                  className="progress is-large is-smart"
                   value={this.props.level_data.points}
                   max={this.props.level_data.next_points}
                 />
@@ -136,7 +136,7 @@ export default class ProfilePage extends Component {
               }}
             >
               <article className="tile is-child box">
-                <p className="title">Klausurniveau Aufgabe</p>
+                <p className="title">Schwere Aufgabe</p>
                 <p className="subtitle">Titel der Aufgabe</p>
               </article>
             </div>
@@ -148,7 +148,7 @@ export default class ProfilePage extends Component {
               }}
             >
               <article className="tile is-child box">
-                <p className="title">Schwere Aufgabe</p>
+                <p className="title">Klausurniveau Aufgabe</p>
                 <p className="subtitle">Titel der Aufgabe</p>
               </article>
             </div>
@@ -169,15 +169,23 @@ export default class ProfilePage extends Component {
             />
           </div>
           <article
-            className="tile is-child is-danger box"
+            className="tile is-child box "
             onClick={this.toggleModal}
             style={{
               cursor: 'pointer',
               flex: 0,
+              backgroundColor: BLUE,
             }}
           >
             <center>
-              <p className="title">Avatar umkleiden</p>
+              <p
+                className="title"
+                style={{
+                  color: 'white',
+                }}
+              >
+                Avatar umkleiden
+              </p>
             </center>
           </article>
           <article
@@ -197,11 +205,11 @@ export default class ProfilePage extends Component {
                 onSubmit={() => this.props.onSaveCharname(this.state.charname)}
               >
                 <input
-                  className="input is-danger"
+                  className="input"
                   type="text"
                   placeholder="Text input"
                   value={this.state.charname}
-                  style={{ width: '140px' }}
+                  style={{ width: '140px', borderColor: BLUE }}
                   maxLength={15}
                   onChange={(event) => {
                     this.setState({
@@ -212,11 +220,11 @@ export default class ProfilePage extends Component {
                   }}
                 />
                 <button
-                  className="button is-danger"
+                  className="button is-smart"
                   disabled={!this.state.charnameSubmit}
                   type="submit"
                 >
-                  <div className="icon is-right ">
+                  <div className="icon is-right">
                     <Icon path={mdiCheckBold} size={1} />
                   </div>
                 </button>

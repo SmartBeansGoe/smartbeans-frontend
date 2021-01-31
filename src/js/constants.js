@@ -19,3 +19,6 @@ export const attributes = {
 };
 
 export const attributePriority = ['no-pants', 'on-top', 'standard'];
+
+export const BLUE = '#489ac7';
+export const LIGHTBLUE = '#a2cce2';

@@ -1,0 +1,25 @@
+.progress.is-smart::-webkit-progress-value {
+  background-color: #489ac7;
+}
+
+.progress.is-smart::-moz-progress-bar {
+  background-color: #489ac7;
+}
+
+.progress.is-smart::-ms-fill {
+  background-color: #489ac7;
+}
+
+.progress.is-smart:indeterminate {
+  background-image: linear-gradient(to right, #489ac7 30%, #ededed 30%);
+}
+
+.button.is-smart {
+  background-color: #489ac7;
+  border-color: transparent;
+  color: #fff;
+}
+
+.has-text-smart {
+  color: #489ac7;
+}

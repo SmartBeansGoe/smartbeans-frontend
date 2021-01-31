@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Icon from '@mdi/react';
+import { mdiCheck, mdiCheckBold } from '@mdi/js';
+import { BLUE } from '../../js/constants';
 
 export default class ExerciseCategoryOverview extends Component {
   constructor(props) {
@@ -9,6 +12,12 @@ export default class ExerciseCategoryOverview extends Component {
 
   render() {
     const progress = this.props.exerciseList.filter((ex) => ex.solved === true);
+
+    const exercises = this.props.exerciseList
+      .sort(function (a, b) {
+        return a.name.localeCompare(b.name);
+      })
+      .sort((a, b) => (a.solved === b.solved ? 0 : !a.solved ? -1 : 1));
 
     return (
       <div className="tile is-child box ">
@@ -19,7 +28,7 @@ export default class ExerciseCategoryOverview extends Component {
         <div className="columns mt-0">
           <div className="column is-two-thirds pt-2">
             <progress
-              className="progress is-success is-small pt-0"
+              className="progress is-small pt-0 is-smart"
               value={progress.length}
               max={this.props.exerciseList.length}
             />
@@ -30,17 +39,25 @@ export default class ExerciseCategoryOverview extends Component {
         </div>
         <div className="content">
           <ul>
-            {this.props.exerciseList.map((e) => {
+            {exercises.map((e) => {
               return (
                 <li key={e.taskid}>
                   <Link
-                    className={e.solved ? 'has-text-success' : 'has-text-grey'}
+                    className={e.solved ? 'has-text-smart' : 'has-text-grey'}
                     to={{
                       pathname: '/exercises/' + e.taskid,
                       state: { task: e },
                     }}
                   >
                     {e.name}
+                    {'  '}
+                    {e.solved ? (
+                      <Icon
+                        path={mdiCheckBold}
+                        size={0.7}
+                        style={{ color: BLUE }}
+                      />
+                    ) : null}
                   </Link>
                 </li>
               );

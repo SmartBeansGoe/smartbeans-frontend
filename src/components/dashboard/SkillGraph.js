@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Chart from 'chart.js';
 import PropTypes from 'prop-types';
+import { BLUE, LIGHTBLUE } from '../../js/constants';
 
 export default class SkillGraph extends Component {
   chartRef = React.createRef();
@@ -28,8 +29,8 @@ export default class SkillGraph extends Component {
                 return a.name.localeCompare(b.name);
               })
               .map((el) => (el.points / el.max_points) * 100),
-            backgroundColor: '#99ccff',
-            borderColor: '#4da6ff',
+            backgroundColor: LIGHTBLUE,
+            borderColor: BLUE,
           },
         ],
       },
