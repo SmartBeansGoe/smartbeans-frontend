@@ -17,8 +17,6 @@ class ExercisePage extends Component {
     let CancelToken = axios.CancelToken;
     let source = CancelToken.source();
     this.state = {
-      solved: '',
-      submissions: [],
       fileName: 'Keine Datei ausgewählt',
       selectedFile: null,
       isLoading: false,
@@ -26,50 +24,6 @@ class ExercisePage extends Component {
       source: source,
       isError: false,
     };
-  }
-
-  componentDidMount() {}
-
-  componentWillUnmount() {
-    this.state.source.cancel('Cancel submissions');
-  }
-
-  addTaskToState(exercise, tries) {
-    if (tries < 500) {
-      if (exercise.submissions === undefined) {
-        tries++;
-        setTimeout(() => this.addTaskToState(exercise, tries), 50);
-      } else {
-        this.setState({
-          title: exercise.name,
-          task: marked(exercise.task),
-          solved: exercise.solved,
-          taskid: exercise.taskid,
-          submissions: exercise.submissions,
-        });
-      }
-    }
-  }
-
-  getSubmissions() {
-    let taskid = this.props.match.params.taskid;
-    axios_inst
-      .get('/submissions/' + taskid, {
-        cancelToken: this.state.source.token,
-      })
-      .then((response) => {
-        let sub = response.data;
-        sub.reverse();
-        if (sub.length !== 0) {
-          this.setState({
-            submissions: sub,
-          });
-          this.props.addSubmission(this.state.taskid, sub);
-        }
-      })
-      .catch((error) => {
-        console.log('error getSubmissions: ', error);
-      });
   }
 
   onChangeHandler = (event) => {
@@ -99,15 +53,13 @@ class ExercisePage extends Component {
             },
           }
         )
-        .then((res) => {
-          let oldLength = this.state.submissions.length;
+        .then(() => {
           this.setState({
             fileName: 'Keine Datei ausgewählt',
             selectedFile: null,
             isLoading: false,
           });
-          this.updateExercises(oldLength, 0);
-          this.getSubmissions();
+          this.props.loadSubmissions();
         })
         .catch((error) => {
           console.log(error);
@@ -158,35 +110,22 @@ class ExercisePage extends Component {
     reader.readAsText(this.state.selectedFile);
   };
 
-  updateExercises(oldLength, tries) {
-    setTimeout(() => {
-      if (tries <= 20) {
-        if (oldLength !== this.state.submissions.length) {
-          if (this.state.submissions[0].result.score === 1) {
-            this.props.loadExercises(this.state.taskid);
-          }
-        } else {
-          tries++;
-          this.updateExercises(oldLength);
-        }
-      }
-    }, 500);
-  }
-
   render() {
+    let taskid = parseInt(this.props.match.params.taskid);
     let exercise = this.props.exercises.filter(
-      (exercise) => exercise.taskid === parseInt(this.props.match.params.taskid)
+      (exercise) => exercise.taskid === taskid
     )[0];
     let name = '';
     let task = '';
-    let submissions = [];
+    let submissions = this.props.submissions
+      .filter((submission) => submission.taskid === taskid)
+      .sort((a, b) => a.timestamp < b.timestamp);
 
     if (exercise !== undefined) {
       name = exercise.name;
       task = exercise.task;
-      submissions =
-        exercise.submissions !== undefined ? exercise.submissions : [];
     }
+
     return (
       <div className="tile is-parent is-vertical exercise_page">
         <div className="tile is-child box">
@@ -231,9 +170,7 @@ class ExercisePage extends Component {
             </div>
           </div>
         </div>
-        {submissions.length !== 0 && (
-          <SubmissionOverview submissions={submissions} />
-        )}
+        <SubmissionOverview submissions={submissions} />
       </div>
     );
   }
@@ -243,4 +180,5 @@ export default withRouter(ExercisePage);
 
 ExercisePage.propTypes = {
   exercises: PropTypes.array.isRequired,
+  submissions: PropTypes.array.isRequired,
 };

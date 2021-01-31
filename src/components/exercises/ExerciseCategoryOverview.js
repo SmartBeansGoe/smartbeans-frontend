@@ -11,7 +11,7 @@ export default class ExerciseCategoryOverview extends Component {
     const progress = this.props.exerciseList.filter((ex) => ex.solved === true);
 
     return (
-      <div className="tile is-child box">
+      <div className="tile is-child box ">
         <div className="title">
           <p>{this.props.title}</p>
         </div>

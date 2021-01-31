@@ -21,6 +21,7 @@ export default class App extends Component {
       username: '',
       charname: '',
       exercises: [],
+      submissions: [],
       level_data: {
         level: 0,
         max_level: 0,
@@ -53,8 +54,7 @@ export default class App extends Component {
     };
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
     this.loadExercises = this.loadExercises.bind(this);
-    this.putSubmissionsInState = this.putSubmissionsInState.bind(this);
-    this.addSubmission = this.addSubmission.bind(this);
+    this.loadSubmissions = this.loadSubmissions.bind(this);
   }
 
   componentDidMount() {
@@ -187,29 +187,13 @@ export default class App extends Component {
       });
     });
   }
+
   loadSubmissions() {
     axios_inst.get('/submissions/all').then((res) => {
-      this.putSubmissionsInState(res.data, 0);
+      this.setState({
+        submissions: res.data,
+      });
     });
-  }
-
-  putSubmissionsInState(submissions, tries) {
-    if (tries < 20) {
-      if (this.state.exercises.length !== 0) {
-        this.setState({
-          exercises: this.state.exercises.map((exercise) => {
-            let submissionsForExercise = submissions.filter(
-              (submission) => submission.taskid === exercise.taskid
-            );
-            exercise.submissions = submissionsForExercise;
-            return exercise;
-          }),
-        });
-      } else {
-        tries++;
-        setTimeout(() => this.putSubmissionsInState(submissions, tries), 50);
-      }
-    }
   }
 
   loadLevelData() {
@@ -290,17 +274,6 @@ export default class App extends Component {
     clearInterval(this.state.intervalID);
   };
 
-  addSubmission = (taskid, submissions) => {
-    this.setState({
-      exercises: this.state.exercises.map((exercise) => {
-        if (exercise.taskid === taskid) {
-          exercise.submissions = submissions;
-        }
-        return exercise;
-      }),
-    });
-  };
-
   render() {
     return (
       <Router>
@@ -331,8 +304,9 @@ export default class App extends Component {
                   render={() => (
                     <ExercisePage
                       loadExercises={this.loadExercises}
-                      addSubmission={this.addSubmission}
+                      loadSubmissions={this.loadSubmissions}
                       exercises={this.state.exercises}
+                      submissions={this.state.submissions}
                     />
                   )}
                 />

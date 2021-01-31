@@ -21,33 +21,41 @@ export default class SubmissionOverview extends Component {
 
   render() {
     return (
-      <div className="is-child tile">
-        <Submission
-          key={this.props.submissions[0].timestamp}
-          id={this.props.submissions.length} result={this.props.submissions[0]}
-          handler={() => { }}
-          defaultOpen={true}
-        />
-        {this.props.submissions.length > 1 &&
-          <Card
-            title="Vorherige Versuche"
-            hasSymbol={false}
-            componentHeight={this.state.componentsHeight}
-            handler={this.handler}
-          >
-            {() =>
-              this.props.submissions.slice(1).map((result, index) => (
-                <Submission
-                  key={result.timestamp}
-                  id={this.props.submissions.length - index - 1}
-                  result={result}
-                  handler={this.handler}
-                  defaultOpen={false}
-                />
-              ))
-            }
-          </Card>}
-      </div>
+      <React.Fragment>
+        {this.props.submissions.length !== 0 && (
+          <div className="is-child tile">
+            <Submission
+              key={this.props.submissions[0].timestamp}
+              id={this.props.submissions.length}
+              result={this.props.submissions[0]}
+              handler={() => {}}
+              defaultOpen={true}
+            />
+            {this.props.submissions.length > 1 && (
+              <Card
+                title="Vorherige Versuche"
+                hasSymbol={false}
+                componentHeight={this.state.componentsHeight}
+                handler={this.handler}
+              >
+                {() =>
+                  this.props.submissions
+                    .slice(1)
+                    .map((result, index) => (
+                      <Submission
+                        key={result.timestamp}
+                        id={this.props.submissions.length - index - 1}
+                        result={result}
+                        handler={this.handler}
+                        defaultOpen={false}
+                      />
+                    ))
+                }
+              </Card>
+            )}
+          </div>
+        )}
+      </React.Fragment>
     );
   }
 }
