@@ -40,15 +40,24 @@ export default class ExerciseOverviewPage extends Component {
     ];
 
     return (
-      <div className="tile is-parent is-vertical">
+      <div className="tile" style={{
+        flexWrap: "wrap"
+      }}>
         {categories.map((c, index) => (
-          <ExerciseCategoryOverview
-            key={index}
-            id={index}
-            title={c.title}
-            subtitle={c.subtitle}
-            exerciseList={c.exerciseList}
-          />
+          <div
+            className={
+              'tile is-parent ' +
+              (index % 2 === 0 ? 'flex-item-left' : 'flex-item-right')
+            }
+          >
+            <ExerciseCategoryOverview
+              key={index}
+              id={index}
+              title={c.title}
+              subtitle={c.subtitle}
+              exerciseList={c.exerciseList}
+            />
+          </div>
         ))}
       </div>
     );
