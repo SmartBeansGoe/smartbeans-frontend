@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import AchievementList from '../achievements/AchievementList';
 import CharacterBuildingPage from '../character/CharacterBuildingPage';
 import { Modal } from './Modal';
-import { mdiCheckBold } from '@mdi/js';
+import { mdiCheckBold, mdiDesktopMacDashboard } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import Bean from '../character/avatar/Bean';
 import SkillGraph from './SkillGraph';
 import { BLUE, LIGHTBLUE } from '../../js/constants';
 import './Dashboard.css';
+import lang from '../../lang/de_DE.json';
 
 export default class ProfilePage extends Component {
   constructor(props) {
@@ -60,8 +61,8 @@ export default class ProfilePage extends Component {
               }}
             >
               <p className="title">
-                Stufe {this.props.level_data.level} von{' '}
-                {this.props.level_data.max_level}
+                {lang['dashboard.level']} {this.props.level_data.level}{' '}
+                {lang['dashboard.of']} {this.props.level_data.max_level}
               </p>
               <div className="progress-wrapper">
                 <progress
@@ -71,25 +72,29 @@ export default class ProfilePage extends Component {
                 />
                 <p className="progress-value has-text-white">
                   {this.props.level_data.points}/
-                  {this.props.level_data.next_points} Punkte
+                  {this.props.level_data.next_points} {lang['dashboard.points']}
                 </p>
               </div>
             </div>
             <div className="tile is-child box">
-              <p className="title">Fähigkeiten</p>
+              <p className="title">{lang['dashboard.skills']}</p>
               <SkillGraph skills={this.props.level_data.skills} />
             </div>
           </div>
 
           <div className="tile is-parent is-vertical flex-item-right">
             <div className="tile is-vertical box">
-              <p className="title">Triumphe</p>
-              <p className="subtitle">Alle freigeschaltenen Erfolge</p>
+              <p className="title">{lang['dashboard.achievements']}</p>
+              <p className="subtitle">
+                {lang['dashboard.achievements.unlocked']}
+              </p>
               <AchievementList
                 achievements={this.props.achievements}
                 completed={true}
               />
-              <p className="subtitle">Noch freizuschaltene Erfolge</p>
+              <p className="subtitle">
+                {lang['dashboard.achievements.locked']}
+              </p>
               <AchievementList
                 achievements={this.props.achievements}
                 completed={false}
@@ -184,7 +189,7 @@ export default class ProfilePage extends Component {
                   color: 'white',
                 }}
               >
-                Avatar umkleiden
+                {lang['dashboard.locker-room']}
               </p>
             </center>
           </article>

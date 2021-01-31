@@ -1,0 +1,10 @@
+{
+  "dashboard.level": "Stufe",
+  "dashboard.of": "von",
+  "dashboard.points": "Punkte",
+  "dashboard.skills": "Fähigkeiten",
+  "dashboard.achievements": "Errungenschaften",
+  "dashboard.achievements.unlocked": "Freigeschaltete Errungenschaften",
+  "dashboard.achievements.locked": "Nicht freigeschaltete Errungenschaften",
+  "dashboard.locker-room": "Umkleide"
+}
