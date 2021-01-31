@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 
 export default class NavBar extends Component {
   state = {
-    isActiv: false,
-    classActiv: 'navbar-menu is-active',
-    classInActiv: 'navbar-menu',
+    isActive: false,
+    classActive: 'navbar-menu is-active',
+    classInActive: 'navbar-menu',
   };
 
   render() {
@@ -19,13 +19,13 @@ export default class NavBar extends Component {
           aria-label="main navigation"
         >
           <div className="navbar-brand">
-            <Link className="navbar-item" to="/">
+            <Link className="navbar-item">
               <img src={logo} width="60" height="60" alt="" />
             </Link>
             <a
               role="button"
               onClick={() => {
-                this.setState({ isActiv: !this.state.isActiv });
+                this.setState({ isActive: !this.state.isActive });
               }}
               className="navbar-burger"
               data-target="navMenu"
@@ -40,17 +40,26 @@ export default class NavBar extends Component {
           </div>
           <div
             className={
-              this.state.isActiv
-                ? this.state.classActiv
-                : this.state.classInActiv
+              this.state.isActive
+                ? this.state.classActive
+                : this.state.classInActive
             }
           >
             <div className="navbar-start">
               <Link
                 className="navbar-item is-hoverable"
+                to="/"
+                onClick={() => {
+                  this.setState({ isActive: false });
+                }}
+              >
+                Dashboard
+              </Link>
+              <Link
+                className="navbar-item is-hoverable"
                 to="/exercises"
                 onClick={() => {
-                  this.setState({ isActiv: false });
+                  this.setState({ isActive: false });
                 }}
               >
                 Aufgaben
@@ -63,15 +72,6 @@ export default class NavBar extends Component {
                 }}
               >
                 Hall of Fame
-              </Link>
-              <Link
-                className="navbar-item is-hoverable"
-                to="/"
-                onClick={() => {
-                  this.setState({ isActiv: false });
-                }}
-              >
-                Profil
               </Link>
             </div>
             <div className="navbar-end">
