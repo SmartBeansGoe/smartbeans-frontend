@@ -36,6 +36,18 @@ export default class ProfilePage extends Component {
       <div className="tile">
         <div className="tile flex-container">
           <div
+        className="tile"
+        style={{
+          margin: 10,
+        }}
+      >
+        <div
+          className="tile flex-container is-10"
+          style={{
+            margin: 0,
+          }}
+        >
+          <div
             className="tile is-parent is-vertical flex-item-left"
             style={{
               minWidth: '50%',

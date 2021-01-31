@@ -296,7 +296,12 @@ export default class App extends Component {
                   />
                 )}
               />
-              <React.Fragment>
+              <div
+                className="tile"
+                style={{
+                  margin: 10,
+                }}
+              >
                 <Route exact path="/leaderboard" component={LeaderboardPage} />
                 <Route
                   exact
@@ -321,7 +326,7 @@ export default class App extends Component {
                   charname={this.state.charname}
                   character={this.state.character}
                 />
-              </React.Fragment>
+              </div>
             </Switch>
           </div>
         </div>
