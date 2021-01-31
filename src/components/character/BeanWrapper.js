@@ -1,13 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Bean from './avatar/Bean';
 
 export default class BeanWrapper extends Component {
   render() {
     return (
-      <div
-        className="tile is-vertical is-2 is-hidden-touch is-parent"
-        style={{ marginLeft: 0, paddingLeft: 0 }}
-      >
+      <div className="tile is-vertical is-2 is-hidden-touch is-parent">
         <div className="tile is-child box" style={{ flex: 0 }}>
           <p className="title has-text-centered has-background-success-light">
             {this.props.charname}
@@ -23,6 +20,6 @@ export default class BeanWrapper extends Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }
