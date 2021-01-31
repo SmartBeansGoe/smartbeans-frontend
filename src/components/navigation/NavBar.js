@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import logo from '../../images/SmartBeans_logo_bw.svg';
 import { Link } from 'react-router-dom';
+import lang from '../../lang/de_DE.json';
 
 export default class NavBar extends Component {
   state = {
@@ -53,7 +54,7 @@ export default class NavBar extends Component {
                   this.setState({ isActive: false });
                 }}
               >
-                Dashboard
+                {lang['navigation.dashboard']}
               </Link>
               <Link
                 className="navbar-item is-hoverable"
@@ -62,7 +63,7 @@ export default class NavBar extends Component {
                   this.setState({ isActive: false });
                 }}
               >
-                Aufgaben
+                {lang['navigation.exercises']}
               </Link>
               <Link
                 className="navbar-item is-hoverable"
@@ -71,12 +72,14 @@ export default class NavBar extends Component {
                   this.setState({ isActiv: false });
                 }}
               >
-                Hall of Fame
+                {lang['navigation.leaderboard']}
               </Link>
             </div>
             <div className="navbar-end">
               <article className="navbar-item">
-                <p id="userbox">Eingeloggt als: {this.props.username}</p>
+                <p id="userbox">
+                  {lang['navigation.logged-in-as']}: {this.props.username}
+                </p>
               </article>
             </div>
           </div>

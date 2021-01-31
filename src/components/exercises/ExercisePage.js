@@ -9,6 +9,7 @@ import { Icon } from '@mdi/react';
 import './ExercisePage.css';
 import { NotificationContext } from './../notification/NotificationProvider';
 import axios from 'axios';
+import lang from '../../lang/de_DE.json';
 
 class ExercisePage extends Component {
   static contextType = NotificationContext;
@@ -17,7 +18,7 @@ class ExercisePage extends Component {
     let CancelToken = axios.CancelToken;
     let source = CancelToken.source();
     this.state = {
-      fileName: 'Keine Datei ausgewählt',
+      fileName: lang['exercise.no-file-selected'],
       selectedFile: null,
       isLoading: false,
       isDisabled: true,
@@ -55,7 +56,7 @@ class ExercisePage extends Component {
         )
         .then(() => {
           this.setState({
-            fileName: 'Keine Datei ausgewählt',
+            fileName: lang['exercise.no-file-selected'],
             selectedFile: null,
             isLoading: false,
           });
@@ -66,7 +67,7 @@ class ExercisePage extends Component {
         .catch((error) => {
           console.log(error);
           this.setState({
-            fileName: 'Keine Datei ausgewählt',
+            fileName: lang['exercise.no-file-selected'],
             selectedFile: null,
             isLoading: false,
             isError: true,
@@ -78,8 +79,8 @@ class ExercisePage extends Component {
             payload: {
               id: new Date().toLocaleString(),
               type: 'text',
-              message: 'Bitte versuchen Sie es später noch einmal',
-              title: 'Fehler beim Hochladen der Datei',
+              message: lang['exercise.upload-error.message'],
+              title: lang['exercise.upload-error.title'],
               achievementId: -1,
               achievementName: null,
             },
@@ -88,7 +89,7 @@ class ExercisePage extends Component {
     };
     reader.onerror = (event) => {
       this.setState({
-        fileName: 'Keine Datei ausgewählt',
+        fileName: lang['exercise.no-file-selected'],
         selectedFile: null,
         isLoading: false,
         isError: true,
@@ -100,9 +101,8 @@ class ExercisePage extends Component {
         payload: {
           id: new Date().toLocaleString(),
           type: 'is-danger',
-          message:
-            'Bitte überprüfen Sie die Datei und probieren Sie das Hochladen noch einmal',
-          title: 'Fehler beim Einlesen der Datei',
+          message: lang['exercise.read-error.message'],
+          title: lang['exercise.read-error.title'],
           pictureId: -1,
           name: null,
         },
@@ -148,7 +148,9 @@ class ExercisePage extends Component {
                     <span className="file-icon">
                       <Icon path={mdiUpload} size={1} />
                     </span>
-                    <span className="file-label">Datei auswählen</span>
+                    <span className="file-label">
+                      {lang['exercise.select-file']}
+                    </span>
                   </span>
                   <span className="file-name" style={{ width: '200px' }}>
                     {this.state.fileName}
@@ -166,8 +168,8 @@ class ExercisePage extends Component {
                 onClick={this.onClickHandler}
               >
                 {this.state.isError
-                  ? 'Fehler aufgetretten'
-                  : 'Lösung hochladen'}
+                  ? lang['exercise.error-occured']
+                  : lang['exercise.upload-solution']}
               </button>
             </div>
           </div>

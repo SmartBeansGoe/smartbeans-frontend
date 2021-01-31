@@ -199,7 +199,7 @@ export default class ProfilePage extends Component {
               flex: 0,
             }}
           >
-            <p className="title">Avatarname</p>
+            <p className="title">{lang['dashboard.avatar-naming']}</p>
             <div
               className="control"
               style={{
@@ -240,7 +240,7 @@ export default class ProfilePage extends Component {
         <Modal
           closeModal={this.toggleModal}
           modalState={this.state.modalState}
-          title="Umkleide"
+          title={lang['wardrobe.name']}
         >
           <CharacterBuildingPage
             body_color={this.props.character.body_color}

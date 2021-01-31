@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
 import Submission from './Submission';
+import lang from '../../lang/de_DE.json';
 
 export default class SubmissionOverview extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ export default class SubmissionOverview extends Component {
             />
             {this.props.submissions.length > 1 && (
               <Card
-                title="Vorherige Versuche"
+                title={lang['submission.previous-attempts']}
                 hasSymbol={false}
                 componentHeight={this.state.componentsHeight}
                 handler={this.handler}

@@ -1,48 +1,57 @@
 import React, { Component } from 'react';
 import ExerciseCategoryOverview from './ExerciseCategoryOverview';
+import lang from '../../lang/de_DE.json';
+
+const EASY = 'einfach';
+const MEDIUM = 'mittel';
+const HARD = 'schwierig';
+const EXAM = 'klausur';
 
 export default class ExerciseOverviewPage extends Component {
   render() {
     let exercises = this.props.exercises;
     var bronze = exercises.filter(function (el) {
-      return el.difficulty === 'einfach';
+      return el.difficulty === EASY;
     });
     var silver = exercises.filter(function (el) {
-      return el.difficulty === 'mittel';
+      return el.difficulty === MEDIUM;
     });
     var gold = exercises.filter(function (el) {
-      return el.difficulty === 'schwierig';
+      return el.difficulty === HARD;
     });
     var platin = exercises.filter(function (el) {
-      return el.difficulty === 'klausur';
+      return el.difficulty === EXAM;
     });
     let categories = [
       {
-        title: 'Bronze',
-        subtitle: 'Basis Aufgaben',
+        title: lang['exercise.category.easy.title'],
+        subtitle: lang['exercise.category.easy.subtitle'],
         exerciseList: bronze,
       },
       {
-        title: 'Silver',
-        subtitle: 'Einsteiger Aufgaben',
+        title: lang['exercise.category.medium.title'],
+        subtitle: lang['exercise.category.medium.subtitle'],
         exerciseList: silver,
       },
       {
-        title: 'Gold',
-        subtitle: 'Fortgeschrittenen Aufgaben',
+        title: lang['exercise.category.hard.title'],
+        subtitle: lang['exercise.category.hard.subtitle'],
         exerciseList: gold,
       },
       {
-        title: 'Platin',
-        subtitle: 'Klausurniveau Aufgaben',
+        title: lang['exercise.category.exam.title'],
+        subtitle: lang['exercise.category.exam.subtitle'],
         exerciseList: platin,
       },
     ];
 
     return (
-      <div className="tile" style={{
-        flexWrap: "wrap"
-      }}>
+      <div
+        className="tile"
+        style={{
+          flexWrap: 'wrap',
+        }}
+      >
         {categories.map((c, index) => (
           <div
             className={

@@ -8,6 +8,7 @@ import assets from './sources/assets.json';
 
 import { SHIRTS, PANTS, HATS } from '../../js/constants';
 import axios_inst from '../../js/backend';
+import lang from '../../lang/de_DE.json';
 
 export default class CharacterBuildingPage extends Component {
   constructor(props) {
@@ -120,7 +121,7 @@ export default class CharacterBuildingPage extends Component {
                     <span className="icon is-small">
                       <Icon path={mdiHatFedora} size={1} />
                     </span>
-                    <span>Kopfac­ces­soires</span>
+                    <span>{lang['wardrobe.head-accessory']}</span>
                   </a>
                 </li>
                 <li id={'tab-' + SHIRTS} className="is-active">
@@ -128,7 +129,9 @@ export default class CharacterBuildingPage extends Component {
                     <span className="icon is-small">
                       <Icon path={mdiTshirtCrew} size={1} />
                     </span>
-                    <span>Shirts & Kleider</span>
+                    <span>
+                      {lang['wardrobe.shirts']} & {lang['wardrobe.dresses']}
+                    </span>
                   </a>
                 </li>
                 <li id={'tab-' + PANTS}>
@@ -136,7 +139,9 @@ export default class CharacterBuildingPage extends Component {
                     <span className="icon is-small">
                       <img src={pants} alt="" />
                     </span>
-                    <span>Hosen & Röcke</span>
+                    <span>
+                      {lang['wardrobe.pants']} & {lang['wardrobe.skirts']}
+                    </span>
                   </a>
                 </li>
               </ul>
@@ -213,7 +218,7 @@ export default class CharacterBuildingPage extends Component {
                       )
                     }
                   >
-                    Save Configurations
+                    {lang['wardrobe.save']}
                   </button>
                 </span>
               </div>
