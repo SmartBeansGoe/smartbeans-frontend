@@ -15,7 +15,7 @@
   flex: 50%;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 768px) {
   .flex-item-right, .flex-item-left {
     flex: 100%;
   }
