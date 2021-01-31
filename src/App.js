@@ -55,6 +55,7 @@ export default class App extends Component {
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
     this.loadExercises = this.loadExercises.bind(this);
     this.loadSubmissions = this.loadSubmissions.bind(this);
+    this.loadLevelData = this.loadLevelData.bind(this);
   }
 
   componentDidMount() {
@@ -310,6 +311,7 @@ export default class App extends Component {
                     <ExercisePage
                       loadExercises={this.loadExercises}
                       loadSubmissions={this.loadSubmissions}
+                      loadLevelData={this.loadLevelData}
                       exercises={this.state.exercises}
                       submissions={this.state.submissions}
                     />

@@ -60,6 +60,8 @@ class ExercisePage extends Component {
             isLoading: false,
           });
           this.props.loadSubmissions();
+          this.props.loadExercises();
+          this.props.loadLevelData();
         })
         .catch((error) => {
           console.log(error);
@@ -181,4 +183,7 @@ export default withRouter(ExercisePage);
 ExercisePage.propTypes = {
   exercises: PropTypes.array.isRequired,
   submissions: PropTypes.array.isRequired,
+  loadExercises: PropTypes.func.isRequired,
+  loadSubmissions: PropTypes.func.isRequired,
+  loadLevelData: PropTypes.func.isRequired,
 };
