@@ -331,7 +331,19 @@ export default class App extends Component {
                   />
                 )}
               />
-              <Route exact path="/leaderboard" component={LeaderboardPage} />
+              <Route
+                exact
+                path="/leaderboard"
+                render={() => (
+                  <React.Fragment>
+                    <LeaderboardPage />
+                    <BeanWrapper
+                      charname={this.state.charname}
+                      character={this.state.character}
+                    />
+                  </React.Fragment>
+                )}
+              />
               <Route
                 exact
                 path="/exercises/:taskid"
