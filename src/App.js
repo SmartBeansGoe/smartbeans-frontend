@@ -10,6 +10,7 @@ import { NotificationContext } from './components/notification/NotificationProvi
 import './App.css';
 import Dashboard from './components/dashboard/Dashboard';
 import { handleError } from './errors/Error';
+import Error404 from './components/errors/Error404';
 
 export default class App extends Component {
   static contextType = NotificationContext;
@@ -330,12 +331,12 @@ export default class App extends Component {
                   />
                 )}
               />
-              <React.Fragment>
-                <Route exact path="/leaderboard" component={LeaderboardPage} />
-                <Route
-                  exact
-                  path="/exercises/:taskid"
-                  render={() => (
+              <Route exact path="/leaderboard" component={LeaderboardPage} />
+              <Route
+                exact
+                path="/exercises/:taskid"
+                render={() => (
+                  <React.Fragment>
                     <ExercisePage
                       loadExercises={this.loadExercises}
                       loadSubmissions={this.loadSubmissions}
@@ -343,20 +344,27 @@ export default class App extends Component {
                       exercises={this.state.exercises}
                       submissions={this.state.submissions}
                     />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/exercises"
-                  render={() => (
+                    <BeanWrapper
+                      charname={this.state.charname}
+                      character={this.state.character}
+                    />
+                  </React.Fragment>
+                )}
+              />
+              <Route
+                exact
+                path="/exercises"
+                render={() => (
+                  <React.Fragment>
                     <ExerciseOverviewPage exercises={this.state.exercises} />
-                  )}
-                />
-                <BeanWrapper
-                  charname={this.state.charname}
-                  character={this.state.character}
-                />
-              </React.Fragment>
+                    <BeanWrapper
+                      charname={this.state.charname}
+                      character={this.state.character}
+                    />
+                  </React.Fragment>
+                )}
+              />
+              <Route component={Error404} />
             </Switch>
           </div>
         </div>
