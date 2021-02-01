@@ -10,7 +10,7 @@ import { SHIRTS, PANTS, HATS } from '../../js/constants';
 import axios_inst from '../../js/backend';
 import lang from '../../lang/de_DE.json';
 
-export default class CharacterBuildingPage extends Component {
+export default class Wardrobe extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -230,7 +230,7 @@ export default class CharacterBuildingPage extends Component {
   }
 }
 
-CharacterBuildingPage.propTypes = {
+Wardrobe.propTypes = {
   body_color: PropTypes.string.isRequired,
   assets: PropTypes.object.isRequired,
   onSaveCharacterProperties: PropTypes.func.isRequired,

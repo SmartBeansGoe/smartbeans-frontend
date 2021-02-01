@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AchievementList from '../achievements/AchievementList';
-import CharacterBuildingPage from '../character/CharacterBuildingPage';
+import Wardrobe from '../character/Wardrobe';
 import { Modal } from './Modal';
 import { mdiCheckBold } from '@mdi/js';
 import { Icon } from '@mdi/react';
@@ -237,7 +237,7 @@ export default class Dashboard extends Component {
           modalState={this.state.modalState}
           title={lang['wardrobe.name']}
         >
-          <CharacterBuildingPage
+          <Wardrobe
             body_color={this.props.character.body_color}
             face_id={this.props.character.face_id}
             pants_id={this.props.character.pants_id}
