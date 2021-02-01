@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import AchievementList from '../achievements/AchievementList';
 import CharacterBuildingPage from '../character/CharacterBuildingPage';
 import { Modal } from './Modal';
-import { mdiCheckBold, mdiDesktopMacDashboard } from '@mdi/js';
+import { mdiCheckBold } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import Bean from '../character/avatar/Bean';
 import SkillGraph from './SkillGraph';
-import { BLUE, LIGHTBLUE } from '../../js/constants';
+import { BLUE } from '../../js/constants';
 import './Dashboard.css';
 import lang from '../../lang/de_DE.json';
 
@@ -184,12 +184,12 @@ export default class ProfilePage extends Component {
           >
             <center>
               <p
-                className="title"
+                className="title is-4"
                 style={{
                   color: 'white',
                 }}
               >
-                {lang['dashboard.locker-room']}
+                {lang['dashboard.wardrobe']}
               </p>
             </center>
           </article>
@@ -199,7 +199,7 @@ export default class ProfilePage extends Component {
               flex: 0,
             }}
           >
-            <p className="title">{lang['dashboard.avatar-naming']}</p>
+            <p className="title is-4">{lang['dashboard.avatar-naming']}</p>
             <div
               className="control"
               style={{
