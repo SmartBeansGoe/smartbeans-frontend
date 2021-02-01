@@ -20,7 +20,7 @@ export default class NavBar extends Component {
           aria-label="main navigation"
         >
           <div className="navbar-brand">
-            <Link className="navbar-item">
+            <Link className="navbar-item" to="/">
               <img src={logo} width="60" height="60" alt="" />
             </Link>
             <a
