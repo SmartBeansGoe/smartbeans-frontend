@@ -36,12 +36,7 @@ export default class Dashboard extends Component {
 
   render() {
     return (
-      <div
-        className="tile"
-        style={{
-          margin: 10,
-        }}
-      >
+      <div className="tile">
         <div
           className="tile flex-container is-10"
           style={{

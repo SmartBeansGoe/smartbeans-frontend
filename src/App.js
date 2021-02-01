@@ -280,7 +280,13 @@ export default class App extends Component {
       <Router>
         <div className="App">
           <NavBar username={this.state.username} />
-          <div id="body" className="tile is-ancestor">
+          <div
+            id="body"
+            className="tile is-ancestor"
+            style={{
+              margin: 0,
+            }}
+          >
             <Switch>
               <Route
                 exact
@@ -297,12 +303,7 @@ export default class App extends Component {
                   />
                 )}
               />
-              <div
-                className="tile"
-                style={{
-                  margin: 10,
-                }}
-              >
+              <React.Fragment>
                 <Route exact path="/leaderboard" component={LeaderboardPage} />
                 <Route
                   exact
@@ -328,7 +329,7 @@ export default class App extends Component {
                   charname={this.state.charname}
                   character={this.state.character}
                 />
-              </div>
+              </React.Fragment>
             </Switch>
           </div>
         </div>
