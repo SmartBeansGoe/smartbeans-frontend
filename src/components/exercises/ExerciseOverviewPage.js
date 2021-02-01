@@ -54,6 +54,7 @@ export default class ExerciseOverviewPage extends Component {
       >
         {categories.map((c, index) => (
           <div
+            key={index}
             className={
               'tile is-parent ' +
               (index % 2 === 0 ? 'flex-item-left' : 'flex-item-right')
