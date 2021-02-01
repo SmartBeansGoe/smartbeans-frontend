@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Icon from '@mdi/react';
-import { mdiCheck, mdiCheckBold } from '@mdi/js';
+import { mdiCheckBold } from '@mdi/js';
 import { BLUE } from '../../js/constants';
 
 export default class ExerciseCategoryOverview extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const progress = this.props.exerciseList.filter((ex) => ex.solved === true);
 
