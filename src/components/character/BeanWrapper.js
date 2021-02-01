@@ -6,7 +6,7 @@ export default class BeanWrapper extends Component {
     return (
       <div className="tile is-vertical is-2 is-hidden-touch is-parent">
         <div className="tile is-child box" style={{ flex: 0 }}>
-          <p className="title has-text-centered has-background-success-light">
+          <p className="title has-text-centered">
             {this.props.charname}
           </p>
           <Bean
