@@ -13,7 +13,7 @@ export default class NavBar extends Component {
 
   render() {
     return (
-      <div>
+      <div id="navbar">
         <nav
           className="navbar is-dark"
           role="navigation"

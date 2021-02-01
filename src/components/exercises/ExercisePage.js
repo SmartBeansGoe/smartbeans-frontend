@@ -10,6 +10,7 @@ import './ExercisePage.css';
 import { NotificationContext } from './../notification/NotificationProvider';
 import axios from 'axios';
 import lang from '../../lang/de_DE.json';
+import { handleError } from '../../errors/Error';
 
 class ExercisePage extends Component {
   static contextType = NotificationContext;
@@ -65,7 +66,7 @@ class ExercisePage extends Component {
           this.props.loadLevelData();
         })
         .catch((error) => {
-          console.log(error);
+          handleError(error);
           this.setState({
             fileName: lang['exercise.no-file-selected'],
             selectedFile: null,

@@ -7,10 +7,9 @@ import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage';
 import BeanWrapper from './components/character/BeanWrapper';
 import ExercisePage from './components/exercises/ExercisePage';
 import { NotificationContext } from './components/notification/NotificationProvider';
-
 import './App.css';
-
 import Dashboard from './components/dashboard/Dashboard';
+import { handleError } from './errors/Error';
 
 export default class App extends Component {
   static contextType = NotificationContext;
@@ -59,51 +58,48 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.checkLogin();
-    this.loadUser();
-    this.loadCharacter();
-    this.loadCharname();
-    this.loadLevelData();
-    this.loadAchievements();
-    this.loadAssets();
-    this.loadExercises();
-    this.loadSubmissions();
-    this.getNotifications();
-  }
-
-  checkLogin() {
     axios_inst
       .get('/username')
-      .then((response) => {})
+      .then((res) => {
+        this.loadUser();
+        this.loadCharacter();
+        this.loadCharname();
+        this.loadLevelData();
+        this.loadAchievements();
+        this.loadAssets();
+        this.loadExercises();
+        this.loadSubmissions();
+        this.getNotifications();
+      })
       .catch((error) => {
-        var error_message;
-        if (error.response === undefined) {
-          error_message = 'Keine Antwort vom Server erhalten.';
-        } else {
-          error_message = 'Du bist nicht eingeloggt.';
-        }
-
-        document.getElementById('body').innerHTML =
-          '<div class="notification is-danger is-light has-text-centered">' +
-          error_message +
-          '</div>';
+        handleError(error);
       });
   }
 
   loadUser() {
-    axios_inst.get('/username').then((response) =>
-      this.setState({
-        username: response.data.username,
-      })
-    );
+    axios_inst
+      .get('/username')
+      .then((response) =>
+        this.setState({
+          username: response.data.username,
+        })
+      )
+      .catch((error) => {
+        handleError(error);
+      });
   }
 
   loadCharname() {
-    axios_inst.get('/charname').then((response) => {
-      this.setState({
-        charname: response.data.charname,
+    axios_inst
+      .get('/charname')
+      .then((response) => {
+        this.setState({
+          charname: response.data.charname,
+        });
+      })
+      .catch((error) => {
+        handleError(error);
       });
-    });
   }
 
   onSaveCharname = (charname) => {
@@ -117,7 +113,7 @@ export default class App extends Component {
         console.log(response);
       })
       .catch((error) => {
-        console.log(error);
+        handleError(error);
       });
     this.setState({
       charname: charname,
@@ -125,16 +121,21 @@ export default class App extends Component {
   };
 
   loadCharacter() {
-    axios_inst.get('/character').then((response) => {
-      var data = response.data;
-      this.setCharacter(
-        data.body_color === null ? '#E7C27A' : data.body_color,
-        data.shirt_id === null ? '' : data.shirt_id,
-        this.state.character.face_id,
-        data.pants_id === null ? '' : data.pants_id,
-        data.hat_id === null ? '' : data.hat_id
-      );
-    });
+    axios_inst
+      .get('/character')
+      .then((response) => {
+        var data = response.data;
+        this.setCharacter(
+          data.body_color === null ? '#E7C27A' : data.body_color,
+          data.shirt_id === null ? '' : data.shirt_id,
+          this.state.character.face_id,
+          data.pants_id === null ? '' : data.pants_id,
+          data.hat_id === null ? '' : data.hat_id
+        );
+      })
+      .catch((error) => {
+        handleError(error);
+      });
   }
 
   setCharacter = (body_color, shirt_id, face_id, pants_id, hat_id) => {
@@ -162,8 +163,9 @@ export default class App extends Component {
         console.log(response);
       })
       .catch((error) => {
-        console.log(error);
+        handleError(error);
       });
+
     this.setCharacter(
       body_color,
       shirt_id,
@@ -174,43 +176,68 @@ export default class App extends Component {
   };
 
   loadAssets() {
-    axios_inst.get('/assets').then((response) => {
-      this.setState({
-        assets: response.data,
+    axios_inst
+      .get('/assets')
+      .then((response) => {
+        this.setState({
+          assets: response.data,
+        });
+      })
+      .catch((error) => {
+        handleError(error);
       });
-    });
   }
 
   loadExercises() {
-    axios_inst.get('/tasks').then((res) => {
-      this.setState({
-        exercises: res.data,
+    axios_inst
+      .get('/tasks')
+      .then((res) => {
+        this.setState({
+          exercises: res.data,
+        });
+      })
+      .catch((error) => {
+        handleError(error);
       });
-    });
   }
 
   loadSubmissions() {
-    axios_inst.get('/submissions/all').then((res) => {
-      this.setState({
-        submissions: res.data,
+    axios_inst
+      .get('/submissions/all')
+      .then((res) => {
+        this.setState({
+          submissions: res.data,
+        });
+      })
+      .catch((error) => {
+        handleError(error);
       });
-    });
   }
 
   loadLevelData() {
-    axios_inst.get('/level_data').then((res) => {
-      this.setState({
-        level_data: res.data,
+    axios_inst
+      .get('/level_data')
+      .then((res) => {
+        this.setState({
+          level_data: res.data,
+        });
+      })
+      .catch((error) => {
+        handleError(error);
       });
-    });
   }
 
   loadAchievements() {
-    axios_inst.get('/achievements').then((res) => {
-      this.setState({
-        achievements: res.data,
+    axios_inst
+      .get('/achievements')
+      .then((res) => {
+        this.setState({
+          achievements: res.data,
+        });
+      })
+      .catch((error) => {
+        handleError(error);
       });
-    });
   }
 
   getNotifications() {
@@ -254,7 +281,7 @@ export default class App extends Component {
         })
         .catch((error) => {
           if (this.state.errorResponseCounter > 12) {
-            // Umleiten auf error Page
+            handleError(error);
           } else {
             this.setState({
               errorResponseCounter: this.state.errorResponseCounter + 1,

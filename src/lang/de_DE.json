@@ -53,5 +53,6 @@
   "submission.target-success": "Erfolg",
   "submission.note-on-task-type": "Hinweis zum Aufgabentyp",
   "submission.error-message": "Hier ist KEINE Eingabe und Ausgabe verlangt. Die Einsendung darf KEINE main-Funktion enthalten. <br>Dieser Aufgabentyp wird (noch) nicht ganz korrekt erkannt. Das betrifft vor allem auch das Bewertungsergebnis. Die Aufgabe ist richtig, wenn die Spalte \"Failed\" nur Nullen enthalten. Zusätzlich werden alle fehlerhaften Aufrufe über der Tabelle aufgelistet.",
-  "submission.previous-attempts": "Vorherige Versuche"
+  "submission.previous-attempts": "Vorherige Versuche",
+  "error.not-logged-in": "Du bist nicht angemeldet. Logge dich bitte über die StudIP-Veranstaltung an."
 }
