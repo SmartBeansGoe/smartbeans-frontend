@@ -11,7 +11,7 @@ import { BLUE } from '../../js/constants';
 import './Dashboard.css';
 import lang from '../../lang/de_DE.json';
 
-export default class ProfilePage extends Component {
+export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -257,7 +257,7 @@ export default class ProfilePage extends Component {
   }
 }
 
-ProfilePage.propTypes = {
+Dashboard.propTypes = {
   charname: PropTypes.string.isRequired,
   character: PropTypes.object.isRequired,
   assets: PropTypes.object.isRequired,
