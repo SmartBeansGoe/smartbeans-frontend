@@ -12,6 +12,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import { handleError, hasError } from './errors/Error';
 import Error404 from './components/errors/Error404';
 import NavBarNotLoggedIn from './components/navigation/NavBarNotLoggedIn';
+import FirstLoginModal from './components/login/FirstLoginModal';
 
 export default class App extends Component {
   static contextType = NotificationContext;
@@ -53,6 +54,7 @@ export default class App extends Component {
       intervalID: null,
       errorResponseCounter: 0,
       logged_in: false,
+      firstLogin: false,
     };
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
     this.loadExercises = this.loadExercises.bind(this);
@@ -67,6 +69,7 @@ export default class App extends Component {
         this.setState({
           logged_in: true,
         });
+        this.checkFirstLogin();
         this.loadUser();
         this.loadCharacter();
         this.loadCharname();
@@ -76,6 +79,31 @@ export default class App extends Component {
         this.loadExercises();
         this.loadSubmissions();
         this.getNotifications();
+      })
+      .catch((error) => {
+        handleError(error);
+      });
+  }
+
+  checkFirstLogin() {
+    axios_inst
+      .get('/first_login')
+      .then((response) =>
+        this.setState({
+          firstLogin: response.data,
+        })
+      )
+      .catch((error) => {
+        handleError(error);
+      });
+  }
+
+  setNoFirstLogin() {
+    axios_inst
+      .post('/first_login', 'true', {
+        headers: {
+          'Content-Type': 'text/plain',
+        },
       })
       .catch((error) => {
         handleError(error);
@@ -324,6 +352,13 @@ export default class App extends Component {
       navigation = <NavBarNotLoggedIn />;
     }
 
+    let firstLoginModal;
+    if (this.state.firstLogin)
+      firstLoginModal = this.renderWhenLoggedIn(
+        <FirstLoginModal setNoFirstLogin={this.setNoFirstLogin} />
+      );
+    else firstLoginModal = <></>;
+
     return (
       <Router>
         <div className="App">
@@ -341,16 +376,16 @@ export default class App extends Component {
                 path="/"
                 component={() => {
                   return this.renderWhenLoggedIn(
-                        <Dashboard
-                          charname={this.state.charname}
-                          character={this.state.character}
-                          assets={this.state.assets}
-                          achievements={this.state.achievements}
-                          level_data={this.state.level_data}
+                    <Dashboard
+                      charname={this.state.charname}
+                      character={this.state.character}
+                      assets={this.state.assets}
+                      achievements={this.state.achievements}
+                      level_data={this.state.level_data}
                       onSaveCharacterProperties={this.onSaveCharacterProperties}
-                          onSaveCharname={this.onSaveCharname}
-                        />
-                    );
+                      onSaveCharname={this.onSaveCharname}
+                    />
+                  );
                 }}
               />
               <Route
@@ -358,13 +393,13 @@ export default class App extends Component {
                 path="/leaderboard"
                 render={() => {
                   return this.renderWhenLoggedIn(
-                  <React.Fragment>
-                    <LeaderboardPage />
-                    <BeanWrapper
-                      charname={this.state.charname}
-                      character={this.state.character}
-                    />
-                  </React.Fragment>
+                    <React.Fragment>
+                      <LeaderboardPage />
+                      <BeanWrapper
+                        charname={this.state.charname}
+                        character={this.state.character}
+                      />
+                    </React.Fragment>
                   );
                 }}
               />
@@ -373,19 +408,19 @@ export default class App extends Component {
                 path="/exercises/:taskid"
                 render={() => {
                   return this.renderWhenLoggedIn(
-                  <React.Fragment>
-                    <ExercisePage
-                      loadExercises={this.loadExercises}
-                      loadSubmissions={this.loadSubmissions}
-                      loadLevelData={this.loadLevelData}
-                      exercises={this.state.exercises}
-                      submissions={this.state.submissions}
-                    />
-                    <BeanWrapper
-                      charname={this.state.charname}
-                      character={this.state.character}
-                    />
-                  </React.Fragment>
+                    <React.Fragment>
+                      <ExercisePage
+                        loadExercises={this.loadExercises}
+                        loadSubmissions={this.loadSubmissions}
+                        loadLevelData={this.loadLevelData}
+                        exercises={this.state.exercises}
+                        submissions={this.state.submissions}
+                      />
+                      <BeanWrapper
+                        charname={this.state.charname}
+                        character={this.state.character}
+                      />
+                    </React.Fragment>
                   );
                 }}
               />
@@ -394,18 +429,19 @@ export default class App extends Component {
                 path="/exercises"
                 render={() => {
                   return this.renderWhenLoggedIn(
-                  <React.Fragment>
-                    <ExerciseOverviewPage exercises={this.state.exercises} />
-                    <BeanWrapper
-                      charname={this.state.charname}
-                      character={this.state.character}
-                    />
-                  </React.Fragment>
+                    <React.Fragment>
+                      <ExerciseOverviewPage exercises={this.state.exercises} />
+                      <BeanWrapper
+                        charname={this.state.charname}
+                        character={this.state.character}
+                      />
+                    </React.Fragment>
                   );
                 }}
               />
               <Route component={Error404} />
             </Switch>
+            {firstLoginModal}
           </div>
         </div>
       </Router>

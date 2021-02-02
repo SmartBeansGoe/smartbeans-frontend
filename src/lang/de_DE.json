@@ -59,5 +59,9 @@
   "error.404.title": "Error 404",
   "error.404.message": "Diese Seite wurde nicht gefunden!",
   "error.server.no-connection": "Es konnte keine Verbindung zum Server aufgebaut werden. Bitte versuchen Sie es zu einem späteren Zeitpunkt nochmal.",
-  "error.server.message": "Der Server hat folgenden Fehler Code geworfen. Bitte melden Sie diesen Fehler bei den Admins, damit das Problem schnellst möglich gelöst wird."
+  "error.server.message": "Der Server hat folgenden Fehler Code geworfen. Bitte melden Sie diesen Fehler bei den Admins, damit das Problem schnellst möglich gelöst wird.",
+  "firstlogin.title": "Informationen und Datenschutz",
+  "firstlogin.do-not-show-again": "Nicht mehr anzeigen",
+  "firstlogin.close": "Schließen",
+  "firstlogin.message": "<p class=\"title is-4\">Informationen zum Forschungsvorhaben</p><p></p><p class=\"title is-4\">Datenschutzhinweis</p><p></p>"
 }
