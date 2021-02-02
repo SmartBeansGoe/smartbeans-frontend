@@ -308,6 +308,14 @@ export default class App extends Component {
     clearInterval(this.state.intervalID);
   };
 
+  renderWhenLoggedIn(node) {
+    if (this.state.logged_in) {
+      return node;
+    } else {
+      return <></>;
+    }
+  }
+
   render() {
     let navigation;
     if (this.state.logged_in && !hasError) {
@@ -332,31 +340,24 @@ export default class App extends Component {
                 exact
                 path="/"
                 component={() => {
-                  if (this.state.logged_in) {
-                    return (
-                      <div>
+                  return this.renderWhenLoggedIn(
                         <Dashboard
                           charname={this.state.charname}
                           character={this.state.character}
                           assets={this.state.assets}
                           achievements={this.state.achievements}
                           level_data={this.state.level_data}
-                          onSaveCharacterProperties={
-                            this.onSaveCharacterProperties
-                          }
+                      onSaveCharacterProperties={this.onSaveCharacterProperties}
                           onSaveCharname={this.onSaveCharname}
                         />
-                      </div>
                     );
-                  } else {
-                    return <></>;
-                  }
                 }}
               />
               <Route
                 exact
                 path="/leaderboard"
-                render={() => (
+                render={() => {
+                  return this.renderWhenLoggedIn(
                   <React.Fragment>
                     <LeaderboardPage />
                     <BeanWrapper
@@ -364,12 +365,14 @@ export default class App extends Component {
                       character={this.state.character}
                     />
                   </React.Fragment>
-                )}
+                  );
+                }}
               />
               <Route
                 exact
                 path="/exercises/:taskid"
-                render={() => (
+                render={() => {
+                  return this.renderWhenLoggedIn(
                   <React.Fragment>
                     <ExercisePage
                       loadExercises={this.loadExercises}
@@ -383,12 +386,14 @@ export default class App extends Component {
                       character={this.state.character}
                     />
                   </React.Fragment>
-                )}
+                  );
+                }}
               />
               <Route
                 exact
                 path="/exercises"
-                render={() => (
+                render={() => {
+                  return this.renderWhenLoggedIn(
                   <React.Fragment>
                     <ExerciseOverviewPage exercises={this.state.exercises} />
                     <BeanWrapper
@@ -396,7 +401,8 @@ export default class App extends Component {
                       character={this.state.character}
                     />
                   </React.Fragment>
-                )}
+                  );
+                }}
               />
               <Route component={Error404} />
             </Switch>
