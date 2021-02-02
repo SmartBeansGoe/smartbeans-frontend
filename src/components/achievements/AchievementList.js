@@ -3,6 +3,7 @@ import Achievement from './Achievement';
 import './AchievementList.css';
 
 export default function AchievementList(props) {
+  console.log(props.achievements)
   return (
     <div className="achievement-list-container">
       {props.achievements
@@ -11,7 +12,11 @@ export default function AchievementList(props) {
             ? achievement.completed !== null
             : achievement.completed === null
         )
-        .sort((a, b) => a.frequency < b.frequency)
+        .sort((a, b) =>
+          props.completed
+            ? a.completed > b.completed
+            : a.frequency > b.frequency
+        )
         .map((achievement) => {
           return (
             <div
@@ -23,7 +28,6 @@ export default function AchievementList(props) {
             >
               <Achievement
                 id={achievement.id}
-                completed={achievement.completed}
                 name={achievement.name}
                 description={achievement.description}
               />
