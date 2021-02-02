@@ -9,7 +9,7 @@ import ExercisePage from './components/exercises/ExercisePage';
 import { NotificationContext } from './components/notification/NotificationProvider';
 import './App.css';
 import Dashboard from './components/dashboard/Dashboard';
-import { handleError } from './errors/Error';
+import { handleError, hasError } from './errors/Error';
 import Error404 from './components/errors/Error404';
 import NavBarNotLoggedIn from './components/navigation/NavBarNotLoggedIn';
 
@@ -310,7 +310,7 @@ export default class App extends Component {
 
   render() {
     let navigation;
-    if (this.state.logged_in) {
+    if (this.state.logged_in && !hasError) {
       navigation = <NavBar username={this.state.username} />;
     } else {
       navigation = <NavBarNotLoggedIn />;
