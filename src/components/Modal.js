@@ -1,6 +1,14 @@
 import PropTypes from 'prop-types';
 
-export const Modal = ({ children, closeModal, modalState, title }) => {
+export const Modal = ({
+  children,
+  closeModal,
+  modalState,
+  title,
+  width,
+  height,
+  footer,
+}) => {
   if (!modalState) {
     return null;
   }
@@ -16,8 +24,9 @@ export const Modal = ({ children, closeModal, modalState, title }) => {
       <div
         className="modal-card"
         style={{
-          width: '90%',
-          height: '90%',
+          minwidth: 350,
+          width: width !== undefined ? width : '90%',
+          height: height !== undefined ? height : '90%',
         }}
       >
         <header className="modal-card-head">
@@ -27,6 +36,7 @@ export const Modal = ({ children, closeModal, modalState, title }) => {
         <section className="modal-card-body">
           <div className="content">{children}</div>
         </section>
+        {footer}
       </div>
     </div>
   );
@@ -35,5 +45,8 @@ export const Modal = ({ children, closeModal, modalState, title }) => {
 Modal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   modalState: PropTypes.bool.isRequired,
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  width: PropTypes.any,
+  height: PropTypes.any,
+  footer: PropTypes.node,
 };

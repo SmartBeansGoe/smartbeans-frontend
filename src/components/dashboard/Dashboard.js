@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AchievementList from '../achievements/AchievementList';
-import Wardrobe from '../character/Wardrobe';
-import { Modal } from './Modal';
 import { mdiCheckBold } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import Bean from '../character/avatar/Bean';
@@ -10,6 +8,7 @@ import SkillGraph from './SkillGraph';
 import { BLUE } from '../../js/constants';
 import './Dashboard.css';
 import lang from '../../lang/de_DE.json';
+import WardrobeModal from './WardrobeModal';
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -21,9 +20,6 @@ export default class Dashboard extends Component {
     };
 
     this.toggleModal = this.toggleModal.bind(this);
-    this.onSaveCharacterProperties = this.props.onSaveCharacterProperties.bind(
-      this
-    );
   }
 
   toggleModal() {
@@ -232,21 +228,14 @@ export default class Dashboard extends Component {
             </div>
           </article>
         </div>
-        <Modal
+        <WardrobeModal
           closeModal={this.toggleModal}
           modalState={this.state.modalState}
           title={lang['wardrobe.name']}
-        >
-          <Wardrobe
-            body_color={this.props.character.body_color}
-            face_id={this.props.character.face_id}
-            pants_id={this.props.character.pants_id}
-            shirt_id={this.props.character.shirt_id}
-            hat_id={this.props.character.hat_id}
-            assets={this.props.assets}
-            onSaveCharacterProperties={this.onSaveCharacterProperties}
-          />
-        </Modal>
+          character={this.props.character}
+          assets={this.props.assets}
+          onSaveCharacterProperties={this.props.onSaveCharacterProperties}
+        />
       </div>
     );
   }
