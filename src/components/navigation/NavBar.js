@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import logo from '../../images/SmartBeans_logo_bw.svg';
 import { Link } from 'react-router-dom';
 import lang from '../../lang/de_DE.json';
+import Icon from '@mdi/react';
+import { mdiLogout } from '@mdi/js';
+import { logout } from '../../js/cookie';
 
 export default class NavBar extends Component {
   state = {
@@ -80,6 +83,13 @@ export default class NavBar extends Component {
                 <p id="userbox">
                   {lang['navigation.logged-in-as']}: {this.props.username}
                 </p>
+                <a title={lang["navigation.logout"]} onClick={() => logout()}>
+                  <Icon
+                    path={mdiLogout}
+                    size={1.2}
+                    style={{ color: 'white', paddingTop: 5, marginLeft: 5 }}
+                  />
+                </a>
               </article>
             </div>
           </div>

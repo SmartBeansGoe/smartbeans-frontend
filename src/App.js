@@ -11,6 +11,7 @@ import './App.css';
 import Dashboard from './components/dashboard/Dashboard';
 import { handleError } from './errors/Error';
 import Error404 from './components/errors/Error404';
+import NavBarNotLoggedIn from './components/navigation/NavBarNotLoggedIn';
 
 export default class App extends Component {
   static contextType = NotificationContext;
@@ -51,6 +52,7 @@ export default class App extends Component {
       achievements: [],
       intervalID: null,
       errorResponseCounter: 0,
+      logged_in: false,
     };
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
     this.loadExercises = this.loadExercises.bind(this);
@@ -62,6 +64,9 @@ export default class App extends Component {
     axios_inst
       .get('/username')
       .then((res) => {
+        this.setState({
+          logged_in: true,
+        });
         this.loadUser();
         this.loadCharacter();
         this.loadCharname();
@@ -304,10 +309,17 @@ export default class App extends Component {
   };
 
   render() {
+    let navigation;
+    if (this.state.logged_in) {
+      navigation = <NavBar username={this.state.username} />;
+    } else {
+      navigation = <NavBarNotLoggedIn />;
+    }
+
     return (
       <Router>
         <div className="App">
-          <NavBar username={this.state.username} />
+          {navigation}
           <div
             id="body"
             className="tile is-ancestor"
@@ -319,17 +331,27 @@ export default class App extends Component {
               <Route
                 exact
                 path="/"
-                component={() => (
-                  <Dashboard
-                    charname={this.state.charname}
-                    character={this.state.character}
-                    assets={this.state.assets}
-                    achievements={this.state.achievements}
-                    level_data={this.state.level_data}
-                    onSaveCharacterProperties={this.onSaveCharacterProperties}
-                    onSaveCharname={this.onSaveCharname}
-                  />
-                )}
+                component={() => {
+                  if (this.state.logged_in) {
+                    return (
+                      <div>
+                        <Dashboard
+                          charname={this.state.charname}
+                          character={this.state.character}
+                          assets={this.state.assets}
+                          achievements={this.state.achievements}
+                          level_data={this.state.level_data}
+                          onSaveCharacterProperties={
+                            this.onSaveCharacterProperties
+                          }
+                          onSaveCharname={this.onSaveCharname}
+                        />
+                      </div>
+                    );
+                  } else {
+                    return <></>;
+                  }
+                }}
               />
               <Route
                 exact
