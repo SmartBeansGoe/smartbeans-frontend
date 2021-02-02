@@ -57,5 +57,7 @@
   "submission.previous-attempts": "Vorherige Versuche",
   "error.not-logged-in": "Du bist nicht angemeldet. Logge dich bitte über die StudIP-Veranstaltung an.",
   "error.404.title": "Error 404",
-  "error.404.message": "Diese Seite wurde nicht gefunden!"
+  "error.404.message": "Diese Seite wurde nicht gefunden!",
+  "error.server.no-connection": "Es konnte keine Verbindung zum Server aufgebaut werden. Bitte versuchen Sie es zu einem späteren Zeitpunkt nochmal.",
+  "error.server.message": "Der Server hat folgenden Fehler Code geworfen. Bitte melden Sie diesen Fehler bei den Admins, damit das Problem schnellst möglich gelöst wird."
 }
