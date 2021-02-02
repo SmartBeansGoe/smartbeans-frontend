@@ -80,14 +80,18 @@ export default class NavBar extends Component {
             </div>
             <div className="navbar-end">
               <article className="navbar-item">
-                <p id="userbox">
+                <p>
                   {lang['navigation.logged-in-as']}: {this.props.username}
                 </p>
-                <a title={lang["navigation.logout"]} onClick={() => logout()}>
+                <a title={lang['navigation.logout']} onClick={() => logout()}>
                   <Icon
                     path={mdiLogout}
                     size={1.2}
-                    style={{ color: 'white', paddingTop: 5, marginLeft: 5 }}
+                    style={{
+                      color: this.state.isActive ? 'black' : 'white',
+                      paddingTop: 5,
+                      marginLeft: 5,
+                    }}
                   />
                 </a>
               </article>
