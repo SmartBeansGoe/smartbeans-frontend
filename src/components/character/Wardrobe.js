@@ -6,7 +6,7 @@ import { Icon } from '@mdi/react';
 import pants from '../../images/pants.svg';
 import assets from './sources/assets.json';
 
-import { SHIRTS, PANTS, HATS } from '../../js/constants';
+import { SHIRTS, PANTS, HATS, LIGHTBLUE } from '../../js/constants';
 import axios_inst from '../../js/backend';
 import lang from '../../lang/de_DE.json';
 
@@ -166,18 +166,20 @@ export default class Wardrobe extends Component {
                       onClick={() => this.setAsset(asset.asset_id)}
                     >
                       <div
-                        className={
-                          'box' +
-                          (asset_id_type === asset.asset_id ? ' my-active' : '')
-                        }
+                        className="box"
                         style={{
+                          width: 'auto',
                           cursor: 'pointer',
+                          backgroundColor:
+                            asset_id_type === asset.asset_id
+                              ? LIGHTBLUE
+                              : 'white',
                         }}
                       >
                         <svg
                           viewBox="0 0 77.707 108.77"
-                          height={this.state.height / 5}
-                          width="auto"
+                          height={this.state.height / 6}
+                          width={((this.state.height / 6) * 78) / 108}
                           dangerouslySetInnerHTML={{
                             __html: assets[this.state.category][asset.asset_id],
                           }}
@@ -189,38 +191,42 @@ export default class Wardrobe extends Component {
               </div>
             </div>
             <div className="tile is-parent">
-              <div className="tile is-child flex-container">
+              <div
+                style={{
+                  flexGrow: 1,
+                }}
+              >
                 <input
                   className="button"
                   type="color"
-                  id="body"
-                  name="body"
+                  name="body-color"
+                  id="body-color"
+                  title="Farbe"
                   value={this.state.body_color}
                   onChange={(event) => this.setBodyColor(event.target.value)}
+                  style={{
+                    backgroundColor: this.state.body_color,
+                    padding: 0,
+                    width: 40,
+                    height: 40,
+                  }}
                 />
               </div>
-              <div
-                className="tile is-child flex-container"
-                style={{
-                  justifyContent: 'flex-end',
-                }}
-              >
-                <span className="flex-container">
-                  <button
-                    className="button is-success"
-                    disabled={!this.isBodyChanged()}
-                    onClick={() =>
-                      this.props.onSaveCharacterProperties(
-                        this.state.body_color,
-                        this.state.shirt_id,
-                        this.state.pants_id,
-                        this.state.hat_id
-                      )
-                    }
-                  >
-                    {lang['wardrobe.save']}
-                  </button>
-                </span>
+              <div>
+                <button
+                  className="button is-success"
+                  disabled={!this.isBodyChanged()}
+                  onClick={() =>
+                    this.props.onSaveCharacterProperties(
+                      this.state.body_color,
+                      this.state.shirt_id,
+                      this.state.pants_id,
+                      this.state.hat_id
+                    )
+                  }
+                >
+                  {lang['wardrobe.save']}
+                </button>
               </div>
             </div>
           </div>
