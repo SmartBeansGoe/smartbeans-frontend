@@ -87,10 +87,10 @@ export default class App extends Component {
 
   checkFirstLogin() {
     axios_inst
-      .get('/first_login')
+      .get('/user/data')
       .then((response) =>
         this.setState({
-          firstLogin: response.data,
+          firstLogin: response.data.first_login,
         })
       )
       .catch((error) => {
@@ -99,15 +99,9 @@ export default class App extends Component {
   }
 
   setNoFirstLogin() {
-    axios_inst
-      .post('/first_login', 'true', {
-        headers: {
-          'Content-Type': 'text/plain',
-        },
-      })
-      .catch((error) => {
-        handleError(error);
-      });
+    axios_inst.post('/user/first_login_done').catch((error) => {
+      handleError(error);
+    });
   }
 
   loadUser() {
