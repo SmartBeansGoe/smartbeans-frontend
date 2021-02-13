@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
 import lang from '../../lang/de_DE.json';
+import axios_inst from '../../js/backend';
+import { NotificationContext } from './../notification/NotificationProvider';
 
 export default class Submission extends Component {
+  static contextType = NotificationContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -105,6 +108,49 @@ export default class Submission extends Component {
     });
   }
 
+  shareSubmission = () => {
+    axios_inst
+      .post(`/share/${this.props.result.taskid}/${this.props.result.timestamp}`)
+      .then(response => {
+        try {
+          var winHandle = window.open(response.data, "_blank");
+        } catch (error) {
+          this.showErrorNotificationPopupBlocked();
+        } finally {
+          if (!winHandle) {
+            this.showErrorNotificationPopupBlocked();
+          }
+        }
+      })
+      .catch(error => {
+        this.context({
+          type: 'ADD_NOTIFICATION',
+          payload: {
+            id: new Date().toLocaleString(),
+            type: 'is-danger',
+            message: lang['submission.share-sourecode-problem.message'],
+            title: lang['submission.share-sourecode-problem.title'],
+            pictureId: -1,
+            name: null,
+          },
+        });
+      })
+  }
+
+  showErrorNotificationPopupBlocked = () => {
+    this.context({
+      type: 'ADD_NOTIFICATION',
+      payload: {
+        id: new Date().toLocaleString(),
+        type: 'is-danger',
+        message: lang['submission.popup-blocked.message'],
+        title: lang['submission.popup-blocked.title'],
+        pictureId: -1,
+        name: null,
+      },
+    });
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -118,9 +164,22 @@ export default class Submission extends Component {
         >
           {() => (
             <React.Fragment>
-              <h1 className="title is-6  mb-3">
-                {lang['submission.source-code']}
-              </h1>
+              <div className="mb-3" style={{ position: 'relative' }} >
+                <span>
+                  <h1 className="title is-6">
+                    {lang['submission.source-code']}
+                  </h1>
+                </span>
+                <span
+                  style={{
+                    position: 'absolute',
+                    right: '0px',
+                    top: '-6px'
+                  }}>
+                  <button className="button is-small is-primary" onClick={this.shareSubmission}>Quelltext teilen</button>
+                </span>
+              </div>
+
               <pre>
                 <code>{this.state.sourceCode}</code>
               </pre>
@@ -149,7 +208,7 @@ export default class Submission extends Component {
             </React.Fragment>
           )}
         </Card>
-      </React.Fragment>
+      </React.Fragment >
     );
   }
 }
