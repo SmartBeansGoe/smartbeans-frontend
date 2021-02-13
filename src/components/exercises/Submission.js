@@ -176,7 +176,7 @@ export default class Submission extends Component {
                     right: '0px',
                     top: '-6px'
                   }}>
-                  <button className="button is-small is-primary" onClick={this.shareSubmission}>Quelltext teilen</button>
+                  <button className="button is-small is-link " onClick={this.shareSubmission}>Quelltext teilen</button>
                 </span>
               </div>
 
