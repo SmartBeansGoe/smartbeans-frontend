@@ -80,7 +80,8 @@ export default class SkillGraph extends Component {
               return (
                 chart.labels[object.index] +
                 ': ' +
-                Math.round(object.value * 100) / 100
+                Math.round(object.value * 100) / 100 +
+                '%'
               );
             },
           },
