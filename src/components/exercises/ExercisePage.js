@@ -22,18 +22,8 @@ class ExercisePage extends Component {
       isLoading: false,
       isDisabled: true,
       isError: false,
-      modalState: false,
+
     };
-
-    this.toggleModal = this.toggleModal.bind(this);
-  }
-
-  toggleModal() {
-    this.setState((prev, props) => {
-      const newState = !prev.modalState;
-
-      return { modalState: newState };
-    });
   }
 
   onChangeHandler = (event) => {
@@ -183,12 +173,7 @@ class ExercisePage extends Component {
           </div>
         </div>
         <SubmissionOverview submissions={submissions} />
-        <div>
-          <button className="button is-danger is-light is-outlined" type="button" onClick={this.toggleModal}>
-            {lang['exercise.problem.report']}
-          </button>
-        </div>
-        <ProblemModal closeModal={this.toggleModal} modalState={this.state.modalState} taskid={taskid}
+        <ProblemModal taskid={taskid}
         />
       </div>
     );

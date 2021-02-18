@@ -8,16 +8,9 @@ export const Modal = ({
   width,
   height,
   footer,
-  clearInput,
 }) => {
   if (!modalState) {
     return null;
-  }
-
-  let close = () => {
-    if (clearInput !== undefined)
-      clearInput();
-    closeModal();
   }
 
   return (
@@ -27,7 +20,7 @@ export const Modal = ({
         width: '100%',
       }}
     >
-      <div className="modal-background" onClick={close} />
+      <div className="modal-background" onClick={closeModal} />
       <div
         className="modal-card"
         style={{
@@ -38,7 +31,7 @@ export const Modal = ({
       >
         <header className="modal-card-head">
           <p className="modal-card-title">{title}</p>
-          <button className="delete" onClick={close} />
+          <button className="delete" onClick={closeModal} />
         </header>
         <section className="modal-card-body">
           <div className="content">{children}</div>
@@ -56,5 +49,4 @@ Modal.propTypes = {
   width: PropTypes.any,
   height: PropTypes.any,
   footer: PropTypes.node,
-  clearInput: PropTypes.func,
 };
