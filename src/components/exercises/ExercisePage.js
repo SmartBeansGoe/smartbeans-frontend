@@ -77,11 +77,10 @@ class ExercisePage extends Component {
             type: 'ADD_NOTIFICATION',
             payload: {
               id: new Date().toLocaleString(),
-              type: '',
-              message: lang['exercise.upload-error.message'],
+              type: 'text',
               title: lang['exercise.upload-error.title'],
-              achievementId: -1,
-              achievementName: null,
+              message: lang['exercise.upload-error.message'],
+              colorClass: 'is-danger',
             },
           });
         });
@@ -99,11 +98,10 @@ class ExercisePage extends Component {
         type: 'ADD_NOTIFICATION',
         payload: {
           id: new Date().toLocaleString(),
-          type: 'is-danger',
-          message: lang['exercise.read-error.message'],
+          type: 'text',
           title: lang['exercise.read-error.title'],
-          pictureId: -1,
-          name: null,
+          message: lang['exercise.read-error.message'],
+          colorClass: 'is-danger',
         },
       });
       reader.abort();

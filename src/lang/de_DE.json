@@ -1,4 +1,7 @@
 {
+  "app.notifications.achievement.title": "Errungenschaft freigeschaltet!",
+  "app.notifications.text.title": "Du hast einen neue Nachricht!",
+  "app.notifications.asset.title": "Kleidungsstück freigeschaltet!",
   "dashboard.level": "Stufe",
   "dashboard.of": "von",
   "dashboard.points": "Punkte",
