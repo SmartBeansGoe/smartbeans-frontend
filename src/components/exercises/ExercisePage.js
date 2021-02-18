@@ -8,24 +8,32 @@ import { mdiUpload } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import './ExercisePage.css';
 import { NotificationContext } from './../notification/NotificationProvider';
-import axios from 'axios';
 import lang from '../../lang/de_DE.json';
 import { handleError } from '../../errors/Error';
+import ProblemModal from './ProblemModal';
 
 class ExercisePage extends Component {
   static contextType = NotificationContext;
   constructor(props) {
     super(props);
-    let CancelToken = axios.CancelToken;
-    let source = CancelToken.source();
     this.state = {
       fileName: lang['exercise.no-file-selected'],
       selectedFile: null,
       isLoading: false,
       isDisabled: true,
-      source: source,
       isError: false,
+      modalState: false,
     };
+
+    this.toggleModal = this.toggleModal.bind(this);
+  }
+
+  toggleModal() {
+    this.setState((prev, props) => {
+      const newState = !prev.modalState;
+
+      return { modalState: newState };
+    });
   }
 
   onChangeHandler = (event) => {
@@ -79,7 +87,7 @@ class ExercisePage extends Component {
             type: 'ADD_NOTIFICATION',
             payload: {
               id: new Date().toLocaleString(),
-              type: 'text',
+              type: '',
               message: lang['exercise.upload-error.message'],
               title: lang['exercise.upload-error.title'],
               achievementId: -1,
@@ -161,9 +169,8 @@ class ExercisePage extends Component {
             </div>
             <div className="control">
               <button
-                className={`button ${
-                  this.state.isError ? 'is-danger' : 'is-primary'
-                }  mt-4 ${this.state.isLoading ? 'is-loading' : ''}`}
+                className={`button ${this.state.isError ? 'is-danger' : 'is-primary'
+                  }  mt-4 ${this.state.isLoading ? 'is-loading' : ''}`}
                 disabled={this.state.isDisabled}
                 type="button"
                 onClick={this.onClickHandler}
@@ -176,6 +183,13 @@ class ExercisePage extends Component {
           </div>
         </div>
         <SubmissionOverview submissions={submissions} />
+        <div>
+          <button className="button is-danger is-light is-outlined" type="button" onClick={this.toggleModal}>
+            {lang['exercise.problem.report']}
+          </button>
+        </div>
+        <ProblemModal closeModal={this.toggleModal} modalState={this.state.modalState} taskid={taskid}
+        />
       </div>
     );
   }
