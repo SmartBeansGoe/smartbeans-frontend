@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-
+import { NotificationContext } from './../notification/NotificationProvider';
 import { Modal } from '../Modal';
 import lang from '../../lang/de_DE.json';
 
 export default class ProblemModal extends Component {
+  static contextType = NotificationContext;
   constructor() {
     super();
     this.state = {
@@ -35,11 +36,20 @@ export default class ProblemModal extends Component {
   }
 
   reportProblem = () => {
-    console.log("text: ", this.state.textAreaValue);
+    // console.log("text: ", this.state.textAreaValue);
     // console.log("id: ", this.props.taskid);
     // axios_inst.post().then();
     this.clearInput();
     this.toggleModal();
+    this.context({
+      type: 'ADD_NOTIFICATION',
+      payload: {
+        id: new Date().toLocaleString(),
+        type: 'text',
+        title: lang['exercise.problem.notification.title'],
+        message: lang['exercise.problem.notification.message'],
+      },
+    });
   }
 
   render() {

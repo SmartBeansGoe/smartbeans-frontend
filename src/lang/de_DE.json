@@ -43,6 +43,8 @@
   "exercise.problem.messageprompt": "Bitte beschreibe hier das aufgetrettene Problem:",
   "exercise.problem.abort": "Abbrechen",
   "exercise.problem.submit": "Abschicken",
+  "exercise.problem.notification.title": "Problem wurde gemeldet",
+  "exercise.problem.notification.message": "Wir kümmern uns so schnell es geht darum das Problem zu beheben!",
   "submission.attempt": "Versuch",
   "submission.source-code": "Quelltext",
   "submission.compile-output": "Ausgabe des Compilers",

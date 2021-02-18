@@ -22,7 +22,6 @@ class ExercisePage extends Component {
       isLoading: false,
       isDisabled: true,
       isError: false,
-
     };
   }
 
