@@ -9,6 +9,7 @@ import { BLUE } from '../../js/constants';
 import './Dashboard.css';
 import lang from '../../lang/de_DE.json';
 import WardrobeModal from './WardrobeModal';
+import ProblemModal from '../exercises/ProblemModal'
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -227,6 +228,7 @@ export default class Dashboard extends Component {
               </form>
             </div>
           </article>
+          <ProblemModal />
         </div>
         <WardrobeModal
           closeModal={this.toggleModal}
