@@ -127,11 +127,10 @@ export default class Submission extends Component {
           type: 'ADD_NOTIFICATION',
           payload: {
             id: new Date().toLocaleString(),
-            type: 'is-danger',
+            type: 'text',
             message: lang['submission.share-sourecode-problem.message'],
             title: lang['submission.share-sourecode-problem.title'],
-            pictureId: -1,
-            name: null,
+            colorClass: 'is-danger'
           },
         });
       })
@@ -142,11 +141,10 @@ export default class Submission extends Component {
       type: 'ADD_NOTIFICATION',
       payload: {
         id: new Date().toLocaleString(),
-        type: 'is-danger',
+        type: 'text',
         message: lang['submission.popup-blocked.message'],
         title: lang['submission.popup-blocked.title'],
-        pictureId: -1,
-        name: null,
+        colorClass: 'is-danger'
       },
     });
   }
@@ -164,7 +162,7 @@ export default class Submission extends Component {
         >
           {() => (
             <React.Fragment>
-              <div className="mb-3" style={{ position: 'relative' }} >
+              <div className="mb-3 mt-1" style={{ position: 'relative' }} >
                 <span>
                   <h1 className="title is-6">
                     {lang['submission.source-code']}
@@ -174,9 +172,9 @@ export default class Submission extends Component {
                   style={{
                     position: 'absolute',
                     right: '0px',
-                    top: '-6px'
+                    top: '-15px'
                   }}>
-                  <button className="button is-small is-link " onClick={this.shareSubmission}>Quelltext teilen</button>
+                  <button className="button is-link " onClick={this.shareSubmission}>Quelltext teilen</button>
                 </span>
               </div>
 
