@@ -3,6 +3,8 @@ import lang from '../lang/de_DE.json';
 export let hasError = false;
 
 export function handleError(error) {
+  if (hasError)
+    return;
   if (error.response === undefined) {
     hasError = true;
     handleNoServerConnection();
@@ -73,7 +75,7 @@ function handleNoServerConnection() {
 }
 
 function handleServerError(errorCode) {
-  showErrorMessage(lang['error.server.error'] + ' Error: ' + errorCode);
+  showErrorMessage(lang['error.server.message'] + ' Error: ' + errorCode);
 }
 
 function showErrorMessage(message) {
