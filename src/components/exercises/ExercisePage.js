@@ -9,7 +9,6 @@ import { Icon } from '@mdi/react';
 import './ExercisePage.css';
 import { NotificationContext } from './../notification/NotificationProvider';
 import lang from '../../lang/de_DE.json';
-import { handleError } from '../../errors/Error';
 import BeanWrapper from './BeanWrapper';
 
 class ExercisePage extends Component {
@@ -63,7 +62,7 @@ class ExercisePage extends Component {
           this.props.loadLevelData();
         })
         .catch((error) => {
-          handleError(error);
+          this.props.handleError(error);
           this.setState({
             fileName: lang['exercise.no-file-selected'],
             selectedFile: null,

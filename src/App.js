@@ -8,7 +8,7 @@ import ExercisePage from './components/exercises/ExercisePage';
 import { NotificationContext } from './components/notification/NotificationProvider';
 import './App.css';
 import Dashboard from './components/dashboard/Dashboard';
-import { handleError, hasError } from './errors/Error';
+import { handleError } from './errors/Error';
 import Error404 from './components/errors/Error404';
 import NavBarNotLoggedIn from './components/navigation/NavBarNotLoggedIn';
 import FirstLoginModal from './components/login/FirstLoginModal';
@@ -65,11 +65,13 @@ export default class App extends Component {
       errorResponseCounter: 0,
       logged_in: false,
       firstLogin: false,
+      hasError: false,
     };
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
     this.loadExercises = this.loadExercises.bind(this);
     this.loadSubmissions = this.loadSubmissions.bind(this);
     this.loadLevelData = this.loadLevelData.bind(this);
+    this.handleError = this.handleError.bind(this);
   }
 
   componentDidMount() {
@@ -91,7 +93,7 @@ export default class App extends Component {
         this.getNotifications();
       })
       .catch((error) => {
-        handleError(error);
+        this.handleError(error);
       });
   }
 
@@ -104,14 +106,21 @@ export default class App extends Component {
         })
       )
       .catch((error) => {
-        handleError(error);
+        this.handleError(error);
       });
   }
 
   setNoFirstLogin() {
     axios_inst.post('/user/first_login_done').catch((error) => {
-      handleError(error);
+      this.handleError(error);
     });
+  }
+
+  handleError(error) {
+    this.setState({
+      hasError: true,
+    });
+    handleError(error);
   }
 
   loadUser() {
@@ -123,7 +132,7 @@ export default class App extends Component {
         })
       )
       .catch((error) => {
-        handleError(error);
+        this.handleError(error);
       });
   }
 
@@ -136,7 +145,7 @@ export default class App extends Component {
         });
       })
       .catch((error) => {
-        handleError(error);
+        this.handleError(error);
       });
   }
 
@@ -151,7 +160,7 @@ export default class App extends Component {
         console.log(response);
       })
       .catch((error) => {
-        handleError(error);
+        this.handleError(error);
       });
     this.setState({
       charname: charname,
@@ -172,7 +181,7 @@ export default class App extends Component {
         );
       })
       .catch((error) => {
-        handleError(error);
+        this.handleError(error);
       });
   }
 
@@ -201,7 +210,7 @@ export default class App extends Component {
         console.log(response);
       })
       .catch((error) => {
-        handleError(error);
+        this.handleError(error);
       });
 
     this.setCharacter(
@@ -222,7 +231,7 @@ export default class App extends Component {
         });
       })
       .catch((error) => {
-        handleError(error);
+        this.handleError(error);
       });
   }
 
@@ -235,7 +244,7 @@ export default class App extends Component {
         });
       })
       .catch((error) => {
-        handleError(error);
+        this.handleError(error);
       });
   }
 
@@ -248,7 +257,7 @@ export default class App extends Component {
         });
       })
       .catch((error) => {
-        handleError(error);
+        this.handleError(error);
       });
   }
 
@@ -261,7 +270,7 @@ export default class App extends Component {
         });
       })
       .catch((error) => {
-        handleError(error);
+        this.handleError(error);
       });
   }
 
@@ -274,7 +283,7 @@ export default class App extends Component {
         });
       })
       .catch((error) => {
-        handleError(error);
+        this.handleError(error);
       });
   }
 
@@ -328,7 +337,7 @@ export default class App extends Component {
         })
         .catch((error) => {
           if (this.state.errorResponseCounter > 12) {
-            handleError(error);
+            this.handleError(error);
           } else {
             this.setState({
               errorResponseCounter: this.state.errorResponseCounter + 1,
@@ -359,7 +368,7 @@ export default class App extends Component {
 
   render() {
     let navigation;
-    if (this.state.logged_in && !hasError) {
+    if (this.state.logged_in && !this.state.hasError) {
       navigation = <NavBar username={this.state.username} />;
     } else {
       navigation = <NavBarNotLoggedIn />;
@@ -429,6 +438,7 @@ export default class App extends Component {
                         submissions={this.state.submissions}
                         charname={this.state.charname}
                         character={this.state.character}
+                        handleError={this.handleError}
                       />
                     </React.Fragment>
                   );
