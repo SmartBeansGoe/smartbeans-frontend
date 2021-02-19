@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Bean from '../character/avatar/Bean';
-import ProblemModal from '../ProblemModal';
 import UnlockPreview from '../exercises/UnlockPreview';
 import PropTypes from 'prop-types';
 
@@ -24,7 +23,6 @@ export default class BeanWrapper extends Component {
           taskid={this.props.taskid}
           categories={this.props.categories}
         />
-        <ProblemModal taskid={this.props.taskid} />
       </div>
     );
   }

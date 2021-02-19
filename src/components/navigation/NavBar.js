@@ -6,6 +6,7 @@ import lang from '../../lang/de_DE.json';
 import Icon from '@mdi/react';
 import { mdiLogout } from '@mdi/js';
 import { logout } from '../../js/cookie';
+import ProblemModal from '../ProblemModal';
 
 export default class NavBar extends Component {
   state = {
@@ -86,9 +87,11 @@ export default class NavBar extends Component {
               >
                 {lang['navigation.about']}
               </Link>
-
             </div>
             <div className="navbar-end">
+              <div className="navbar-item">
+                <ProblemModal />
+              </div>
               <article className="navbar-item">
                 <p>
                   {lang['navigation.logged-in-as']}: {this.props.username}

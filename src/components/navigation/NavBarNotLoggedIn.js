@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../../images/SmartBeans_logo_bw.svg';
+import ProblemModal from '../ProblemModal';
 
 export default class NavBarNotLoggedIn extends Component {
   state = {
@@ -19,6 +20,11 @@ export default class NavBarNotLoggedIn extends Component {
           <div className="navbar-brand">
             <div className="navbar-item">
               <img src={logo} width="60" height="60" alt="" />
+            </div>
+          </div>
+          <div className="navbar-end">
+            <div className="navbar-item">
+              <ProblemModal />
             </div>
           </div>
         </nav>
