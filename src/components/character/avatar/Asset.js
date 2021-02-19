@@ -22,5 +22,5 @@ export default class Asset extends Component {
 }
 
 Asset.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
 };

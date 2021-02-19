@@ -5,6 +5,12 @@ import Shirt from './Shirt';
 import Hat from './Hat';
 import PropTypes from 'prop-types';
 import Pants from './Pants';
+import assetIDs from '../sources/assetIDs.json';
+
+function getAttributesOf(assetID) {
+  if (assetID === null || assetID === '') return [];
+  return assetIDs.find((el) => el.asset_id === assetID).attributes;
+}
 
 export default class Bean extends Component {
   render() {
@@ -18,9 +24,23 @@ export default class Bean extends Component {
         >
           <Body color={this.props.body_color} />
           <Face id={this.props.face_id} />
+
+          {getAttributesOf(this.props.pants_id).includes('on-top') ? (
+            <Shirt id={this.props.shirt_id} />
+          ) : (
+            ''
+          )}
+          {getAttributesOf(this.props.shirt_id).includes('no-pants') ? (
+            <Pants id={null} />
+          ) : (
+            <Pants id={this.props.pants_id} />
+          )}
+          {getAttributesOf(this.props.pants_id).includes('on-top') ? (
+            ''
+          ) : (
+            <Shirt id={this.props.shirt_id} />
+          )}
           <Hat id={this.props.hat_id} />
-          <Pants id={this.props.pants_id} />
-          <Shirt id={this.props.shirt_id} />
         </svg>
       </div>
     );
@@ -32,7 +52,7 @@ Bean.propTypes = {
   height: PropTypes.any.isRequired,
   body_color: PropTypes.string.isRequired,
   face_id: PropTypes.string.isRequired,
-  hat_id: PropTypes.string.isRequired,
-  pants_id: PropTypes.string.isRequired,
-  shirt_id: PropTypes.string.isRequired,
+  hat_id: PropTypes.string,
+  pants_id: PropTypes.string,
+  shirt_id: PropTypes.string,
 };

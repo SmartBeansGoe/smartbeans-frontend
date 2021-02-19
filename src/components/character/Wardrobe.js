@@ -57,17 +57,17 @@ export default class Wardrobe extends Component {
     switch (this.state.category) {
       case SHIRTS:
         this.setState({
-          shirt_id: asset_id === this.state.shirt_id ? '' : asset_id,
+          shirt_id: asset_id === this.state.shirt_id ? null : asset_id,
         });
         break;
       case PANTS:
         this.setState({
-          pants_id: asset_id === this.state.pants_id ? '' : asset_id,
+          pants_id: asset_id === this.state.pants_id ? null : asset_id,
         });
         break;
       case HATS:
         this.setState({
-          hat_id: asset_id === this.state.hat_id ? '' : asset_id,
+          hat_id: asset_id === this.state.hat_id ? null : asset_id,
         });
         break;
     }
@@ -226,7 +226,7 @@ Wardrobe.propTypes = {
   assets: PropTypes.object.isRequired,
   onSaveCharacterProperties: PropTypes.func.isRequired,
   face_id: PropTypes.string.isRequired,
-  pants_id: PropTypes.string.isRequired,
-  shirt_id: PropTypes.string.isRequired,
-  hat_id: PropTypes.string.isRequired,
+  pants_id: PropTypes.string,
+  shirt_id: PropTypes.string,
+  hat_id: PropTypes.string,
 };
