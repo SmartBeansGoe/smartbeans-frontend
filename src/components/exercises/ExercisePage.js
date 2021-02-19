@@ -11,6 +11,7 @@ import { NotificationContext } from './../notification/NotificationProvider';
 import lang from '../../lang/de_DE.json';
 import { handleError } from '../../errors/Error';
 import ProblemModal from './ProblemModal';
+import UnlockPreview from './UnlockPreview';
 
 class ExercisePage extends Component {
   static contextType = NotificationContext;
@@ -113,8 +114,10 @@ class ExercisePage extends Component {
     let exercise = this.props.exercises.filter(
       (exercise) => exercise.taskid === taskid
     )[0];
+    // console.log('exercise: ', exercise);
     let name = '';
     let task = '';
+    let categories = [];
     let submissions = this.props.submissions
       .filter((submission) => submission.taskid === taskid)
       .sort((a, b) => a.timestamp < b.timestamp);
@@ -122,6 +125,7 @@ class ExercisePage extends Component {
     if (exercise !== undefined) {
       name = exercise.name;
       task = exercise.task;
+      categories = exercise.categories;
     }
 
     return (
@@ -170,8 +174,8 @@ class ExercisePage extends Component {
           </div>
         </div>
         <SubmissionOverview submissions={submissions} />
-        <ProblemModal taskid={taskid}
-        />
+        <ProblemModal taskid={taskid} />
+        <UnlockPreview taskid={taskid} categories={categories} />
       </div>
     );
   }
