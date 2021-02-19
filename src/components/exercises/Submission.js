@@ -214,6 +214,7 @@ export default class Submission extends Component {
 }
 
 Submission.propTypes = {
-  id: PropTypes.number,
-  result: PropTypes.object,
+  id: PropTypes.number.isRequired,
+  result: PropTypes.object.isRequired,
+  handler: PropTypes.func.isRequired,
 };
