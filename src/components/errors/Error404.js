@@ -2,10 +2,11 @@ import React from 'react';
 import lang from '../../lang/de_DE.json';
 import { BLUE } from '../../js/constants';
 import axios_inst from '../../js/backend';
-import { handleError } from '../../errors/Error';
 
 export default function Error404() {
-  axios_inst.post('/achievements/404').catch((error) => handleError(error));
+  axios_inst
+    .post('/achievements/404')
+    .catch((error) => this.props.handleError(error));
   return (
     <div className="tile">
       <div className="tile is-parent is-10">
