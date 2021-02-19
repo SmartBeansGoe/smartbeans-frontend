@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { NotificationContext } from './../notification/NotificationProvider';
-import { Modal } from '../Modal';
-import lang from '../../lang/de_DE.json';
+import { NotificationContext } from './notification/NotificationProvider';
+import { Modal } from './Modal';
+import lang from '../lang/de_DE.json';
 
 export default class ProblemModal extends Component {
   static contextType = NotificationContext;
@@ -55,11 +55,11 @@ export default class ProblemModal extends Component {
   render() {
     return (
       <React.Fragment>
-        <div>
+        {/* <div> */}
           <button className="button is-danger is-light is-outlined" type="button" onClick={this.toggleModal}>
             {lang['exercise.problem.report']}
           </button>
-        </div>
+        {/* </div> */}
         <Modal
           closeModal={this.toggleModal}
           modalState={this.state.modalState}
