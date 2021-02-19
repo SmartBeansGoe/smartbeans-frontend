@@ -4,7 +4,6 @@ import NavBar from './components/navigation/NavBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LeaderboardPage from './components/leaderboard/LeaderboardPage';
 import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage';
-import BeanWrapper from './components/character/BeanWrapper';
 import ExercisePage from './components/exercises/ExercisePage';
 import { NotificationContext } from './components/notification/NotificationProvider';
 import './App.css';
@@ -13,6 +12,8 @@ import { handleError, hasError } from './errors/Error';
 import Error404 from './components/errors/Error404';
 import NavBarNotLoggedIn from './components/navigation/NavBarNotLoggedIn';
 import FirstLoginModal from './components/login/FirstLoginModal';
+import lang from './lang/de_DE.json';
+import About from './components/about/About';
 
 import axiosRetry from 'axios-retry';
 
@@ -284,35 +285,44 @@ export default class App extends Component {
         .then((res) => {
           if (res.data.length !== 0) {
             res.data.forEach((message) => {
-              let messageBody;
-              let title;
-              let name = null;
-              // Dirty fix until backend gives right ids
-              let pictureId = 4;
               if (message.type === 'achievement_unlocked') {
-                messageBody = message.content.description;
-                title = 'Errungenschaft freigeschaltet!';
-                name = message.content.name;
-                pictureId = message.content.id;
+                this.context({
+                  type: 'ADD_NOTIFICATION',
+                  payload: {
+                    id: message.id,
+                    type: message.type,
+                    title: lang['app.notifications.achievement.title'],
+                    message: message.content.description,
+                    achievementId: message.content.id,
+                    name: message.content.name,
+                  },
+                });
                 this.loadAchievements();
               } else if (message.type === 'text') {
-                messageBody = message.content;
-                title = 'Du hast einen neue Nachricht!';
+                this.context({
+                  type: 'ADD_NOTIFICATION',
+                  payload: {
+                    id: message.id,
+                    type: message.type,
+                    title: lang['app.notifications.text.title'],
+                    message: message.content,
+                  },
+                });
               } else {
-                title = 'Kleidungsstück freigeschaltet!';
-                messageBody = 'Mal schauen was die API sagt';
+                this.context({
+                  type: 'ADD_NOTIFICATION',
+                  payload: {
+                    id: message.id,
+                    type: message.type,
+                    title: lang['app.notifications.asset.title'],
+                    message: message.content.description,
+                    assetId: message.content.id,
+                    assetCategory: message.content.category,
+                    name: message.content.name,
+                  },
+                });
+                this.loadAssets();
               }
-              this.context({
-                type: 'ADD_NOTIFICATION',
-                payload: {
-                  id: message.id,
-                  type: '',
-                  message: messageBody,
-                  title: title,
-                  pictureId: pictureId,
-                  name: name,
-                },
-              });
             });
           }
         })
@@ -397,8 +407,7 @@ export default class App extends Component {
                 render={() => {
                   return this.renderWhenLoggedIn(
                     <React.Fragment>
-                      <LeaderboardPage />
-                      <BeanWrapper
+                      <LeaderboardPage
                         charname={this.state.charname}
                         character={this.state.character}
                       />
@@ -418,8 +427,6 @@ export default class App extends Component {
                         loadLevelData={this.loadLevelData}
                         exercises={this.state.exercises}
                         submissions={this.state.submissions}
-                      />
-                      <BeanWrapper
                         charname={this.state.charname}
                         character={this.state.character}
                       />
@@ -433,13 +440,20 @@ export default class App extends Component {
                 render={() => {
                   return this.renderWhenLoggedIn(
                     <React.Fragment>
-                      <ExerciseOverviewPage exercises={this.state.exercises} />
-                      <BeanWrapper
+                      <ExerciseOverviewPage
+                        exercises={this.state.exercises}
                         charname={this.state.charname}
                         character={this.state.character}
                       />
                     </React.Fragment>
                   );
+                }}
+              />
+              <Route
+                exact
+                path="/about"
+                render={() => {
+                  return this.renderWhenLoggedIn(<About />);
                 }}
               />
               <Route component={Error404} />

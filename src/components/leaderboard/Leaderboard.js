@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import mockup_badge from './images/mockup_badge.svg';
 import LeaderboardItem from './LeaderboardItem';
 
+
 export default class Leaderboard extends Component {
   render() {
     return (
@@ -37,6 +38,7 @@ export default class Leaderboard extends Component {
             </table>
           </div>
         </div>
+        
       </React.Fragment>
     );
   }
@@ -57,4 +59,6 @@ Leaderboard.propTypes = {
       points: PropTypes.number.isRequired,
     },
   ],
+  charname: PropTypes.string.isRequired,
+  character: PropTypes.object.isRequired,
 };

@@ -72,11 +72,21 @@ export default class NavBar extends Component {
                 className="navbar-item is-hoverable"
                 to="/leaderboard"
                 onClick={() => {
-                  this.setState({ isActiv: false });
+                  this.setState({ isActive: false });
                 }}
               >
                 {lang['navigation.leaderboard']}
               </Link>
+              <Link
+                className="navbar-item is-hoverable"
+                to="/about"
+                onClick={() => {
+                  this.setState({ isActive: false });
+                }}
+              >
+                {lang['navigation.about']}
+              </Link>
+
             </div>
             <div className="navbar-end">
               <article className="navbar-item">
