@@ -10,8 +10,7 @@ import './ExercisePage.css';
 import { NotificationContext } from './../notification/NotificationProvider';
 import lang from '../../lang/de_DE.json';
 import { handleError } from '../../errors/Error';
-import ProblemModal from './ProblemModal';
-import UnlockPreview from './UnlockPreview';
+import BeanWrapper from './BeanWrapper';
 
 class ExercisePage extends Component {
   static contextType = NotificationContext;
@@ -129,54 +128,61 @@ class ExercisePage extends Component {
     }
 
     return (
-      <div className="tile is-parent is-vertical exercise_page">
-        <div className="tile is-child box">
-          <h1 className="title ml-3 mt-3">{name}</h1>
-          <div dangerouslySetInnerHTML={{ __html: marked(task) }} />
-          <div className="field is-grouped " style={{ flexWrap: 'wrap' }}>
-            <div className="control mr-6">
-              <div className="file has-name  mt-4 is-focused is-link is-light">
-                <label className="file-label">
-                  <input
-                    className="file-input ml-3"
-                    type="file"
-                    accept=".c"
-                    name="cfile"
-                    onChange={this.onChangeHandler}
-                  />
-                  <span className="file-cta">
-                    <span className="file-icon">
-                      <Icon path={mdiUpload} size={1} />
+      <React.Fragment>
+        <div className="tile is-parent is-vertical exercise_page">
+          <div className="tile is-child box">
+            <h1 className="title ml-3 mt-3">{name}</h1>
+            <div dangerouslySetInnerHTML={{ __html: marked(task) }} />
+            <div className="field is-grouped " style={{ flexWrap: 'wrap' }}>
+              <div className="control mr-6">
+                <div className="file has-name  mt-4 is-focused is-link is-light">
+                  <label className="file-label">
+                    <input
+                      className="file-input ml-3"
+                      type="file"
+                      accept=".c"
+                      name="cfile"
+                      onChange={this.onChangeHandler}
+                    />
+                    <span className="file-cta">
+                      <span className="file-icon">
+                        <Icon path={mdiUpload} size={1} />
+                      </span>
+                      <span className="file-label">
+                        {lang['exercise.select-file']}
+                      </span>
                     </span>
-                    <span className="file-label">
-                      {lang['exercise.select-file']}
+                    <span className="file-name" style={{ width: '200px' }}>
+                      {this.state.fileName}
                     </span>
-                  </span>
-                  <span className="file-name" style={{ width: '200px' }}>
-                    {this.state.fileName}
-                  </span>
-                </label>
+                  </label>
+                </div>
+              </div>
+              <div className="control">
+                <button
+                  className={`button ${
+                    this.state.isError ? 'is-danger' : 'is-primary'
+                  }  mt-4 ${this.state.isLoading ? 'is-loading' : ''}`}
+                  disabled={this.state.isDisabled}
+                  type="button"
+                  onClick={this.onClickHandler}
+                >
+                  {this.state.isError
+                    ? lang['exercise.error-occured']
+                    : lang['exercise.upload-solution']}
+                </button>
               </div>
             </div>
-            <div className="control">
-              <button
-                className={`button ${this.state.isError ? 'is-danger' : 'is-primary'
-                  }  mt-4 ${this.state.isLoading ? 'is-loading' : ''}`}
-                disabled={this.state.isDisabled}
-                type="button"
-                onClick={this.onClickHandler}
-              >
-                {this.state.isError
-                  ? lang['exercise.error-occured']
-                  : lang['exercise.upload-solution']}
-              </button>
-            </div>
           </div>
+          <SubmissionOverview submissions={submissions} />
         </div>
-        <SubmissionOverview submissions={submissions} />
-        <ProblemModal taskid={taskid} />
-        <UnlockPreview taskid={taskid} categories={categories} />
-      </div>
+        <BeanWrapper
+          charname={this.props.charname}
+          character={this.props.character}
+          taskid={taskid}
+          categories={categories}
+        />
+      </React.Fragment>
     );
   }
 }
@@ -189,4 +195,6 @@ ExercisePage.propTypes = {
   loadExercises: PropTypes.func.isRequired,
   loadSubmissions: PropTypes.func.isRequired,
   loadLevelData: PropTypes.func.isRequired,
+  charname: PropTypes.string.isRequired,
+  character: PropTypes.object.isRequired,
 };

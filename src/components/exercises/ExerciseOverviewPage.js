@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ExerciseCategoryOverview from './ExerciseCategoryOverview';
 import lang from '../../lang/de_DE.json';
+import Bean from '../character/avatar/Bean';
 
 const EASY = 'einfach';
 const MEDIUM = 'mittel';
@@ -46,30 +47,46 @@ export default class ExerciseOverviewPage extends Component {
     ];
 
     return (
-      <div
-        className="tile"
-        style={{
-          flexWrap: 'wrap',
-        }}
-      >
-        {categories.map((c, index) => (
-          <div
-            key={index}
-            className={
-              'tile is-parent ' +
-              (index % 2 === 0 ? 'flex-item-left' : 'flex-item-right')
-            }
-          >
-            <ExerciseCategoryOverview
+      <React.Fragment>
+        <div
+          className="tile"
+          style={{
+            flexWrap: 'wrap',
+          }}
+        >
+          {categories.map((c, index) => (
+            <div
               key={index}
-              id={index}
-              title={c.title}
-              subtitle={c.subtitle}
-              exerciseList={c.exerciseList}
+              className={
+                'tile is-parent ' +
+                (index % 2 === 0 ? 'flex-item-left' : 'flex-item-right')
+              }
+            >
+              <ExerciseCategoryOverview
+                key={index}
+                id={index}
+                title={c.title}
+                subtitle={c.subtitle}
+                exerciseList={c.exerciseList}
+              />
+            </div>
+          ))}
+        </div>
+        <div className="tile is-vertical is-2 is-hidden-touch is-parent">
+          <div className="tile is-child box" style={{ flex: 0 }}>
+            <p className="title has-text-centered">{this.props.charname}</p>
+            <Bean
+              width="auto"
+              height="auto"
+              body_color={this.props.character.body_color}
+              face_id={this.props.character.face_id}
+              pants_id={this.props.character.pants_id}
+              hat_id={this.props.character.hat_id}
+              shirt_id={this.props.character.shirt_id}
             />
           </div>
-        ))}
-      </div>
+        </div>
+      </React.Fragment>
     );
   }
 }

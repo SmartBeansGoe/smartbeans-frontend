@@ -4,7 +4,6 @@ import NavBar from './components/navigation/NavBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LeaderboardPage from './components/leaderboard/LeaderboardPage';
 import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage';
-import BeanWrapper from './components/character/BeanWrapper';
 import ExercisePage from './components/exercises/ExercisePage';
 import { NotificationContext } from './components/notification/NotificationProvider';
 import './App.css';
@@ -399,8 +398,7 @@ export default class App extends Component {
                 render={() => {
                   return this.renderWhenLoggedIn(
                     <React.Fragment>
-                      <LeaderboardPage />
-                      <BeanWrapper
+                      <LeaderboardPage
                         charname={this.state.charname}
                         character={this.state.character}
                       />
@@ -420,8 +418,6 @@ export default class App extends Component {
                         loadLevelData={this.loadLevelData}
                         exercises={this.state.exercises}
                         submissions={this.state.submissions}
-                      />
-                      <BeanWrapper
                         charname={this.state.charname}
                         character={this.state.character}
                       />
@@ -435,8 +431,8 @@ export default class App extends Component {
                 render={() => {
                   return this.renderWhenLoggedIn(
                     <React.Fragment>
-                      <ExerciseOverviewPage exercises={this.state.exercises} />
-                      <BeanWrapper
+                      <ExerciseOverviewPage
+                        exercises={this.state.exercises}
                         charname={this.state.charname}
                         character={this.state.character}
                       />
@@ -448,9 +444,7 @@ export default class App extends Component {
                 exact
                 path="/about"
                 render={() => {
-                  return this.renderWhenLoggedIn(
-                    <About />
-                  );
+                  return this.renderWhenLoggedIn(<About />);
                 }}
               />
               <Route component={Error404} />
