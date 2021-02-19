@@ -7,7 +7,6 @@ export default class SkillGraph extends Component {
   chartRef = React.createRef();
 
   componentDidMount() {
-    console.log('SkillGraph did mount.');
     this.chart();
   }
 
