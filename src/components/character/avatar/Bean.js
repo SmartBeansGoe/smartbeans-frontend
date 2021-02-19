@@ -5,12 +5,7 @@ import Shirt from './Shirt';
 import Hat from './Hat';
 import PropTypes from 'prop-types';
 import Pants from './Pants';
-import assetIDs from '../sources/assetIDs.json';
-
-function getAttributesOf(assetID) {
-  if (assetID === null || assetID === '') return [];
-  return assetIDs.find((el) => el.asset_id === assetID).attributes;
-}
+import { getAttributesOf } from './Asset';
 
 export default class Bean extends Component {
   render() {

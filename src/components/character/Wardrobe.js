@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Bean from './avatar/Bean';
 import PropTypes from 'prop-types';
-import { mdiTshirtCrew, mdiHatFedora } from '@mdi/js';
+import { mdiTshirtCrew, mdiHatFedora, mdiInformation } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import pants from '../../images/pants.svg';
 import assets from './sources/assets.json';
 
-import { SHIRTS, PANTS, HATS, LIGHTBLUE } from '../../js/constants';
+import { SHIRTS, PANTS, HATS, LIGHTBLUE, BLUE } from '../../js/constants';
 import lang from '../../lang/de_DE.json';
+import { getAttributesOf } from './avatar/Asset';
 
 export default class Wardrobe extends Component {
   constructor(props) {
@@ -82,6 +83,7 @@ export default class Wardrobe extends Component {
   }
 
   render() {
+    let isNoPants = getAttributesOf(this.state.shirt_id).includes('no-pants');
     return (
       <div className="tile">
         <div className="tile is-parent is-4">
@@ -148,13 +150,13 @@ export default class Wardrobe extends Component {
                   return (
                     <div
                       key={asset.asset_id}
-                      onClick={() => this.setAsset(asset.asset_id)}
+                      onClick={() => this.state.category === PANTS && isNoPants ? null : this.setAsset(asset.asset_id)}
                     >
                       <div
                         className="box"
                         style={{
                           width: 'auto',
-                          cursor: 'pointer',
+                          cursor: this.state.category === PANTS && isNoPants ? 'not-allowed' : 'pointer',
                           backgroundColor:
                             asset_id_type === asset.asset_id
                               ? LIGHTBLUE
@@ -178,7 +180,7 @@ export default class Wardrobe extends Component {
             <div className="tile is-parent">
               <div
                 style={{
-                  flexGrow: 1,
+                  flexGrow: 0.2,
                 }}
               >
                 <input
@@ -196,6 +198,37 @@ export default class Wardrobe extends Component {
                     height: 40,
                   }}
                 />
+              </div>
+              <div
+                style={{
+                  flexGrow: 0.8,
+                }}
+              >
+                {this.state.category === PANTS && isNoPants ? (
+                  <React.Fragment>
+                    <span
+                      style={{
+                        paddingRight: 10,
+                      }}
+                    >
+                      <Icon
+                        path={mdiInformation}
+                        size={1.0}
+                        style={{
+                          position: 'relative',
+                          top: '5px',
+                          left: '5px',
+                          color: BLUE,
+                        }}
+                      />
+                    </span>
+                    <span style={{ color: BLUE }}>
+                      {lang['wardrobe.information.no-pants']}
+                    </span>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment></React.Fragment>
+                )}
               </div>
               <div>
                 <button
