@@ -7,7 +7,6 @@ import pants from '../../images/pants.svg';
 import assets from './sources/assets.json';
 
 import { SHIRTS, PANTS, HATS, LIGHTBLUE } from '../../js/constants';
-import axios_inst from '../../js/backend';
 import lang from '../../lang/de_DE.json';
 
 export default class Wardrobe extends Component {
@@ -29,20 +28,6 @@ export default class Wardrobe extends Component {
     this.updateWindowDimensions();
     // The height must be updated if the window size changes, therefore the Event Listener.
     window.addEventListener('resize', this.updateWindowDimensions);
-
-    // This axios call is needed if the character page is reloaded.
-    // Because then the App component is not mounted and the state is not initialized.
-    // Therefore the character information has to be reloaded from the backend.
-    axios_inst.get('/character').then((response) => {
-      var data = response.data;
-      this.setState({
-        body_color:
-          data.body_color === null ? this.props.body_color : data.body_color,
-        shirt_id: data.shirt_id === null ? this.props.shirt_id : data.shirt_id,
-        pants_id: data.pants_id === null ? this.props.pants_id : data.pants_id,
-        hat_id: data.hat_id === null ? this.props.pants_id : data.hat_id,
-      });
-    });
   }
 
   componentWillUnmount() {
