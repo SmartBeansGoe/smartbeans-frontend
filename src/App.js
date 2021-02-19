@@ -205,9 +205,6 @@ export default class App extends Component {
         pants_id: pants_id,
         hat_id: hat_id,
       })
-      .then((response) => {
-        console.log(response);
-      })
       .catch((error) => {
         this.handleError(error);
       });
@@ -338,7 +335,7 @@ export default class App extends Component {
           this.stopNotifications();
           this.handleError(error);
           console.log('error notifications: ', error);
-        })
+        });
     }, 5000);
     this.setState({
       intervalID: id,

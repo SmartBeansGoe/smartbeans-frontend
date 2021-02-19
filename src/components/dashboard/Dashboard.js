@@ -25,8 +25,6 @@ function getRandomExercise(exercises, solved = false) {
 }
 
 function renderNextExercise(exercise, difficulty) {
-  console.log(difficulty);
-  console.log(exercise);
   let solved = exercise === undefined;
   return (
     <div
