@@ -52,8 +52,20 @@ export default class ProblemModal extends Component {
           payload: {
             id: new Date().toLocaleString(),
             type: 'text',
-            title: lang['exercise.problem.notification.title'],
-            message: lang['exercise.problem.notification.message'],
+            title: lang['problem.report.title'],
+            message: lang['problem.report.message'],
+          },
+        });
+      })
+      .catch((error) => {
+        this.context({
+          type: 'ADD_NOTIFICATION',
+          payload: {
+            id: new Date().toLocaleString(),
+            type: 'text',
+            title: lang['problem.error.title'],
+            message: lang['problem.error.message'],
+            colorClass: 'is-danger',
           },
         });
       });
