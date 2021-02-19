@@ -14,6 +14,15 @@ import Error404 from './components/errors/Error404';
 import NavBarNotLoggedIn from './components/navigation/NavBarNotLoggedIn';
 import FirstLoginModal from './components/login/FirstLoginModal';
 
+import axiosRetry from 'axios-retry';
+
+axiosRetry(axios_inst, {
+  retries: 5,
+  retryDelay: (retryCount) => {
+    return retryCount * 200;
+  },
+});
+
 export default class App extends Component {
   static contextType = NotificationContext;
 
