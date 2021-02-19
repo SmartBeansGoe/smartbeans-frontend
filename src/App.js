@@ -20,7 +20,7 @@ import axiosRetry from 'axios-retry';
 axiosRetry(axios_inst, {
   retries: 5,
   retryDelay: (retryCount) => {
-    return retryCount * 200;
+    return retryCount * 1000;
   },
 });
 
@@ -62,7 +62,6 @@ export default class App extends Component {
       },
       achievements: [],
       intervalID: null,
-      errorResponseCounter: 0,
       logged_in: false,
       firstLogin: false,
       hasError: false,
@@ -290,7 +289,7 @@ export default class App extends Component {
   getNotifications() {
     const id = setInterval(() => {
       axios_inst
-        .get('/system_messages')
+        .get('/system_messages', { requests: 6 })
         .then((res) => {
           if (res.data.length !== 0) {
             res.data.forEach((message) => {
@@ -336,18 +335,10 @@ export default class App extends Component {
           }
         })
         .catch((error) => {
-          if (this.state.errorResponseCounter > 12) {
-            this.handleError(error);
-          } else {
-            this.setState({
-              errorResponseCounter: this.state.errorResponseCounter + 1,
-            });
-          }
+          this.stopNotifications();
+          this.handleError(error);
           console.log('error notifications: ', error);
         })
-        .catch((error) => {
-          console.log('error notifications: ', error);
-        });
     }, 5000);
     this.setState({
       intervalID: id,
@@ -466,7 +457,11 @@ export default class App extends Component {
                   return this.renderWhenLoggedIn(<About />);
                 }}
               />
-              <Route component={Error404} />
+              <Route
+                render={() => {
+                  return <Error404 handleError={this.handleError} />;
+                }}
+              />
             </Switch>
             {firstLoginModal}
           </div>
