@@ -395,6 +395,7 @@ export default class App extends Component {
                       assets={this.state.assets}
                       achievements={this.state.achievements}
                       level_data={this.state.level_data}
+                      exercises={this.state.exercises}
                       onSaveCharacterProperties={this.onSaveCharacterProperties}
                       onSaveCharname={this.onSaveCharname}
                     />

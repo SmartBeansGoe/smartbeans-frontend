@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AchievementList from '../achievements/AchievementList';
-import { mdiCheckBold } from '@mdi/js';
+import { mdiCheckBold, mdiCheckCircleOutline } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import Bean from '../character/avatar/Bean';
 import SkillGraph from './SkillGraph';
@@ -9,6 +9,67 @@ import { BLUE } from '../../js/constants';
 import './Dashboard.css';
 import lang from '../../lang/de_DE.json';
 import WardrobeModal from './WardrobeModal';
+import {
+  getExerciseByCategories,
+  EASY,
+  MEDIUM,
+  HARD,
+  EXAM,
+} from '../exercises/ExerciseOverviewPage';
+import { Link } from 'react-router-dom';
+
+function getRandomExercise(exercises, solved = false) {
+  return exercises
+    .filter((el) => el.solved === solved)
+    .sort(() => Math.random() - 0.5)[0];
+}
+
+function renderNextExercise(exercise, difficulty) {
+  console.log(difficulty);
+  console.log(exercise);
+  let solved = exercise === undefined;
+  return (
+    <div
+      className="tile is-parent"
+      style={{
+        cursor: solved ? 'default' : 'pointer',
+        minWidth: '300px',
+        maxWidth: '33%',
+      }}
+    >
+      {solved ? (
+        <div
+          className="tile columns is-child box"
+          title={lang['exercise.next.all.ready']}
+        >
+          <div className="column is-10">
+            <p className="title is-4">
+              {lang['exercise.next.' + difficulty + '.ready']}
+            </p>
+            <p className="subtitle is-6">{lang['exercise.next.all.ready']}</p>
+          </div>
+          <div className="column is-2">
+            <Icon
+              path={mdiCheckCircleOutline}
+              size={2.0}
+              style={{ color: BLUE }}
+            />
+          </div>
+        </div>
+      ) : (
+        <Link
+          className="tile is-child box"
+          to={'/exercises/' + exercise.taskid}
+        >
+          <p className="title is-4">
+            {lang['exercise.next.' + difficulty + '.title']}
+          </p>
+          <p className="subtitle">{exercise.name}</p>
+        </Link>
+      )}
+    </div>
+  );
+}
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -31,6 +92,19 @@ export default class Dashboard extends Component {
   }
 
   render() {
+    let categories = getExerciseByCategories(this.props.exercises);
+    let easyExercise = getRandomExercise(
+      categories.find((c) => c.id === EASY).exerciseList
+    );
+    let mediumExercise = getRandomExercise(
+      categories.find((c) => c.id === MEDIUM).exerciseList
+    );
+    let hardExercise = getRandomExercise(
+      categories.find((c) => c.id === HARD).exerciseList
+    );
+    let examExercise = getRandomExercise(
+      categories.find((c) => c.id === EXAM).exerciseList
+    );
     return (
       <div className="tile">
         <div
@@ -100,54 +174,10 @@ export default class Dashboard extends Component {
               flexFlow: 'row wrap',
             }}
           >
-            <div
-              className="tile is-parent"
-              style={{
-                cursor: 'pointer',
-                minWidth: '300px',
-              }}
-            >
-              <article className="tile is-child box">
-                <p className="title">Leichte Aufgabe</p>
-                <p className="subtitle">Titel der Aufgabe</p>
-              </article>
-            </div>
-            <div
-              className="tile is-parent"
-              style={{
-                cursor: 'pointer',
-                minWidth: '300px',
-              }}
-            >
-              <article className="tile is-child box">
-                <p className="title">Mittlere Aufgabe</p>
-                <p className="subtitle">Titel der Aufgabe</p>
-              </article>
-            </div>
-            <div
-              className="tile is-parent"
-              style={{
-                cursor: 'pointer',
-                minWidth: '300px',
-              }}
-            >
-              <article className="tile is-child box">
-                <p className="title">Schwere Aufgabe</p>
-                <p className="subtitle">Titel der Aufgabe</p>
-              </article>
-            </div>
-            <div
-              className="tile is-parent"
-              style={{
-                cursor: 'pointer',
-                minWidth: '300px',
-              }}
-            >
-              <article className="tile is-child box">
-                <p className="title">Klausurniveau Aufgabe</p>
-                <p className="subtitle">Titel der Aufgabe</p>
-              </article>
-            </div>
+            {renderNextExercise(easyExercise, EASY)}
+            {renderNextExercise(mediumExercise, MEDIUM)}
+            {renderNextExercise(hardExercise, HARD)}
+            {renderNextExercise(examExercise, EXAM)}
           </div>
         </div>
 
@@ -247,6 +277,7 @@ Dashboard.propTypes = {
   assets: PropTypes.object.isRequired,
   achievements: PropTypes.array.isRequired,
   level_data: PropTypes.object.isRequired,
+  exercises: PropTypes.array.isRequired,
   onSaveCharacterProperties: PropTypes.func.isRequired,
   onSaveCharname: PropTypes.func.isRequired,
 };
