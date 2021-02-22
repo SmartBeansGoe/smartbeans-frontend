@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { NotificationContext } from './notification/NotificationProvider';
 import { Modal } from './Modal';
 import lang from '../lang/de_DE.json';
@@ -11,22 +12,29 @@ export default class ProblemModal extends Component {
     this.state = {
       textAreaValue: '',
       modalState: false,
+      isChecked: false,
+      checkboxId: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.clearInput = this.clearInput.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
   }
 
   toggleModal() {
     this.setState((prev, props) => {
       const newState = !prev.modalState;
 
-      return { modalState: newState, textAreaValue: '' };
+      return { modalState: newState, textAreaValue: '', isChecked: false };
     });
   }
 
   handleChange(event) {
     this.setState({ textAreaValue: event.target.value });
+  }
+
+  handleCheck() {
+    this.setState({ isChecked: !this.state.isChecked });
   }
 
   clearInput() {
@@ -36,10 +44,15 @@ export default class ProblemModal extends Component {
   }
 
   reportProblem = () => {
+    // console.log('this.state.isChecked', this.state.isChecked);
     axios_inst
       .post(
         '/report_error',
-        'Location: ' + window.location.href + '\n' + this.state.textAreaValue,
+        (this.state.isChecked ? 'User: ' + this.props.username + '\n' : '') +
+          'Location: ' +
+          window.location.href +
+          '\n\n' +
+          this.state.textAreaValue,
         {
           headers: {
             'Content-Type': 'text/plain',
@@ -93,15 +106,35 @@ export default class ProblemModal extends Component {
         >
           <div>
             <h5>{lang['exercise.problem.messageprompt']}</h5>
-            <div>
+            <div className="field">
               <textarea
                 value={this.state.textAreaValue}
                 onChange={this.handleChange}
                 rows={6}
-                style={{ width: '100%' }}
+                style={{
+                  width: '100%',
+                  resize: 'vertical',
+                  minHeight: '140px',
+                }}
               ></textarea>
             </div>
-            <div className="mt-3">
+            <div className="field">
+              <label className="checkbox p-1" style={{ color: '#4a4a4a' }}>
+                <input
+                  style={{
+                    verticalAlign: 'middle',
+                    bottom: '1px',
+                    position: 'relative',
+                  }}
+                  onChange={this.handleCheck}
+                  id="test"
+                  type="checkbox"
+                  checked={this.state.isChecked}
+                />
+                &nbsp;Für Rückfragen darf der Studip name mitgeschickt werden.
+              </label>
+            </div>
+            <div className="field mt-3">
               <button className="button is-light" onClick={this.toggleModal}>
                 {lang['exercise.problem.abort']}
               </button>
@@ -120,3 +153,7 @@ export default class ProblemModal extends Component {
     );
   }
 }
+
+ProblemModal.propTypes = {
+  username: PropTypes.string.isRequired,
+};
