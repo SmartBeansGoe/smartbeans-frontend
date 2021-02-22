@@ -262,6 +262,7 @@ export default class App extends Component {
     axios_inst
       .get('/level_data')
       .then((res) => {
+        this.sentNotificationForLevelUp(res.data);
         this.setState({
           level_data: res.data,
         });
@@ -269,6 +270,25 @@ export default class App extends Component {
       .catch((error) => {
         this.handleError(error);
       });
+  }
+
+  sentNotificationForLevelUp(newLevel) {
+    if (this.state.level_data.max_level !== 0) {
+      if (this.state.level_data.level < newLevel.level) {
+        this.context({
+          type: 'ADD_NOTIFICATION',
+          payload: {
+            id: new Date().getTime(),
+            type: 'achievement_unlocked',
+            title: lang['app.notifications.levelup.title'],
+            name: lang['app.notifications.levelup.name'] + newLevel.level,
+            message: lang['app.notifications.levelup.message'],
+            // TODO fragen ob es eine Batch geben wird?
+            achievementId: 4,
+          },
+        });
+      }
+    }
   }
 
   loadAchievements() {
@@ -344,7 +364,7 @@ export default class App extends Component {
       this.context({
         type: 'ADD_NOTIFICATION',
         payload: {
-          id: new Date().toLocaleString(),
+          id: new Date().getTime(),
           type: 'assets_unlocked',
           title: lang['app.notifications.asset.title'],
           message: lang['app.notifications.asset.message'],
