@@ -84,7 +84,9 @@ export default class Submission extends Component {
       feedback =
         '<article class="message is-info"><div class="message-body"> <strong>' +
         lang['submission.note-on-task-type'] +
-        ':</strong> <br>' + lang["submission.error-message"] + '</div></article>';
+        ':</strong> <br>' +
+        lang['submission.error-message'] +
+        '</div></article>';
       feedback +=
         "<pre class='mt-0 pt-0'><code>" +
         this.props.result.result.feedback.stdout +
@@ -111,9 +113,9 @@ export default class Submission extends Component {
   shareSubmission = () => {
     axios_inst
       .post(`/share/${this.props.result.taskid}/${this.props.result.timestamp}`)
-      .then(response => {
+      .then((response) => {
         try {
-          var winHandle = window.open(response.data, "_blank");
+          var winHandle = window.open(response.data, '_blank');
         } catch (error) {
           this.showErrorNotificationPopupBlocked();
         } finally {
@@ -122,7 +124,7 @@ export default class Submission extends Component {
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.context({
           type: 'ADD_NOTIFICATION',
           payload: {
@@ -130,11 +132,11 @@ export default class Submission extends Component {
             type: 'text',
             message: lang['submission.share-sourecode-problem.message'],
             title: lang['submission.share-sourecode-problem.title'],
-            colorClass: 'is-danger'
+            colorClass: 'is-danger',
           },
         });
-      })
-  }
+      });
+  };
 
   showErrorNotificationPopupBlocked = () => {
     this.context({
@@ -144,10 +146,10 @@ export default class Submission extends Component {
         type: 'text',
         message: lang['submission.popup-blocked.message'],
         title: lang['submission.popup-blocked.title'],
-        colorClass: 'is-danger'
+        colorClass: 'is-danger',
       },
     });
-  }
+  };
 
   render() {
     return (
@@ -162,7 +164,7 @@ export default class Submission extends Component {
         >
           {() => (
             <React.Fragment>
-              <div className="mb-3 mt-1" style={{ position: 'relative' }} >
+              <div className="mb-3 mt-1" style={{ position: 'relative' }}>
                 <span>
                   <h1 className="title is-6">
                     {lang['submission.source-code']}
@@ -172,9 +174,15 @@ export default class Submission extends Component {
                   style={{
                     position: 'absolute',
                     right: '0px',
-                    top: '-15px'
-                  }}>
-                  <button className="button is-link " onClick={this.shareSubmission}>Quelltext teilen</button>
+                    top: '-15px',
+                  }}
+                >
+                  <button
+                    className="button is-link "
+                    onClick={this.shareSubmission}
+                  >
+                    Quelltext teilen
+                  </button>
                 </span>
               </div>
 
@@ -206,7 +214,7 @@ export default class Submission extends Component {
             </React.Fragment>
           )}
         </Card>
-      </React.Fragment >
+      </React.Fragment>
     );
   }
 }

@@ -15,14 +15,14 @@ const Notification = (props) => {
       });
     }, 400);
   };
-    var svg;
-    if (props.type === 'achievement_unlocked') {
-      let icon = achievements.find((el) => el.id === props.achievementId);
-      if (icon === undefined) {
-        svg = achievements.find((el) => el.id === 'default').svg;
-      } else {
-        svg = icon.svg;
-      }
+  var svg;
+  if (props.type === 'achievement_unlocked') {
+    let icon = achievements.find((el) => el.id === props.achievementId);
+    if (icon === undefined) {
+      svg = achievements.find((el) => el.id === 'default').svg;
+    } else {
+      svg = icon.svg;
+    }
   } else if (props.type === 'assets_unlocked') {
     console.log('this.props.assetsIds', props.assetsIds);
     props.assetsIds.forEach((asset) => {
@@ -30,12 +30,13 @@ const Notification = (props) => {
       svg += assets[asset.category][asset.asset_id];
       svg += '</g>';
     });
-    }
+  }
+  
   return (
     <article
       className={`message notification-item ${props.colorClass} ${
         exit ? 'exit' : ''
-        }`}
+      }`}
     >
       <div className="message-header">
         <p>{props.title}</p>
@@ -48,7 +49,7 @@ const Notification = (props) => {
       <div className="message-body">
         <div className="columns">
           {props.type !== 'text' && (
-            <div className="pl-2">              
+            <div className="pl-2">
               <svg
                 viewBox="0 0 110 110"
                 width="auto"
