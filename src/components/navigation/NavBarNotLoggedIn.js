@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import logo from '../../images/SmartBeans_logo_bw.svg';
-import ProblemModal from '../ProblemModal';
 
 export default class NavBarNotLoggedIn extends Component {
   state = {
