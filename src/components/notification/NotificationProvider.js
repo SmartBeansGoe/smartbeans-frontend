@@ -1,4 +1,5 @@
 import React, { useReducer, createContext } from 'react';
+import PropTypes from 'prop-types';
 import Notification from './Notification';
 import './Notification.css';
 
@@ -27,3 +28,7 @@ export default function NotificationProvider(props) {
     </NotificationContext.Provider>
   );
 }
+
+NotificationProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

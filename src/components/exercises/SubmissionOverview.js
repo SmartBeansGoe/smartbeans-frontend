@@ -38,6 +38,7 @@ export default class SubmissionOverview extends Component {
                 hasSymbol={false}
                 componentHeight={this.state.componentsHeight}
                 handler={this.handler}
+                defaultOpen={false}
               >
                 {() =>
                   this.props.submissions

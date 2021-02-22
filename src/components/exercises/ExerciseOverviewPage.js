@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ExerciseCategoryOverview from './ExerciseCategoryOverview';
 import lang from '../../lang/de_DE.json';
 import Bean from '../character/avatar/Bean';
@@ -98,3 +99,9 @@ export default class ExerciseOverviewPage extends Component {
     );
   }
 }
+
+ExerciseOverviewPage.propTypes = {
+  exercises: PropTypes.array.isRequired,
+  charname: PropTypes.string.isRequired,
+  character: PropTypes.object.isRequired,
+};

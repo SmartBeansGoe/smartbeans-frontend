@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { mdiChevronDown, mdiChevronUp, mdiCheckBold, mdiCancel } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import './Card.css';
@@ -16,7 +17,10 @@ export default class Card extends Component {
   }
 
   componentDidMount() {
-    this.props.handler(0, this.props.defaultOpen ? 20000 : this.cardRef.current.scrollHeight);
+    this.props.handler(
+      0,
+      this.props.defaultOpen ? 20000 : this.cardRef.current.scrollHeight
+    );
   }
 
   toggle = () => {
@@ -43,8 +47,9 @@ export default class Card extends Component {
         >
           {this.props.hasSymbol && (
             <span
-              className={`icon ml-2 has-text-${this.props.isSuccess ? 'success' : 'danger'
-                }`}
+              className={`icon ml-2 has-text-${
+                this.props.isSuccess ? 'success' : 'danger'
+              }`}
             >
               <Icon
                 path={this.props.isSuccess ? mdiCheckBold : mdiCancel}
@@ -66,8 +71,9 @@ export default class Card extends Component {
           className="toCollapse"
           ref={this.submissionRef}
           style={{
-            maxHeight: `${this.state.isOpen ? this.props.componentHeight : 0
-              }px`,
+            maxHeight: `${
+              this.state.isOpen ? this.props.componentHeight : 0
+            }px`,
           }}
         >
           <div className="card-content">{children()}</div>
@@ -76,3 +82,13 @@ export default class Card extends Component {
     );
   }
 }
+
+Card.propTypes = {
+  componentHeight: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  isSuccess: PropTypes.bool,
+  hasSymbol: PropTypes.bool.isRequired,
+  children: PropTypes.any.isRequired,
+  defaultOpen: PropTypes.bool.isRequired,
+  handler: PropTypes.func.isRequired,
+};

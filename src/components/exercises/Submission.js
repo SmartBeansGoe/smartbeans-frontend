@@ -18,6 +18,7 @@ export default class Submission extends Component {
       score: '',
       compileResult: '',
       feedback: '',
+      isSuccess: false,
     };
     this.handler = this.handler.bind(this);
   }
@@ -223,4 +224,5 @@ Submission.propTypes = {
   id: PropTypes.number.isRequired,
   result: PropTypes.object.isRequired,
   handler: PropTypes.func.isRequired,
+  defaultOpen: PropTypes.bool.isRequired,
 };
