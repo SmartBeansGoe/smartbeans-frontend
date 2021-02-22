@@ -14,6 +14,7 @@ import NavBarNotLoggedIn from './components/navigation/NavBarNotLoggedIn';
 import FirstLoginModal from './components/login/FirstLoginModal';
 import lang from './lang/de_DE.json';
 import About from './components/about/About';
+import assetIDs from './components/character/sources/assetIDs.json';
 
 import axiosRetry from 'axios-retry';
 
@@ -269,6 +270,7 @@ export default class App extends Component {
     axios_inst
       .get('/level_data')
       .then((res) => {
+        this.sentNotificationForLevelUp(res.data);
         this.setState({
           level_data: res.data,
         });
@@ -276,6 +278,25 @@ export default class App extends Component {
       .catch((error) => {
         this.handleError(error);
       });
+  }
+
+  sentNotificationForLevelUp(newLevel) {
+    if (this.state.level_data.max_level !== 0) {
+      if (this.state.level_data.level < newLevel.level) {
+        this.context({
+          type: 'ADD_NOTIFICATION',
+          payload: {
+            id: new Date().getTime(),
+            type: 'achievement_unlocked',
+            title: lang['app.notifications.levelup.title'],
+            name: lang['app.notifications.levelup.name'] + newLevel.level,
+            message: lang['app.notifications.levelup.message'],
+            // TODO fragen ob es eine Batch geben wird?
+            achievementId: 4,
+          },
+        });
+      }
+    }
   }
 
   loadAchievements() {
@@ -311,6 +332,8 @@ export default class App extends Component {
                   },
                 });
                 this.loadAchievements();
+                this.loadAssets();
+                this.sendAssetNotificationForAchievement(message.content.id);
               } else if (message.type === 'text') {
                 this.context({
                   type: 'ADD_NOTIFICATION',
@@ -321,20 +344,6 @@ export default class App extends Component {
                     message: message.content,
                   },
                 });
-              } else {
-                this.context({
-                  type: 'ADD_NOTIFICATION',
-                  payload: {
-                    id: message.id,
-                    type: message.type,
-                    title: lang['app.notifications.asset.title'],
-                    message: message.content.description,
-                    assetId: message.content.id,
-                    assetCategory: message.content.category,
-                    name: message.content.name,
-                  },
-                });
-                this.loadAssets();
               }
             });
           }
@@ -348,6 +357,29 @@ export default class App extends Component {
     this.setState({
       intervalID: id,
     });
+  }
+
+  sendAssetNotificationForAchievement(achievementId) {
+    // Version für später
+    // let result = assetIDs.filter(
+    //   (asset) => asset.precondition.achievementId === achievementId
+    // );
+    // Version für jetzt
+    let result = assetIDs.filter(
+      (asset) => asset.precondition === achievementId
+    );
+    if (result.length !== 0) {
+      this.context({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: new Date().getTime(),
+          type: 'assets_unlocked',
+          title: lang['app.notifications.asset.title'],
+          message: lang['app.notifications.asset.message'],
+          assetsIds: result,
+        },
+      });
+    }
   }
 
   stopNotifications = () => {

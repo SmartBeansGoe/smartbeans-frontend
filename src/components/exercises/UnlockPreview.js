@@ -5,42 +5,58 @@ import assetIDs from '../character/sources/assetIDs.json';
 
 export default class UnlockPreview extends Component {
   render() {
-    let result = assetIDs.filter(asset => asset.precondition === this.props.taskid);
+    // Version für später
+    // let result = assetIDs.filter(
+    //   (asset) => asset.precondition.taskId === this.props.taskid
+    // );
+    // Version für jetzt
+    let result = assetIDs.filter(
+      (asset) => asset.precondition === this.props.taskid
+    );
+    // svg zusammensetzten
     let svg;
-    if (result.length !== 0) {
-      let asset = result[0];
-      svg = assets[asset.category][asset.asset_id];
-    }
-    let categories = ""
-    this.props.categories.forEach(category => { categories += `<li>${category}</li>` });
+    result.forEach((asset) => {
+      svg += '<g>';
+      svg += assets[asset.category][asset.asset_id];
+      svg += '</g>';
+    });
+    let categories = '';
+    this.props.categories.forEach((category) => {
+      categories += `<li>${category}</li> `;
+    });
 
     return (
       <div className="box">
-        <h5 className="subtitle">
-          Durch das Lösen der Aufgabe bekommts du
-        </h5>
-        <h6 className="subtitle is-6">
-          Fähigkeitenzuwachs in Kategorie:
-        </h6>
-        <ul dangerouslySetInnerHTML={{ __html: categories }}>
-        </ul>
-        {svg !== undefined &&
+        <h5 className="subtitle">Durch das Lösen der Aufgabe erhälst du ...</h5>
+        <h6 className="mb-3">Erfahrungspunkte in:</h6>
+        <ul
+          style={{
+            width: '100px',
+            paddingLeft: '10px',
+            paddingTop: '5px',
+            paddingBottom: '5px',
+            marginLeft: '10px',
+            backgroundColor: 'whitesmoke',
+          }}
+          dangerouslySetInnerHTML={{ __html: categories }}
+        />
+        {svg !== undefined && (
           <React.Fragment>
-            <h6 className="subtitle is-6">
-              Neue Kleidungsstücke:
-            </h6>
-            <svg
-              viewBox="0 0 77.707 108.77"
-              height={150}
-              width="auto"
-              dangerouslySetInnerHTML={{
-                __html: svg,
-              }}
-            />
+            <h6 className="mt-4 mb-3">Outfit:</h6>
+            <div style={{ textAlign: 'center' }}>
+              <svg
+                viewBox="0 0 77.707 108.77"
+                height={150}
+                width="auto"
+                dangerouslySetInnerHTML={{
+                  __html: svg,
+                }}
+              />
+            </div>
           </React.Fragment>
-        }
+        )}
       </div>
-    )
+    );
   }
 }
 

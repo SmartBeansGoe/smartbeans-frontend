@@ -2,41 +2,76 @@
   position: fixed;
   right: 25px;
   bottom: 25px;
-  width: 25%;
+  width: 400px;
   z-index: 999;
 }
 
 .notification-item {
+  width: 400px;
+  position: relative;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   border-radius: 8px;
-  animation: SlideLeft 0.4s;
-  animation-fill-mode: forwards;
-  min-width: 300px;
-  min-height: 110px;
-}
-
-@keyframes SlideLeft {
-  0% {
-    margin-left: 120%;
-  }
-  100% {
-    margin-left: 0;
-  }
-}
-
-@keyframes SlideRight {
-  0% {
-    margin-left: 0;
-  }
-  100% {
-    margin-left: 120%;
-  }
+  left: 0px;
+  -webkit-animation: slideIn 1s forwards;
+  -moz-animation: slideIn 1s forwards;
+  animation: slideIn 1s forwards;
 }
 
 .notification-item.exit {
-  animation: SlideRight 0.4s;
-  animation-fill-mode: forwards;
+  -webkit-animation: slideOut 1s forwards;
+  -moz-animation: slideOut 1s forwards;
+  animation: slideOut 1s forwards;
+}
+
+@-webkit-keyframes slideIn {
+  0% {
+    transform: translateX(900px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@-moz-keyframes slideIn {
+  0% {
+    transform: translateX(900px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes slideIn {
+  0% {
+    transform: translateX(900px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes slideOut {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(900px);
+  }
+}
+@-moz-keyframes slideOut {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(900px);
+  }
+}
+@keyframes slideOut {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(900px);
+  }
 }
 
 .notification-item.progress {
