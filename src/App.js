@@ -81,20 +81,12 @@ export default class App extends Component {
       .then((res) => {
         this.setState(
           {
-            firstLogin: true, //res.data.first_login,
+            firstLogin: res.data.first_login,
             logged_in: true,
           },
           () => {
             if (!this.state.firstLogin) {
-              this.loadUser();
-              this.loadCharacter();
-              this.loadCharname();
-              this.loadLevelData();
-              this.loadAchievements();
-              this.loadAssets();
-              this.loadExercises();
-              this.loadSubmissions();
-              this.getNotifications();
+              this.loadAllData();
             }
           }
         );
@@ -104,19 +96,23 @@ export default class App extends Component {
       });
   }
 
+  loadAllData() {
+    this.loadUser();
+    this.loadCharacter();
+    this.loadCharname();
+    this.loadLevelData();
+    this.loadAchievements();
+    this.loadAssets();
+    this.loadExercises();
+    this.loadSubmissions();
+    this.getNotifications();
+  }
+
   setNoFirstLogin() {
     axios_inst
       .post('/user/first_login_done')
       .then(() => {
-        this.loadUser();
-        this.loadCharacter();
-        this.loadCharname();
-        this.loadLevelData();
-        this.loadAchievements();
-        this.loadAssets();
-        this.loadExercises();
-        this.loadSubmissions();
-        this.getNotifications();
+        this.loadAllData();
       })
       .catch((error) => {
         console.log(error);
