@@ -24,7 +24,6 @@ export default class NavBarNotLoggedIn extends Component {
           </div>
           <div className="navbar-end">
             <div className="navbar-item">
-              <ProblemModal />
             </div>
           </div>
         </nav>
