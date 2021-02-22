@@ -31,7 +31,9 @@ export const Modal = ({
       >
         <header className="modal-card-head">
           <p className="modal-card-title">{title}</p>
-          <button className="delete" onClick={closeModal} />
+          {closeModal === null ? null : (
+            <button className="delete" onClick={closeModal} />
+          )}
         </header>
         <section className="modal-card-body">
           <div className="content">{children}</div>
@@ -43,7 +45,7 @@ export const Modal = ({
 };
 
 Modal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func,
   modalState: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   width: PropTypes.any,

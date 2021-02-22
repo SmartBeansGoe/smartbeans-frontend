@@ -71,16 +71,42 @@ export default class App extends Component {
     this.loadSubmissions = this.loadSubmissions.bind(this);
     this.loadLevelData = this.loadLevelData.bind(this);
     this.handleError = this.handleError.bind(this);
+    this.setNoFirstLogin = this.setNoFirstLogin.bind(this);
   }
 
   componentDidMount() {
     axios_inst
-      .get('/username')
+      .get('/user/data')
       .then((res) => {
-        this.setState({
-          logged_in: true,
-        });
-        this.checkFirstLogin();
+        this.setState(
+          {
+            firstLogin: true, //res.data.first_login,
+            logged_in: true,
+          },
+          () => {
+            if (!this.state.firstLogin) {
+              this.loadUser();
+              this.loadCharacter();
+              this.loadCharname();
+              this.loadLevelData();
+              this.loadAchievements();
+              this.loadAssets();
+              this.loadExercises();
+              this.loadSubmissions();
+              this.getNotifications();
+            }
+          }
+        );
+      })
+      .catch((error) => {
+        this.handleError(error);
+      });
+  }
+
+  setNoFirstLogin() {
+    axios_inst
+      .post('/user/first_login_done')
+      .then(() => {
         this.loadUser();
         this.loadCharacter();
         this.loadCharname();
@@ -92,27 +118,9 @@ export default class App extends Component {
         this.getNotifications();
       })
       .catch((error) => {
+        console.log(error);
         this.handleError(error);
       });
-  }
-
-  checkFirstLogin() {
-    axios_inst
-      .get('/user/data')
-      .then((response) =>
-        this.setState({
-          firstLogin: response.data.first_login,
-        })
-      )
-      .catch((error) => {
-        this.handleError(error);
-      });
-  }
-
-  setNoFirstLogin() {
-    axios_inst.post('/user/first_login_done').catch((error) => {
-      this.handleError(error);
-    });
   }
 
   handleError(error) {
