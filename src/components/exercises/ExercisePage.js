@@ -85,15 +85,16 @@ class ExercisePage extends Component {
           });
         });
     };
-    reader.onerror = (event) => {
-      this.setState({
+    var _this = this;
+    reader.onerror = function (error) {
+      _this.setState({
         fileName: lang['exercise.no-file-selected'],
         selectedFile: null,
         isLoading: false,
         isError: true,
         isDisabled: true,
       });
-      this.context({
+      _this.context({
         type: 'ADD_NOTIFICATION',
         payload: {
           id: new Date().getTime(),
@@ -143,9 +144,12 @@ class ExercisePage extends Component {
     let name = '';
     let task = '';
     let categories = [];
-    let submissions = this.props.submissions
-      .filter((submission) => submission.taskid === taskid)
-      .sort((a, b) => a.timestamp < b.timestamp);
+    let submissions = this.props.submissions.filter(
+      (submission) => submission.taskid === taskid
+    );
+    submissions = submissions.sort(function (a, b) {
+      return b.timestamp - a.timestamp;
+    });
 
     if (exercise !== undefined) {
       name = exercise.name;

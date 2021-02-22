@@ -90,7 +90,7 @@ export default class NavBar extends Component {
             </div>
             <div className="navbar-end">
               <div className="navbar-item">
-                <ProblemModal />
+                <ProblemModal username={this.props.username} />
               </div>
               <article className="navbar-item">
                 <p>
