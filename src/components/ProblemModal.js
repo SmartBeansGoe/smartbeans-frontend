@@ -50,7 +50,7 @@ export default class ProblemModal extends Component {
         this.context({
           type: 'ADD_NOTIFICATION',
           payload: {
-            id: new Date().toLocaleString(),
+            id: new Date().getTime(),
             type: 'text',
             title: lang['problem.report.title'],
             message: lang['problem.report.message'],
@@ -61,7 +61,7 @@ export default class ProblemModal extends Component {
         this.context({
           type: 'ADD_NOTIFICATION',
           payload: {
-            id: new Date().toLocaleString(),
+            id: new Date().getTime(),
             type: 'text',
             title: lang['problem.error.title'],
             message: lang['problem.error.message'],

@@ -76,7 +76,7 @@ class ExercisePage extends Component {
           this.context({
             type: 'ADD_NOTIFICATION',
             payload: {
-              id: new Date().toLocaleString(),
+              id: new Date().getTime(),
               type: 'text',
               title: lang['exercise.upload-error.title'],
               message: lang['exercise.upload-error.message'],
@@ -93,11 +93,10 @@ class ExercisePage extends Component {
         isError: true,
         isDisabled: true,
       });
-      console.log('onerrorreader: ', event);
       this.context({
         type: 'ADD_NOTIFICATION',
         payload: {
-          id: new Date().toLocaleString(),
+          id: new Date().getTime(),
           type: 'text',
           title: lang['exercise.read-error.title'],
           message: lang['exercise.read-error.message'],
@@ -124,7 +123,7 @@ class ExercisePage extends Component {
           this.context({
             type: 'ADD_NOTIFICATION',
             payload: {
-              id: new Date().toLocaleString(),
+              id: new Date().getTime(),
               type: 'assets_unlocked',
               title: lang['app.notifications.asset.title'],
               message: lang['app.notifications.asset.message'],
@@ -135,12 +134,12 @@ class ExercisePage extends Component {
       }
     }
   }
+
   render() {
     let taskid = parseInt(this.props.match.params.taskid);
     let exercise = this.props.exercises.filter(
       (exercise) => exercise.taskid === taskid
     )[0];
-    // console.log('exercise: ', exercise);
     let name = '';
     let task = '';
     let categories = [];
