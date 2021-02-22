@@ -353,13 +353,13 @@ export default class App extends Component {
 
   sendAssetNotificationForAchievement(achievementId) {
     // Version für später
-    let result = assetIDs.filter(
-      (asset) => asset.precondition.achievementId === achievementId
-    );
-    // Version für jetzt
     // let result = assetIDs.filter(
-    //   (asset) => asset.precondition === achievementId
+    //   (asset) => asset.precondition.achievementId === achievementId
     // );
+    // Version für jetzt
+    let result = assetIDs.filter(
+      (asset) => asset.precondition === achievementId
+    );
     if (result.length !== 0) {
       this.context({
         type: 'ADD_NOTIFICATION',

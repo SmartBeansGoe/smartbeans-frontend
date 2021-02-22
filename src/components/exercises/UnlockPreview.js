@@ -6,13 +6,13 @@ import assetIDs from '../character/sources/assetIDs.json';
 export default class UnlockPreview extends Component {
   render() {
     // Version für später
-    let result = assetIDs.filter(
-      (asset) => asset.precondition.taskId === this.props.taskid
-    );
-    // Version für jetzt
     // let result = assetIDs.filter(
-    //   (asset) => asset.precondition === this.props.taskid
+    //   (asset) => asset.precondition.taskId === this.props.taskid
     // );
+    // Version für jetzt
+    let result = assetIDs.filter(
+      (asset) => asset.precondition === this.props.taskid
+    );
     // svg zusammensetzten
     let svg;
     result.forEach((asset) => {
