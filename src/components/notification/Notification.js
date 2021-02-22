@@ -15,7 +15,6 @@ const Notification = (props) => {
       });
     }, 400);
   };
-  if (props.type !== 'text') {
     var svg;
     if (props.type === 'achievement_unlocked') {
       let icon = achievements.find((el) => el.id === props.achievementId);
@@ -24,14 +23,18 @@ const Notification = (props) => {
       } else {
         svg = icon.svg;
       }
+  } else if (props.type === 'assets_unlocked') {
+    console.log('this.props.assetsIds', props.assetsIds);
+    props.assetsIds.forEach((asset) => {
+      svg += '<g>';
+      svg += assets[asset.category][asset.asset_id];
+      svg += '</g>';
+    });
     }
-    else {
-      svg = assets[props.assetCategory][props.assetId];
-    }
-  }
   return (
     <article
-      className={`message notification-item ${props.colorClass} ${exit ? 'exit' : ''
+      className={`message notification-item ${props.colorClass} ${
+        exit ? 'exit' : ''
         }`}
     >
       <div className="message-header">
@@ -42,10 +45,10 @@ const Notification = (props) => {
           aria-label="delete"
         ></button>
       </div>
-      <div className="message-body p-0">
-        <div className="flex-container">
+      <div className="message-body">
+        <div className="columns">
           {props.type !== 'text' && (
-            <span>
+            <div className="pl-2">              
               <svg
                 viewBox="0 0 110 110"
                 width="auto"
@@ -54,14 +57,14 @@ const Notification = (props) => {
                   __html: svg,
                 }}
               />
-            </span>
+            </div>
           )}
-          <span>
+          <div className="column">
             {props.name !== undefined && (
-              <p className="subtitle margin-top">{props.name}</p>
+              <p className="subtitle mb-2">{props.name}</p>
             )}
             <p>{props.message}</p>
-          </span>
+          </div>
         </div>
       </div>
     </article>
@@ -76,7 +79,6 @@ Notification.propTypes = {
   message: PropTypes.string.isRequired,
   name: PropTypes.string,
   achievementId: PropTypes.number,
-  assetId: PropTypes.string,
-  assetCategory: PropTypes.string,
+  assetsIds: PropTypes.array,
   colorClass: PropTypes.string,
 };

@@ -10,6 +10,7 @@ import './ExercisePage.css';
 import { NotificationContext } from './../notification/NotificationProvider';
 import lang from '../../lang/de_DE.json';
 import BeanWrapper from './BeanWrapper';
+import assetIDs from '../character/sources/assetIDs.json';
 
 class ExercisePage extends Component {
   static contextType = NotificationContext;
@@ -51,7 +52,8 @@ class ExercisePage extends Component {
             },
           }
         )
-        .then(() => {
+        .then((response) => {
+          this.sendNotificationForFirstSolve(response);
           this.setState({
             fileName: lang['exercise.no-file-selected'],
             selectedFile: null,
@@ -107,6 +109,32 @@ class ExercisePage extends Component {
     reader.readAsText(this.state.selectedFile);
   };
 
+  sendNotificationForFirstSolve(response) {
+    if (response.data.score === 1) {
+      let result = this.props.submissions.filter(
+        (submission) => submission.score === 1
+      );
+      if (result.length === 0) {
+        let assets = assetIDs.filter(
+          (asset) =>
+            asset.precondition.taskId ===
+            parseInt(this.props.match.params.taskid)
+        );
+        if (assets.length !== 0) {
+          this.context({
+            type: 'ADD_NOTIFICATION',
+            payload: {
+              id: new Date().toLocaleString(),
+              type: 'assets_unlocked',
+              title: lang['app.notifications.asset.title'],
+              message: lang['app.notifications.asset.message'],
+              assetsIds: result,
+            },
+          });
+        }
+      }
+    }
+  }
   render() {
     let taskid = parseInt(this.props.match.params.taskid);
     let exercise = this.props.exercises.filter(
@@ -123,9 +151,17 @@ class ExercisePage extends Component {
     if (exercise !== undefined) {
       name = exercise.name;
       task = exercise.task;
-      categories = exercise.categories;
+      // TODO was soll den der Scheis??? wenn es nur eine Kategorie ist ist es statt ein Array mit nur einem eintrag ein string!!! das zerschiest mir alles!!!!
+      if (exercise.categories === undefined || exercise.categories === null) {
+        categories = [];
+      } else if (typeof exercise.categories === 'string') {
+        categories = [exercise.categories];
+      } else if (Array.isArray(exercise.categories)) {
+        categories = exercise.categories;
+      } else {
+        console.log('WTF den noch?');
+      }
     }
-
     return (
       <React.Fragment>
         <div className="tile is-parent is-vertical exercise_page">
