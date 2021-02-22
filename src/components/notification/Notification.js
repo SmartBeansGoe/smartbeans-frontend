@@ -15,6 +15,7 @@ const Notification = (props) => {
       });
     }, 400);
   };
+
   var svg;
   if (props.type === 'achievement_unlocked') {
     let icon = achievements.find((el) => el.id === props.achievementId);
@@ -31,7 +32,7 @@ const Notification = (props) => {
       svg += '</g>';
     });
   }
-  
+
   return (
     <article
       className={`message notification-item ${props.colorClass} ${
