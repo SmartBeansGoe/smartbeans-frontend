@@ -6,8 +6,9 @@ const auth_cookie = document.cookie
   .find((row) => row.startsWith('auth_token'));
 
 var auth_token;
-if (auth_cookie !== undefined) auth_token = auth_cookie.split('=')[1];
-else auth_token = 'not logged in';
+if (auth_cookie !== undefined || auth_cookie !== '') {
+  auth_token = auth_cookie.split('=')[1];
+} else auth_token = 'not logged in';
 
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + auth_token;
 

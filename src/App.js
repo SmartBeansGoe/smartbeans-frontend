@@ -493,7 +493,9 @@ export default class App extends Component {
               />
               <Route
                 render={() => {
-                  return <Error404 handleError={this.handleError} />;
+                  return this.renderWhenLoggedIn(
+                    <Error404 handleError={this.handleError} />
+                  );
                 }}
               />
             </Switch>
