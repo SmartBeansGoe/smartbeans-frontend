@@ -10,20 +10,14 @@ export default class LeaderboardPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      description: '',
+      title: lang['leaderboard.title'],
+      description: lang['leaderboard.description'],
       header: {
-        rank: '',
-        bean: '',
-        points: '',
+        rank: lang['leaderboard.header.rank'],
+        bean: lang['leaderboard.header.bean'],
+        points: lang['leaderboard.header.points'],
       },
-      rows: [
-        {
-          rank: 1,
-          bean: '',
-          points: 0,
-        },
-      ],
+      rows: [],
       character: {
         body_color: DEFAULTSKINCOLOR,
         shirt_id: '',
@@ -80,31 +74,29 @@ export default class LeaderboardPage extends Component {
   }
 
   getLeaderboards() {
-    axios_inst.get('/leaderboard').then((response) => {
-      let rows = [];
-      let active = -1;
-      response.data.forEach((person, index) => {
-        if (person.character.username !== null) active = index;
-        rows.push({
-          rank: person.rank,
-          bean: person.charname,
-          points: person.score,
+    axios_inst
+      .get('/leaderboard')
+      .then((response) => {
+        let rows = [];
+        let active = -1;
+        response.data.forEach((person, index) => {
+          if (person.character.username !== null) active = index;
+          rows.push({
+            rank: person.rank,
+            bean: person.charname,
+            points: person.score,
+          });
         });
+        if (this.state.active !== -1) active = this.state.active;
+        this.setState({
+          rows: rows,
+          rawData: response.data,
+          active: active,
+        });
+      })
+      .catch((error) => {
+        console.log('error', error);
       });
-      if (this.state.active !== -1) active = this.state.active;
-      this.setState({
-        title: lang['leaderboard.title'],
-        description: lang['leaderboard.description'],
-        header: {
-          rank: lang['leaderboard.header.rank'],
-          bean: lang['leaderboard.header.bean'],
-          points: lang['leaderboard.header.points'],
-        },
-        rows: rows,
-        rawData: response.data,
-        active: active,
-      });
-    });
   }
 
   startInterval() {
