@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import assets from '../character/sources/assets.json';
 import assetIDs from '../character/sources/assetIDs.json';
+import lang from '../../lang/de_DE.json';
 
 export default class UnlockPreview extends Component {
   render() {
@@ -27,8 +28,8 @@ export default class UnlockPreview extends Component {
 
     return (
       <div className="box">
-        <h5 className="subtitle">Durch das Lösen der Aufgabe erhälst du ...</h5>
-        <h6 className="mb-3">Erfahrungspunkte in:</h6>
+        <h5 className="subtitle">{lang['unlockpreview.title']}</h5>
+        <h6 className="mb-3">{lang['unlockpreview.title.categories']}</h6>
         <ul
           style={{
             width: '100px',
@@ -42,7 +43,7 @@ export default class UnlockPreview extends Component {
         />
         {svg !== undefined && (
           <React.Fragment>
-            <h6 className="mt-4 mb-3">Outfit:</h6>
+            <h6 className="mt-4 mb-3">{lang['unlockpreview.title.outfit']}</h6>
             <div style={{ textAlign: 'center' }}>
               <svg
                 viewBox="0 0 77.707 108.77"

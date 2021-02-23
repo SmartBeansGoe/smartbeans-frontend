@@ -94,18 +94,18 @@ export default class ProblemModal extends Component {
           type="button"
           onClick={this.toggleModal}
         >
-          {lang['exercise.problem.report']}
+          {lang['problem.report']}
         </button>
         <Modal
           closeModal={this.toggleModal}
           modalState={this.state.modalState}
-          title={lang['exercise.problem.report']}
+          title={lang['problem.report']}
           height={'300'}
           width={'600'}
           clearInput={this.clearInput}
         >
           <div>
-            <h5>{lang['exercise.problem.messageprompt']}</h5>
+            <h5>{lang['problem.messageprompt']}</h5>
             <div className="field">
               <textarea
                 value={this.state.textAreaValue}
@@ -131,12 +131,12 @@ export default class ProblemModal extends Component {
                   type="checkbox"
                   checked={this.state.isChecked}
                 />
-                &nbsp;Für Rückfragen darf der Studip name mitgeschickt werden.
+                {lang['problem.checkbox.label']}
               </label>
             </div>
             <div className="field mt-3">
               <button className="button is-light" onClick={this.toggleModal}>
-                {lang['exercise.problem.abort']}
+                {lang['problem.abort']}
               </button>
               <button
                 className="button is-link"
@@ -144,7 +144,7 @@ export default class ProblemModal extends Component {
                 disabled={this.state.textAreaValue === ''}
                 style={{ float: 'right' }}
               >
-                {lang['exercise.problem.submit']}
+                {lang['problem.submit']}
               </button>
             </div>
           </div>

@@ -182,7 +182,7 @@ export default class Submission extends Component {
                     className="button is-link "
                     onClick={this.shareSubmission}
                   >
-                    Quelltext teilen
+                    {lang['submission.share-sourcecode.button']}
                   </button>
                 </span>
               </div>
