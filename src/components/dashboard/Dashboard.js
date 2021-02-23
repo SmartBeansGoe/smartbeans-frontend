@@ -5,7 +5,7 @@ import { mdiCheckBold, mdiCheckCircleOutline } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import Bean from '../character/avatar/Bean';
 import SkillGraph from './SkillGraph';
-import { BLUE } from '../../js/constants';
+import { BLUE, LIGHTBLUE } from '../../js/constants';
 import './Dashboard.css';
 import lang from '../../lang/de_DE.json';
 import WardrobeModal from './WardrobeModal';
@@ -31,13 +31,18 @@ function renderNextExercise(exercise, difficulty) {
       className="tile is-parent"
       style={{
         cursor: solved ? 'default' : 'pointer',
-        minWidth: '300px',
-        maxWidth: '33%',
+        minWidth: '350px',
+        maxWidth: '25%',
       }}
     >
       {solved ? (
         <div
           className="tile columns is-child box"
+          style={{
+            border: 'solid',
+            borderWidth: '0.4em',
+            borderColor: LIGHTBLUE,
+          }}
           title={lang['exercise.next.all.ready']}
         >
           <div className="column is-10">
@@ -57,6 +62,11 @@ function renderNextExercise(exercise, difficulty) {
       ) : (
         <Link
           className="tile is-child box"
+          style={{
+            border: 'solid',
+            borderWidth: '0.4em',
+            borderColor: LIGHTBLUE,
+          }}
           to={'/exercises/' + exercise.taskid}
         >
           <p className="title is-4">
@@ -165,17 +175,24 @@ export default class Dashboard extends Component {
             </div>
           </div>
 
-          <div
-            className="tile"
-            style={{
-              display: 'flex',
-              flexFlow: 'row wrap',
-            }}
-          >
-            {renderNextExercise(easyExercise, EASY)}
-            {renderNextExercise(mediumExercise, MEDIUM)}
-            {renderNextExercise(hardExercise, HARD)}
-            {renderNextExercise(examExercise, EXAM)}
+          <div className="tile is-parent">
+            <div className="tile is-child box">
+              <p className="title">
+                {lang['dashboard.exercise-recommendations']}
+              </p>
+              <div
+                className="tile"
+                style={{
+                  display: 'flex',
+                  flexFlow: 'row wrap',
+                }}
+              >
+                {renderNextExercise(easyExercise, EASY)}
+                {renderNextExercise(mediumExercise, MEDIUM)}
+                {renderNextExercise(hardExercise, HARD)}
+                {renderNextExercise(examExercise, EXAM)}
+              </div>
+            </div>
           </div>
         </div>
 
