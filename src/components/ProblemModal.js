@@ -44,11 +44,13 @@ export default class ProblemModal extends Component {
   }
 
   reportProblem = () => {
-    // console.log('this.state.isChecked', this.state.isChecked);
     axios_inst
       .post(
         '/report_error',
         (this.state.isChecked ? '' : 'User: ' + this.props.username + '\n') +
+          'Browser: ' +
+          navigator.userAgent +
+          '\n' +
           'Location: ' +
           window.location.href +
           '\n\n' +
