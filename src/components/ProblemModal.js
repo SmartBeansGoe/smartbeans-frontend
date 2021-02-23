@@ -108,6 +108,7 @@ export default class ProblemModal extends Component {
             <h5>{lang['problem.messageprompt']}</h5>
             <div className="field">
               <textarea
+                className="textarea"
                 value={this.state.textAreaValue}
                 onChange={this.handleChange}
                 rows={6}
