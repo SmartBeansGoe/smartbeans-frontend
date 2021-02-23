@@ -81,9 +81,9 @@ export default class LeaderboardPage extends Component {
   getLeaderboards() {
     axios_inst.get('/leaderboard').then((response) => {
       let rows = [];
-      let active;
+      let active = -1;
       response.data.forEach((person, index) => {
-        if (this.props.username === person.character.username) active = index;
+        if (person.character.username !== null) active = index;
         rows.push({
           rank: person.rank,
           bean: person.charname,
@@ -152,5 +152,4 @@ export default class LeaderboardPage extends Component {
 LeaderboardPage.propTypes = {
   charname: PropTypes.string.isRequired,
   character: PropTypes.object.isRequired,
-  username: PropTypes.string.isRequired,
 };
