@@ -9,38 +9,42 @@ export default class Leaderboard extends Component {
       <React.Fragment>
         <div className="tile is-parent">
           <div className="tile is-child box">
-            <p className="title has-text-centered">{this.props.title}</p>
-            <p className="has-text-centered">
-              <img src={mockup_badge} width="150" height="150" alt="Badge" />
-            </p>
-            <p
-              className="has-text-centered"
-              style={{ backgroundColor: 'rgba(162,204,226,0.5)' }}
-            >
-              {this.props.description}
-            </p>
-            <table className="table is-fullwidth is-hoverable has-text-centered">
-              <thead>
-                <tr>
-                  <th>{this.props.header.rank}</th>
-                  <th>{this.props.header.bean}</th>
-                  <th>{this.props.header.points}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.rows.map((row, index) => (
-                  <LeaderboardItem
-                    key={row.bean + index}
-                    index={index}
-                    rank={row.rank}
-                    bean={row.bean}
-                    points={row.points}
-                    handleClick={this.props.handleClick}
-                    active={this.props.active}
-                  />
-                ))}
-              </tbody>
-            </table>
+            <div className="container" style={{ maxWidth: '1000px' }}>
+              <p className="title has-text-centered">{this.props.title}</p>
+              <p className="has-text-centered">
+                <img src={mockup_badge} width="150" height="150" alt="Badge" />
+              </p>
+              <p
+                className="has-text-centered"
+                style={{
+                  backgroundColor: 'rgba(162,204,226,0.5)',
+                }}
+              >
+                {this.props.description}
+              </p>
+              <table className="table is-fullwidth is-hoverable has-text-centered">
+                <thead>
+                  <tr>
+                    <th>{this.props.header.rank}</th>
+                    <th>{this.props.header.bean}</th>
+                    <th>{this.props.header.points}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.props.rows.map((row, index) => (
+                    <LeaderboardItem
+                      key={row.bean + index}
+                      index={index}
+                      rank={row.rank}
+                      bean={row.bean}
+                      points={row.points}
+                      handleClick={this.props.handleClick}
+                      active={this.props.active}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </React.Fragment>
