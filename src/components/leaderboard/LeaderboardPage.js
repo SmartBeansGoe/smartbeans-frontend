@@ -31,16 +31,24 @@ export default class LeaderboardPage extends Component {
   }
 
   getLeaderboards() {
-    let rows = [];
     // Laden lieber in der App js? dann müsste man bei namensänderung und bei abgabe von Aufgaben neu laden... ich fände es hier besser
     axios_inst.get('/leaderboard').then((response) => {
       // console.log('response', response.data);
+      let rows = [];
       response.data.forEach((person) => {
         rows.push({
           rank: person.rank,
           bean: person.charname,
           points: person.score,
         });
+      });
+      // sortieren der Liste falls man nicht davon ausgehen kann das die List richtig ist
+      rows.sort((a, b) => {
+        if (a.rank - b.rank !== 0) {
+          return a.rank - b.rank;
+        } else {
+          return a.points - b.points;
+        }
       });
       // console.log('rows', rows);
       this.setState({
