@@ -22,3 +22,8 @@ export const attributePriority = ['no-pants', 'on-top', 'standard'];
 
 export const BLUE = '#489ac7';
 export const LIGHTBLUE = '#a2cce2';
+
+export const DEFAULTSKINCOLOR = '#E7C27A';
+export const DEFAULTFACE = 'face001';
+
+

@@ -15,6 +15,7 @@ import FirstLoginModal from './components/login/FirstLoginModal';
 import lang from './lang/de_DE.json';
 import About from './components/about/About';
 import assetIDs from './components/character/sources/assetIDs.json';
+import { DEFAULTSKINCOLOR, DEFAULTFACE } from './js/constants';
 
 import axiosRetry from 'axios-retry';
 
@@ -49,9 +50,9 @@ export default class App extends Component {
         ],
       },
       character: {
-        body_color: '#E7C27A',
+        body_color: DEFAULTSKINCOLOR,
         shirt_id: '',
-        face_id: 'face001',
+        face_id: DEFAULTFACE,
         pants_id: '',
         hat_id: '',
       },
@@ -177,7 +178,7 @@ export default class App extends Component {
       .then((response) => {
         var data = response.data;
         this.setCharacter(
-          data.body_color === null ? '#E7C27A' : data.body_color,
+          data.body_color === null ? DEFAULTSKINCOLOR : data.body_color,
           data.shirt_id === null ? '' : data.shirt_id,
           this.state.character.face_id,
           data.pants_id === null ? '' : data.pants_id,

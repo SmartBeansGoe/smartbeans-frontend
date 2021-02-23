@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Leaderboard from './Leaderboard';
 import Bean from '../character/avatar/Bean';
 import axios_inst from '../../js/backend';
+import { DEFAULTFACE, DEFAULTSKINCOLOR } from '../../js/constants';
 
 export default class LeaderboardPage extends Component {
   state = {
