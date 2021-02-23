@@ -69,15 +69,28 @@ export default class NavBar extends Component {
               >
                 {lang['navigation.exercises']}
               </Link>
+              {this.props.level < 5 ? (
+                <article
+                  title={lang['navigation.locked']}
+                  className="navbar-item"
+                  style={{
+                    cursor: 'not-allowed',
+                    color: 'rgb(203, 192, 192)',
+                  }}
+                >
+                  <p>{lang['navigation.leaderboard']}</p>
+                </article>
+              ) : (
               <Link
-                className="navbar-item is-hoverable"
+                  className="navbar-item is-hoverable disabled-link is-primary"
                 to="/leaderboard"
-                onClick={() => {
+                  onClick={(e) => {
                   this.setState({ isActive: false });
                 }}
               >
                 {lang['navigation.leaderboard']}
               </Link>
+              )}
               <Link
                 className="navbar-item is-hoverable"
                 to="/about"
@@ -118,4 +131,5 @@ export default class NavBar extends Component {
 
 NavBar.propTypes = {
   username: PropTypes.string.isRequired,
+  level: PropTypes.number.isRequired,
 };

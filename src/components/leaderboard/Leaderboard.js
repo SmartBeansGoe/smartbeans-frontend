@@ -15,7 +15,7 @@ export default class Leaderboard extends Component {
             </p>
             <p
               className="has-text-centered"
-              style={{ backgroundColor: 'rgba(162,204,226,0.4)' }}
+              style={{ backgroundColor: 'rgba(162,204,226,0.5)' }}
             >
               {this.props.description}
             </p>
@@ -28,12 +28,15 @@ export default class Leaderboard extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.rows.map((row) => (
+                {this.props.rows.map((row, index) => (
                   <LeaderboardItem
-                    key={row.bean}
+                    key={row.bean + index}
+                    index={index}
                     rank={row.rank}
                     bean={row.bean}
                     points={row.points}
+                    handleClick={this.props.handleClick}
+                    active={this.props.active}
                   />
                 ))}
               </tbody>
@@ -60,4 +63,6 @@ Leaderboard.propTypes = {
       points: PropTypes.number.isRequired,
     })
   ).isRequired,
+  handleClick: PropTypes.func.isRequired,
+  active: PropTypes.number,
 };

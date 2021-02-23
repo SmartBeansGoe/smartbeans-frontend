@@ -394,7 +394,12 @@ export default class App extends Component {
   render() {
     let navigation;
     if (this.state.logged_in && !this.state.hasError) {
-      navigation = <NavBar username={this.state.username} />;
+      navigation = (
+        <NavBar
+          username={this.state.username}
+          level={this.state.level_data.level}
+        />
+      );
     } else {
       navigation = <NavBarNotLoggedIn />;
     }
@@ -440,13 +445,16 @@ export default class App extends Component {
                 exact
                 path="/leaderboard"
                 render={() => {
-                  return this.renderWhenLoggedIn(
-                    <React.Fragment>
-                      <LeaderboardPage
-                        charname={this.state.charname}
-                        character={this.state.character}
-                      />
-                    </React.Fragment>
+                  return (
+                    this.state.level_data.level >= 5 &&
+                    this.renderWhenLoggedIn(
+                      <React.Fragment>
+                        <LeaderboardPage
+                          charname={this.state.charname}
+                          character={this.state.character}
+                        />
+                      </React.Fragment>
+                    )
                   );
                 }}
               />
