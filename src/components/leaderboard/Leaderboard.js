@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import mockup_badge from './images/mockup_badge.svg';
 import LeaderboardItem from './LeaderboardItem';
 
-
 export default class Leaderboard extends Component {
   render() {
     return (
@@ -14,7 +13,10 @@ export default class Leaderboard extends Component {
             <p className="has-text-centered">
               <img src={mockup_badge} width="150" height="150" alt="Badge" />
             </p>
-            <p className="has-text-centered has-background-primary-light">
+            <p
+              className="has-text-centered"
+              style={{ backgroundColor: 'rgba(162,204,226,0.4)' }}
+            >
               {this.props.description}
             </p>
             <table className="table is-fullwidth is-hoverable has-text-centered">
@@ -28,7 +30,7 @@ export default class Leaderboard extends Component {
               <tbody>
                 {this.props.rows.map((row) => (
                   <LeaderboardItem
-                    key={row.rank}
+                    key={row.bean}
                     rank={row.rank}
                     bean={row.bean}
                     points={row.points}
@@ -38,7 +40,6 @@ export default class Leaderboard extends Component {
             </table>
           </div>
         </div>
-        
       </React.Fragment>
     );
   }
@@ -47,18 +48,16 @@ export default class Leaderboard extends Component {
 Leaderboard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  header: {
+  header: PropTypes.exact({
     rank: PropTypes.string.isRequired,
     bean: PropTypes.string.isRequired,
     points: PropTypes.string.isRequired,
-  },
-  rows: [
-    {
+  }),
+  rows: PropTypes.arrayOf(
+    PropTypes.shape({
       rank: PropTypes.number.isRequired,
       bean: PropTypes.string.isRequired,
       points: PropTypes.number.isRequired,
-    },
-  ],
-  charname: PropTypes.string.isRequired,
-  character: PropTypes.object.isRequired,
+    })
+  ).isRequired,
 };

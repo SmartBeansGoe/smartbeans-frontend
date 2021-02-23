@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Leaderboard from './Leaderboard';
 import Bean from '../character/avatar/Bean';
+import axios_inst from '../../js/backend';
 
 export default class LeaderboardPage extends Component {
   state = {
@@ -30,48 +31,32 @@ export default class LeaderboardPage extends Component {
   }
 
   getLeaderboards() {
-    // Dummy state
-    // Axios will look up these.
-
-    this.setState({
-      leaderboards: [
-        {
-          title: 'Meister der Möglichkeiten',
-          description: 'Verwende die meisten if-Abfragen in einer Aufgabe',
-          header: {
-            rank: 'Rang',
-            bean: 'Bohne',
-            points: 'Anzahl',
+    let rows = [];
+    // Laden lieber in der App js? dann müsste man bei namensänderung und bei abgabe von Aufgaben neu laden... ich fände es hier besser
+    axios_inst.get('/leaderboard').then((response) => {
+      // console.log('response', response.data);
+      response.data.forEach((person) => {
+        rows.push({
+          rank: person.rank,
+          bean: person.charname,
+          points: person.score,
+        });
+      });
+      // console.log('rows', rows);
+      this.setState({
+        leaderboards: [
+          {
+            title: 'Hall of Fame',
+            description: 'Spieler mit den höchsten Leveln und Punkten',
+            header: {
+              rank: 'Rang',
+              bean: 'Bohne',
+              points: 'Punkte',
+            },
+            rows: rows,
           },
-          rows: [
-            {
-              rank: 1,
-              bean: 'Trollbob_100',
-              points: 70,
-            },
-            {
-              rank: 2,
-              bean: 'DieLiese71',
-              points: 65,
-            },
-            {
-              rank: 3,
-              bean: 'MarkusHerold',
-              points: 62,
-            },
-            {
-              rank: 4,
-              bean: 'DerKleineJonas',
-              points: 61,
-            },
-            {
-              rank: 5,
-              bean: 'Nico',
-              points: 59,
-            },
-          ],
-        },
-      ],
+        ],
+      });
     });
   }
 
