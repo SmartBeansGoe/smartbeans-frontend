@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from '../Modal';
 import lang from '../../lang/de_DE.json';
-import bean from '../about/bean.png';
+import bean from './bean.png';
 
 const NUM_LAYERS = 2;
 
