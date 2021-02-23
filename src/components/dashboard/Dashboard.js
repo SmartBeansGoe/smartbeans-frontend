@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AchievementList from '../achievements/AchievementList';
-import { mdiCheckBold, mdiCheckCircleOutline } from '@mdi/js';
+import { mdiCheckBold, mdiCheckCircleOutline, mdiRefresh } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import Bean from '../character/avatar/Bean';
 import SkillGraph from './SkillGraph';
@@ -86,20 +86,17 @@ export default class Dashboard extends Component {
       modalState: false,
       charname: this.props.charname,
       charnameSubmit: false,
+      recommendations: {},
     };
 
     this.toggleModal = this.toggleModal.bind(this);
   }
 
-  toggleModal() {
-    this.setState((prev, props) => {
-      const newState = !prev.modalState;
-
-      return { modalState: newState };
-    });
+  componentDidMount() {
+    this.updateExerciseRecommendations();
   }
 
-  render() {
+  updateExerciseRecommendations() {
     let categories = getExerciseByCategories(this.props.exercises);
     let easyExercise = getRandomExercise(
       categories.find((c) => c.id === EASY).exerciseList
@@ -113,6 +110,24 @@ export default class Dashboard extends Component {
     let examExercise = getRandomExercise(
       categories.find((c) => c.id === EXAM).exerciseList
     );
+    this.setState({
+      recommendations: {
+        easyExercise: easyExercise,
+        mediumExercise: mediumExercise,
+        hardExercise: hardExercise,
+        examExercise: examExercise,
+      },
+    });
+  }
+
+  toggleModal() {
+    this.setState((prev, props) => {
+      const newState = !prev.modalState;
+      return { modalState: newState };
+    });
+  }
+
+  render() {
     return (
       <div className="tile">
         <div
@@ -177,9 +192,17 @@ export default class Dashboard extends Component {
 
           <div className="tile is-parent">
             <div className="tile is-child box">
-              <p className="title">
-                {lang['dashboard.exercise-recommendations']}
-              </p>
+              <div className="flex-container">
+                <span className="title" style={{ flexGrow: 1 }}>
+                  {lang['dashboard.exercise-recommendations']}
+                </span>
+                <Icon
+                  path={mdiRefresh}
+                  size={1.5}
+                  onClick={() => this.updateExerciseRecommendations()}
+                  style={{ cursor: 'pointer', color: BLUE }}
+                />
+              </div>
               <div
                 className="tile"
                 style={{
@@ -187,10 +210,22 @@ export default class Dashboard extends Component {
                   flexFlow: 'row wrap',
                 }}
               >
-                {renderNextExercise(easyExercise, EASY)}
-                {renderNextExercise(mediumExercise, MEDIUM)}
-                {renderNextExercise(hardExercise, HARD)}
-                {renderNextExercise(examExercise, EXAM)}
+                {renderNextExercise(
+                  this.state.recommendations.easyExercise,
+                  EASY
+                )}
+                {renderNextExercise(
+                  this.state.recommendations.mediumExercise,
+                  MEDIUM
+                )}
+                {renderNextExercise(
+                  this.state.recommendations.hardExercise,
+                  HARD
+                )}
+                {renderNextExercise(
+                  this.state.recommendations.examExercise,
+                  EXAM
+                )}
               </div>
             </div>
           </div>
