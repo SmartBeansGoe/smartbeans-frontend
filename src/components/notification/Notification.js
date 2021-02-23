@@ -50,7 +50,7 @@ const Notification = (props) => {
       <div className="message-body">
         <div className="columns">
           {props.type !== 'text' && (
-            <div className="pl-2">
+            <div className="pl-2" style={{ width: '110px' }}>
               <svg
                 viewBox="0 0 110 110"
                 width="auto"
