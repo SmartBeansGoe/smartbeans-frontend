@@ -4,6 +4,7 @@ import Leaderboard from './Leaderboard';
 import Bean from '../character/avatar/Bean';
 import axios_inst from '../../js/backend';
 import { DEFAULTFACE, DEFAULTSKINCOLOR } from '../../js/constants';
+import lang from '../../lang/de_DE.json';
 
 export default class LeaderboardPage extends Component {
   constructor(props) {
@@ -92,12 +93,12 @@ export default class LeaderboardPage extends Component {
       });
       if (this.state.active !== -1) active = this.state.active;
       this.setState({
-        title: 'Hall of Fame',
-        description: 'Spieler mit den höchsten Leveln und Punkten',
+        title: lang['leaderboard.title'],
+        description: lang['leaderboard.description'],
         header: {
-          rank: 'Rang',
-          bean: 'Bohne',
-          points: 'Punkte',
+          rank: lang['leaderboard.header.rank'],
+          bean: lang['leaderboard.header.bean'],
+          points: lang['leaderboard.header.points'],
         },
         rows: rows,
         rawData: response.data,
