@@ -31,6 +31,6 @@ WardrobeModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   modalState: PropTypes.bool.isRequired,
   character: PropTypes.object.isRequired,
-  assets: PropTypes.object.isRequired,
+  assets: PropTypes.array.isRequired,
   onSaveCharacterProperties: PropTypes.func.isRequired,
 };

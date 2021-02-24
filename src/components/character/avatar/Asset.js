@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import assets from '../sources/assets.json';
 import assetIDs from '../sources/assetIDs.json';
 
 export function getAttributesOf(assetID) {
   if (assetID === null || assetID === '') return [];
+  if (assetIDs.find((el) => el.asset_id === assetID) === undefined) return [];
   return assetIDs.find((el) => el.asset_id === assetID).attributes;
 }
 
@@ -15,15 +15,20 @@ export default class Asset extends Component {
   }
 
   render() {
-    return (
-      <React.Fragment>
-        <g
-          dangerouslySetInnerHTML={{
-            __html: assets[this.category][this.props.id],
-          }}
-        />
-      </React.Fragment>
-    );
+    if (assetIDs.filter((el) => el.id === this.props.id).length === 0) {
+      return <div>Existiert nicht mehr!</div>;
+    } else {
+      let svg = assetIDs.find((el) => el.id === this.props.id).svg;
+      return (
+        <React.Fragment>
+          <g
+            dangerouslySetInnerHTML={{
+              __html: svg,
+            }}
+          />
+        </React.Fragment>
+      );
+    }
   }
 }
 

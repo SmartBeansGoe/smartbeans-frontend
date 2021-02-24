@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { mdiTshirtCrew, mdiHatFedora, mdiInformation } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import pants from '../../images/pants.svg';
-import assets from './sources/assets.json';
+import Asset from './avatar/Asset';
+import assetIDs from './sources/assetIDs.json';
 
 import { SHIRTS, PANTS, HATS, LIGHTBLUE, BLUE } from '../../js/constants';
 import lang from '../../lang/de_DE.json';
@@ -84,6 +85,14 @@ export default class Wardrobe extends Component {
 
   render() {
     let isNoPants = getAttributesOf(this.state.shirt_id).includes('no-pants');
+    let assets_by_category = this.props.assets.filter((el) => {
+      let asset = assetIDs.find((x) => el === x.id);
+      if (asset != undefined) {
+        return asset.category === this.state.category;
+      } else {
+        return false;
+      }
+    });
     return (
       <div className="tile">
         <div className="tile is-parent is-4">
@@ -140,8 +149,8 @@ export default class Wardrobe extends Component {
                   height: this.state.height * 0.5,
                 }}
               >
-                {this.props.assets[this.state.category].map((asset) => {
-                  var asset_id_type =
+                {assets_by_category.map((asset) => {
+                  var active_asset =
                     this.state.category === SHIRTS
                       ? this.state.shirt_id
                       : this.state.category === PANTS
@@ -149,28 +158,32 @@ export default class Wardrobe extends Component {
                       : this.state.hat_id;
                   return (
                     <div
-                      key={asset.asset_id}
-                      onClick={() => this.state.category === PANTS && isNoPants ? null : this.setAsset(asset.asset_id)}
+                      key={asset}
+                      onClick={() =>
+                        this.state.category === PANTS && isNoPants
+                          ? null
+                          : this.setAsset(asset)
+                      }
                     >
                       <div
                         className="box"
                         style={{
                           width: 'auto',
-                          cursor: this.state.category === PANTS && isNoPants ? 'not-allowed' : 'pointer',
+                          cursor:
+                            this.state.category === PANTS && isNoPants
+                              ? 'not-allowed'
+                              : 'pointer',
                           backgroundColor:
-                            asset_id_type === asset.asset_id
-                              ? LIGHTBLUE
-                              : 'white',
+                            active_asset === asset ? LIGHTBLUE : 'white',
                         }}
                       >
                         <svg
                           viewBox="0 0 77.707 108.77"
                           height={this.state.height / 6}
                           width={((this.state.height / 6) * 78) / 108}
-                          dangerouslySetInnerHTML={{
-                            __html: assets[this.state.category][asset.asset_id],
-                          }}
-                        />
+                        >
+                          <Asset id={asset} />
+                        </svg>
                       </div>
                     </div>
                   );
@@ -256,7 +269,7 @@ export default class Wardrobe extends Component {
 
 Wardrobe.propTypes = {
   body_color: PropTypes.string.isRequired,
-  assets: PropTypes.object.isRequired,
+  assets: PropTypes.array.isRequired,
   onSaveCharacterProperties: PropTypes.func.isRequired,
   face_id: PropTypes.string.isRequired,
   pants_id: PropTypes.string,

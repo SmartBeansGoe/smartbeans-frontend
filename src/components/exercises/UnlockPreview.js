@@ -6,19 +6,13 @@ import lang from '../../lang/de_DE.json';
 
 export default class UnlockPreview extends Component {
   render() {
-    // Version für später
-    // let result = assetIDs.filter(
-    //   (asset) => asset.precondition.taskId === this.props.taskid
-    // );
-    // Version für jetzt
     let result = assetIDs.filter(
-      (asset) => asset.precondition === this.props.taskid
+      (asset) => asset.precondition["task-id"] === this.props.taskid
     );
-    // svg zusammensetzten
     let svg;
     result.forEach((asset) => {
       svg += '<g>';
-      svg += assets[asset.category][asset.asset_id];
+      svg += asset.svg;
       svg += '</g>';
     });
     let categories = '';

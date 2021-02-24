@@ -335,7 +335,7 @@ export default class Dashboard extends Component {
 Dashboard.propTypes = {
   charname: PropTypes.string.isRequired,
   character: PropTypes.object.isRequired,
-  assets: PropTypes.object.isRequired,
+  assets: PropTypes.array.isRequired,
   achievements: PropTypes.array.isRequired,
   level_data: PropTypes.object.isRequired,
   exercises: PropTypes.array.isRequired,
