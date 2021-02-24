@@ -288,10 +288,21 @@ export default class Dashboard extends Component {
                   style={{ width: '140px', borderColor: BLUE }}
                   maxLength={15}
                   onChange={(event) => {
+                    let newCharnameSubmit = false;
+                    let newCharname = this.state.charname;
+                    if (
+                      event.target.value.charAt(
+                        event.target.value.length - 1
+                      ) !== ' '
+                    )
+                      newCharname = event.target.value;
+                    if (newCharname.length > 1) {
+                      newCharnameSubmit =
+                        event.target.value !== this.props.charname;
+                    }
                     this.setState({
-                      charname: event.target.value,
-                      charnameSubmit:
-                        event.target.value !== this.props.charname,
+                      charname: newCharname,
+                      charnameSubmit: newCharnameSubmit,
                     });
                   }}
                 />
