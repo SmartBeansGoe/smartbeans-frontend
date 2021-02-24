@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import assets from '../character/sources/assets.json';
 import assetIDs from '../character/sources/assetIDs.json';
 import lang from '../../lang/de_DE.json';
+import { SHIRTS, PANTS, HATS } from '../../js/constants';
 
 export default class UnlockPreview extends Component {
   render() {
-    let result = assetIDs.filter(
-      (asset) => asset.precondition["task-id"] === this.props.taskid
-    );
+    let result = assetIDs
+      .filter((asset) => asset.precondition['task-id'] === this.props.taskid)
+      .sort((a, b) => {
+        let order = [];
+        if (a.attributes.includes('on-top') || b.attributes.includes('on-top'))
+          order = [SHIRTS, PANTS, HATS];
+        else order = [PANTS, SHIRTS, HATS];
+        return order.indexOf(a.category) - order.indexOf(b.category);
+      });
     let svg;
     result.forEach((asset) => {
-      svg += '<g>';
-      svg += asset.svg;
-      svg += '</g>';
+      svg += '<g>' + asset.svg + '</g>';
     });
     let categories = '';
     this.props.categories.forEach((category) => {
