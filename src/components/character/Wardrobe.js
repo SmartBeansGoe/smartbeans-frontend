@@ -170,7 +170,7 @@ export default class Wardrobe extends Component {
                               ? 'not-allowed'
                               : 'pointer',
                           backgroundColor:
-                            asset_type === asset.asset_id ? LIGHTBLUE : 'white',
+                            asset_type === asset ? LIGHTBLUE : 'white',
                         }}
                       >
                         <svg
