@@ -13,8 +13,8 @@ export default function AchievementList(props) {
         )
         .sort((a, b) =>
           props.completed
-            ? a.completed > b.completed
-            : a.frequency < b.frequency
+            ? a.completed - b.completed
+            : b.frequency - a.frequency
         )
         .map((achievement) => {
           return (

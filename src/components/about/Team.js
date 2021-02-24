@@ -5,13 +5,10 @@ import team from './team.json';
 export default class Team extends Component {
   render() {
     return (
-      <div className="container"
-        style={{
-          maxWidth: 'auto',
-        }}
-      >
+      <>
         {team.map((el, id) => (
           <PersonalCard
+            key={el.name + id}
             name={el.name}
             job={el.job}
             description={el.description}
@@ -19,7 +16,7 @@ export default class Team extends Component {
             leftAlign={id % 2 === 0}
           />
         ))}
-      </div>
+      </>
     );
   }
 }

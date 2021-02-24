@@ -9,7 +9,7 @@ export default class PersonalCard extends Component {
   displayDescription() {
     let alignment = this.props.leftAlign ? 'left' : 'right';
     return (
-      <div className="column is-8">
+      <div className="column is-9">
         <p style={{ textAlign: alignment }}>
           <span className="title is-5">{this.props.name}</span>
           <br />
@@ -23,7 +23,7 @@ export default class PersonalCard extends Component {
   displaySVG() {
     let alignment = this.props.leftAlign ? 'right' : 'left';
     return (
-      <div className="column is-4" style={{textAlign: alignment}}>
+      <div className="column is-3" style={{textAlign: alignment}}>
         <svg
           viewBox="0 0 77.706579 108.77032"
           height="200px"
