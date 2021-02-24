@@ -30,7 +30,7 @@ export default class LeaderboardPage extends Component {
       active: -1,
       intervalId: 0,
     };
-    this.handleClick = this.handleClick.bind(this);
+    this.setActive = this.setActive.bind(this);
   }
 
   componentDidMount() {
@@ -52,7 +52,7 @@ export default class LeaderboardPage extends Component {
     this.stopInterval();
   }
 
-  handleClick(index) {
+  setActive(index) {
     let bean = this.state.rawData[index];
     this.setState({
       character: {
@@ -87,12 +87,17 @@ export default class LeaderboardPage extends Component {
             points: person.score,
           });
         });
-        if (this.state.active !== -1) active = this.state.active;
-        this.setState({
-          rows: rows,
-          rawData: response.data,
-          active: active,
-        });
+        if (this.state.active !== -1) {
+          active = this.state.active;
+        }
+        this.setState(
+          {
+            rows: rows,
+            rawData: response.data,
+            active: active,
+          },
+          () => this.setActive(active)
+        );
       })
       .catch((error) => {
         console.log('error', error);
@@ -120,7 +125,7 @@ export default class LeaderboardPage extends Component {
           description={this.state.description}
           header={this.state.header}
           rows={this.state.rows}
-          handleClick={this.handleClick}
+          handleClick={this.setActive}
           active={this.state.active}
         />
         <div className="tile is-vertical is-2 is-hidden-touch is-parent">
