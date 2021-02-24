@@ -16,6 +16,8 @@
   "dashboard.wardrobe": "Kleiderschrank",
   "dashboard.avatar-naming": "Avatarname",
   "dashboard.exercise-recommendations": "Aufgabenvorschläge",
+  "dashboard.archievement.frequency": "Freischaltungshäufigkeit: ",
+  "dashboard.archievement.percent": "%",
   "navigation.dashboard": "Dashboard",
   "navigation.exercises": "Aufgaben",
   "navigation.leaderboard": "Hall of Fame",
@@ -123,5 +125,4 @@
   "about.team.title": "Unser Team",
   "about.research.title": "Unsere Forschung",
   "about.privacy-policy.title": "Datenschutzerklärung"
-
 }

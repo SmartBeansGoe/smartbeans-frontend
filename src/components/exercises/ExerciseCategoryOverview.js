@@ -11,7 +11,18 @@ export default class ExerciseCategoryOverview extends Component {
 
     const exercises = this.props.exerciseList
       .sort(function (a, b) {
-        return a.name.localeCompare(b.name);
+        if (a.shortname.charAt(0) !== b.shortname.charAt(0)) {
+          let order = 'SEKXZ';
+          return (
+            order.indexOf(a.shortname.charAt(0)) -
+            order.indexOf(b.shortname.charAt(0))
+          );
+        } else {
+          return (
+            parseInt(a.shortname.substring(1)) -
+            parseInt(b.shortname.substring(1))
+          );
+        }
       })
       .sort((a, b) => (a.solved === b.solved ? 0 : !a.solved ? -1 : 1));
 

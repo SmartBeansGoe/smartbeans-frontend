@@ -29,6 +29,7 @@ export default function AchievementList(props) {
                 id={achievement.id}
                 name={achievement.name}
                 description={achievement.description}
+                frequency={achievement.frequency}
               />
             </div>
           );
