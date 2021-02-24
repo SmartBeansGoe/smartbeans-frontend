@@ -115,17 +115,11 @@ class ExercisePage extends Component {
         (submission) => submission.score === 1
       );
       if (result.length === 0) {
-        // Für jetzt
         let assets = assetIDs.filter(
           (asset) =>
-            asset.precondition === parseInt(this.props.match.params.taskid)
+            asset.precondition.taskId ===
+            parseInt(this.props.match.params.taskid)
         );
-        // Für später
-        // let assets = assetIDs.filter(
-        //   (asset) =>
-        //     asset.precondition.taskId ===
-        //     parseInt(this.props.match.params.taskid)
-        // );
         if (assets.length !== 0) {
           this.context({
             type: 'ADD_NOTIFICATION',
