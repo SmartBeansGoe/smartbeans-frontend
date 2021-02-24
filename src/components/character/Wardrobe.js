@@ -85,10 +85,14 @@ export default class Wardrobe extends Component {
 
   render() {
     let isNoPants = getAttributesOf(this.state.shirt_id).includes('no-pants');
-    let assets_by_category = this.props.assets.filter(
-      (el) => assetIDs.find((x) => el === x.id).category === this.state.category
-    );
-    console.log(assets_by_category);
+    let assets_by_category = this.props.assets.filter((el) => {
+      let asset = assetIDs.find((x) => el === x.id);
+      if (asset != undefined) {
+        return asset.category === this.state.category;
+      } else {
+        return false;
+      }
+    });
     return (
       <div className="tile">
         <div className="tile is-parent is-4">
@@ -146,7 +150,7 @@ export default class Wardrobe extends Component {
                 }}
               >
                 {assets_by_category.map((asset) => {
-                  var asset_type =
+                  var active_asset =
                     this.state.category === SHIRTS
                       ? this.state.shirt_id
                       : this.state.category === PANTS
@@ -170,7 +174,7 @@ export default class Wardrobe extends Component {
                               ? 'not-allowed'
                               : 'pointer',
                           backgroundColor:
-                            asset_type === asset ? LIGHTBLUE : 'white',
+                            active_asset === asset ? LIGHTBLUE : 'white',
                         }}
                       >
                         <svg
