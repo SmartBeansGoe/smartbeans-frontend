@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import achievements from './../achievements/achievements.json';
+import achievements from '../../data/achievements.json';
 import { SHIRTS, PANTS, HATS } from '../../js/constants';
 
 const Notification = (props) => {

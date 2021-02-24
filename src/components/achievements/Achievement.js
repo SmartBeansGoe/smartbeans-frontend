@@ -1,4 +1,4 @@
-import achievements from './achievements.json';
+import achievements from '../../data/achievements.json';
 import PropTypes from 'prop-types';
 import { useLayer } from 'react-laag';
 import React from 'react';
