@@ -4,8 +4,7 @@ import assetIDs from '../sources/assetIDs.json';
 
 export function getAttributesOf(assetID) {
   if (assetID === null || assetID === '') return [];
-  if (assetIDs.find((el) => el.asset_id === assetID) === undefined) return [];
-  return assetIDs.find((el) => el.asset_id === assetID).attributes;
+  return assetIDs.find((el) => el.id === assetID).attributes;
 }
 
 export default class Asset extends Component {
