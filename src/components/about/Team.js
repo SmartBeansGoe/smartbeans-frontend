@@ -8,6 +8,7 @@ export default class Team extends Component {
       <>
         {team.map((el, id) => (
           <PersonalCard
+            key={el.name + id}
             name={el.name}
             job={el.job}
             description={el.description}
