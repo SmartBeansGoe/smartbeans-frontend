@@ -49,7 +49,7 @@ export default function Achievement(props) {
               color: '#FFF',
             }}
           >
-            <span style={{ width: 150 }}>
+            <span style={{ width: 200 }}>
               <svg
                 viewBox="0 0 110 110"
                 dangerouslySetInnerHTML={{
