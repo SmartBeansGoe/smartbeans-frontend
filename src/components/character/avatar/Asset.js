@@ -15,12 +15,9 @@ export default class Asset extends Component {
   }
 
   render() {
-    console.log(assetIDs.filter((el) => el.id === this.props.id));
     if (assetIDs.filter((el) => el.id === this.props.id).length === 0) {
-      console.log('HIER');
       return <div>Existiert nicht mehr!</div>;
     } else {
-      console.log(this.props.id);
       let svg = assetIDs.find((el) => el.id === this.props.id).svg;
       return (
         <React.Fragment>
