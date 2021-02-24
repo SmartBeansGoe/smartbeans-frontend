@@ -458,7 +458,7 @@ export default class App extends Component {
           type: 'assets_unlocked',
           title: lang['app.notifications.asset.title'],
           message: lang['app.notifications.asset.message'],
-          assetsIds: result,
+          assets: result,
         },
       });
     }

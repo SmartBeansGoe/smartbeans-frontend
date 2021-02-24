@@ -117,7 +117,7 @@ class ExercisePage extends Component {
       if (result.length === 0) {
         let assets = assetIDs.filter(
           (asset) =>
-            asset.precondition.taskId ===
+            asset.precondition['task-id'] ===
             parseInt(this.props.match.params.taskid)
         );
         if (assets.length !== 0) {
@@ -128,7 +128,7 @@ class ExercisePage extends Component {
               type: 'assets_unlocked',
               title: lang['app.notifications.asset.title'],
               message: lang['app.notifications.asset.message'],
-              assetsIds: result,
+              assets: assets,
             },
           });
         }

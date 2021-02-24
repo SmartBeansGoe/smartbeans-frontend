@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import achievements from './../achievements/achievements.json';
-import assets from '../character/sources/assets.json';
+import { SHIRTS, PANTS, HATS } from '../../js/constants';
 
 const Notification = (props) => {
   const [exit, setExit] = useState(false);
@@ -25,12 +25,17 @@ const Notification = (props) => {
       svg = icon.svg;
     }
   } else if (props.type === 'assets_unlocked') {
-    console.log('this.props.assetsIds', props.assetsIds);
-    props.assetsIds.forEach((asset) => {
-      svg += '<g>';
-      svg += assets[asset.category][asset.asset_id];
-      svg += '</g>';
-    });
+    props.assets
+      .sort((a, b) => {
+        let order = [];
+        if (a.attributes.includes('on-top') || b.attributes.includes('on-top'))
+          order = [SHIRTS, PANTS, HATS];
+        else order = [PANTS, SHIRTS, HATS];
+        return order.indexOf(a.category) - order.indexOf(b.category);
+      })
+      .forEach((asset) => {
+        svg += '<g>' + asset.svg + '</g>';
+      });
   }
 
   return (
@@ -81,6 +86,6 @@ Notification.propTypes = {
   message: PropTypes.string.isRequired,
   name: PropTypes.string,
   achievementId: PropTypes.number,
-  assetsIds: PropTypes.array,
+  assets: PropTypes.array,
   colorClass: PropTypes.string,
 };
