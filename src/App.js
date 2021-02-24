@@ -14,7 +14,7 @@ import NavBarNotLoggedIn from './components/navigation/NavBarNotLoggedIn';
 import FirstLoginModal from './components/login/FirstLoginModal';
 import lang from './lang/de_DE.json';
 import About from './components/about/About';
-import assetIDs from './components/character/sources/assetIDs.json';
+import assets from './data/assets.json';
 import { DEFAULTSKINCOLOR, DEFAULTFACE } from './js/constants';
 
 import axiosRetry from 'axios-retry';
@@ -447,7 +447,7 @@ export default class App extends Component {
   }
 
   sendAssetNotificationForAchievement(achievementId) {
-    let result = assetIDs.filter(
+    let result = assets.filter(
       (asset) => asset.precondition['achievement-id'] === achievementId
     );
     if (result.length !== 0) {

@@ -10,7 +10,7 @@ import './ExercisePage.css';
 import { NotificationContext } from './../notification/NotificationProvider';
 import lang from '../../lang/de_DE.json';
 import BeanWrapper from './BeanWrapper';
-import assetIDs from '../character/sources/assetIDs.json';
+import assets from '../../data/assets.json';
 
 class ExercisePage extends Component {
   static contextType = NotificationContext;
@@ -115,12 +115,12 @@ class ExercisePage extends Component {
         (submission) => submission.score === 1
       );
       if (result.length === 0) {
-        let assets = assetIDs.filter(
+        let filterd_assets = assets.filter(
           (asset) =>
             asset.precondition['task-id'] ===
             parseInt(this.props.match.params.taskid)
         );
-        if (assets.length !== 0) {
+        if (filterd_assets.length !== 0) {
           this.context({
             type: 'ADD_NOTIFICATION',
             payload: {
@@ -128,7 +128,7 @@ class ExercisePage extends Component {
               type: 'assets_unlocked',
               title: lang['app.notifications.asset.title'],
               message: lang['app.notifications.asset.message'],
-              assets: assets,
+              assets: filterd_assets,
             },
           });
         }

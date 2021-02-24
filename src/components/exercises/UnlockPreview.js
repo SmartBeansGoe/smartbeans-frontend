@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import assetIDs from '../character/sources/assetIDs.json';
+import assets from '../../data/assets.json';
 import lang from '../../lang/de_DE.json';
 import { SHIRTS, PANTS, HATS } from '../../js/constants';
 
 export default class UnlockPreview extends Component {
   render() {
-    let result = assetIDs
+    let result = assets
       .filter((asset) => asset.precondition['task-id'] === this.props.taskid)
       .sort((a, b) => {
         let order = [];

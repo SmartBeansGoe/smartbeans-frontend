@@ -5,7 +5,7 @@ import { mdiTshirtCrew, mdiHatFedora, mdiInformation } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import pants from '../../images/pants.svg';
 import Asset from './avatar/Asset';
-import assetIDs from './sources/assetIDs.json';
+import assets from '../../data/assets.json'
 
 import { SHIRTS, PANTS, HATS, LIGHTBLUE, BLUE } from '../../js/constants';
 import lang from '../../lang/de_DE.json';
@@ -86,7 +86,7 @@ export default class Wardrobe extends Component {
   render() {
     let isNoPants = getAttributesOf(this.state.shirt_id).includes('no-pants');
     let assets_by_category = this.props.assets.filter((el) => {
-      let asset = assetIDs.find((x) => el === x.id);
+      let asset = assets.find((x) => el === x.id);
       if (asset != undefined) {
         return asset.category === this.state.category;
       } else {
