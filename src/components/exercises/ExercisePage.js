@@ -22,6 +22,7 @@ class ExercisePage extends Component {
       isLoading: false,
       isDisabled: true,
       isError: false,
+      inputKey: Math.random().toString(36),
     };
   }
 
@@ -58,6 +59,7 @@ class ExercisePage extends Component {
             fileName: lang['exercise.no-file-selected'],
             selectedFile: null,
             isLoading: false,
+            inputKey: Math.random().toString(36),
           });
           this.props.loadSubmissions();
           this.props.loadExercises();
@@ -72,6 +74,7 @@ class ExercisePage extends Component {
             isLoading: false,
             isError: true,
             isDisabled: true,
+            inputKey: Math.random().toString(36),
           });
 
           this.context({
@@ -94,6 +97,7 @@ class ExercisePage extends Component {
         isLoading: false,
         isError: true,
         isDisabled: true,
+        inputKey: Math.random().toString(36),
       });
       _this.context({
         type: 'ADD_NOTIFICATION',
@@ -183,6 +187,7 @@ class ExercisePage extends Component {
                         accept=".c"
                         name="cfile"
                         onChange={this.onChangeHandler}
+                        key={this.state.inputKey}
                       />
                       <span className="file-cta">
                         <span className="file-icon">
