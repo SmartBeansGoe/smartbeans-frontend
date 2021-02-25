@@ -279,12 +279,10 @@ export default class App extends Component {
           type: 'ADD_NOTIFICATION',
           payload: {
             id: new Date().getTime(),
-            type: 'achievement_unlocked',
+            type: 'level_up',
             title: lang['app.notifications.levelup.title'],
             name: lang['app.notifications.levelup.name'] + newLevel.level,
             message: lang['app.notifications.levelup.message'],
-            // TODO fragen ob es eine Batch geben wird?
-            achievementId: 4,
           },
         });
       }

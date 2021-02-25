@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import mockup_badge from './images/mockup_badge.svg';
+import leaderboard_graphic from './images/leaderboard_graphic.svg';
 import LeaderboardItem from './LeaderboardItem';
 
 export default class Leaderboard extends Component {
@@ -12,7 +12,7 @@ export default class Leaderboard extends Component {
             <div className="container" style={{ maxWidth: '1000px' }}>
               <p className="title has-text-centered">{this.props.title}</p>
               <p className="has-text-centered">
-                <img src={mockup_badge} width="150" height="150" alt="Badge" />
+                <img src={leaderboard_graphic} width="150" height="150" alt="Badge" />
               </p>
               <table className="table is-fullwidth is-hoverable has-text-centered">
                 <thead>

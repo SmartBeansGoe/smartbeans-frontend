@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import achievements from '../../data/achievements.json';
 import { SHIRTS, PANTS, HATS } from '../../js/constants';
+import levelUp from '../../data/Levelup.json';
 
 const Notification = (props) => {
   const [exit, setExit] = useState(false);
@@ -36,6 +37,8 @@ const Notification = (props) => {
       .forEach((asset) => {
         svg += '<g>' + asset.svg + '</g>';
       });
+  } else if (props.type === 'level_up') {
+    svg = levelUp.svg;
   }
 
   return (

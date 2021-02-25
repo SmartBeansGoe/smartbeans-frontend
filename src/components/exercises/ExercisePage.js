@@ -112,7 +112,7 @@ class ExercisePage extends Component {
   sendNotificationForFirstSolve(response) {
     if (response.data.score === 1) {
       let result = this.props.submissions.filter(
-        (submission) => submission.score === 1
+        (submission) => submission.result.score === 1
       );
       if (result.length === 0) {
         let filterd_assets = assets.filter(
@@ -169,46 +169,48 @@ class ExercisePage extends Component {
       <React.Fragment>
         <div className="tile is-parent is-vertical exercise_page">
           <div className="tile is-child box">
-            <h1 className="title ml-3 mt-3">{name}</h1>
-            <div dangerouslySetInnerHTML={{ __html: marked(task) }} />
-            <div className="field is-grouped " style={{ flexWrap: 'wrap' }}>
-              <div className="control mr-6">
-                <div className="file has-name  mt-4 is-focused is-link is-light">
-                  <label className="file-label">
-                    <input
-                      className="file-input ml-3"
-                      type="file"
-                      accept=".c"
-                      name="cfile"
-                      onChange={this.onChangeHandler}
-                    />
-                    <span className="file-cta">
-                      <span className="file-icon">
-                        <Icon path={mdiUpload} size={1} />
+            <div className="content ml-3 ">
+              <h1 className="title mt-3">{name}</h1>
+              <div dangerouslySetInnerHTML={{ __html: marked(task) }} />
+              <div className="field is-grouped " style={{ flexWrap: 'wrap' }}>
+                <div className="control mr-6">
+                  <div className="file has-name  mt-4 is-focused is-link is-light">
+                    <label className="file-label">
+                      <input
+                        className="file-input ml-3"
+                        type="file"
+                        accept=".c"
+                        name="cfile"
+                        onChange={this.onChangeHandler}
+                      />
+                      <span className="file-cta">
+                        <span className="file-icon">
+                          <Icon path={mdiUpload} size={1} />
+                        </span>
+                        <span className="file-label">
+                          {lang['exercise.select-file']}
+                        </span>
                       </span>
-                      <span className="file-label">
-                        {lang['exercise.select-file']}
+                      <span className="file-name" style={{ width: '200px' }}>
+                        {this.state.fileName}
                       </span>
-                    </span>
-                    <span className="file-name" style={{ width: '200px' }}>
-                      {this.state.fileName}
-                    </span>
-                  </label>
+                    </label>
+                  </div>
                 </div>
-              </div>
-              <div className="control">
-                <button
-                  className={`button ${
-                    this.state.isError ? 'is-danger' : 'is-primary'
-                  }  mt-4 ${this.state.isLoading ? 'is-loading' : ''}`}
-                  disabled={this.state.isDisabled}
-                  type="button"
-                  onClick={this.onClickHandler}
-                >
-                  {this.state.isError
-                    ? lang['exercise.error-occured']
-                    : lang['exercise.upload-solution']}
-                </button>
+                <div className="control">
+                  <button
+                    className={`button ${
+                      this.state.isError ? 'is-danger' : 'is-primary'
+                    }  mt-4 ${this.state.isLoading ? 'is-loading' : ''}`}
+                    disabled={this.state.isDisabled}
+                    type="button"
+                    onClick={this.onClickHandler}
+                  >
+                    {this.state.isError
+                      ? lang['exercise.error-occured']
+                      : lang['exercise.upload-solution']}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
