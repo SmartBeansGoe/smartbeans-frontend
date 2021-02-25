@@ -5,8 +5,7 @@ import { mdiTshirtCrew, mdiHatFedora, mdiInformation } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import pants from '../../images/pants.svg';
 import Asset from './avatar/Asset';
-import assets from '../../data/assets.json'
-
+import assets from '../../data/assets.json';
 import { SHIRTS, PANTS, HATS, LIGHTBLUE, BLUE } from '../../js/constants';
 import lang from '../../lang/de_DE.json';
 import { getAttributesOf } from './avatar/Asset';
@@ -87,7 +86,7 @@ export default class Wardrobe extends Component {
     let isNoPants = getAttributesOf(this.state.shirt_id).includes('no-pants');
     let assets_by_category = this.props.assets.filter((el) => {
       let asset = assets.find((x) => el === x.id);
-      if (asset != undefined) {
+      if (asset !== undefined) {
         return asset.category === this.state.category;
       } else {
         return false;
@@ -191,27 +190,37 @@ export default class Wardrobe extends Component {
               </div>
             </div>
             <div className="tile is-parent">
-              <div
-                style={{
-                  flexGrow: 0.2,
-                }}
-              >
-                <input
-                  className="button"
-                  type="color"
-                  name="body-color"
-                  id="body-color"
-                  title="Farbe"
-                  value={this.state.body_color}
-                  onChange={(event) => this.setBodyColor(event.target.value)}
-                  style={{
-                    backgroundColor: this.state.body_color,
-                    padding: 0,
-                    width: 40,
-                    height: 40,
-                  }}
-                />
+              <div class="field has-addons">
+                <div class="control">
+                  <label
+                    class="button is-rounded"
+                    for="body-color"
+                    style={{
+                      backgroundColor: this.state.body_color,
+                    }}
+                  ></label>
+                </div>
+                <div class="control">
+                  <label class="button" for="body-color">
+                    {lang['wardrobe.skin-color']}
+                  </label>
+                </div>
               </div>
+              <input
+                className="input is-rounded"
+                type="color"
+                name="body-color"
+                id="body-color"
+                title={lang['wardrobe.skin-color']}
+                value={this.state.body_color}
+                onChange={(event) => this.setBodyColor(event.target.value)}
+                style={{
+                  backgroundColor: this.state.body_color,
+                  opacity: 0,
+                  visibility: 'hidden',
+                }}
+              />
+
               <div
                 style={{
                   flexGrow: 0.8,
