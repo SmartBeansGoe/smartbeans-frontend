@@ -71,7 +71,8 @@ export default function Achievement(props) {
 
               <p className=" has-text-right  has-text-weight-light  is-italic mt-4">
                 {lang['dashboard.archievement.frequency']}
-                {props.frequency} {lang['dashboard.archievement.percent']}
+                {parseInt(props.frequency)}{' '}
+                {lang['dashboard.archievement.percent']}
               </p>
             </span>
           </div>
