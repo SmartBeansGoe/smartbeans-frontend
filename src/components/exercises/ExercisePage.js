@@ -112,7 +112,7 @@ class ExercisePage extends Component {
   sendNotificationForFirstSolve(response) {
     if (response.data.score === 1) {
       let result = this.props.submissions.filter(
-        (submission) => submission.score === 1
+        (submission) => submission.result.score === 1
       );
       if (result.length === 0) {
         let filterd_assets = assets.filter(
