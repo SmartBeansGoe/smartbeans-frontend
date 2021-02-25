@@ -14,14 +14,6 @@ export default class Leaderboard extends Component {
               <p className="has-text-centered">
                 <img src={mockup_badge} width="150" height="150" alt="Badge" />
               </p>
-              <p
-                className="has-text-centered"
-                style={{
-                  backgroundColor: 'rgba(162,204,226,0.5)',
-                }}
-              >
-                {this.props.description}
-              </p>
               <table className="table is-fullwidth is-hoverable has-text-centered">
                 <thead>
                   <tr>

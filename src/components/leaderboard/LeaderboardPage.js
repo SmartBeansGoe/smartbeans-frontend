@@ -11,7 +11,6 @@ export default class LeaderboardPage extends Component {
     super(props);
     this.state = {
       title: lang['leaderboard.title'],
-      description: lang['leaderboard.description'],
       header: {
         rank: lang['leaderboard.header.rank'],
         bean: lang['leaderboard.header.bean'],
@@ -122,7 +121,6 @@ export default class LeaderboardPage extends Component {
       <React.Fragment>
         <Leaderboard
           title={this.state.title}
-          description={this.state.description}
           header={this.state.header}
           rows={this.state.rows}
           handleClick={this.setActive}
