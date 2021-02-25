@@ -62,6 +62,7 @@ class ExercisePage extends Component {
           this.props.loadSubmissions();
           this.props.loadExercises();
           this.props.loadLevelData();
+          this.props.loadAssets();
         })
         .catch((error) => {
           this.props.handleError(error);
@@ -235,6 +236,7 @@ ExercisePage.propTypes = {
   loadExercises: PropTypes.func.isRequired,
   loadSubmissions: PropTypes.func.isRequired,
   loadLevelData: PropTypes.func.isRequired,
+  loadAssets: PropTypes.func.isRequired,
   charname: PropTypes.string.isRequired,
   character: PropTypes.object.isRequired,
 };

@@ -15,7 +15,11 @@ import FirstLoginModal from './components/login/FirstLoginModal';
 import lang from './lang/de_DE.json';
 import About from './components/about/About';
 import assets from './data/assets.json';
-import { DEFAULTSKINCOLOR, DEFAULTFACE, LEADERBOARD_UNLOCK } from './js/constants';
+import {
+  DEFAULTSKINCOLOR,
+  DEFAULTFACE,
+  LEADERBOARD_UNLOCK,
+} from './js/constants';
 
 import axiosRetry from 'axios-retry';
 
@@ -67,6 +71,7 @@ export default class App extends Component {
     this.loadExercises = this.loadExercises.bind(this);
     this.loadSubmissions = this.loadSubmissions.bind(this);
     this.loadLevelData = this.loadLevelData.bind(this);
+    this.loadAssets = this.loadAssets.bind(this);
     this.handleError = this.handleError.bind(this);
     this.setNoFirstLogin = this.setNoFirstLogin.bind(this);
   }
@@ -456,6 +461,7 @@ export default class App extends Component {
                         loadExercises={this.loadExercises}
                         loadSubmissions={this.loadSubmissions}
                         loadLevelData={this.loadLevelData}
+                        loadAssets={this.loadAssets}
                         exercises={this.state.exercises}
                         submissions={this.state.submissions}
                         charname={this.state.charname}
