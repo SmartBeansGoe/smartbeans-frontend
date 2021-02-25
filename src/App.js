@@ -15,7 +15,7 @@ import FirstLoginModal from './components/login/FirstLoginModal';
 import lang from './lang/de_DE.json';
 import About from './components/about/About';
 import assets from './data/assets.json';
-import { DEFAULTSKINCOLOR, DEFAULTFACE } from './js/constants';
+import { DEFAULTSKINCOLOR, DEFAULTFACE, LEADERBOARD_UNLOCK } from './js/constants';
 
 import axiosRetry from 'axios-retry';
 
@@ -436,7 +436,7 @@ export default class App extends Component {
                 path="/leaderboard"
                 render={() => {
                   return (
-                    this.state.level_data.level >= 5 &&
+                    this.state.level_data.level >= LEADERBOARD_UNLOCK &&
                     this.renderWhenLoggedIn(
                       <React.Fragment>
                         <LeaderboardPage

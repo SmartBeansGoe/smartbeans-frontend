@@ -7,6 +7,7 @@ import Icon from '@mdi/react';
 import { mdiLogout } from '@mdi/js';
 import { logout } from '../../js/cookie';
 import ProblemModal from '../ProblemModal';
+import { LEADERBOARD_UNLOCK } from '../../js/constants';
 
 export default class NavBar extends Component {
   state = {
@@ -69,7 +70,7 @@ export default class NavBar extends Component {
               >
                 {lang['navigation.exercises']}
               </Link>
-              {this.props.level < 5 ? (
+              {this.props.level < LEADERBOARD_UNLOCK ? (
                 <article
                   title={lang['navigation.locked']}
                   className="navbar-item"
