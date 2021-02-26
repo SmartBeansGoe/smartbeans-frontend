@@ -46,7 +46,6 @@ export default class Leaderboard extends Component {
 
 Leaderboard.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
   header: PropTypes.exact({
     rank: PropTypes.string.isRequired,
     bean: PropTypes.string.isRequired,
