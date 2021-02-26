@@ -4,7 +4,7 @@ import marked from 'marked';
 import axios_inst from '../../js/backend';
 import SubmissionOverview from './SubmissionOverview';
 import { withRouter } from 'react-router';
-import { mdiUpload } from '@mdi/js';
+import { mdiUpload, mdiCheckBold } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import './ExercisePage.css';
 import { NotificationContext } from './../notification/NotificationProvider';
@@ -27,12 +27,13 @@ class ExercisePage extends Component {
   }
 
   onChangeHandler = (event) => {
-    this.setState({
-      fileName: event.target.files[0].name,
-      selectedFile: event.target.files[0],
-      isDisabled: false,
-      isError: false,
-    });
+    if (event.target.files.length !== 0)
+      this.setState({
+        fileName: event.target.files[0].name,
+        selectedFile: event.target.files[0],
+        isDisabled: false,
+        isError: false,
+      });
   };
 
   onClickHandler = (e) => {
@@ -62,9 +63,11 @@ class ExercisePage extends Component {
             inputKey: Math.random().toString(36),
           });
           this.props.loadSubmissions();
-          this.props.loadExercises();
-          this.props.loadLevelData();
-          this.props.loadAssets();
+          if (response.data.score === 1) {
+            this.props.loadExercises();
+            this.props.loadLevelData();
+            this.props.loadAssets();
+          }
         })
         .catch((error) => {
           this.props.handleError(error);
@@ -156,26 +159,34 @@ class ExercisePage extends Component {
       return b.timestamp - a.timestamp;
     });
 
+    let solved = submissions.filter((sub) => sub.result.score === 1).length > 0;
+
     if (exercise !== undefined) {
       name = exercise.name;
       task = exercise.task;
-      // TODO was soll den der Scheis??? wenn es nur eine Kategorie ist ist es statt ein Array mit nur einem eintrag ein string!!! das zerschiest mir alles!!!!
-      if (exercise.categories === undefined || exercise.categories === null) {
-        categories = [];
-      } else if (typeof exercise.categories === 'string') {
-        categories = [exercise.categories];
-      } else if (Array.isArray(exercise.categories)) {
+      if (Array.isArray(exercise.categories)) {
         categories = exercise.categories;
-      } else {
-        console.log('WTF den noch?');
       }
     }
+
     return (
       <React.Fragment>
         <div className="tile is-parent is-vertical exercise_page">
           <div className="tile is-child box">
             <div className="content ml-3 ">
-              <h1 className="title mt-3">{name}</h1>
+              <h1 className="title mt-3">
+                {name}
+                {solved && (
+                  <span
+                    className="icon ml-2 has-text-success is-large"
+                    style={{ marginTop: '-20px' }}
+                  >
+                    <svg viewBox="0 -7 48 48" style={{ top: '0px' }}>
+                      <Icon path={mdiCheckBold} size={1} />
+                    </svg>
+                  </span>
+                )}
+              </h1>
               <div dangerouslySetInnerHTML={{ __html: marked(task) }} />
               <div className="field is-grouped " style={{ flexWrap: 'wrap' }}>
                 <div className="control mr-6">
