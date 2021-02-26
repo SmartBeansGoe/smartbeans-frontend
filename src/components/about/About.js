@@ -52,18 +52,27 @@ export default class About extends Component {
               <li
                 className={`${this.state.isTeam ? 'is-active' : ''}`}
                 onClick={() => this.clickHandler(0)}
+                style={{
+                  width: '290px',
+                }}
               >
                 <a>{lang['about.team.title']}</a>
               </li>
               <li
                 className={`${this.state.isForschung ? 'is-active' : ''}`}
                 onClick={() => this.clickHandler(1)}
+                style={{
+                  width: '290px',
+                }}
               >
                 <a>{lang['about.research.title']}</a>
               </li>
               <li
                 className={`${this.state.isData ? 'is-active' : ''}`}
                 onClick={() => this.clickHandler(2)}
+                style={{
+                  width: '290px',
+                }}
               >
                 <a>{lang['about.privacy-policy.title']}</a>
               </li>
