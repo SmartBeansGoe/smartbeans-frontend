@@ -224,7 +224,7 @@ export default class Wardrobe extends Component {
 
               <div
                 style={{
-                  flexGrow: 0.8,
+                  flexGrow: 1.0,
                 }}
               >
                 {this.state.category === PANTS && isNoPants ? (
