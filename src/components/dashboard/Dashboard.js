@@ -276,7 +276,8 @@ export default class Dashboard extends Component {
               }}
             >
               <form
-                onSubmit={() => {
+                onSubmit={(event) => {
+                  event.preventDefault();
                   this.setState(
                     {
                       charname: this.state.charname.trim(),
