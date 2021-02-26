@@ -10,8 +10,6 @@ export default class BeanWrapper extends Component {
         <div className="tile is-child box" style={{ flex: 0 }}>
           <p className="title has-text-centered">{this.props.charname}</p>
           <Bean
-            width="auto"
-            height="auto"
             body_color={this.props.character.body_color}
             face_id={this.props.character.face_id}
             pants_id={this.props.character.pants_id}

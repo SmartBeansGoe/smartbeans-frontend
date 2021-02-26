@@ -130,8 +130,6 @@ export default class LeaderboardPage extends Component {
           <div className="tile is-child box" style={{ flex: 0 }}>
             <p className="title has-text-centered">{this.state.charname}</p>
             <Bean
-              width="auto"
-              height="auto"
               body_color={this.state.character.body_color}
               face_id={this.state.character.face_id}
               pants_id={this.state.character.pants_id}

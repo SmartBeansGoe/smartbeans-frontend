@@ -71,6 +71,8 @@ export default class Wardrobe extends Component {
           hat_id: asset_id === this.state.hat_id ? null : asset_id,
         });
         break;
+      default:
+        console.error('Cannot find asset category: ' + this.state.category);
     }
   }
 
@@ -97,8 +99,6 @@ export default class Wardrobe extends Component {
         <div className="tile is-parent is-4">
           <div className="tile is-child box">
             <Bean
-              width="auto"
-              height="auto"
               body_color={this.state.body_color}
               face_id={this.props.face_id}
               pants_id={this.state.pants_id}
@@ -112,7 +112,7 @@ export default class Wardrobe extends Component {
             <div className="tabs">
               <ul>
                 <li id={'tab-' + HATS}>
-                  <a onClick={() => this.tab(HATS)}>
+                  <a href="/#" onClick={() => this.tab(HATS)}>
                     <span className="icon is-small">
                       <Icon path={mdiHatFedora} size={1} />
                     </span>
@@ -120,7 +120,7 @@ export default class Wardrobe extends Component {
                   </a>
                 </li>
                 <li id={'tab-' + SHIRTS} className="is-active">
-                  <a onClick={() => this.tab(SHIRTS)}>
+                  <a href="/#" onClick={() => this.tab(SHIRTS)}>
                     <span className="icon is-small">
                       <Icon path={mdiTshirtCrew} size={1} />
                     </span>
@@ -130,7 +130,7 @@ export default class Wardrobe extends Component {
                   </a>
                 </li>
                 <li id={'tab-' + PANTS}>
-                  <a onClick={() => this.tab(PANTS)}>
+                  <a href="/#" onClick={() => this.tab(PANTS)}>
                     <span className="icon is-small">
                       <img src={pants} alt="" />
                     </span>
@@ -190,18 +190,18 @@ export default class Wardrobe extends Component {
               </div>
             </div>
             <div className="tile is-parent">
-              <div class="field has-addons">
-                <div class="control">
+              <div className="field has-addons">
+                <div className="control">
                   <label
-                    class="button is-rounded"
-                    for="body-color"
+                    className="button is-rounded"
+                    htmlFor="body-color"
                     style={{
                       backgroundColor: this.state.body_color,
                     }}
                   ></label>
                 </div>
-                <div class="control">
-                  <label class="button" for="body-color">
+                <div className="control">
+                  <label className="button" htmlFor="body-color">
                     {lang['wardrobe.skin-color']}
                   </label>
                 </div>

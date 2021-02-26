@@ -15,7 +15,7 @@ export default class Asset extends Component {
 
   render() {
     if (assets.filter((el) => el.id === this.props.id).length === 0) {
-      return <div>Existiert nicht mehr!</div>;
+      return null;
     } else {
       let svg = assets.find((el) => el.id === this.props.id).svg;
       return (
