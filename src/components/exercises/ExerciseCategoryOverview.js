@@ -1,34 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ExerciseListItem from './ExerciseListItem';
+import { Link } from 'react-router-dom';
+import Icon from '@mdi/react';
+import { mdiCheckBold } from '@mdi/js';
+import { BLUE } from '../../js/constants';
 
 export default class ExerciseCategoryOverview extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-
-    this.DivRef = React.createRef();
-
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-  }
-
-  componentDidMount() {
-    this.updateWindowDimensions();
-    // The height must be updated if the window size changes, therefore the Event Listener.
-    window.addEventListener('resize', this.updateWindowDimensions);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
-  }
-
-  updateWindowDimensions() {
-    this.setState({
-      width: this.DivRef.current.offsetWidth,
-    });
-  }
-
   render() {
     const progress = this.props.exerciseList.filter((ex) => ex.solved === true);
 
@@ -50,7 +27,7 @@ export default class ExerciseCategoryOverview extends Component {
       .sort((a, b) => (a.solved === b.solved ? 0 : !a.solved ? -1 : 1));
 
     return (
-      <div ref={this.DivRef} className="tile is-child box ">
+      <div className="tile is-child box ">
         <div className="title">
           <p>{this.props.title}</p>
         </div>
@@ -68,20 +45,28 @@ export default class ExerciseCategoryOverview extends Component {
           </div>
         </div>
         <div className="content">
-          <ul
-            style={{
-              listStyleType: 'none',
-              marginLeft: '2.5em',
-              paddingLeft: 0,
-              position: 'relative',
-            }}
-          >
-            {exercises.map((exercise) => {
+          <ul>
+            {exercises.map((e) => {
               return (
-                <ExerciseListItem
-                  exercise={exercise}
-                  width={this.state.width}
-                />
+                <li key={e.taskid}>
+                  <Link
+                    className={e.solved ? 'has-text-smart' : 'has-text-grey'}
+                    to={{
+                      pathname: '/exercises/' + e.taskid,
+                      state: { task: e },
+                    }}
+                  >
+                    {e.name}
+                    {'  '}
+                    {e.solved ? (
+                      <Icon
+                        path={mdiCheckBold}
+                        size={0.7}
+                        style={{ color: BLUE }}
+                      />
+                    ) : null}
+                  </Link>
+                </li>
               );
             })}
           </ul>
