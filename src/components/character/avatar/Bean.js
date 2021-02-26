@@ -43,8 +43,8 @@ export default class Bean extends Component {
 }
 
 Bean.propTypes = {
-  width: PropTypes.any.isRequired,
-  height: PropTypes.any.isRequired,
+  width: PropTypes.any,
+  height: PropTypes.any,
   body_color: PropTypes.string.isRequired,
   face_id: PropTypes.string.isRequired,
   hat_id: PropTypes.string,

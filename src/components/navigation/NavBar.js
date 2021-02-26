@@ -8,13 +8,27 @@ import { mdiLogout } from '@mdi/js';
 import { logout } from '../../js/cookie';
 import ProblemModal from '../ProblemModal';
 import { LEADERBOARD_UNLOCK } from '../../js/constants';
+import LeaderboardBlockedModal from '../leaderboard/LeaderboardBlockedModal';
 
 export default class NavBar extends Component {
+  constructor(props) {
+    super(props);
+    this.showLeaderboardBlockedModal = this.showLeaderboardBlockedModal.bind(
+      this
+    );
+  }
   state = {
     isActive: false,
     classActive: 'navbar-menu is-active',
     classInActive: 'navbar-menu',
+    leaderboardModalActive: false,
   };
+
+  showLeaderboardBlockedModal() {
+    this.setState({
+      leaderboardModalActive: !this.state.leaderboardModalActive,
+    });
+  }
 
   render() {
     return (
@@ -71,26 +85,31 @@ export default class NavBar extends Component {
                 {lang['navigation.exercises']}
               </Link>
               {this.props.level < LEADERBOARD_UNLOCK ? (
-                <article
-                  title={lang['navigation.locked']}
-                  className="navbar-item"
-                  style={{
-                    cursor: 'not-allowed',
-                    color: 'rgb(203, 192, 192)',
-                  }}
-                >
-                  <p>{lang['navigation.leaderboard']}</p>
-                </article>
+                <React.Fragment>
+                  <article
+                    title={lang['navigation.locked']}
+                    className="navbar-item"
+                    style={{
+                      cursor: 'not-allowed',
+                      color: 'rgb(203, 192, 192)',
+                    }}
+                    onClick={() => this.showLeaderboardBlockedModal()}
+                  >
+                    <p>{lang['navigation.leaderboard']}</p>
+                  </article>
+                </React.Fragment>
               ) : (
-              <Link
-                  className="navbar-item is-hoverable disabled-link is-primary"
-                to="/leaderboard"
-                  onClick={(e) => {
-                  this.setState({ isActive: false });
-                }}
-              >
-                {lang['navigation.leaderboard']}
-              </Link>
+                <React.Fragment>
+                  <Link
+                    className="navbar-item is-hoverable disabled-link is-primary"
+                    to="/leaderboard"
+                    onClick={(e) => {
+                      this.setState({ isActive: false });
+                    }}
+                  >
+                    {lang['navigation.leaderboard']}
+                  </Link>
+                </React.Fragment>
               )}
               <Link
                 className="navbar-item is-hoverable"
@@ -125,6 +144,10 @@ export default class NavBar extends Component {
             </div>
           </div>
         </nav>
+        <LeaderboardBlockedModal
+          modalState={this.state.leaderboardModalActive}
+          closeModal={this.showLeaderboardBlockedModal}
+        />
       </div>
     );
   }

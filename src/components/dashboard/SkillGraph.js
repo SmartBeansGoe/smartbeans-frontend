@@ -28,7 +28,7 @@ export default class SkillGraph extends Component {
                 return a.name.localeCompare(b.name);
               })
               .map((el) => (el.points / el.max_points) * 100),
-            backgroundColor: LIGHTBLUE,
+            backgroundColor: LIGHTBLUE + 'AA',
             borderColor: BLUE,
           },
         ],

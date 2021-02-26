@@ -17,7 +17,7 @@ export default function Error404() {
       </div>
       <div className="tile is-parent is-2">
         <article className="tile is-child box">
-          <svg width="auto" height="auto" viewBox="20 20 190 277" version="1.1">
+          <svg viewBox="20 20 190 277" version="1.1">
             <g>
               <ellipse
                 style={{

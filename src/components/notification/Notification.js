@@ -61,7 +61,6 @@ const Notification = (props) => {
             <div className="pl-2" style={{ width: '110px' }}>
               <svg
                 viewBox="0 0 110 110"
-                width="auto"
                 height="100px"
                 dangerouslySetInnerHTML={{
                   __html: svg,

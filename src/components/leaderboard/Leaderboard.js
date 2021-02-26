@@ -9,17 +9,40 @@ export default class Leaderboard extends Component {
       <React.Fragment>
         <div className="tile is-parent">
           <div className="tile is-child box">
-            <div className="container" style={{ maxWidth: '1000px' }}>
+            <div className="container" style={{ maxWidth: '900px' }}>
               <p className="title has-text-centered">{this.props.title}</p>
               <p className="has-text-centered">
-                <img src={leaderboard_graphic} width="150" height="150" alt="Badge" />
+                <img
+                  src={leaderboard_graphic}
+                  width="150"
+                  height="150"
+                  alt="Badge"
+                />
               </p>
               <table className="table is-fullwidth is-hoverable has-text-centered">
                 <thead>
                   <tr>
-                    <th>{this.props.header.rank}</th>
-                    <th>{this.props.header.bean}</th>
-                    <th>{this.props.header.points}</th>
+                    <th
+                      style={{
+                        width: '25%',
+                      }}
+                    >
+                      {this.props.header.rank}
+                    </th>
+                    <th
+                      style={{
+                        width: '50%',
+                      }}
+                    >
+                      {this.props.header.bean}
+                    </th>
+                    <th
+                      style={{
+                        width: '25%',
+                      }}
+                    >
+                      {this.props.header.points}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>

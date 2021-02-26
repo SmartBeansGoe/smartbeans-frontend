@@ -104,7 +104,6 @@ export default class ProblemModal extends Component {
           title={lang['problem.report']}
           height={'300'}
           width={'600'}
-          clearInput={this.clearInput}
         >
           <div>
             <h5>{lang['problem.messageprompt']}</h5>

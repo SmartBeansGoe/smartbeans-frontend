@@ -46,7 +46,6 @@ export default class UnlockPreview extends Component {
               <svg
                 viewBox="0 0 77.707 108.77"
                 height={150}
-                width="auto"
                 dangerouslySetInnerHTML={{
                   __html: svg,
                 }}
