@@ -218,6 +218,7 @@ export default class Wardrobe extends Component {
                   backgroundColor: this.state.body_color,
                   opacity: 0,
                   visibility: 'hidden',
+                  width: 0,
                 }}
               />
 
