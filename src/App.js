@@ -162,7 +162,7 @@ export default class App extends Component {
         },
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
       })
       .catch((error) => {
         this.handleError(error);
