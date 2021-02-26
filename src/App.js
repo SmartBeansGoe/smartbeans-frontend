@@ -161,9 +161,6 @@ export default class App extends Component {
           'Content-Type': 'text/plain',
         },
       })
-      .then((response) => {
-        // console.log(response);
-      })
       .catch((error) => {
         this.handleError(error);
       });
