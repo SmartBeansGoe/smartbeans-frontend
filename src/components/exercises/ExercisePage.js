@@ -27,6 +27,7 @@ class ExercisePage extends Component {
   }
 
   onChangeHandler = (event) => {
+    if (event.target.files.length !== 0)
     this.setState({
       fileName: event.target.files[0].name,
       selectedFile: event.target.files[0],
@@ -62,9 +63,11 @@ class ExercisePage extends Component {
             inputKey: Math.random().toString(36),
           });
           this.props.loadSubmissions();
+          if (response.data.score === 1) {
           this.props.loadExercises();
           this.props.loadLevelData();
           this.props.loadAssets();
+          }
         })
         .catch((error) => {
           this.props.handleError(error);
