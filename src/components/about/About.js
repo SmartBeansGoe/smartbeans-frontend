@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import logo from '../../images/SmartBeans_logo_bw.svg';
 import Team from './Team';
 import lang from '../../lang/de_DE.json';
@@ -100,5 +99,3 @@ export default class About extends Component {
     );
   }
 }
-
-About.propTypes = {};
