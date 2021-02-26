@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class PersonalCard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   displayDescription() {
     let alignment = this.props.leftAlign ? 'left' : 'right';
     return (
