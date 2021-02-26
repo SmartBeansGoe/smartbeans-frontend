@@ -278,31 +278,29 @@ export default class Dashboard extends Component {
               }}
             >
               <form
-                onSubmit={() => this.props.onSaveCharname(this.state.charname)}
+                onSubmit={() => {
+                  this.setState(
+                    {
+                      charname: this.state.charname.trim(),
+                    },
+                    () => this.props.onSaveCharname(this.state.charname)
+                  );
+                }}
               >
                 <input
                   className="input"
                   type="text"
                   placeholder="Text input"
                   value={this.state.charname}
-                  style={{ width: '140px', borderColor: BLUE }}
+                  style={{
+                    width: '140px',
+                    borderColor: this.state.charnameSubmit ? BLUE : LIGHTBLUE,
+                  }}
                   maxLength={15}
                   onChange={(event) => {
-                    let newCharnameSubmit = false;
-                    let newCharname = this.state.charname;
-                    if (
-                      event.target.value.charAt(
-                        event.target.value.length - 1
-                      ) !== ' '
-                    )
-                      newCharname = event.target.value;
-                    if (newCharname.length > 1) {
-                      newCharnameSubmit =
-                        event.target.value !== this.props.charname;
-                    }
                     this.setState({
-                      charname: newCharname,
-                      charnameSubmit: newCharnameSubmit,
+                      charname: event.target.value,
+                      charnameSubmit: event.target.value.trim().length > 1,
                     });
                   }}
                 />
