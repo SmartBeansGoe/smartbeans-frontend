@@ -32,6 +32,9 @@ export default class Submission extends Component {
 
   componentDidMount() {
     let feedback = '';
+    if (this.props.result === null) {
+      return;
+    }
     if (this.props.result.result.testtype === 'simple') {
       feedback = '<div>';
       let endpTag = '</div>';
@@ -88,10 +91,20 @@ export default class Submission extends Component {
         ':</strong> <br>' +
         lang['submission.error-message'] +
         '</div></article>';
-      feedback +=
-        "<pre class='mt-0 pt-0'><code>" +
-        this.props.result.result.feedback.stdout +
-        '</code></pre>';
+      if (
+        this.props.result.result.feedback === undefined ||
+        this.props.result.result.feedback === null
+      ) {
+        feedback +=
+          "<pre class='mt-0 pt-0'><code>" +
+          lang['submission.error-no-feedback'] +
+          '</code></pre>';
+      } else {
+        feedback +=
+          "<pre class='mt-0 pt-0'><code>" +
+          this.props.result.result.feedback.stdout +
+          '</code></pre>';
+      }
     }
 
     this.setState({
@@ -101,7 +114,8 @@ export default class Submission extends Component {
       testtype: this.props.result.result.testtype === 'cunit' ? true : false,
       score: this.props.result.result.score,
       compileResult:
-        this.props.result.result.type === 'TIME_LIMIT'
+        this.props.result.result.type === 'TIME_LIMIT' ||
+        this.props.result.result.type === 'EVALUATION_ERROR'
           ? ''
           : this.props.result.result.compileResult.stdout,
       isCompileResult:

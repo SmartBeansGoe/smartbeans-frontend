@@ -41,9 +41,8 @@ export default class SubmissionOverview extends Component {
                 defaultOpen={false}
               >
                 {() =>
-                  this.props.submissions
-                    .slice(1)
-                    .map((result, index) => (
+                  this.props.submissions.slice(1).map((result, index) => {
+                    return (
                       <Submission
                         key={result.timestamp}
                         id={this.props.submissions.length - index - 1}
@@ -51,7 +50,8 @@ export default class SubmissionOverview extends Component {
                         handler={this.handler}
                         defaultOpen={false}
                       />
-                    ))
+                    );
+                  })
                 }
               </Card>
             )}

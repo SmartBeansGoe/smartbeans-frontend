@@ -94,6 +94,7 @@
   "submission.popup-blocked.message": "Wahrscheinlich wurden das Öffnen des Pop-ups blockiert. Der Quelltext konnte leider nicht geteilt werden.",
   "submission.share-sourecode-problem.title": "Fehler beim Teilen des Quelltextes",
   "submission.share-sourecode-problem.message": "Leider konnte kein Link für das Teilen des Quelltextes erstellt werden.",
+  "submission.error-no-feedback": "Im SmartApe wurden keine Tests ausgeführt.",
   "unlockpreview.title": "Durch das Lösen der Aufgabe erhältst du ...",
   "unlockpreview.title.categories": "Erfahrungspunkte in:",
   "unlockpreview.title.outfit": "Outfit:",

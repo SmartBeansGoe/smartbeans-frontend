@@ -11,6 +11,14 @@ import { NotificationContext } from './../notification/NotificationProvider';
 import lang from '../../lang/de_DE.json';
 import BeanWrapper from './BeanWrapper';
 import assets from '../../data/assets.json';
+import axiosRetry from 'axios-retry';
+
+axiosRetry(axios_inst, {
+  retries: 5,
+  retryDelay: (retryCount) => {
+    return retryCount * 500;
+  },
+});
 
 class ExercisePage extends Component {
   static contextType = NotificationContext;
@@ -70,7 +78,6 @@ class ExercisePage extends Component {
           }
         })
         .catch((error) => {
-          this.props.handleError(error);
           this.setState({
             fileName: lang['exercise.no-file-selected'],
             selectedFile: null,
