@@ -315,6 +315,26 @@ export default class Dashboard extends Component {
               </form>
             </div>
           </article>
+
+          <div
+            style={{
+              marginTop: '50',
+              textAlign: 'right',
+              color: 'grey',
+              fontSize: '10pt',
+            }}
+          >
+            {this.props.version.frontend !== '' ? (
+              <p>Frontend Version {this.props.version.frontend}</p>
+            ) : null}
+            {this.props.version.backend !== '' ? (
+              <p>Backend Version {this.props.version.backend}</p>
+            ) : null}
+
+            <a target="_blank" href="/changelog.html">
+              Changelog
+            </a>
+          </div>
         </div>
         <WardrobeModal
           closeModal={this.toggleModal}
@@ -338,4 +358,5 @@ Dashboard.propTypes = {
   exercises: PropTypes.array.isRequired,
   onSaveCharacterProperties: PropTypes.func.isRequired,
   onSaveCharname: PropTypes.func.isRequired,
+  version: PropTypes.object.isRequired,
 };
