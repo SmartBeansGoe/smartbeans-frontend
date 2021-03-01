@@ -4,12 +4,16 @@ import ExerciseCategoryOverview from './ExerciseCategoryOverview';
 import lang from '../../lang/de_DE.json';
 import Bean from '../character/avatar/Bean';
 
+export const SUPEREASY = 'sehr einfach';
 export const EASY = 'einfach';
 export const MEDIUM = 'mittel';
 export const HARD = 'schwierig';
 export const EXAM = 'klausur';
 
 export function getExerciseByCategories(exercises) {
+  var iron = exercises.filter(function (el) {
+    return el.difficulty === SUPEREASY;
+  });
   var bronze = exercises.filter(function (el) {
     return el.difficulty === EASY;
   });
@@ -23,6 +27,12 @@ export function getExerciseByCategories(exercises) {
     return el.difficulty === EXAM;
   });
   let categories = [
+    {
+      id: SUPEREASY,
+      title: lang['exercise.category.supereasy.title'],
+      subtitle: lang['exercise.category.supereasy.subtitle'],
+      exerciseList: iron,
+    },
     {
       id: EASY,
       title: lang['exercise.category.easy.title'],
@@ -60,26 +70,51 @@ export default class ExerciseOverviewPage extends Component {
         <div
           className="tile"
           style={{
+            display: 'flex',
             flexWrap: 'wrap',
           }}
         >
-          {categories.map((c, index) => (
-            <div
-              key={index}
-              className={
-                'tile is-parent ' +
-                (index % 2 === 0 ? 'flex-item-left' : 'flex-item-right')
-              }
-            >
-              <ExerciseCategoryOverview
+          {categories.map((c, index) => {
+            console.log(index);
+
+            if (index % 2 === 0 && index === categories.length - 1) {
+              console.log('HI');
+              return (
+                <React.Fragment>
+                  <div key={index} className={'tile is-parent flex-item-left'}>
+                    <ExerciseCategoryOverview
+                      key={index}
+                      id={index}
+                      title={c.title}
+                      subtitle={c.subtitle}
+                      exerciseList={c.exerciseList}
+                    />
+                  </div>
+                  <div
+                    key={index + 1}
+                    className={'tile is-parent flex-item-right'}
+                  ></div>
+                </React.Fragment>
+              );
+            }
+            return (
+              <div
                 key={index}
-                id={index}
-                title={c.title}
-                subtitle={c.subtitle}
-                exerciseList={c.exerciseList}
-              />
-            </div>
-          ))}
+                className={
+                  'tile is-parent ' +
+                  (index % 2 === 0 ? 'flex-item-left' : 'flex-item-right')
+                }
+              >
+                <ExerciseCategoryOverview
+                  key={index}
+                  id={index}
+                  title={c.title}
+                  subtitle={c.subtitle}
+                  exerciseList={c.exerciseList}
+                />
+              </div>
+            );
+          })}
         </div>
         <div className="tile is-vertical is-2 is-hidden-touch is-parent">
           <div className="tile is-child box" style={{ flex: 0 }}>
