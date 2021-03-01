@@ -75,10 +75,7 @@ export default class ExerciseOverviewPage extends Component {
           }}
         >
           {categories.map((c, index) => {
-            console.log(index);
-
             if (index % 2 === 0 && index === categories.length - 1) {
-              console.log('HI');
               return (
                 <React.Fragment>
                   <div key={index} className={'tile is-parent flex-item-left'}>
