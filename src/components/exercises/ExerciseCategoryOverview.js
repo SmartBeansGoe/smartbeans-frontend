@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import Icon from '@mdi/react';
-import { mdiCheckBold } from '@mdi/js';
-import { BLUE } from '../../js/constants';
+import ExerciseList from './ExerciseList';
 
 export default class ExerciseCategoryOverview extends Component {
   render() {
@@ -11,23 +8,12 @@ export default class ExerciseCategoryOverview extends Component {
 
     const exercises = this.props.exerciseList
       .sort(function (a, b) {
-        if (a.shortname.charAt(0) !== b.shortname.charAt(0)) {
-          let order = 'SEKXZ';
-          return (
-            order.indexOf(a.shortname.charAt(0)) -
-            order.indexOf(b.shortname.charAt(0))
-          );
-        } else {
-          return (
-            parseInt(a.shortname.substring(1)) -
-            parseInt(b.shortname.substring(1))
-          );
-        }
+        return a.order - b.order;
       })
       .sort((a, b) => (a.solved === b.solved ? 0 : !a.solved ? -1 : 1));
 
     return (
-      <div className="tile is-child box ">
+      <div className="tile is-child box">
         <div className="title">
           <p>{this.props.title}</p>
         </div>
@@ -45,31 +31,7 @@ export default class ExerciseCategoryOverview extends Component {
           </div>
         </div>
         <div className="content">
-          <ul>
-            {exercises.map((e) => {
-              return (
-                <li key={e.taskid}>
-                  <Link
-                    className={e.solved ? 'has-text-smart' : 'has-text-grey'}
-                    to={{
-                      pathname: '/exercises/' + e.taskid,
-                      state: { task: e },
-                    }}
-                  >
-                    {e.name}
-                    {'  '}
-                    {e.solved ? (
-                      <Icon
-                        path={mdiCheckBold}
-                        size={0.7}
-                        style={{ color: BLUE }}
-                      />
-                    ) : null}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+          <ExerciseList exercises={exercises} />
         </div>
       </div>
     );

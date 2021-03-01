@@ -20,6 +20,7 @@ import {
   DEFAULTFACE,
   LEADERBOARD_UNLOCK,
 } from './js/constants';
+import package_json from '../package.json';
 
 import axiosRetry from 'axios-retry';
 
@@ -66,6 +67,10 @@ export default class App extends Component {
       logged_in: false,
       firstLogin: false,
       hasError: false,
+      version: {
+        frontend: package_json.version,
+        backend: '',
+      },
     };
     this.onSaveCharacterProperties = this.onSaveCharacterProperties.bind(this);
     this.loadExercises = this.loadExercises.bind(this);
@@ -99,6 +104,7 @@ export default class App extends Component {
 
   loadAllData() {
     this.loadUser();
+    this.loadVersion();
     this.loadCharacter();
     this.loadCharname();
     this.loadLevelData();
@@ -181,6 +187,22 @@ export default class App extends Component {
           data.pants_id,
           data.hat_id
         );
+      })
+      .catch((error) => {
+        this.handleError(error);
+      });
+  }
+
+  loadVersion() {
+    axios_inst
+      .get('/version')
+      .then((res) => {
+        this.setState({
+          version: {
+            frontend: this.state.version.frontend,
+            backend: res.data.split(' ')[0],
+          },
+        });
       })
       .catch((error) => {
         this.handleError(error);
@@ -427,6 +449,7 @@ export default class App extends Component {
                       exercises={this.state.exercises}
                       onSaveCharacterProperties={this.onSaveCharacterProperties}
                       onSaveCharname={this.onSaveCharname}
+                      version={this.state.version}
                     />
                   );
                 }}
