@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import Leaderboard from './Leaderboard';
 import Bean from '../character/avatar/Bean';
 import axios_inst from '../../js/backend';
-import { DEFAULTFACE, DEFAULTSKINCOLOR } from '../../js/constants';
+import {
+  DEFAULTFACE,
+  DEFAULTSKINCOLOR,
+  LEADERBOARD_UNLOCK,
+} from '../../js/constants';
 import lang from '../../lang/de_DE.json';
 
 export default class LeaderboardPage extends Component {
@@ -79,12 +83,14 @@ export default class LeaderboardPage extends Component {
         let rows = [];
         let active = -1;
         response.data.forEach((person, index) => {
-          if (person.character.username !== null) active = index;
-          rows.push({
-            rank: person.rank,
-            bean: person.charname,
-            points: person.score,
-          });
+          if (person.score >= 340) {
+            if (person.character.username !== null) active = index;
+            rows.push({
+              rank: person.rank,
+              bean: person.charname,
+              points: person.score,
+            });
+          }
         });
         if (this.state.active !== -1) {
           active = this.state.active;
