@@ -29,7 +29,7 @@ export default class LeaderboardPage extends Component {
       },
       rawData: [],
       charname: '',
-      active: -1,
+      active: 0,
       intervalId: 0,
     };
     this.setActive = this.setActive.bind(this);
@@ -91,8 +91,8 @@ export default class LeaderboardPage extends Component {
             });
           }
         });
-        if (this.state.active !== -1) {
-          active = this.state.active;
+        if (active === -1) {
+          active = 0;
         }
         this.setState(
           {
