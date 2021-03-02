@@ -166,7 +166,11 @@ class ExercisePage extends Component {
       return b.timestamp - a.timestamp;
     });
 
-    let solved = submissions.filter((sub) => sub.result.score === 1).length > 0;
+    let solved =
+      submissions.filter((sub) => {
+        if (sub.result !== null) return sub.result.score === 1;
+        return false;
+      }).length > 0;
 
     if (exercise !== undefined) {
       name = exercise.name;
