@@ -6,7 +6,6 @@ import axios_inst from '../../js/backend';
 import {
   DEFAULTFACE,
   DEFAULTSKINCOLOR,
-  LEADERBOARD_UNLOCK,
 } from '../../js/constants';
 import lang from '../../lang/de_DE.json';
 
