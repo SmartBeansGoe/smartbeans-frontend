@@ -77,10 +77,9 @@ export default class ExerciseOverviewPage extends Component {
           {categories.map((c, index) => {
             if (index % 2 === 0 && index === categories.length - 1) {
               return (
-                <React.Fragment>
-                  <div key={index} className={'tile is-parent flex-item-left'}>
+                <React.Fragment key={'category-' + index}>
+                  <div className={'tile is-parent flex-item-left'}>
                     <ExerciseCategoryOverview
-                      key={index}
                       id={index}
                       title={c.title}
                       subtitle={c.subtitle}
@@ -88,7 +87,7 @@ export default class ExerciseOverviewPage extends Component {
                     />
                   </div>
                   <div
-                    key={index + 1}
+                    key={'category-empty'}
                     className={'tile is-parent flex-item-right'}
                   ></div>
                 </React.Fragment>
@@ -96,14 +95,13 @@ export default class ExerciseOverviewPage extends Component {
             }
             return (
               <div
-                key={index}
+                key={'category-' + index}
                 className={
                   'tile is-parent ' +
                   (index % 2 === 0 ? 'flex-item-left' : 'flex-item-right')
                 }
               >
                 <ExerciseCategoryOverview
-                  key={index}
                   id={index}
                   title={c.title}
                   subtitle={c.subtitle}
