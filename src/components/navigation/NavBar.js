@@ -4,11 +4,13 @@ import logo from '../../images/SmartBeans_logo_bw.svg';
 import { Link } from 'react-router-dom';
 import lang from '../../lang/de_DE.json';
 import Icon from '@mdi/react';
-import { mdiLogout } from '@mdi/js';
+import { mdiLogout, mdiAlertDecagram } from '@mdi/js';
 import { logout } from '../../js/cookie';
 import ProblemModal from '../ProblemModal';
 import { LEADERBOARD_UNLOCK } from '../../js/constants';
 import LeaderboardBlockedModal from '../leaderboard/LeaderboardBlockedModal';
+import axios_inst from '../../js/backend';
+import './NavBar.css';
 
 export default class NavBar extends Component {
   constructor(props) {
@@ -22,12 +24,49 @@ export default class NavBar extends Component {
     classActive: 'navbar-menu is-active',
     classInActive: 'navbar-menu',
     leaderboardModalActive: false,
+    errorMessages: [],
+    intervalId: null,
   };
 
   showLeaderboardBlockedModal() {
     this.setState({
       leaderboardModalActive: !this.state.leaderboardModalActive,
     });
+  }
+
+  componentDidMount() {
+    this.getErrorMessages();
+    this.startInterval();
+  }
+
+  componentWillUnmount() {
+    this.stopInterval();
+  }
+
+  getErrorMessages() {
+    axios_inst
+      .get('/error_notifications')
+      .then((res) => {
+        this.setState({
+          errorMessages: res.data,
+        });
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
+  }
+
+  startInterval() {
+    const intervalId = setInterval(() => {
+      this.getErrorMessages();
+    }, 30000);
+    this.setState({
+      intervalId: intervalId,
+    });
+  }
+
+  stopInterval() {
+    clearInterval(this.state.intervalId);
   }
 
   render() {
@@ -47,7 +86,9 @@ export default class NavBar extends Component {
               onClick={() => {
                 this.setState({ isActive: !this.state.isActive });
               }}
-              className="navbar-burger"
+              className={`navbar-burger ${
+                this.state.isActive ? 'is-active' : ''
+              }`}
               data-target="navMenu"
               aria-label="menu"
               aria-expanded="false"
@@ -122,6 +163,49 @@ export default class NavBar extends Component {
               </Link>
             </div>
             <div className="navbar-end">
+              {this.state.errorMessages.length !== 0 && (
+                <div className="navbar-item pb-0">
+                  <div className="dropdown  is-hoverable">
+                    <div className="dropdown-trigger">
+                      <span className="icon is-medium">
+                        <svg viewBox="0 0 10 10" style={{ top: '0px' }}>
+                          <Icon
+                            className="icon-color-change"
+                            path={mdiAlertDecagram}
+                            size={1}
+                            style={{
+                              paddingTop: 5,
+                              marginLeft: 5,
+                            }}
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                    <div
+                      className="dropdown-menu  pt-4"
+                      role="menu"
+                      style={{ width: '400px' }}
+                    >
+                      {this.state.errorMessages.map((errorMessage, index) => {
+                        return (
+                          <article
+                            className="message is-dark"
+                            style={{
+                              boxShadow: ' 0 0 15px 5px rgba(10, 10, 10, 0.7)',
+                            }}
+                            key={index + errorMessage.title}
+                          >
+                            <div className="message-body">
+                              <h5 className="subtitle">{errorMessage.title}</h5>
+                              {errorMessage.content}
+                            </div>
+                          </article>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
               <div className="navbar-item">
                 <ProblemModal username={this.props.username} />
               </div>
