@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
 import Submission from './Submission';
-import lang from '../../lang/de_DE.json';
+import lang from '../../../lang/de_DE.json';
 
 export default class SubmissionOverview extends Component {
   constructor(props) {

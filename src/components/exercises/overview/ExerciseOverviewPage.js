@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ExerciseCategoryOverview from './ExerciseCategoryOverview';
-import lang from '../../lang/de_DE.json';
-import Bean from '../character/avatar/Bean';
+import lang from '../../../lang/de_DE.json';
+import Bean from '../../character/avatar/Bean';
 
 export const SUPEREASY = 'sehr einfach';
 export const EASY = 'einfach';

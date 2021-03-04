@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Bean from '../character/avatar/Bean';
-import UnlockPreview from '../exercises/UnlockPreview';
+import Bean from '../../character/avatar/Bean';
+import UnlockPreview from './UnlockPreview';
 import PropTypes from 'prop-types';
 
 export default class BeanWrapper extends Component {

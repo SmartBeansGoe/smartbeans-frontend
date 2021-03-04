@@ -15,7 +15,7 @@ import {
   MEDIUM,
   HARD,
   EXAM,
-} from '../exercises/ExerciseOverviewPage';
+} from '../exercises/overview/ExerciseOverviewPage';
 import { Link } from 'react-router-dom';
 
 function getRandomExercise(exercises, solved = false) {

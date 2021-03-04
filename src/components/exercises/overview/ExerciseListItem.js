@@ -3,7 +3,7 @@ import {
   mdiCheckboxMarkedCircleOutline,
 } from '@mdi/js';
 import React, { Component } from 'react';
-import { BLUE } from '../../js/constants';
+import { BLUE } from '../../../js/constants';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Icon from '@mdi/react';
