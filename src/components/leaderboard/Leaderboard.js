@@ -8,7 +8,13 @@ export default class Leaderboard extends Component {
     return (
       <React.Fragment>
         <div className="tile is-parent">
-          <div className="tile is-child box">
+          <div
+            className="tile is-child box"
+            style={{
+              height: '90vh',
+              overflowY: 'scroll',
+            }}
+          >
             <div className="container" style={{ maxWidth: '900px' }}>
               <p className="title has-text-centered">{this.props.title}</p>
               <p className="has-text-centered">
