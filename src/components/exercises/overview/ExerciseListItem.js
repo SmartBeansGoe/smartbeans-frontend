@@ -7,30 +7,37 @@ import { BLUE } from '../../../js/constants';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Icon from '@mdi/react';
+import SkillTag from './SkillTag';
 
 export default class ExerciseListItem extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      widthWindow: window.innerWidth,
-      widthSpanSkills: 0,
-    };
+    if (this.props.hasTags) {
+      this.state = {
+        widthWindow: window.innerWidth,
+        widthSpanSkills: 0,
+      };
 
-    this.SpanSkillsRef = React.createRef();
+      this.SpanSkillsRef = React.createRef();
 
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+      this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    }
   }
 
   componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions);
-    this.setState({
-      widthSpanSkills: this.SpanSkillsRef.current.offsetWidth,
-    });
+    if (this.props.hasTags) {
+      this.updateWindowDimensions();
+      window.addEventListener('resize', this.updateWindowDimensions);
+      this.setState({
+        widthSpanSkills: this.SpanSkillsRef.current.offsetWidth,
+      });
+    }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
+    if (this.props.hasTags) {
+      window.removeEventListener('resize', this.updateWindowDimensions);
+    }
   }
 
   updateWindowDimensions() {
@@ -42,29 +49,20 @@ export default class ExerciseListItem extends Component {
   renderSkillTags(exercise) {
     let categories = exercise.categories;
     return categories.map((el, id) => {
-      return (
-        <span
-          key={el + id}
-          style={{
-            marginLeft: 4,
-            backgroundColor: BLUE,
-            color: 'whitesmoke',
-          }}
-          className="tag"
-        >
-          {el}
-        </span>
-      );
+      return <SkillTag skill={el} key={el + id} />;
     });
   }
 
   render() {
     return (
       <li
-        style={{
-          alignItems: 'center',
-          height: 24,
-        }}
+        style={
+          this.props.hasTags
+            ? {
+                height: 24,
+              }
+            : {}
+        }
       >
         <span
           style={{
@@ -90,31 +88,37 @@ export default class ExerciseListItem extends Component {
             pathname: '/exercises/' + this.props.exercise.taskid,
             state: { task: this.props.exercise },
           }}
-          style={{
-            marginLeft: 10,
-            width:
-              this.state.widthWindow <= 768
-                ? 'calc(70vw - ' + this.state.widthSpanSkills + 'px)'
-                : 'calc(32vw - ' + this.state.widthSpanSkills + 'px)',
-            display: 'inline-block',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-            overflow: 'hidden',
-          }}
+          style={
+            this.props.hasTags
+              ? {
+                  marginLeft: 10,
+                  width:
+                    this.state.widthWindow <= 768
+                      ? 'calc(70vw - ' + this.state.widthSpanSkills + 'px)'
+                      : 'calc(32vw - ' + this.state.widthSpanSkills + 'px)',
+                  display: 'inline-block',
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
+                }
+              : { marginLeft: 10 }
+          }
         >
           {this.props.exercise.name}
         </Link>
-        <span
-          ref={this.SpanSkillsRef}
-          style={{
-            whiteSpace: 'nowrap',
-            textAlign: 'right',
-            position: 'absolute',
-            right: 0,
-          }}
-        >
-          {this.renderSkillTags(this.props.exercise)}
-        </span>
+        {this.props.hasTags ? (
+          <span
+            ref={this.SpanSkillsRef}
+            style={{
+              whiteSpace: 'nowrap',
+              textAlign: 'right',
+              position: 'absolute',
+              right: 0,
+            }}
+          >
+            {this.renderSkillTags(this.props.exercise)}
+          </span>
+        ) : null}
       </li>
     );
   }
@@ -122,4 +126,5 @@ export default class ExerciseListItem extends Component {
 
 ExerciseListItem.propTypes = {
   exercise: PropTypes.object.isRequired,
+  hasTags: PropTypes.bool.isRequired,
 };

@@ -10,7 +10,7 @@ import './Dashboard.css';
 import lang from '../../lang/de_DE.json';
 import WardrobeModal from './WardrobeModal';
 import {
-  getExerciseByCategories,
+  getExerciseByDifficulty,
   EASY,
   MEDIUM,
   HARD,
@@ -97,7 +97,7 @@ export default class Dashboard extends Component {
   }
 
   updateExerciseRecommendations() {
-    let categories = getExerciseByCategories(this.props.exercises);
+    let categories = getExerciseByDifficulty(this.props.exercises);
     let easyExercise = getRandomExercise(
       categories.find((c) => c.id === EASY).exerciseList
     );

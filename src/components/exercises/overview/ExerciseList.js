@@ -18,6 +18,7 @@ export default class ExerciseList extends Component {
             <ExerciseListItem
               key={exercise.taskid + '_exerciseItem'}
               exercise={exercise}
+              hasTags={this.props.hasTags}
             />
           );
         })}
@@ -28,4 +29,5 @@ export default class ExerciseList extends Component {
 
 ExerciseList.propTypes = {
   exercises: PropTypes.array.isRequired,
+  hasTags: PropTypes.bool.isRequired,
 };
