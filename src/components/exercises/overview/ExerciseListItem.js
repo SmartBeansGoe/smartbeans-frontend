@@ -9,16 +9,67 @@ import { Link } from 'react-router-dom';
 import Icon from '@mdi/react';
 
 export default class ExerciseListItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      widthWindow: window.innerWidth,
+      widthSpanSkills: 0,
+    };
+
+    this.SpanSkillsRef = React.createRef();
+
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+    this.setState({
+      widthSpanSkills: this.SpanSkillsRef.current.offsetWidth,
+    });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({
+      widthWindow: window.innerWidth,
+    });
+  }
+
+  renderSkillTags(exercise) {
+    let categories = exercise.categories;
+    return categories.map((el, id) => {
+      return (
+        <span
+          key={el + id}
+          style={{
+            marginLeft: 4,
+            backgroundColor: BLUE,
+            color: 'whitesmoke',
+          }}
+          className="tag"
+        >
+          {el}
+        </span>
+      );
+    });
+  }
+
   render() {
     return (
-      <li>
+      <li
+        style={{
+          alignItems: 'center',
+          height: 24,
+        }}
+      >
         <span
           style={{
-            left: '-2em',
+            left: '-1.5em',
             position: 'absolute',
-            textAlign: 'center',
-            width: '2em',
-            lineHeight: ' inherit',
           }}
         >
           {this.props.exercise.solved ? (
@@ -41,10 +92,29 @@ export default class ExerciseListItem extends Component {
           }}
           style={{
             marginLeft: 10,
+            width:
+              this.state.widthWindow <= 768
+                ? 'calc(70vw - ' + this.state.widthSpanSkills + 'px)'
+                : 'calc(32vw - ' + this.state.widthSpanSkills + 'px)',
+            display: 'inline-block',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
           }}
         >
           {this.props.exercise.name}
         </Link>
+        <span
+          ref={this.SpanSkillsRef}
+          style={{
+            whiteSpace: 'nowrap',
+            textAlign: 'right',
+            position: 'absolute',
+            right: 0,
+          }}
+        >
+          {this.renderSkillTags(this.props.exercise)}
+        </span>
       </li>
     );
   }
