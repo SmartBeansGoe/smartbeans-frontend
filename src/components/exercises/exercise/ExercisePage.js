@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import marked from 'marked';
-import axios_inst from '../../js/backend';
+import axios_inst from '../../../js/backend';
 import SubmissionOverview from './SubmissionOverview';
 import { withRouter } from 'react-router';
 import { mdiUpload, mdiCheckBold } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import './ExercisePage.css';
-import { NotificationContext } from './../notification/NotificationProvider';
-import lang from '../../lang/de_DE.json';
+import { NotificationContext } from '../../notification/NotificationProvider';
+import lang from '../../../lang/de_DE.json';
 import BeanWrapper from './BeanWrapper';
-import assets from '../../data/assets.json';
+import assets from '../../../data/assets.json';
 import axiosRetry from 'axios-retry';
 
 axiosRetry(axios_inst, {

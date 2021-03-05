@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
-import lang from '../../lang/de_DE.json';
-import axios_inst from '../../js/backend';
-import { NotificationContext } from './../notification/NotificationProvider';
+import lang from '../../../lang/de_DE.json';
+import axios_inst from '../../../js/backend';
+import { NotificationContext } from '../../notification/NotificationProvider';
 
 export default class Submission extends Component {
   static contextType = NotificationContext;

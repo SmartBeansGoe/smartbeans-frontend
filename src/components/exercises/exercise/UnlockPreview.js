@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import assets from '../../data/assets.json';
-import lang from '../../lang/de_DE.json';
-import { SHIRTS, PANTS, HATS } from '../../js/constants';
+import assets from '../../../data/assets.json';
+import lang from '../../../lang/de_DE.json';
+import { SHIRTS, PANTS, HATS } from '../../../js/constants';
 
 export default class UnlockPreview extends Component {
   render() {

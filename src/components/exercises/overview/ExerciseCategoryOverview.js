@@ -31,7 +31,7 @@ export default class ExerciseCategoryOverview extends Component {
           </div>
         </div>
         <div className="content">
-          <ExerciseList exercises={exercises} />
+          <ExerciseList exercises={exercises} hasTags={this.props.hasTags} />
         </div>
       </div>
     );
@@ -39,8 +39,8 @@ export default class ExerciseCategoryOverview extends Component {
 }
 
 ExerciseCategoryOverview.propTypes = {
-  id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
   exerciseList: PropTypes.array.isRequired,
+  hasTags: PropTypes.bool.isRequired,
 };

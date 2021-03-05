@@ -3,8 +3,8 @@ import axios_inst from './js/backend';
 import NavBar from './components/navigation/NavBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LeaderboardPage from './components/leaderboard/LeaderboardPage';
-import ExerciseOverviewPage from './components/exercises/ExerciseOverviewPage';
-import ExercisePage from './components/exercises/ExercisePage';
+import ExerciseOverviewPage from './components/exercises/overview/ExerciseOverviewPage';
+import ExercisePage from './components/exercises/exercise/ExercisePage';
 import { NotificationContext } from './components/notification/NotificationProvider';
 import './App.css';
 import Dashboard from './components/dashboard/Dashboard';
@@ -23,6 +23,7 @@ import {
 import package_json from '../package.json';
 
 import axiosRetry from 'axios-retry';
+import ExerciseCategoryPage from './components/exercises/overview/ExerciseCategoryPage';
 
 axiosRetry(axios_inst, {
   retries: 5,
@@ -487,6 +488,21 @@ export default class App extends Component {
                         charname={this.state.charname}
                         character={this.state.character}
                         handleError={this.handleError}
+                      />
+                    </React.Fragment>
+                  );
+                }}
+              />
+              <Route
+                exact
+                path="/exercises/category/:category"
+                render={() => {
+                  return this.renderWhenLoggedIn(
+                    <React.Fragment>
+                      <ExerciseCategoryPage
+                        exercises={this.state.exercises}
+                        charname={this.state.charname}
+                        character={this.state.character}
                       />
                     </React.Fragment>
                   );

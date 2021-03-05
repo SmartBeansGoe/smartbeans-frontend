@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ExerciseCategoryOverview from './ExerciseCategoryOverview';
-import lang from '../../lang/de_DE.json';
-import Bean from '../character/avatar/Bean';
+import lang from '../../../lang/de_DE.json';
+import Bean from '../../character/avatar/Bean';
 
 export const SUPEREASY = 'sehr einfach';
 export const EASY = 'einfach';
@@ -10,7 +10,7 @@ export const MEDIUM = 'mittel';
 export const HARD = 'schwierig';
 export const EXAM = 'klausur';
 
-export function getExerciseByCategories(exercises) {
+export function getExerciseByDifficulty(exercises) {
   var iron = exercises.filter(function (el) {
     return el.difficulty === SUPEREASY;
   });
@@ -63,8 +63,9 @@ export function getExerciseByCategories(exercises) {
 
 export default class ExerciseOverviewPage extends Component {
   render() {
+    let hasTags = true;
     let exercises = this.props.exercises;
-    let categories = getExerciseByCategories(exercises);
+    let categories = getExerciseByDifficulty(exercises);
     return (
       <React.Fragment>
         <div
@@ -80,10 +81,10 @@ export default class ExerciseOverviewPage extends Component {
                 <React.Fragment key={'category-' + index}>
                   <div className={'tile is-parent flex-item-left'}>
                     <ExerciseCategoryOverview
-                      id={index}
                       title={c.title}
                       subtitle={c.subtitle}
                       exerciseList={c.exerciseList}
+                      hasTags={hasTags}
                     />
                   </div>
                   <div
@@ -102,10 +103,10 @@ export default class ExerciseOverviewPage extends Component {
                 }
               >
                 <ExerciseCategoryOverview
-                  id={index}
                   title={c.title}
                   subtitle={c.subtitle}
                   exerciseList={c.exerciseList}
+                  hasTags={hasTags}
                 />
               </div>
             );
