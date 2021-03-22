@@ -69,6 +69,7 @@ export default class Survey extends Component {
         <Modal
           title="Umfrage"
           modalState={this.props.modalState}
+          closeModal={this.props.setSurveyDone}
           width="50%"
           height="50%"
           footer={
