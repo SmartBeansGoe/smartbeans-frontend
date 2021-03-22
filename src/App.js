@@ -24,6 +24,7 @@ import package_json from '../package.json';
 
 import axiosRetry from 'axios-retry';
 import ExerciseCategoryPage from './components/exercises/overview/ExerciseCategoryPage';
+import Survey from './components/survey/Survey';
 
 axiosRetry(axios_inst, {
   retries: 5,
@@ -67,6 +68,7 @@ export default class App extends Component {
       intervalID: null,
       logged_in: false,
       firstLogin: false,
+      survey: false,
       hasError: false,
       version: {
         frontend: package_json.version,
@@ -80,6 +82,7 @@ export default class App extends Component {
     this.loadAssets = this.loadAssets.bind(this);
     this.handleError = this.handleError.bind(this);
     this.setNoFirstLogin = this.setNoFirstLogin.bind(this);
+    this.setSurveyDone = this.setSurveyDone.bind(this);
   }
 
   componentDidMount() {
@@ -104,6 +107,7 @@ export default class App extends Component {
   }
 
   loadAllData() {
+    this.checkSurveyDone();
     this.loadUser();
     this.loadVersion();
     this.loadCharacter();
@@ -126,6 +130,26 @@ export default class App extends Component {
         console.log(error);
         this.handleError(error);
       });
+  }
+
+  checkSurveyDone() {
+    // TODO
+    // axios_inst
+    // .get('/user/survey_done')
+    // .then((res) => {
+    //   this.setState({
+    //     survey: res.data,
+    //   });
+    // })
+    this.setState({
+      survey: true,
+    });
+  }
+
+  setSurveyDone() {
+    this.setState({
+      survey: false,
+    });
   }
 
   handleError(error) {
@@ -424,6 +448,16 @@ export default class App extends Component {
       );
     else firstLoginModal = <></>;
 
+    let survey;
+    if (this.state.survey) {
+      survey = this.renderWhenLoggedIn(
+        <Survey
+          modalState={this.state.survey}
+          setSurveyDone={this.setSurveyDone}
+        />
+      );
+    } else survey = null;
+
     return (
       <Router>
         <div className="App">
@@ -539,6 +573,7 @@ export default class App extends Component {
               />
             </Switch>
             {firstLoginModal}
+            {survey}
           </div>
         </div>
       </Router>
