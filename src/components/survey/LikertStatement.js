@@ -48,9 +48,9 @@ export default class LikertStatement extends Component {
               />
               <label>
                 {i === 0
-                  ? 'Trifft nicht zu'
+                  ? 'Sehr schlecht'
                   : i === this.props.numberAnswerOptions - 1
-                  ? 'Trifft zu'
+                  ? 'Sehr gut'
                   : ''}
               </label>
             </li>

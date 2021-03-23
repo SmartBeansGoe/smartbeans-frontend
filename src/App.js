@@ -134,7 +134,7 @@ export default class App extends Component {
 
   setSurveyDone() {
     this.setState({
-      surveyCompleted: false,
+      surveyCompleted: true,
     });
   }
 

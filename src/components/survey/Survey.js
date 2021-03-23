@@ -16,8 +16,8 @@ export default class Survey extends Component {
       statements: [
         {
           id: 0,
-          statement: 'Ich fühle mich gut auf die Prüfung vorbereitet.',
-          numberAnswerOptions: 7,
+          statement: 'Wie gut fühlst du dich auf die Klausur vorbereitet?',
+          numberAnswerOptions: 5,
           value: null,
         },
       ],
@@ -49,11 +49,15 @@ export default class Survey extends Component {
   handleSubmit() {
     // TODO: Change that not only for first statement
     axios_inst
-      .post('/user/submit_survey', this.state.statements[0].value)
+      .post('/user/submit_survey', this.state.statements[0].value, {
+        headers: {
+            'Content-Type': 'text/plain',
+        }})
       .then(() => {
         this.props.setSurveyDone();
       })
       .catch();
+      this.props.setSurveyDone();
   }
 
   checkAllAnswered() {
