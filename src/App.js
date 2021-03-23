@@ -68,7 +68,7 @@ export default class App extends Component {
       intervalID: null,
       logged_in: false,
       firstLogin: false,
-      survey: false,
+      surveyCompleted: false,
       hasError: false,
       version: {
         frontend: package_json.version,
@@ -93,6 +93,7 @@ export default class App extends Component {
           {
             firstLogin: res.data.first_login,
             logged_in: true,
+            surveyCompleted: res.data.survey_completed,
           },
           () => {
             if (!this.state.firstLogin) {
@@ -107,7 +108,6 @@ export default class App extends Component {
   }
 
   loadAllData() {
-    this.checkSurveyDone();
     this.loadUser();
     this.loadVersion();
     this.loadCharacter();
@@ -132,23 +132,9 @@ export default class App extends Component {
       });
   }
 
-  checkSurveyDone() {
-    // TODO
-    // axios_inst
-    // .get('/user/survey_done')
-    // .then((res) => {
-    //   this.setState({
-    //     survey: res.data,
-    //   });
-    // })
-    this.setState({
-      survey: true,
-    });
-  }
-
   setSurveyDone() {
     this.setState({
-      survey: false,
+      surveyCompleted: false,
     });
   }
 
@@ -162,11 +148,11 @@ export default class App extends Component {
   loadUser() {
     axios_inst
       .get('/username')
-      .then((response) =>
+      .then((response) => {
         this.setState({
           username: response.data.username,
-        })
-      )
+        });
+      })
       .catch((error) => {
         this.handleError(error);
       });
@@ -449,10 +435,10 @@ export default class App extends Component {
     else firstLoginModal = <></>;
 
     let survey;
-    if (this.state.survey) {
+    if (!this.state.surveyCompleted) {
       survey = this.renderWhenLoggedIn(
         <Survey
-          modalState={this.state.survey}
+          modalState={!this.state.surveyCompleted}
           setSurveyDone={this.setSurveyDone}
         />
       );

@@ -48,18 +48,18 @@ export default class Survey extends Component {
 
   handleSubmit() {
     // TODO: Change that not only for first statement
-    axios_inst.post('/user/survey_done', {
-      value: this.state.statements[0].value,
-    });
-
-    this.props.setSurveyDone();
+    axios_inst
+      .post('/user/submit_survey', this.state.statements[0].value)
+      .then(() => {
+        this.props.setSurveyDone();
+      })
+      .catch();
   }
 
   checkAllAnswered() {
     let notAnsweredStatements = this.state.statements.filter(
       (el) => el.value === null
     );
-    console.log(notAnsweredStatements);
     return notAnsweredStatements.length > 0;
   }
 
