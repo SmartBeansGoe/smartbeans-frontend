@@ -206,8 +206,8 @@ class ExercisePage extends Component {
                       <input
                         className="file-input ml-3"
                         type="file"
-                        accept=".c"
-                        name="cfile"
+                        accept=".py"
+                        name="python-file"
                         onChange={this.onChangeHandler}
                         key={this.state.inputKey}
                       />

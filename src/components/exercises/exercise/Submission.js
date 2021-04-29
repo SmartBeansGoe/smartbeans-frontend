@@ -31,6 +31,7 @@ export default class Submission extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props.result);
     let feedback =
       "<pre class='mt-0 pt-0'><code>" +
       lang['submission.error-no-feedback'] +
@@ -44,93 +45,36 @@ export default class Submission extends Component {
     let compileResult = '';
     let isCompileResult = false;
     let isSuccess = false;
-    if (this.props.result.result !== null) {
-      type = this.props.result.result.type;
-      testtype = this.props.result.result.testtype === 'cunit' ? true : false;
-      score = this.props.result.result.score;
-      compileResult =
-        this.props.result.result.type === 'TIME_LIMIT' ||
-        this.props.result.result.type === 'EVALUATION_ERROR'
-          ? ''
-          : this.props.result.result.compileResult.stdout;
-      isCompileResult =
-        this.props.result.result.type === 'COMPILE_ERROR' ? true : false;
-      isSuccess = this.props.result.result.score === 1;
-      if (this.props.result.result.testtype === 'simple') {
-        feedback = '<div>';
-        let endpTag = '</div>';
-        switch (this.props.result.result.type) {
-          case 'SUCCESS':
-            feedback += lang['submission.target-success'] + '!' + endpTag;
-            break;
-          case 'WRONG_ANSWER':
-            feedback += '<h2>' + lang['submission.wrong-output'] + '</h2> <br>';
-            this.props.result.result.feedback.forEach((testCase, index) => {
-              feedback +=
-                lang['submission.test'] +
-                ' ' +
-                (index + 1) +
-                '<pre class="p-4 mb-3"><code><strong>' +
-                lang['submission.input'] +
-                ':</strong> <br>' +
-                (testCase.testCase.stdin !== ''
-                  ? testCase.testCase.stdin
-                  : '(' + lang['submission.empty'] + ')') +
-                '\n<strong>' +
-                lang['submission.target-output'] +
-                ':</strong>\n' +
-                (testCase.testCase.stdout !== ''
-                  ? testCase.testCase.stdout
-                  : '(' + lang['submission.empty'] + ')') +
-                '\n<strong>' +
-                lang['submission.actual-output'] +
-                ':</strong>\n' +
-                testCase.testResult.stdout +
-                '</code></pre>';
-            });
-            feedback += endpTag;
-            break;
-          case 'RUN_ERROR':
-            feedback += lang['submission.run-error'] + endpTag;
-            break;
-          case 'COMPILE_ERROR':
-            feedback += lang['submission.compile-error'] + endpTag;
-            break;
-          case 'EVALUATION_ERROR':
-            feedback += lang['submission.evaluation-error'] + endpTag;
-            break;
-          case 'TIME_LIMIT':
-            feedback += lang['submission.time-limit'] + endpTag;
-            break;
-          default:
-            feedback += lang['submission.unknown-error'] + endpTag;
-        }
-      } else {
-        feedback =
-          '<article class="message is-info"><div class="message-body"> <strong>' +
-          lang['submission.note-on-task-type'] +
-          ':</strong> <br>' +
-          lang['submission.error-message'] +
-          '</div></article>';
-        if (
-          this.props.result.result.feedback === undefined ||
-          this.props.result.result.feedback === null
-        ) {
-          feedback +=
-            "<pre class='mt-0 pt-0'><code>" +
-            lang['submission.error-no-feedback'] +
-            '</code></pre>';
-        } else {
-          feedback +=
-            "<pre class='mt-0 pt-0'><code>" +
-            this.props.result.result.feedback.stdout +
-            '</code></pre>';
-        }
-      }
+    feedback = '<div>';
+    let endpTag = '</div>';
+    switch (this.props.result.result_type) {
+      case 'Success':
+        feedback += lang['submission.target-success'] + this.props.result.feedback + endpTag;
+        break;
+      case 'Failed':
+        feedback += lang['submission.wrong-output'] + this.props.result.feedback + endpTag;
+        break;
+      // case 'WRONG_ANSWER':
+      //   feedback += '<h2>' + lang['submission.wrong-output'] + this.props.feedback + '</h2> <br>';
+      //   break;
+      // case 'RUN_ERROR':
+      //   feedback += lang['submission.run-error'] + endpTag;
+      //   break;
+      // case 'COMPILE_ERROR':
+      //   feedback += lang['submission.compile-error'] + endpTag;
+      //   break;
+      case 'EvaluationError':
+        feedback += lang['submission.evaluation-error'] + this.props.result.feedback + endpTag;
+        break;
+      case 'TimeOut':
+        feedback += lang['submission.time-limit'] + this.props.result.feedback + endpTag;
+        break;
+      default:
+        feedback += lang['submission.unknown-error'] + endpTag;
     }
     this.setState({
-      sourceCode: this.props.result.sourceCode,
-      timestamp: this.props.result.timestamp,
+      // sourceCode: this.props.result.sourceCode,
+      // timestamp: this.props.result.timestamp,
       type: type,
       testtype: testtype,
       score: score,
