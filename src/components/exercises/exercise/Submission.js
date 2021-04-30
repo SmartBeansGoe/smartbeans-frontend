@@ -47,12 +47,12 @@ export default class Submission extends Component {
     let isSuccess = false;
     feedback = '<div>';
     let endpTag = '</div>';
-    switch (this.props.result.result_type) {
+    switch (this.props.result.result.result_type) {
       case 'Success':
-        feedback += lang['submission.target-success'] + this.props.result.feedback + endpTag;
+        feedback += lang['submission.target-success'] + this.props.result.result.feedback + endpTag;
         break;
       case 'Failed':
-        feedback += lang['submission.wrong-output'] + this.props.result.feedback + endpTag;
+        feedback += lang['submission.wrong-output'] + this.props.result.result.feedback + endpTag;
         break;
       // case 'WRONG_ANSWER':
       //   feedback += '<h2>' + lang['submission.wrong-output'] + this.props.feedback + '</h2> <br>';
@@ -64,10 +64,10 @@ export default class Submission extends Component {
       //   feedback += lang['submission.compile-error'] + endpTag;
       //   break;
       case 'EvaluationError':
-        feedback += lang['submission.evaluation-error'] + this.props.result.feedback + endpTag;
+        feedback += lang['submission.evaluation-error'] + this.props.result.result.feedback + endpTag;
         break;
       case 'TimeOut':
-        feedback += lang['submission.time-limit'] + this.props.result.feedback + endpTag;
+        feedback += lang['submission.time-limit'] + this.props.result.result.feedback + endpTag;
         break;
       default:
         feedback += lang['submission.unknown-error'] + endpTag;
@@ -80,6 +80,7 @@ export default class Submission extends Component {
       score: score,
       compileResult: compileResult,
       isCompileResult: isCompileResult,
+      sourceCode: this.props.result.sourceCode,
       feedback: feedback,
       isSuccess: isSuccess,
     });
