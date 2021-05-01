@@ -47,12 +47,26 @@ export default class Submission extends Component {
     let isSuccess = false;
     feedback = '<div>';
     let endpTag = '</div>';
+    if (this.props.result.result === null) return;
     switch (this.props.result.result.result_type) {
       case 'Success':
-        feedback += lang['submission.target-success'] + this.props.result.result.feedback + endpTag;
+        isSuccess = true;
+        feedback +=
+          lang['submission.target-success'] +
+          ':\n' +
+          '<pre><code>' +
+          this.props.result.result.feedback +
+          '</code></pre>' +
+          endpTag;
         break;
       case 'Failed':
-        feedback += lang['submission.wrong-output'] + this.props.result.result.feedback + endpTag;
+        feedback +=
+          lang['submission.wrong-output'] +
+          ':\n' +
+          '<pre><code>' +
+          this.props.result.result.feedback +
+          '</code></pre>' +
+          endpTag;
         break;
       // case 'WRONG_ANSWER':
       //   feedback += '<h2>' + lang['submission.wrong-output'] + this.props.feedback + '</h2> <br>';
@@ -64,23 +78,34 @@ export default class Submission extends Component {
       //   feedback += lang['submission.compile-error'] + endpTag;
       //   break;
       case 'EvaluationError':
-        feedback += lang['submission.evaluation-error'] + this.props.result.result.feedback + endpTag;
+        feedback +=
+          lang['submission.evaluation-error'] +
+          ':\n' +
+          '<pre><code>' +
+          this.props.result.result.feedback +
+          '</code></pre>' +
+          endpTag;
         break;
       case 'TimeOut':
-        feedback += lang['submission.time-limit'] + this.props.result.result.feedback + endpTag;
+        feedback +=
+          lang['submission.time-limit'] +
+          ':\n' +
+          '<pre><code>' +
+          this.props.result.result.feedback +
+          '</code></pre>' +
+          endpTag;
         break;
       default:
-        feedback += lang['submission.unknown-error'] + endpTag;
+        feedback += lang['submission.unknown-error'] + ':\n' + endpTag;
     }
     this.setState({
-      // sourceCode: this.props.result.sourceCode,
-      // timestamp: this.props.result.timestamp,
+      sourceCode: this.props.result.sourceCode,
+      timestamp: this.props.result.timestamp,
       type: type,
       testtype: testtype,
       score: score,
       compileResult: compileResult,
       isCompileResult: isCompileResult,
-      sourceCode: this.props.result.sourceCode,
       feedback: feedback,
       isSuccess: isSuccess,
     });

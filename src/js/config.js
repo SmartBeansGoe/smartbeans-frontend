@@ -1,3 +1,3 @@
-const backend_url = 'https://smartbeans.informatik.uni-goettingen.de/api';
+const backend_url = 'https://c101-248.cloud.gwdg.de/api';
 
 export default backend_url;
