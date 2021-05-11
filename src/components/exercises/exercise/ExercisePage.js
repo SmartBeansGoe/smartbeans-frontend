@@ -12,6 +12,7 @@ import lang from '../../../lang/de_DE.json';
 import BeanWrapper from './BeanWrapper';
 import assets from '../../../data/assets.json';
 import axiosRetry from 'axios-retry';
+import Editor from '@monaco-editor/react';
 
 axiosRetry(axios_inst, {
   retries: 5,
@@ -36,9 +37,9 @@ class ExercisePage extends Component {
     this.handleTextAreaChange = this.handleTextAreaChange.bind(this);
   }
 
-  handleTextAreaChange(event) {
-    this.setState({ textAreaValue: event.target.value });
-    this.setState({ isDisabled: this.state.textAreaValue > 0 });
+  handleTextAreaChange(value, event) {
+    this.setState({ textAreaValue: value });
+    this.setState({ isDisabled: this.state.textAreaValue > 0, isError: false });
   }
 
   onChangeHandler = (event) => {
@@ -203,8 +204,28 @@ class ExercisePage extends Component {
                 }}
               >
                 <h3>Lösung</h3>
-
-                <div className="field">
+                <div
+                  style={{
+                    backgroundColor: 'white',
+                    borderRadius: '6px',
+                    boxShadow:
+                      '0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02)',
+                    color: '#4a4a4a',
+                    display: 'block',
+                    paddingTop: '1.0rem',
+                    paddingLeft: '0.5rem',
+                  }}
+                >
+                  <Editor
+                    height="30vh"
+                    defaultLanguage="python"
+                    defaultValue="# Schreibe hier deine Loesung!"
+                    theme="light"
+                    value={this.state.textAreaValue}
+                    onChange={this.handleTextAreaChange}
+                  />
+                </div>
+                {/* <div className="field">
                   <textarea
                     className="textarea"
                     value={this.state.textAreaValue}
@@ -218,7 +239,7 @@ class ExercisePage extends Component {
                       fontSize: '16px',
                     }}
                   ></textarea>
-                </div>
+                </div> */}
                 <div
                   className="field is-grouped "
                   style={{ float: 'right', flexWrap: 'wrap' }}

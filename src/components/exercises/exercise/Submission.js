@@ -31,7 +31,6 @@ export default class Submission extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.result);
     let feedback =
       "<pre class='mt-0 pt-0'><code>" +
       lang['submission.error-no-feedback'] +
