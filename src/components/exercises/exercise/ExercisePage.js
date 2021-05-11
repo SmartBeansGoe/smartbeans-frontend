@@ -31,17 +31,35 @@ class ExercisePage extends Component {
       isDisabled: true,
       isError: false,
       inputKey: Math.random().toString(36),
+      textAreaValue: '',
     };
+    this.handleTextAreaChange = this.handleTextAreaChange.bind(this);
+  }
+
+  handleTextAreaChange(event) {
+    this.setState({ textAreaValue: event.target.value });
+    this.setState({ isDisabled: this.state.textAreaValue > 0 });
   }
 
   onChangeHandler = (event) => {
-    if (event.target.files.length !== 0)
+    if (event.target.files.length !== 0) {
+      var file = event.target.files[0];
+
       this.setState({
         fileName: event.target.files[0].name,
         selectedFile: event.target.files[0],
         isDisabled: false,
         isError: false,
       });
+      let reader = new FileReader();
+      reader.onload = (event) => {
+        this.setState({
+          textAreaValue: reader.result,
+        });
+      };
+
+      reader.readAsText(file);
+    }
   };
 
   onClickHandler = (e) => {
@@ -49,79 +67,53 @@ class ExercisePage extends Component {
       isLoading: true,
       isDisabled: true,
     });
-    let reader = new FileReader();
 
-    reader.onload = (event) => {
-      axios_inst
-        .post(
-          '/submit/' + parseInt(this.props.match.params.taskid),
-          reader.result,
-          {
-            headers: {
-              'Content-Type': 'text/plain',
-            },
-          }
-        )
-        .then((response) => {
-          this.sendNotificationForFirstSolve(response);
-          this.setState({
-            fileName: lang['exercise.no-file-selected'],
-            selectedFile: null,
-            isLoading: false,
-            inputKey: Math.random().toString(36),
-          });
-          this.props.loadSubmissions();
-          if (response.data.score === 1) {
-            this.props.loadExercises();
-            this.props.loadLevelData();
-            this.props.loadAssets();
-          }
-        })
-        .catch((error) => {
-          this.setState({
-            fileName: lang['exercise.no-file-selected'],
-            selectedFile: null,
-            isLoading: false,
-            isError: true,
-            isDisabled: true,
-            inputKey: Math.random().toString(36),
-          });
-
-          this.context({
-            type: 'ADD_NOTIFICATION',
-            payload: {
-              id: new Date().getTime(),
-              type: 'text',
-              title: lang['exercise.upload-error.title'],
-              message: lang['exercise.upload-error.message'],
-              colorClass: 'is-danger',
-            },
-          });
+    axios_inst
+      .post(
+        '/submit/' + parseInt(this.props.match.params.taskid),
+        this.state.textAreaValue,
+        {
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+        }
+      )
+      .then((response) => {
+        this.sendNotificationForFirstSolve(response);
+        this.setState({
+          fileName: lang['exercise.no-file-selected'],
+          selectedFile: null,
+          isLoading: false,
+          inputKey: Math.random().toString(36),
         });
-    };
-    var _this = this;
-    reader.onerror = function (error) {
-      _this.setState({
-        fileName: lang['exercise.no-file-selected'],
-        selectedFile: null,
-        isLoading: false,
-        isError: true,
-        isDisabled: true,
-        inputKey: Math.random().toString(36),
+        this.props.loadSubmissions();
+        if (response.data.score === 1) {
+          this.props.loadExercises();
+          this.props.loadLevelData();
+          this.props.loadAssets();
+        }
+      })
+      .catch((error) => {
+        this.setState({
+          fileName: lang['exercise.no-file-selected'],
+          selectedFile: null,
+          isLoading: false,
+          isError: true,
+          isDisabled: true,
+          inputKey: Math.random().toString(36),
+        });
+
+        this.context({
+          type: 'ADD_NOTIFICATION',
+          payload: {
+            id: new Date().getTime(),
+            type: 'text',
+            title: lang['exercise.upload-error.title'],
+            message: lang['exercise.upload-error.message'],
+            colorClass: 'is-danger',
+          },
+        });
       });
-      _this.context({
-        type: 'ADD_NOTIFICATION',
-        payload: {
-          id: new Date().getTime(),
-          type: 'text',
-          title: lang['exercise.read-error.title'],
-          message: lang['exercise.read-error.message'],
-          colorClass: 'is-danger',
-        },
-      });
-      reader.abort();
-    };
-    reader.readAsText(this.state.selectedFile);
   };
 
   sendNotificationForFirstSolve(response) {
@@ -180,11 +172,13 @@ class ExercisePage extends Component {
       }
     }
 
+    console.log(this.state.textAreaValue);
+
     return (
       <React.Fragment>
         <div className="tile is-parent is-vertical exercise_page">
           <div className="tile is-child box">
-            <div className="content ml-3 ">
+            <div className="content ml-3">
               <h1 className="title mt-3">
                 {name}
                 {solved && (
@@ -198,46 +192,73 @@ class ExercisePage extends Component {
                   </span>
                 )}
               </h1>
-              <div dangerouslySetInnerHTML={{ __html: marked(task) }} />
-              <div className="field is-grouped " style={{ flexWrap: 'wrap' }}>
-                <div className="control mr-6">
-                  <div className="file has-name  mt-4 is-focused is-link is-light">
-                    <label className="file-label">
-                      <input
-                        className="file-input ml-3"
-                        type="file"
-                        accept=".py"
-                        name="python-file"
-                        onChange={this.onChangeHandler}
-                        key={this.state.inputKey}
-                      />
-                      <span className="file-cta">
-                        <span className="file-icon">
-                          <Icon path={mdiUpload} size={1} />
-                        </span>
-                        <span className="file-label">
-                          {lang['exercise.select-file']}
-                        </span>
-                      </span>
-                      <span className="file-name" style={{ width: '200px' }}>
-                        {this.state.fileName}
-                      </span>
-                    </label>
-                  </div>
+              <div
+                dangerouslySetInnerHTML={{ __html: marked(task) }}
+                style={{ float: 'left', width: '50%', paddingRight: '20px' }}
+              />
+              <div
+                style={{
+                  float: 'left',
+                  width: '50%',
+                }}
+              >
+                <h3>Lösung</h3>
+
+                <div className="field">
+                  <textarea
+                    className="textarea"
+                    value={this.state.textAreaValue}
+                    onChange={this.handleTextAreaChange}
+                    rows={11}
+                    style={{
+                      width: '100%',
+                      resize: 'vertical',
+                      minHeight: '140px',
+                      fontFamily: 'monospace',
+                      fontSize: '16px',
+                    }}
+                  ></textarea>
                 </div>
-                <div className="control">
-                  <button
-                    className={`button ${
-                      this.state.isError ? 'is-danger' : 'is-primary'
-                    }  mt-4 ${this.state.isLoading ? 'is-loading' : ''}`}
-                    disabled={this.state.isDisabled}
-                    type="button"
-                    onClick={this.onClickHandler}
-                  >
-                    {this.state.isError
-                      ? lang['exercise.error-occured']
-                      : lang['exercise.upload-solution']}
-                  </button>
+                <div
+                  className="field is-grouped "
+                  style={{ float: 'right', flexWrap: 'wrap' }}
+                >
+                  <div className="control mr-6">
+                    <div class="file is-focused is-link is-light mt-4">
+                      <label class="file-label">
+                        <input
+                          className="file-input"
+                          type="file"
+                          accept=".py"
+                          name="python-file"
+                          onChange={this.onChangeHandler}
+                          key={this.state.inputKey}
+                        />
+                        <span class="file-cta">
+                          <span class="file-icon">
+                            <Icon path={mdiUpload} size={1} />
+                          </span>
+                          <span class="file-label">
+                            {lang['exercise.import-file']}
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="control">
+                    <button
+                      className={`button ${
+                        this.state.isError ? 'is-danger' : 'is-primary'
+                      }  mt-4 ${this.state.isLoading ? 'is-loading' : ''}`}
+                      disabled={this.state.isDisabled}
+                      type="button"
+                      onClick={this.onClickHandler}
+                    >
+                      {this.state.isError
+                        ? lang['exercise.error-occured']
+                        : lang['exercise.upload-solution']}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

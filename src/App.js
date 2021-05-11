@@ -68,7 +68,7 @@ export default class App extends Component {
       intervalID: null,
       logged_in: false,
       firstLogin: false,
-      surveyCompleted: false,
+      surveyCompleted: true,
       hasError: false,
       version: {
         frontend: package_json.version,
