@@ -39,7 +39,10 @@ class ExercisePage extends Component {
 
   handleTextAreaChange(value, event) {
     this.setState({ textAreaValue: value });
-    this.setState({ isDisabled: this.state.textAreaValue > 0, isError: false });
+    this.setState({
+      isDisabled: !(this.state.textAreaValue.length > 0),
+      isError: false,
+    });
   }
 
   onChangeHandler = (event) => {
