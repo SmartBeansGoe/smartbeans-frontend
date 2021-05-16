@@ -11,6 +11,7 @@ import lang from '../../lang/de_DE.json';
 import WardrobeModal from './WardrobeModal';
 import {
   getExerciseByDifficulty,
+  SUPEREASY,
   EASY,
   MEDIUM,
   HARD,
@@ -24,59 +25,61 @@ function getRandomExercise(exercises, solved = false) {
     .sort(() => Math.random() - 0.5)[0];
 }
 
-function renderNextExercise(exercise, difficulty) {
+function renderNextExercise(exercise, difficulty, exercises) {
   let solved = exercise === undefined;
-  return (
-    <div
-      className="tile is-parent"
-      style={{
-        cursor: solved ? 'default' : 'pointer',
-        minWidth: '350px',
-        maxWidth: '25%',
-      }}
-    >
-      {solved ? (
-        <div
-          className="tile columns is-child box"
-          style={{
-            border: 'solid',
-            borderWidth: '0.4em',
-            borderColor: LIGHTBLUE,
-          }}
-          title={lang['exercise.next.all.ready']}
-        >
-          <div className="column is-10">
+  let categories = getExerciseByDifficulty(exercises);
+  if (categories.find((c) => c.id === difficulty).exerciseList.length > 0)
+    return (
+      <div
+        className="tile is-parent"
+        style={{
+          cursor: solved ? 'default' : 'pointer',
+          minWidth: '350px',
+          maxWidth: '25%',
+        }}
+      >
+        {solved ? (
+          <div
+            className="tile columns is-child box"
+            style={{
+              border: 'solid',
+              borderWidth: '0.4em',
+              borderColor: LIGHTBLUE,
+            }}
+            title={lang['exercise.next.all.ready']}
+          >
+            <div className="column is-10">
+              <p className="title is-4">
+                {lang['exercise.next.' + difficulty + '.ready']}
+              </p>
+              <p className="subtitle is-6">{lang['exercise.next.all.ready']}</p>
+            </div>
+            <div className="column is-2">
+              <Icon
+                path={mdiCheckCircleOutline}
+                size={2.0}
+                style={{ color: BLUE }}
+              />
+            </div>
+          </div>
+        ) : (
+          <Link
+            className="tile is-child box"
+            style={{
+              border: 'solid',
+              borderWidth: '0.4em',
+              borderColor: LIGHTBLUE,
+            }}
+            to={'/exercises/' + exercise.taskid}
+          >
             <p className="title is-4">
-              {lang['exercise.next.' + difficulty + '.ready']}
+              {lang['exercise.next.' + difficulty + '.title']}
             </p>
-            <p className="subtitle is-6">{lang['exercise.next.all.ready']}</p>
-          </div>
-          <div className="column is-2">
-            <Icon
-              path={mdiCheckCircleOutline}
-              size={2.0}
-              style={{ color: BLUE }}
-            />
-          </div>
-        </div>
-      ) : (
-        <Link
-          className="tile is-child box"
-          style={{
-            border: 'solid',
-            borderWidth: '0.4em',
-            borderColor: LIGHTBLUE,
-          }}
-          to={'/exercises/' + exercise.taskid}
-        >
-          <p className="title is-4">
-            {lang['exercise.next.' + difficulty + '.title']}
-          </p>
-          <p className="subtitle">{exercise.name}</p>
-        </Link>
-      )}
-    </div>
-  );
+            <p className="subtitle">{exercise.name}</p>
+          </Link>
+        )}
+      </div>
+    );
 }
 
 export default class Dashboard extends Component {
@@ -98,6 +101,9 @@ export default class Dashboard extends Component {
 
   updateExerciseRecommendations() {
     let categories = getExerciseByDifficulty(this.props.exercises);
+    let supereasyExercise = getRandomExercise(
+      categories.find((c) => c.id === SUPEREASY).exerciseList
+    );
     let easyExercise = getRandomExercise(
       categories.find((c) => c.id === EASY).exerciseList
     );
@@ -112,6 +118,7 @@ export default class Dashboard extends Component {
     );
     this.setState({
       recommendations: {
+        supereasyExercise: supereasyExercise,
         easyExercise: easyExercise,
         mediumExercise: mediumExercise,
         hardExercise: hardExercise,
@@ -211,20 +218,29 @@ export default class Dashboard extends Component {
                 }}
               >
                 {renderNextExercise(
+                  this.state.recommendations.supereasyExercise,
+                  SUPEREASY,
+                  this.props.exercises
+                )}
+                {renderNextExercise(
                   this.state.recommendations.easyExercise,
-                  EASY
+                  EASY,
+                  this.props.exercises
                 )}
                 {renderNextExercise(
                   this.state.recommendations.mediumExercise,
-                  MEDIUM
+                  MEDIUM,
+                  this.props.exercises
                 )}
                 {renderNextExercise(
                   this.state.recommendations.hardExercise,
-                  HARD
+                  HARD,
+                  this.props.exercises
                 )}
                 {renderNextExercise(
                   this.state.recommendations.examExercise,
-                  EXAM
+                  EXAM,
+                  this.props.exercises
                 )}
               </div>
             </div>
