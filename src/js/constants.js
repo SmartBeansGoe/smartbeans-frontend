@@ -26,5 +26,5 @@ export const LIGHTBLUE = '#a2cce2';
 export const DEFAULTSKINCOLOR = '#E7C27A';
 export const DEFAULTFACE = 'face001';
 
-export const LEADERBOARD_UNLOCK = 7;
+export const LEADERBOARD_UNLOCK = 1;
 
