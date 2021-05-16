@@ -4,7 +4,7 @@ import marked from 'marked';
 import axios_inst from '../../../js/backend';
 import SubmissionOverview from './SubmissionOverview';
 import { withRouter } from 'react-router';
-import { mdiUpload, mdiCheckBold } from '@mdi/js';
+import { mdiUpload, mdiCheckBold, mdiDownload } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import './ExercisePage.css';
 import { NotificationContext } from '../../notification/NotificationProvider';
@@ -120,6 +120,17 @@ class ExercisePage extends Component {
       });
   };
 
+  saveCode(filename, code) {
+    const element = document.createElement('a');
+    const file = new Blob([code], {
+      type: 'text/plain',
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = filename + '.py';
+    document.body.appendChild(element);
+    element.click();
+  }
+
   sendNotificationForFirstSolve(response) {
     if (response.data.score === 1) {
       let result = this.props.submissions.filter(
@@ -225,7 +236,7 @@ class ExercisePage extends Component {
                   className="field is-grouped "
                   style={{ float: 'right', flexWrap: 'wrap' }}
                 >
-                  <div className="control mr-6">
+                  <div className="control">
                     <div class="file is-focused is-link is-light mt-4">
                       <label class="file-label">
                         <input
@@ -246,6 +257,24 @@ class ExercisePage extends Component {
                         </span>
                       </label>
                     </div>
+                  </div>
+                  <div className="control mr-6">
+                    <button
+                      className="button is-link mt-4 file-cta"
+                      onClick={() => {
+                        this.saveCode(
+                          exercise.shortname.toLowerCase(),
+                          this.state.textAreaValue
+                        );
+                      }}
+                    >
+                      <span class="file-icon">
+                        <Icon path={mdiDownload} size={1} />
+                      </span>
+                      <span class="file-label">
+                        {lang['exercise.export-code']}
+                      </span>
+                    </button>
                   </div>
                   <div className="control">
                     <button
