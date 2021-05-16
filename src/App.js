@@ -559,7 +559,7 @@ export default class App extends Component {
               />
             </Switch>
             {firstLoginModal}
-            {survey}
+            {/* {survey} */}
           </div>
         </div>
       </Router>
