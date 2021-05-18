@@ -6,6 +6,23 @@ import axios_inst from '../../js/backend';
 import { DEFAULTFACE, DEFAULTSKINCOLOR } from '../../js/constants';
 import lang from '../../lang/de_DE.json';
 
+function filterLeaderboardHardRank(leaderboard) {
+  let rank = 1;
+  let active = 1;
+  for (let i = 0; i < leaderboard.length; i += 1) {
+    if (leaderboard[i].rank === active) {
+      if (i + 1 !== rank) {
+        leaderboard[i].rank = '';
+      }
+    } else {
+      active = rank + 1;
+      rank = rank + i;
+      leaderboard[i].rank = rank;
+    }
+  }
+  return leaderboard;
+}
+
 export default class LeaderboardPage extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +50,7 @@ export default class LeaderboardPage extends Component {
   }
 
   componentDidMount() {
-    this.getLeaderboards();
+    this.getLeaderboard();
     this.startInterval();
     this.setState({
       character: {
@@ -72,23 +89,26 @@ export default class LeaderboardPage extends Component {
     });
   }
 
-  getLeaderboards() {
+  getLeaderboard() {
     axios_inst
       .get('/leaderboard')
       .then((response) => {
         let rows = [];
         let active = -1;
         response.data.forEach((person, index) => {
-          if (person.character.username !== null) active = index;
-          rows.push({
-            rank: person.rank,
-            bean: person.charname,
-            points: person.score,
-          });
+          if (person.score > 0) {
+            if (person.character.username !== null) active = index;
+            rows.push({
+              rank: person.rank,
+              bean: person.charname,
+              points: person.score,
+            });
+          }
         });
         if (active === -1) {
           active = 0;
         }
+        rows = filterLeaderboardHardRank(rows);
         this.setState(
           {
             rows: rows,
@@ -105,7 +125,7 @@ export default class LeaderboardPage extends Component {
 
   startInterval() {
     const intervalId = setInterval(() => {
-      this.getLeaderboards();
+      this.getLeaderboard();
     }, 30000);
     this.setState({
       intervalId: intervalId,
