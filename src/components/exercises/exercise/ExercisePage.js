@@ -187,8 +187,6 @@ class ExercisePage extends Component {
       }
     }
 
-    console.log(this.state.textAreaValue);
-
     return (
       <React.Fragment>
         <div className="tile is-parent is-vertical exercise_page">
@@ -237,8 +235,8 @@ class ExercisePage extends Component {
                   style={{ float: 'right', flexWrap: 'wrap' }}
                 >
                   <div className="control">
-                    <div class="file is-focused is-link is-light mt-4">
-                      <label class="file-label">
+                    <div className="file is-focused is-link is-light mt-4">
+                      <label className="file-label">
                         <input
                           className="file-input"
                           type="file"
@@ -247,11 +245,11 @@ class ExercisePage extends Component {
                           onChange={this.onChangeHandler}
                           key={this.state.inputKey}
                         />
-                        <span class="file-cta">
-                          <span class="file-icon">
+                        <span className="file-cta">
+                          <span className="file-icon">
                             <Icon path={mdiUpload} size={1} />
                           </span>
-                          <span class="file-label">
+                          <span className="file-label">
                             {lang['exercise.import-file']}
                           </span>
                         </span>
@@ -268,10 +266,10 @@ class ExercisePage extends Component {
                         );
                       }}
                     >
-                      <span class="file-icon">
+                      <span className="file-icon">
                         <Icon path={mdiDownload} size={1} />
                       </span>
-                      <span class="file-label">
+                      <span className="file-label">
                         {lang['exercise.export-code']}
                       </span>
                     </button>
