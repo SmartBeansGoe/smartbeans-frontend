@@ -31,6 +31,7 @@ export default class Submission extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props.result)
     let feedback =
       "<pre class='mt-0 pt-0'><code>" +
       lang['submission.error-no-feedback'] +
@@ -85,7 +86,7 @@ export default class Submission extends Component {
           '</code></pre>' +
           endpTag;
         break;
-      case 'TimeOut':
+      case 'TimedOut':
         feedback +=
           lang['submission.time-limit'] +
           ':\n' +
@@ -94,6 +95,15 @@ export default class Submission extends Component {
           '</code></pre>' +
           endpTag;
         break;
+      case 'ContainerError':
+        feedback +=
+        lang['submission.container-error'] +
+        ':\n' +
+        '<pre><code>' +
+        this.props.result.result.feedback +
+        '</code></pre>' +
+        endpTag;
+      break;
       default:
         feedback += lang['submission.unknown-error'] + ':\n' + endpTag;
     }

@@ -86,6 +86,7 @@
   "submission.time-limit": "Zeitüberschreitung",
   "submission.unknown-error": "Unbekannter Fehler",
   "submission.wrong-output": "Falsche Ausgabe",
+  "submission.container-error": "Interner Fehler: Das bedeutet, dass ein Fehler im System vorgefallen ist. Dies bitten wir zu entschuldigen. Wir arbeiten daran, diese Probleme zu lösen. Wiederhole das Abgeben deiner Lösung nochmal.\nFehlermeldung des Systems",
   "submission.test": "Test",
   "submission.input": "Eingabe",
   "submission.empty": "leer",
