@@ -6,23 +6,6 @@ import axios_inst from '../../js/backend';
 import { DEFAULTFACE, DEFAULTSKINCOLOR } from '../../js/constants';
 import lang from '../../lang/de_DE.json';
 
-function filterLeaderboardHardRank(leaderboard) {
-  let rank = 1;
-  let active = 1;
-  for (let i = 0; i < leaderboard.length; i += 1) {
-    if (leaderboard[i].rank === active) {
-      if (i + 1 !== rank) {
-        leaderboard[i].rank = '';
-      }
-    } else {
-      active = rank + 1;
-      rank = rank + i;
-      leaderboard[i].rank = rank;
-    }
-  }
-  return leaderboard;
-}
-
 export default class LeaderboardPage extends Component {
   constructor(props) {
     super(props);
@@ -95,20 +78,22 @@ export default class LeaderboardPage extends Component {
       .then((response) => {
         let rows = [];
         let active = -1;
+
+        let prev = 0;
         response.data.forEach((person, index) => {
           if (person.score > 0) {
             if (person.character.username !== null) active = index;
             rows.push({
-              rank: person.rank,
+              rank: person.rank !== prev ? index + 1 : '', // Harder rank: 1 1 2 2 3 -> 1 (1) 3 (3) 5
               bean: person.charname,
               points: person.score,
             });
+            prev = person.rank;
           }
         });
         if (active === -1) {
           active = 0;
         }
-        rows = filterLeaderboardHardRank(rows);
         this.setState(
           {
             rows: rows,
