@@ -27,7 +27,7 @@
 			axios_inst
 				.get('/courses/' + courseId + '/tasks/' + id)
 				.then((res) => (task = res.data))
-				// If taskID not avaiable then show error page (TODO)
+				// If taskID not available then show error page (TODO)
 				.catch((e) => {
 					isLoading = false;
 				});
@@ -42,7 +42,7 @@
 			duration: 45,
 			easing: linear
 		}}
-		class="p-4 content-around gap-4 overflow-y h-screen"
+		class="p-4 content-around gap-4 overflow-y task-viewport-height"
 	>
 		<div
 			in:scale={{
@@ -51,15 +51,23 @@
 				easing: BezierEasing(0, 0, 0.2, 1.0)
 			}}
 			out:fade={{ duration: 75, easing: linear }}
+			class="h-full"
 		>
-			<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-full">
 				<div class="p-4 shadow-md bg-gray-100 rounded">
 					<TaskDescription {task} />
 				</div>
-				<div class="p-1 shadow-md bg-gray-100 rounded">
+				<div class="p-1 shadow-md bg-gray-100 rounded h-150 lg:h-full">
 					<Editor {id} {task} />
 				</div>
 			</div>
 		</div>
 	</div>
 </LoadingWrapper>
+
+
+<style>
+	.task-viewport-height {
+		height: calc(100vh - 64px);
+	}
+</style>

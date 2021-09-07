@@ -83,7 +83,7 @@
 
 </script>
 
-<div class="max-h-full">
+<div class="editor-height">
 	<MonacoEditor
 		bind:this={editorComponent}
 	/>
@@ -152,5 +152,9 @@
 	}
 	.btn-outlined {
 		@apply text-light-blue-500 bg-transparent border border-solid 'disabled:text-light-blue-200' border-light-blue-500 'disabled:hover:bg-gray-100' 'disabled:cursor-not-allowed' 'hover:bg-light-blue-500' 'hover:text-white' 'active:bg-light-blue-600' font-bold uppercase text-xs px-4 py-2 rounded outline-none 'focus:outline-none' mr-1 mb-1 ease-linear transition-all duration-150;
+	}
+
+	.editor-height {
+		height: calc(100% - 48px);;
 	}
 </style>

@@ -33,4 +33,4 @@
 
 </script>
 
-<div bind:this={divEl} class="h-screen-200" />
+<div bind:this={divEl} class="h-full" />

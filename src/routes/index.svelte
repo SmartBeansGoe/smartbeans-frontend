@@ -19,7 +19,7 @@
 </TransitionRootPageWrapper>
 
 <style lang="postcss">
-	:global(.box) {
+	.box {
 		@apply p-4 shadow-md bg-gray-100 rounded;
 	}
 </style>
