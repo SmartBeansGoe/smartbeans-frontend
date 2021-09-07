@@ -42,3 +42,9 @@
 		</div>
 	</TransitionRootPageWrapper>
 </LoadingWrapper>
+
+<style lang="postcss">
+	.box {
+		@apply p-4 shadow-md bg-gray-100 rounded;
+	}
+</style>
