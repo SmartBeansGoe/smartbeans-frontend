@@ -1,0 +1,9 @@
+<script>
+	export let title;
+</script>
+
+<div class="border-b-4 border-dashed border-gray-600">
+	<div class="px-6 py-4">
+		<p class="text-xl font-semibold">{title}</p>
+	</div>
+</div>
