@@ -4,6 +4,15 @@
 	import fadeScale from 'svelte-transitions-fade-scale';
 
 	let fromSubRoute = false; // TODO
+	// TODO:
+	// Examples
+	// / -> /tasks         => fromSubRoute = false
+	// /scores -> /tasks   => fromSubRoute = false
+	// /tasks -> /scores   => fromSubRoute = false
+	// /profile -> /scores => fromSubRoute = false
+
+	// /tasks -> /tasks/55 => fromSubRoute = true
+	// /tasks/55 -> /tasks => fromSubRoute = true
 </script>
 
 {#if !fromSubRoute}

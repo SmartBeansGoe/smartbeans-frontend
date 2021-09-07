@@ -1,9 +1,9 @@
 <script>
-	import LoadingWrapper from '../../components/layout/LoadingWrapper.svelte';
+	import LoadingWrapper from '$lib/components/layout/LoadingWrapper.svelte';
 	import { onMount } from 'svelte';
-	import { axiosInstance } from '../../auth/auth';
+	import { axiosInstance } from '$lib/auth/auth';
 	import tasks from '../../stores/tasks';
-	import TransitionRootPageWrapper from '../../components/layout/transitions/TransitionRootPageWrapper.svelte';
+	import TransitionRootPageWrapper from '$lib/components/layout/transitions/TransitionRootPageWrapper.svelte';
 
 	let isLoading = $tasks.length == 0;
 

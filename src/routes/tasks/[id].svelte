@@ -4,10 +4,10 @@
 	import { fade, scale } from 'svelte/transition';
 	import { linear } from 'svelte/easing';
 	import BezierEasing from 'bezier-easing';
-	import { axiosInstance } from '../../auth/auth';
-	import Editor from '../../components/tasks/Editor.svelte';
-	import TaskDescription from '../../components/tasks/TaskDescription.svelte';
-	import LoadingWrapper from '../../components/layout/LoadingWrapper.svelte';
+	import { axiosInstance } from '$lib/auth/auth';
+	import Editor from '$lib/components/tasks/Editor.svelte';
+	import TaskDescription from '$lib/components/tasks/TaskDescription.svelte';
+	import LoadingWrapper from '$lib/components/layout/LoadingWrapper.svelte';
 	import tasks from '../../stores/tasks';
 
 	let id;

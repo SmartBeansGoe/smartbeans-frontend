@@ -1,13 +1,9 @@
 <script>
-	import { fade } from 'svelte/transition';
-	import fadeScale from 'svelte-transitions-fade-scale';
-	import BezierEasing from 'bezier-easing';
+	import SkillGraph from '$lib/components/dashboard/SkillGraph.svelte';
+	import Level from '$lib/components/dashboard/Level.svelte';
+	import Achievements from '$lib/components/dashboard/Achievements.svelte';
 
-	import SkillGraph from '../components/dashboard/SkillGraph.svelte';
-	import Level from '../components/dashboard/Level.svelte';
-	import Achievements from '../components/dashboard/Achievements.svelte';
-
-	import TransitionRootPageWrapper from '../components/layout/transitions/TransitionRootPageWrapper.svelte';
+	import TransitionRootPageWrapper from '$lib/components/layout/transitions/TransitionRootPageWrapper.svelte';
 </script>
 
 <TransitionRootPageWrapper>

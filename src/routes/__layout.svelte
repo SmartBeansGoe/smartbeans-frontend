@@ -3,11 +3,11 @@
 
 	import { browser } from '$app/env';
 
-	import Navigation from '../components/layout/Navigation.svelte';
-	import TopBar from '../components/layout/TopBar.svelte';
+	import Navigation from '$lib/components/layout/Navigation.svelte';
+	import TopBar from '$lib/components/layout/TopBar.svelte';
 	if (browser) import('virtual:windi-devtools');
 
-	import { axiosInstance } from '../auth/auth';
+	import { axiosInstance } from '$lib/auth/auth';
 	import { onMount } from 'svelte';
 
 	let title = "C-Programmierkurs 21/22"; // TODO: load title from store or via api call?
