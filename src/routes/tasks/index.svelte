@@ -1,11 +1,9 @@
 <script>
 	import LoadingWrapper from '../../components/layout/LoadingWrapper.svelte';
 	import { onMount } from 'svelte';
-	import { fade } from 'svelte/transition';
-	import BezierEasing from 'bezier-easing';
-	import fadeScale from 'svelte-transitions-fade-scale';
 	import { axiosInstance } from '../../auth/auth';
 	import tasks from '../../stores/tasks';
+	import TransitionRootPageWrapper from '../../components/layout/transitions/TransitionRootPageWrapper.svelte';
 
 	let isLoading = $tasks.length == 0;
 
@@ -24,16 +22,7 @@
 </script>
 
 <LoadingWrapper {isLoading}>
-	<div
-		in:fadeScale={{
-			delay: 90,
-			duration: 210,
-			baseScale: 0.92,
-			easing: BezierEasing(0, 0, 0.2, 1.0)
-		}}
-		out:fade={{ duration: 90, easing: BezierEasing(0.4, 0, 1, 1) }}
-		class="overflow-y h-screen"
-	>
+	<TransitionRootPageWrapper>
 		<div class="p-4 grid grid-cols-1 md:grid-cols-2 content-around gap-4">
 			<div class="box">
 				{#each $tasks as task}
@@ -51,5 +40,5 @@
 			<div class="box" />
 			<div class="box" />
 		</div>
-	</div>
+	</TransitionRootPageWrapper>
 </LoadingWrapper>
