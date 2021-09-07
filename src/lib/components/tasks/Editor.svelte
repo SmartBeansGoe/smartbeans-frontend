@@ -3,7 +3,7 @@
 	import MonacoEditor from './MonacoEditor.svelte';
 	import Icon from 'mdi-svelte';
 	import { mdiFileDownload, mdiFileUpload, mdiUpload } from '@mdi/js';
-	import { axiosInstance } from '../../auth/auth';
+	import { axiosInstance } from '$lib/auth/auth';
 
 	export let id;
 	export let task;
