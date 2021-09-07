@@ -28,7 +28,7 @@
 <div class="relative min-h-screen flex">
 	<Navigation />
 	<div class="flex-1 bg-gray-200 max-h-screen overflow-y-auto">
-		<div class="sticky top-0 bg-gray-200"><TopBar title={title} /></div>
+		<TopBar title={title} />
 		<div class="grid grid-cols-12">
 			<div class="col-span-12 lg:col-span-10"><slot /></div>
 			<div class="invisible lg:visible lg:col-span-2 p-4 my-4 mr-4 shadow-md bg-gray-100 rounded">
