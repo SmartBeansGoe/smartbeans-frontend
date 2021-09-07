@@ -1,10 +1,9 @@
 <script>
 	import { page } from '$app/stores';
-	import { beforeUpdate } from 'svelte';
+	import { onMount } from 'svelte';
 	import { fade, scale } from 'svelte/transition';
 	import { linear } from 'svelte/easing';
 	import BezierEasing from 'bezier-easing';
-	import fadeScale from 'svelte-transitions-fade-scale';
 	import { axiosInstance } from '../../auth/auth';
 	import Editor from '../../components/tasks/Editor.svelte';
 	import TaskDescription from '../../components/tasks/TaskDescription.svelte';
@@ -16,7 +15,7 @@
 	let isLoading = true;
 	let courseId = 1; // TODO course ID
 
-	beforeUpdate(() => {
+	onMount(() => {
 		// Loading taskID from URL
 		id = $page.params.id;
 		// Check taskID avaiable in tasks store.
