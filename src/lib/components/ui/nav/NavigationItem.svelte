@@ -12,5 +12,5 @@
 	href={link}
 >
 	<slot name="prepend" />
-	<span class="{cls} invisible lg:visible duration-200 fade-out"><slot /></span>
+	<span class="{cls} invisible xl:visible duration-200 fade-out"><slot /></span>
 </a>

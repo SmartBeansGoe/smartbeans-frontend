@@ -1,21 +1,30 @@
 <script>
+	import TransitionWrapper from './transitions/TransitionWrapper.svelte';
+
 	export let isLoading;
 </script>
 
 {#if isLoading}
-	<div class="flex justify-center">
-		<div class="lds-ring">
-			<div />
-			<div />
-			<div />
-			<div />
+	<TransitionWrapper>
+		<div class="p-4 h-full">
+			<div class="flex flex-wrap justify-center h-full box content-center">
+				<div class="lds-ring">
+					<div />
+					<div />
+					<div />
+					<div />
+				</div>
+			</div>
 		</div>
-	</div>
+	</TransitionWrapper>
 {:else}
 	<slot />
 {/if}
 
-<style>
+<style lang="postcss">
+	.box {
+		@apply shadow-md bg-gray-100 rounded;
+	}
 	/*Source: https://loading.io/css/*/
 	.lds-ring {
 		display: inline-block;

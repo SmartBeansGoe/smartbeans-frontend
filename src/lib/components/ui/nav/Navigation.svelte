@@ -5,11 +5,11 @@
 </script>
 
 <div
-	class="group transition-width duration-200 hover:w-48 ease-in-out w-16 text-white lg:w-48 bg-gray-600 px-2"
+	class="group transition-width duration-200 hover:w-48 ease-in-out w-16 text-white xl:w-48 bg-gray-600 px-2"
 >
 	<div class="flex items-center py-2">
 		<img alt="" class="max-w-12" src="../../static/smartbeans-logo.png" />
-		<span class="pl-4 group-hover:flex hidden lg:flex text-2x1 font-extrabold">SmartBeans</span>
+		<span class="pl-4 group-hover:flex hidden xl:flex text-2x1 font-extrabold">SmartBeans</span>
 	</div>
 	<nav class="justify-center">
 		<div class="mb-2 border-b-1 border-dotted border-gray-500" />

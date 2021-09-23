@@ -24,12 +24,12 @@
 			easing: BezierEasing(0, 0, 0.2, 1.0)
 		}}
 		out:fade={{ duration: 90, easing: BezierEasing(0.4, 0, 1, 1) }}
-		class="overflow-y h-screen"
+		class="h-full"
 	>
 		<slot />
 	</div>
 {:else}
-	<div out:fade={{ duration: 90, easing: BezierEasing(0.4, 0, 1, 1) }} class="overflow-y h-screen">
+	<div out:fade={{ duration: 90, easing: BezierEasing(0.4, 0, 1, 1) }} class="h-full">
 		<slot />
 	</div>
 {/if}

@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "scripts": {
     "dev": "svelte-kit dev",
-    "build": "yarn build:tailwind && svelte-kit build",
+    "build": "svelte-kit build",
     "build:tailwind": "postcss ./src/assets/css/tailwind.css -o static/assets/css/tailwindoutput.css",
     "preview": "svelte-kit preview",
     "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
@@ -22,14 +22,22 @@
   },
   "type": "module",
   "dependencies": {
+    "@geoffcox/svelte-splitter": "^1.0.1",
     "@mdi/js": "^5.9.55",
     "axios": "^0.21.1",
     "bezier-easing": "^2.1.0",
     "chart.js": "^3.5.0",
+    "color": "^4.0.1",
+    "js-cookie": "^3.0.1",
     "marked": "^3.0.2",
     "mdi-svelte": "^1.1.2",
     "monaco-editor": "^0.27.0",
+    "postcss": "^8.3.7",
+    "split.js": "^1.6.4",
+    "svelte-grid": "^5.0.1",
+    "svelte-lazy": "^1.0.12",
     "svelte-preprocess": "^4.7.4",
-    "svelte-transitions-fade-scale": "^1.0.0"
+    "svelte-transitions-fade-scale": "^1.0.0",
+    "typescript": "^4.4.2"
   }
 }

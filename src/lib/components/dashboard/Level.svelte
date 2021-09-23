@@ -1,5 +1,4 @@
 <script>
-	export let cls;
   export let level = 0;
   export let maxLevel = 10;
 	export let points = 10;

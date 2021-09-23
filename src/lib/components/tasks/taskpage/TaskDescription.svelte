@@ -3,8 +3,12 @@
 	export let task;
 </script>
 
-<p class="text-xl font-semibold pb-3">{task.name}</p>
-<div>{@html marked(task.task)}<!--TODO: DOMPurify--></div>
+{#if task != undefined}
+	<div class="h-full">
+		<p class="text-xl font-semibold pb-3">{task.title ? task.title : ''}</p>
+		<div>{@html marked(task.task ? task.task : '')}<!--TODO: DOMPurify--></div>
+	</div>
+{/if}
 
 <style lang="postcss">
 	:global(pre) {
@@ -14,7 +18,7 @@
 	}
 
 	:global(code) {
-		@apply text-red-800;
+		@apply text-red-800 text-sm;
 		font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
 	}
 </style>

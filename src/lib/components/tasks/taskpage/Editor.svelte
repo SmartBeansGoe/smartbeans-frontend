@@ -1,5 +1,5 @@
 <script>
-	import { afterUpdate, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import MonacoEditor from './MonacoEditor.svelte';
 	import Icon from 'mdi-svelte';
 	import { mdiFileDownload, mdiFileUpload, mdiUpload } from '@mdi/js';
@@ -7,10 +7,11 @@
 
 	export let id;
 	export let task;
-	// export let courseId;
 
 	let editorComponent;
 	let fileInputComponent;
+	let editorValue;
+	let lastEditorValue;
 
 	let uploadDocument;
 	let downloadDocument;
@@ -20,7 +21,9 @@
 	let submitDocumentDisabled = true;
 	let downloadDocumentDisabled = true;
 
-	onMount(() => {
+	let defaultEditorInput = task.task_description.defaultEditorInput;
+
+	onMount(async () => {
 		// Uploads a document from user's computer into the editor.
 		uploadDocument = (e) => {
 			let file = e.target.files[0];
@@ -33,28 +36,37 @@
 		};
 		// Downloads the content of the editor into a document to user's computer.
 		downloadDocument = () => {
-			let editorValue = editorComponent.getValue();
-			if (editorValue == '') {
-				// TODO: Send notification for nothing to download!
-				console.log('Nothing to download');
-				return;
-			}
 			const element = document.createElement('a');
 			const file = new Blob([editorValue], {
 				type: 'text/plain'
 			});
 			element.href = URL.createObjectURL(file);
-			element.download = task.shortname + '.c'; // TODO: Datatype
+			let filename_ext;
+			switch (task.lang) {
+				case 'c':
+					filename_ext = '.c';
+					break;
+				case 'py':
+					filename_ext = '.py';
+					break;
+				case 'python':
+					filename_ext = '.py';
+					break;
+				case 'java':
+					filename_ext = '.java';
+					break;
+				case 'javascript':
+					filename_ext = '.js';
+					break;
+				case 'rust':
+					filename_ext = '.rs';
+			}
+			element.download = task.task_description.shortname.replaceAll(' ', '-') + filename_ext;
 			document.body.appendChild(element);
 			element.click();
 		};
 		submitDocument = async () => {
-			let editorValue = editorComponent.getValue();
-			if (editorValue == '') {
-				// TODO: Send notification for nothing to submit!
-				console.log('Nothing to submit');
-				return;
-			}
+			lastEditorValue = editorValue;
 			isSubmitLoading = true;
 
 			axiosInstance()
@@ -65,27 +77,28 @@
 					}
 				})
 				.then((res) => {
-					console.log(res);
 					// TODO: Send notification if the result is correct for the first time!
 					// TODO: Save result into submission store?
 					isSubmitLoading = false;
 				})
 				.catch((err) => {
-					/*TODO error handling*/
+					// TODO: Show notification that an error occured during evaluation or response from server!
 				});
 		};
 	});
-
-	// on:change={() => {
-	// 		downloadDocumentDisabled = editorComponent.getValue() == '' || editorComponent.getValue() == undefined ? true : false;
-	// 		submitDocumentDisabled = editorComponent.getValue() == '' || editorComponent.getValue() == undefined ? true : false;
-	// 	}}
-
+	$: {
+		submitDocumentDisabled =
+			editorValue == defaultEditorInput || editorValue == lastEditorValue || editorValue == '';
+		downloadDocumentDisabled = editorValue == defaultEditorInput || editorValue == '';
+	}
 </script>
 
 <div class="editor-height">
 	<MonacoEditor
 		bind:this={editorComponent}
+		language={task.lang}
+		{defaultEditorInput}
+		bind:editorValue
 	/>
 </div>
 <div class="mt-2 flex justify-between">
@@ -122,7 +135,7 @@
 		<button
 			class="flex items-center btn-submit"
 			type="button"
-			disabled={isSubmitLoading || submitDocumentDisabled}
+			disabled={submitDocumentDisabled}
 			on:click|preventDefault={submitDocument}
 		>
 			{#if isSubmitLoading}
@@ -155,6 +168,6 @@
 	}
 
 	.editor-height {
-		height: calc(100% - 48px);;
+		height: calc(100% - 48px);
 	}
 </style>
