@@ -5,14 +5,12 @@
 
 	async function loadAsset(id) {
 		const res = await fetch(`${frontend_url}${staticAssetPath}/${id}.svg`);
-		console.log(res);
 		if (res.ok) {
 			return await res.text();
 		} else {
 			return new Error(`Could not load`); // TODO: Funktioniert komischerweise aktuell nicht!
 		}
 	}
-	$: console.log(id);
 </script>
 
 {#if id != undefined}
