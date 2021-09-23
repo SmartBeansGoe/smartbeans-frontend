@@ -1,6 +1,6 @@
 <script context="module">
 	export async function load({ fetch }) {
-		return await fetch(`http://localhost:3000${staticAssetPath}/assets.json`)
+		return await fetch(`${frontend_url}${staticAssetPath}/assets.json`)
 			.then((response) => response.json())
 			.then((data) => {
 				return { status: 200, props: { assets: data } };
@@ -16,7 +16,7 @@
 	import { axiosInstance } from '$lib/auth/auth';
 	import Wardrobe from '$lib/components/account/Wardrobe.svelte';
 	import TransitionWrapper from '$lib/components/ui/transitions/TransitionWrapper.svelte';
-	import { staticAssetPath } from '$lib/config/config';
+	import { frontend_url, staticAssetPath } from '$lib/config/config';
 	import { mdiContentSave, mdiPencil } from '@mdi/js';
 	import Icon from 'mdi-svelte';
 
