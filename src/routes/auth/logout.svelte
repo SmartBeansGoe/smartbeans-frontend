@@ -32,7 +32,7 @@
 <TransitionWrapper>
 	<div class="flex flex-wrap justify-center content-center h-full">
 		<div class="flex flex-wrap justify-center box p-8 w-80">
-			<img alt="" class="max-w-32 pb-6" src="../../static/smartbeans-logo.png" />
+			<img alt="" class="max-w-32 pb-6" src="/smartbeans-logo.png" />
 			{#if status == 200}
 				<div
 					class="relative flex w-full flex-wrap items-stretch mb-2 text-green-500 bg-green-200 rounded py-2 px-3"

@@ -40,7 +40,7 @@
 
 <div class="flex flex-wrap justify-center h-full content-center">
 	<div class="flex flex-wrap justify-center box p-8 w-80">
-		<img alt="" class="max-w-32 pb-6" src="../../static/smartbeans-logo.png" loading="lazy" />
+		<img alt="" class="max-w-32 pb-6" src="/smartbeans-logo.png" loading="lazy" />
 		{#if error_msg}
 			<div
 				class="relative flex w-full flex-wrap items-stretch mb-2 text-red-500 bg-red-200 rounded py-2 px-3"
