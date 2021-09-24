@@ -2,11 +2,12 @@
 	import { frontend_url, staticAssetPath } from '$lib/config/config';
 	import Body from '$lib/components/avatar/Body.svelte';
 	import character from '$lib/stores/character';
-import { patch_user_character } from '$lib/api/calls';
+	import { patch_user_character } from '$lib/api/calls';
+	import { beforeUpdate } from 'svelte';
 
 	export let assets;
 	export let type;
-	export let selectedItem;
+	let selectedItem;
 
 	async function loadAsset(id) {
 		const path = assets.find((x) => x.id == id).path;
@@ -22,19 +23,31 @@ import { patch_user_character } from '$lib/api/calls';
 		switch (type) {
 			case 'shirt':
 				character.update((x) => {
-					x.shirtId = id;
+					if ($character.shirtId != id) {
+						x.shirtId = id;
+					} else {
+						x.shirtId = null;
+					}
 					return x;
 				});
 				break;
 			case 'pants':
 				character.update((x) => {
-					x.pantsId = id;
+					if ($character.pantsId != id) {
+						x.pantsId = id;
+					} else {
+						x.pantsId = null;
+					}
 					return x;
 				});
 				break;
 			case 'hat':
 				character.update((x) => {
-					x.hatId = id;
+					if ($character.hatId != id) {
+						x.hatId = id;
+					} else {
+						x.hatId = null;
+					}
 					return x;
 				});
 				break;
@@ -42,6 +55,23 @@ import { patch_user_character } from '$lib/api/calls';
 				break;
 		}
 	}
+
+	function getActiveAsset() {
+		switch (type) {
+			case 'shirt':
+				return $character.shirtId;
+			case 'pants':
+				return $character.pantsId;
+			case 'hat':
+				return $character.hatId;
+			default:
+				return null;
+		}
+	}
+
+	beforeUpdate(() => {
+		selectedItem = getActiveAsset();
+	});
 </script>
 
 {#each assets.filter((x) => x.type == type) as x}
@@ -52,7 +82,6 @@ import { patch_user_character } from '$lib/api/calls';
 			? 'bg-white   shadow-lg hover:shadow-lg border-2 p-1'
 			: 'bg-gray-100 shadow-sm hover:enabled:shadow-md border-2 p-2'} rounded-md m-0.5 h-40 w-30"
 		on:click={() => {
-			selectedItem = x.id;
 			setAsset(x.id);
 			patch_user_character($character);
 		}}
