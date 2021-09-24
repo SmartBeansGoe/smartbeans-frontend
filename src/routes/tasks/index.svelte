@@ -1,47 +1,42 @@
 <script>
 	import LoadingWrapper from '$lib/components/ui/LoadingWrapper.svelte';
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	import tasks from '$lib/stores/tasks';
 	import TransitionRootPageWrapper from '$lib/components/ui/transitions/TransitionRootPageWrapper.svelte';
 	import user from '$lib/stores/user';
 	import { load_course_meta, load_tasks, load_user_meta } from '$lib/api/calls';
 	import { page } from '$app/stores';
 	import course from '$lib/stores/course';
-import TaskItemTitleBar from '$lib/components/tasks/TaskItemTitleBar.svelte';
-import TaskItem from '$lib/components/tasks/TaskItem.svelte';
+	import TaskItemTitleBar from '$lib/components/tasks/TaskItemTitleBar.svelte';
+	import TaskItem from '$lib/components/tasks/TaskItem.svelte';
 
 	let isLoading = true;
 	let groupedTasks = {};
 	let categories = [];
 
 	onMount(async () => {
-		await load_user_meta();
-		await load_course_meta($user.activeCourse);
-		await load_tasks($user.activeCourse);
-
+		if ($user.activeCourse == undefined) await load_user_meta();
+		if ($course.config == undefined) await load_course_meta($user.activeCourse);
+		if ($tasks.length == 0) await load_tasks($user.activeCourse);
 		isLoading = false;
 	});
 
-	$: {
-		if ($page.query.getAll('category').length > 0) {
-			categories = $page.query.getAll('category');
-		} else {
-			categories = $course.config.tasks.standardView.sortingByTags;
-		}
-
-		groupedTasks = $tasks.reduce((acc, value) => {
-			let tags = value.tags.filter((tag) => categories.includes(tag));
-			if (tags[0] == undefined)
-				return acc;
-			if (!acc[tags[0]]) {
-				acc[tags[0]] = [];
-			}
-			acc[tags[0]].push(value);
-			return acc;
-		}, {});
-
+	$: if ($page.query.getAll('category').length > 0) {
+		categories = $page.query.getAll('category');
+	} else if ($course.config != undefined) {
+		categories = $course.config.tasks.standardView.sortingByTags;
 	}
+	$: groupedTasks = $tasks.reduce((acc, value) => {
+		let tags = value.tags.filter((tag) => categories.includes(tag));
+		if (!acc[tags[0]]) {
+			acc[tags[0]] = [];
+		}
+		acc[tags[0]].push(value);
+		return acc;
+	}, {});
+
 	$: categoriesShown = Object.keys(groupedTasks);
+	$: categoriesShownLength = categoriesShown.filter((c) => c != 'undefined').length;
 </script>
 
 <LoadingWrapper {isLoading}>
@@ -50,16 +45,30 @@ import TaskItem from '$lib/components/tasks/TaskItem.svelte';
 			<div class="pr-0.5 h-full overflow-y-auto">
 				<div class="grid grid-cols-1 md:grid-cols-2 content-around gap-4">
 					{#each categoriesShown as category}
-						<div class="box">
-							<TaskItemTitleBar
-								title={category}
-								solvedNum={0}
-								maxNum={groupedTasks[category].length}
-							/>
-							{#each groupedTasks[category] as task}
-								<TaskItem {task} />
-							{/each}
-						</div>
+						{#if category != 'undefined'}
+							<div class="box {categoriesShownLength > 1 ? '' : 'col-span-2'}">
+								<TaskItemTitleBar
+									title={category}
+									solvedNum={0}
+									maxNum={groupedTasks[category].length}
+								/>
+								{#if categoriesShownLength > 1}
+									{#each groupedTasks[category] as task}
+										<TaskItem {task} />
+									{/each}
+								{:else}
+									<div class="grid xl:grid-cols-2 gap-x-2">
+										{#each groupedTasks[category] as task, i}
+											{#if i % 2 == 0}
+												<div class="xl:border-r-4 xl:pr-2"><TaskItem {task} /></div>
+											{:else}
+												<div><TaskItem {task} /></div>
+											{/if}
+										{/each}
+									</div>
+								{/if}
+							</div>
+						{/if}
 					{/each}
 				</div>
 			</div>
