@@ -28,10 +28,10 @@
 	}
 	$: groupedTasks = $tasks.reduce((acc, value) => {
 		let tags = value.tags.filter((tag) => categories.includes(tag.name));
-		if (!acc[tags[0]]) {
-			acc[tags[0]] = [];
+		if (!acc[tags[0].name]) {
+			acc[tags[0].name] = [];
 		}
-		acc[tags[0]].push(value);
+		acc[tags[0].name].push(value);
 		return acc;
 	}, {});
 
