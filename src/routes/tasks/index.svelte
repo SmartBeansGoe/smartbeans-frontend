@@ -27,7 +27,7 @@
 		categories = $course.config.tasks.standardView.sortingByTags;
 	}
 	$: groupedTasks = $tasks.reduce((acc, value) => {
-		let tags = value.tags.filter((tag) => categories.includes(tag));
+		let tags = value.tags.filter((tag) => categories.includes(tag.name));
 		if (!acc[tags[0]]) {
 			acc[tags[0]] = [];
 		}

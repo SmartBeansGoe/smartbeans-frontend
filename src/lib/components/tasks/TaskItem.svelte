@@ -54,10 +54,10 @@
 					class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-indigo-600 bg-indigo-200 uppercase last:mr-0 mr-1 hover:bg-indigo-300 hover: text-indigo-600 hover:cursor-pointer"
 					on:click={(event) => {
 						event.stopPropagation();
-						goto(`/tasks?category=${tag}`);
+						goto(`/tasks?category=${tag.name}`);
 					}}
 				>
-					{tag}
+					{tag.name}
 				</div>
 			{/each}
 		</div>
