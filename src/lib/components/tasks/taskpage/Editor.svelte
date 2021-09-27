@@ -4,8 +4,8 @@
 	import Icon from 'mdi-svelte';
 	import { mdiFileDownload, mdiFileUpload, mdiUpload } from '@mdi/js';
 	import { submit_code } from '$lib/api/calls';
+	import { createEventDispatcher } from 'svelte';
 
-	export let id;
 	export let task;
 	export let courseId;
 
@@ -85,6 +85,14 @@
 			editorValue == defaultEditorInput || editorValue == lastEditorValue || editorValue == '';
 		downloadDocumentDisabled = editorValue == defaultEditorInput || editorValue == '';
 	}
+
+	const dispatch = createEventDispatcher();
+
+function onSubmit() {
+	submitDocument();
+	dispatch('submit');
+}
+
 </script>
 
 <div class="editor-height">
@@ -130,7 +138,7 @@
 			class="flex items-center btn-submit"
 			type="button"
 			disabled={submitDocumentDisabled}
-			on:click|preventDefault={submitDocument}
+			on:click|preventDefault={onSubmit}
 		>
 			{#if isSubmitLoading}
 				<div

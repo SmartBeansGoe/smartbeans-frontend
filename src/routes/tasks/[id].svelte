@@ -30,9 +30,6 @@
 					errorCode = err.response.status;
 				});
 		}
-		if ((errorCode == undefined || errorCode < 400) && submissions == undefined) {
-			submissions = await load_task_submissions($user.activeCourse.name, id);
-		}
 
 		if (errorCode == undefined || errorCode < 400) {
 			Split(['#split-0', '#split-1']);
@@ -78,7 +75,11 @@
 				</div>
 				<div id="split-1">
 					{#if !isLoading}
-						<Editor {id} {task} courseId={$course.name} />
+						<Editor
+							{task}
+							courseId={$course.name}
+							on:submit={async () => submissions = await load_task_submissions($course.name, task.taskid)}
+						/>
 					{/if}
 				</div>
 			{:else}
