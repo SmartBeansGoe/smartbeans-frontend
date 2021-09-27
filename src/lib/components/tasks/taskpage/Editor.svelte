@@ -88,8 +88,8 @@
 
 	const dispatch = createEventDispatcher();
 
-function onSubmit() {
-	submitDocument();
+async function onSubmit() {
+	await submitDocument();
 	dispatch('submit');
 }
 
