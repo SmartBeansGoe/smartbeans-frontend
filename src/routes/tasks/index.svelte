@@ -18,6 +18,7 @@
 		if ($user.activeCourse == undefined) await load_user_meta();
 		if ($course.config == undefined) await load_course_meta($user.activeCourse);
 		if ($tasks.length == 0) await load_tasks($user.activeCourse);
+		// await load_progess($user.activeCourse)
 		isLoading = false;
 	});
 
@@ -28,6 +29,13 @@
 	}
 	$: groupedTasks = $tasks.reduce((acc, value) => {
 		let tags = value.tags.filter((tag) => categories.includes(tag.name));
+		if (tags.length == 0) {
+			if (!acc['filtered-out']) {
+				acc['filtered-out'] = [];
+			}
+			acc['filtered-out'].push(value);
+			return acc;
+		}
 		if (!acc[tags[0].name]) {
 			acc[tags[0].name] = [];
 		}
@@ -36,7 +44,7 @@
 	}, {});
 
 	$: categoriesShown = Object.keys(groupedTasks);
-	$: categoriesShownLength = categoriesShown.filter((c) => c != 'undefined').length;
+	$: categoriesShownLength = categoriesShown.filter((c) => c != 'filtered-out').length;
 </script>
 
 <LoadingWrapper {isLoading}>
@@ -45,7 +53,7 @@
 			<div class="pr-0.5 h-full overflow-y-auto">
 				<div class="grid grid-cols-1 md:grid-cols-2 content-around gap-4">
 					{#each categoriesShown as category}
-						{#if category != 'undefined'}
+						{#if category != 'filtered-out'}
 							<div class="box {categoriesShownLength > 1 ? '' : 'col-span-2'}">
 								<TaskItemTitleBar
 									title={category}
