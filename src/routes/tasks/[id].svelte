@@ -9,7 +9,11 @@
 	import tasks from '$lib/stores/tasks';
 	import Split from 'split.js';
 	import Submissions from '$lib/components/tasks/taskpage/Submissions.svelte';
-	import { load_task, load_task_submissions, load_user_meta } from '$lib/api/calls';
+	import {
+		load_task,
+		load_task_submissions,
+		load_user_meta
+	} from '$lib/api/calls';
 	import user from '$lib/stores/user';
 	import course from '$lib/stores/course';
 
@@ -23,12 +27,15 @@
 		id = $page.params.id;
 		task = $tasks.find((task) => task.taskid == id);
 		if (task == undefined) {
-			await load_user_meta(); // Load user meta data, needed for activeCourse.name (courseId)
+			await load_user_meta(); // Load user meta data, needed for activeCourse (courseId)
 			await load_task($user.activeCourse, id)
 				.then((res) => (task = res.data))
 				.catch((err) => {
 					errorCode = err.response.status;
 				});
+		}
+		if (errorCode == undefined || errorCode < 400) {
+			submissions = await load_task_submissions($user.activeCourse, id);
 		}
 
 		if (errorCode == undefined || errorCode < 400) {
@@ -75,11 +82,7 @@
 				</div>
 				<div id="split-1">
 					{#if !isLoading}
-						<Editor
-							{task}
-							courseId={$course.name}
-							on:submit={async () => submissions = await load_task_submissions($course.name, task.taskid)}
-						/>
+						<Editor {id} {task} courseId={$course.name} />
 					{/if}
 				</div>
 			{:else}

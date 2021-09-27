@@ -6,7 +6,7 @@
 	console.log(submissions);
 	let selected;
 	let active;
-	submissions.sort((a, b) => b.timestamp - a.timestamp);
+	submissions.sort((a, b) => a.timestamp - b.timestamp);
 	if (submissions.length > 0) {
 		active = 0;
 		selected = submissions[active];
@@ -51,25 +51,21 @@
 				{#if selected.simplified.compiler}
 					<p>Compiler Ausgabe: (Status Code: {selected.compiler.statusCode})</p>
 					<pre>
-						<code>
-							{selected.simplified.compiler.stdout}
-						</code>
+						<code>{selected.simplified.compiler.stdout}</code>
 				</pre>
 				{/if}
 				{#if selected.simplified.testCase}
 					<pre>
-						<code>
-							{selected.simplified.testCase.stdin}
-						</code>
-						<code>
-							{selected.simplified.testCase.stdout}
-						</code>
-						<code>
-							{selected.simplified.testCase.expectedStdout}
-						</code>
-						<code>
-							{selected.simplified.testCase.statusCode}
-						</code>
+						<code>{selected.simplified.testCase.stdin}</code>
+					</pre>
+					<pre>
+						<code>{selected.simplified.testCase.stdout}</code>
+					</pre>
+					<pre>
+						<code>{selected.simplified.testCase.expectedStdout}</code>
+					</pre>
+					<pre>
+						<code>{selected.simplified.testCase.statusCode}</code>
 					</pre>
 				{/if}
 			{/if}
