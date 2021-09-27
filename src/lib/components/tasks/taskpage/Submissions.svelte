@@ -3,10 +3,11 @@
 	import Icon from 'mdi-svelte';
 
 	export let submissions;
-	console.log(submissions);
+
 	let selected;
 	let active;
-	submissions.sort((a, b) => a.timestamp - b.timestamp);
+	// submissions.sort((a, b) => a.timestamp - b.timestamp); Not Working
+	submissions.reverse();
 	if (submissions.length > 0) {
 		active = 0;
 		selected = submissions[active];
@@ -55,15 +56,19 @@
 				</pre>
 				{/if}
 				{#if selected.simplified.testCase}
+					<p>Standardeingabe</p>
 					<pre>
 						<code>{selected.simplified.testCase.stdin}</code>
 					</pre>
+					<p>Standardausgabe</p>
 					<pre>
 						<code>{selected.simplified.testCase.stdout}</code>
 					</pre>
+					<p>Geforderte Standardausgabe</p>
 					<pre>
 						<code>{selected.simplified.testCase.expectedStdout}</code>
 					</pre>
+					<p>Fehler Code:</p>
 					<pre>
 						<code>{selected.simplified.testCase.statusCode}</code>
 					</pre>
