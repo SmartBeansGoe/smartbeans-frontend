@@ -75,11 +75,5 @@ export async function load_task_submissions(courseId, taskId) {
 
 export async function submit_code(courseId, taskId, code) {
 	return await axiosInstance()
-		.post(`/courses/${courseId}/tasks/${taskId}/submissions`, code)
-		.then((res) => {
-			return res.data;
-		})
-		.catch((err) => {
-			return err;
-		});
+		.post(`/courses/${courseId}/tasks/${taskId}/submissions`, { submission: code })
 }

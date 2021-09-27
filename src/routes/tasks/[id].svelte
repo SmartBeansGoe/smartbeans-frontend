@@ -9,8 +9,9 @@
 	import tasks from '$lib/stores/tasks';
 	import Split from 'split.js';
 	import Submissions from '$lib/components/tasks/taskpage/Submissions.svelte';
-	import { load_task, load_task_submissions, load_user_meta, submit_code } from '$lib/api/calls';
+	import { load_task, load_task_submissions, load_user_meta } from '$lib/api/calls';
 	import user from '$lib/stores/user';
+	import course from '$lib/stores/course';
 
 	let id;
 	let task;
@@ -77,7 +78,7 @@
 				</div>
 				<div id="split-1">
 					{#if !isLoading}
-						<Editor {id} {task} on:submit={async () => submissions.append(await submit_code())} />
+						<Editor {id} {task} courseId={$course.name} />
 					{/if}
 				</div>
 			{:else}

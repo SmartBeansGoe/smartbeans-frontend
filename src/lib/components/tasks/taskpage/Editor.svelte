@@ -3,10 +3,11 @@
 	import MonacoEditor from './MonacoEditor.svelte';
 	import Icon from 'mdi-svelte';
 	import { mdiFileDownload, mdiFileUpload, mdiUpload } from '@mdi/js';
-	import { axiosInstance } from '$lib/auth/auth';
+	import { submit_code } from '$lib/api/calls';
 
 	export let id;
 	export let task;
+	export let courseId;
 
 	let editorComponent;
 	let fileInputComponent;
@@ -69,20 +70,13 @@
 			lastEditorValue = editorValue;
 			isSubmitLoading = true;
 
-			axiosInstance()
-				.post('/submit/' + id, editorValue, {
-					// TODO: API-Call -> 2.0
-					headers: {
-						'Content-Type': 'text/plain'
-					}
-				})
+			submit_code(courseId, task.taskid, editorValue)
 				.then((res) => {
-					// TODO: Send notification if the result is correct for the first time!
-					// TODO: Save result into submission store?
 					isSubmitLoading = false;
+					return res.data;
 				})
 				.catch((err) => {
-					// TODO: Show notification that an error occured during evaluation or response from server!
+					return err;
 				});
 		};
 	});

@@ -6,7 +6,7 @@
 	console.log(submissions);
 	let selected;
 	let active;
-	submissions.reverse();
+	submissions.sort((a, b) => b.timestamp - a.timestamp);
 	if (submissions.length > 0) {
 		active = 0;
 		selected = submissions[active];
@@ -29,7 +29,7 @@
 			>
 				<div class="flex items-center">
 					<div class="pr-1">{submissions.length - i}</div>
-					{#if submission.score >= 0.99}
+					{#if submission.score >= 0.99999}
 						<div class="flex text-green-500">
 							<Icon size="18px" path={mdiClipboardCheck} />
 						</div>
@@ -44,14 +44,44 @@
 	</div>
 	{#if selected != undefined}
 		<div class="p-3">
-			<p>Ergebnis: {selected.score}</p>
+			{#if selected.score && selected.result_type}
+				<p class="font-bold">{selected.result_type} mit Score: {selected.score}</p>
+			{/if}
+			{#if selected.simplified}
+				{#if selected.simplified.compiler}
+					<p>Compiler Ausgabe: (Status Code: {selected.compiler.statusCode})</p>
+					<pre>
+						<code>
+							{selected.simplified.compiler.stdout}
+						</code>
+				</pre>
+				{/if}
+				{#if selected.simplified.testCase}
+					<pre>
+						<code>
+							{selected.simplified.testCase.stdin}
+						</code>
+						<code>
+							{selected.simplified.testCase.stdout}
+						</code>
+						<code>
+							{selected.simplified.testCase.expectedStdout}
+						</code>
+						<code>
+							{selected.simplified.testCase.statusCode}
+						</code>
+					</pre>
+				{/if}
+			{/if}
 			<p>Abgabe:</p>
 			<pre>
-      <code>{selected.code}</code>
-    </pre>
+				<code>{selected.content}</code>
+			</pre>
 		</div>
 	{:else}
-		<div class="flex flex-wrap h-full justify-center content-center italic">Bisher keine Abgaben vorhanden!</div>
+		<div class="flex flex-wrap h-full justify-center content-center italic">
+			Bisher keine Abgaben vorhanden!
+		</div>
 	{/if}
 </div>
 
