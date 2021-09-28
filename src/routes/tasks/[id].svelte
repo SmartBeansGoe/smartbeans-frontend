@@ -9,11 +9,7 @@
 	import tasks from '$lib/stores/tasks';
 	import Split from 'split.js';
 	import Submissions from '$lib/components/tasks/taskpage/Submissions.svelte';
-	import {
-		load_task,
-		load_task_submissions,
-		load_user_meta
-	} from '$lib/api/calls';
+	import { load_task, load_task_submissions, load_user_meta } from '$lib/api/calls';
 	import user from '$lib/stores/user';
 	import course from '$lib/stores/course';
 
@@ -82,7 +78,13 @@
 				</div>
 				<div id="split-1">
 					{#if !isLoading}
-						<Editor {id} {task} courseId={$course.name} />
+						<Editor
+							{id}
+							{task}
+							courseId={$course.name}
+							on:submit={async () =>
+								(submissions = await load_task_submissions($user.activeCourse, id))}
+						/>
 					{/if}
 				</div>
 			{:else}
