@@ -43,6 +43,11 @@
 		isLoading = false;
 	});
 
+	async function handleSubmit() {
+		submissions = await load_task_submissions($user.activeCourse, id);
+		console.log(submissions);
+	}
+
 	$: taskDescription = task && !errorCode ? task.task_description : undefined;
 </script>
 
@@ -78,13 +83,7 @@
 				</div>
 				<div id="split-1">
 					{#if !isLoading}
-						<Editor
-							{id}
-							{task}
-							courseId={$course.name}
-							on:submit={async () =>
-								(submissions = await load_task_submissions($user.activeCourse, id))}
-						/>
+						<Editor {id} {task} courseId={$course.name} on:submit={handleSubmit} />
 					{/if}
 				</div>
 			{:else}

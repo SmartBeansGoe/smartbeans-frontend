@@ -16,7 +16,6 @@
 
 	let uploadDocument;
 	let downloadDocument;
-	let submitDocument;
 
 	let isSubmitLoading = false;
 	let submitDocumentDisabled = true;
@@ -66,20 +65,8 @@
 			document.body.appendChild(element);
 			element.click();
 		};
-		submitDocument = async () => {
-			lastEditorValue = editorValue;
-			isSubmitLoading = true;
-
-			submit_code(courseId, task.taskid, editorValue)
-				.then((res) => {
-					isSubmitLoading = false;
-					return res.data;
-				})
-				.catch((err) => {
-					return err;
-				});
-		};
 	});
+
 	$: {
 		submitDocumentDisabled =
 			editorValue == defaultEditorInput || editorValue == lastEditorValue || editorValue == '';
@@ -88,11 +75,20 @@
 
 	const dispatch = createEventDispatcher();
 
-async function onSubmit() {
-	await submitDocument();
-	dispatch('submit');
-}
+	async function onSubmit() {
+		lastEditorValue = editorValue;
+		isSubmitLoading = true;
 
+		await submit_code(courseId, task.taskid, editorValue)
+			.then((res) => {
+				isSubmitLoading = false;
+				dispatch('submit');
+				return res.data;
+			})
+			.catch((err) => {
+				return err;
+			});
+	}
 </script>
 
 <div class="editor-height">

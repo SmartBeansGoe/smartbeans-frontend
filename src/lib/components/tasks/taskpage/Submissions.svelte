@@ -6,16 +6,14 @@
 
 	let selected;
 	let active;
-	// submissions.sort((a, b) => a.timestamp - b.timestamp); Not Working
-	submissions.reverse();
+	$: submissions.sort((a, b) => b.timestamp - a.timestamp);
 	if (submissions.length > 0) {
 		active = 0;
-		selected = submissions[active];
 	}
 	function handleTabChange(id) {
 		active = id;
-		selected = submissions[active];
 	}
+	$: selected = submissions[active];
 </script>
 
 <div class="h-full p-1">
@@ -45,33 +43,41 @@
 	</div>
 	{#if selected != undefined}
 		<div class="p-3">
-			{#if selected.score && selected.result_type}
+			{#if selected.score != undefined && selected.result_type != undefined}
 				<p class="font-bold">{selected.result_type} mit Score: {selected.score}</p>
 			{/if}
-			{#if selected.simplified}
-				{#if selected.simplified.compiler}
+			{#if selected.simplified != undefined}
+				{#if selected.simplified.compiler != undefined}
 					<p>Compiler Ausgabe: (Status Code: {selected.compiler.statusCode})</p>
 					<pre>
 						<code>{selected.simplified.compiler.stdout}</code>
 				</pre>
 				{/if}
-				{#if selected.simplified.testCase}
-					<p>Standardeingabe</p>
-					<pre>
+				{#if selected.simplified.testCase != undefined}
+					{#if selected.simplified.testCase.stdin != undefined}
+						<p>Standardeingabe</p>
+						<pre>
 						<code>{selected.simplified.testCase.stdin}</code>
 					</pre>
-					<p>Standardausgabe</p>
-					<pre>
+					{/if}
+					{#if selected.simplified.testCase.stdout != undefined}
+						<p>Standardausgabe</p>
+						<pre>
 						<code>{selected.simplified.testCase.stdout}</code>
 					</pre>
-					<p>Geforderte Standardausgabe</p>
-					<pre>
+					{/if}
+					{#if selected.simplified.testCase.expectedStdout != undefined}
+						<p>Geforderte Standardausgabe</p>
+						<pre>
 						<code>{selected.simplified.testCase.expectedStdout}</code>
 					</pre>
-					<p>Fehler Code:</p>
-					<pre>
-						<code>{selected.simplified.testCase.statusCode}</code>
+					{/if}
+					{#if selected.simplified.testCase.exitCode != undefined}
+						<p>Exit Code:</p>
+						<pre>
+						<code>{selected.simplified.testCase.exitCode}</code>
 					</pre>
+					{/if}
 				{/if}
 			{/if}
 			<p>Abgabe:</p>
