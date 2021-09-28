@@ -12,10 +12,12 @@
 	async function loadAsset(id) {
 		const path = assets.find((x) => x.id == id).path;
 		const res = await fetch(`${frontend_url}${staticAssetPath}${path}`);
+		const text = await res.text();
+
 		if (res.ok) {
-			return await res.text();
+			return text;
 		} else {
-			return new Error(`Could not load`); // TODO: Funktioniert komischerweise aktuell nicht!
+			throw new Error(text);
 		}
 	}
 
@@ -97,7 +99,7 @@
 				</Body>
 			</div>
 		{:catch error}
-			Fehler beim Laden: {error.message}
+			Fehler beim Laden!
 		{/await}
 	</button>
 {/each}
