@@ -3,6 +3,7 @@
 	import Nodes from './Nodes.svelte';
 
 	export let tasks;
+	let errorMsg;
 
 	let columnedTasks = { 0: [] };
 
@@ -26,11 +27,10 @@
 			return;
 		}
 		if (nextColumnTasks.length <= newNextColumnTasks.length) {
-			throw new Error(
-				`Unreachable precondition: \n${nextColumnTasks.map(
-					(task) => `\t[${task.prerequisites}] for task ${task.taskid}\n`
-				)}`
-			);
+			let errorMsg = `Unreachable precondition: <ul class="pl-4" style="list-style-type:square">${nextColumnTasks.map(
+				(task) => `<li>[${task.prerequisites}] for task ${task.taskid}</li>`
+			)}</ul>`;
+			throw new Error(errorMsg);
 		}
 		return divideTasks(newNextColumnTasks);
 	}
@@ -57,8 +57,12 @@
 		return columnedTasks[col].map((task) => task.taskid);
 	}
 
-	divideTasks(tasks);
-
+	try {
+		divideTasks(tasks);
+	} catch (error) {
+		errorMsg = error.message;
+	}
+  
 	let links = [];
 	tasks.forEach((task) => {
 		task.prerequisites.forEach((pre) => {
@@ -68,8 +72,20 @@
 </script>
 
 <div class="relative h-full overflow-auto">
-	{#each Object.keys(columnedTasks) as key}
-		<Nodes tasks={columnedTasks[key]} {links} {key} />
-		<Links {links} />
-	{/each}
+	{#if errorMsg != undefined}
+		<div class="p-4">
+			<p class="font-bold text-xl">
+				<span>Fehler: </span>
+				<span class="italic"
+					>Es ist ein Fehler aufgetreten. Melden Sie dieses Problem an den Kursleiter!</span
+				>
+			</p>
+			{@html errorMsg}
+		</div>
+	{:else}
+		{#each Object.keys(columnedTasks) as key}
+			<Nodes tasks={columnedTasks[key]} {links} {key} />
+			<Links {links} />
+		{/each}
+	{/if}
 </div>
