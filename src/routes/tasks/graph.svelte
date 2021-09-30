@@ -1,6 +1,4 @@
 <script>
-	import { load_course_meta, load_tasks, load_user_meta } from '$lib/api/calls';
-
 	import ComplexView from '$lib/components/tasks/complex/ComplexView.svelte';
 	import LoadingWrapper from '$lib/components/ui/LoadingWrapper.svelte';
 	import TransitionWrapper from '$lib/components/ui/transitions/TransitionWrapper.svelte';
