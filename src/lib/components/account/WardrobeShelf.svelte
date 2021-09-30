@@ -1,12 +1,12 @@
 <script>
 	import { frontend_url, staticAssetPath } from '$lib/config/config';
 	import Body from '$lib/components/avatar/Body.svelte';
-	import character from '$lib/stores/character';
 	import { patch_user_character } from '$lib/api/calls';
 	import { beforeUpdate } from 'svelte';
 
 	export let assets;
 	export let type;
+	export let character;
 	let selectedItem;
 
 	async function loadAsset(id) {

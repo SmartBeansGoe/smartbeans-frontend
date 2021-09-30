@@ -12,28 +12,19 @@
 </script>
 
 <script>
-	import { load_user_meta } from '$lib/api/calls';
 	import { axiosInstance } from '$lib/auth/auth';
 	import Wardrobe from '$lib/components/account/Wardrobe.svelte';
 	import TransitionWrapper from '$lib/components/ui/transitions/TransitionWrapper.svelte';
 	import { frontend_url, staticAssetPath } from '$lib/config/config';
+	import { character, user } from '$lib/stores/stores';
 	import { mdiContentSave, mdiPencil } from '@mdi/js';
 	import Icon from 'mdi-svelte';
 
-	import { onMount } from 'svelte';
-
-	import user from '$lib/stores/user';
-
 	export let assets;
 
-	let displayName;
-	let passwordSet;
-
-	onMount(async () => {
-		await load_user_meta();
-		displayName = $user.displayName;
-		passwordSet = $user.passwordSet;
-	});
+	$: displayName = $user.displayName;
+	$: passwordSet = $user.passwordSet;
+	
 	let editDisplayName = true;
 
 	function putDisplayName(displayName) {
@@ -57,7 +48,7 @@
 		<div class="h-full overflow-y-auto">
 			<div class="grid grid-rows-3 grid-cols-1 gap-4">
 				<div class="h-full row-start-1 row-span-3 p-4 box">
-					<Wardrobe {assets} title="Garderobe" />
+					<Wardrobe {assets} title="Garderobe" {character} />
 				</div>
 				<div class="row-start-4 h-full p-4 box">
 					<p class="font-bold text-xl">Profileinstellungen</p>

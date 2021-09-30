@@ -4,17 +4,22 @@
 	import ComplexView from '$lib/components/tasks/complex/ComplexView.svelte';
 	import LoadingWrapper from '$lib/components/ui/LoadingWrapper.svelte';
 	import TransitionWrapper from '$lib/components/ui/transitions/TransitionWrapper.svelte';
-	import course from '$lib/stores/course';
-	import tasks from '$lib/stores/tasks';
-	import user from '$lib/stores/user';
+	import {
+		getProgress,
+		getTasks,
+		progress,
+		progressEmpty,
+		progressLoading,
+		tasks,
+		tasksEmpty,
+		tasksLoading
+	} from '$lib/stores/stores';
 	import { onMount } from 'svelte';
 
-	let isLoading = true;
-	onMount(async () => {
-		if ($user.activeCourse == undefined) await load_user_meta();
-		if ($course.config == undefined) await load_course_meta($user.activeCourse);
-		if ($tasks.length == 0) await load_tasks($user.activeCourse);
-		isLoading = false;
+	$: isLoading = $progressLoading || $tasksLoading;
+	onMount(async() => {
+		if (tasksEmpty()) await getTasks();
+		if (progressEmpty()) await getProgress();
 	});
 </script>
 

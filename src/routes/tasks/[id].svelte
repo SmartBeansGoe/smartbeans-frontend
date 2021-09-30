@@ -6,41 +6,25 @@
 	import BezierEasing from 'bezier-easing';
 	import Editor from '$lib/components/tasks/taskpage/Editor.svelte';
 	import TaskDescription from '$lib/components/tasks/taskpage/TaskDescription.svelte';
-	import tasks from '$lib/stores/tasks';
-	import Split from 'split.js';
 	import Submissions from '$lib/components/tasks/taskpage/Submissions.svelte';
-	import { load_task, load_task_submissions, load_user_meta } from '$lib/api/calls';
-	import user from '$lib/stores/user';
-	import course from '$lib/stores/course';
+	import { activeCourse, load_task_submissions } from '$lib/api/calls';
+	import { user, tasks, userLoading, tasksLoading, course, tasksEmpty, getTasks } from '$lib/stores/stores';
+	import LoadingWrapper from '$lib/components/ui/LoadingWrapper.svelte';
+	import Splitter from '$lib/components/tasks/taskpage/Splitter.svelte';
 
+	let submissions = [];
 	let id;
 	let task;
-	let submissions = [];
-	let errorCode;
-	let isLoading = true;
+	let submissionsLoading = true;
 
+	$: isLoading = $userLoading || $tasksLoading || submissionsLoading;
+	
 	onMount(async () => {
+		if (tasksEmpty()) await getTasks();
 		id = $page.params.id;
 		task = $tasks.find((task) => task.taskid == id);
-		if (task == undefined) {
-			await load_user_meta(); // Load user meta data, needed for activeCourse (courseId)
-			await load_task($user.activeCourse, id)
-				.then((res) => (task = res.data))
-				.catch((err) => {
-					errorCode = err.response.status;
-				});
-		}
-		if (errorCode == undefined || errorCode < 400) {
-			submissions = await load_task_submissions($user.activeCourse, id);
-		}
-
-		if (errorCode == undefined || errorCode < 400) {
-			Split(['#split-0', '#split-1']);
-			Split(['#split-2', '#split-3'], {
-				direction: 'vertical'
-			});
-		}
-		isLoading = false;
+		submissions = await load_task_submissions(await activeCourse(), id);
+		submissionsLoading = false;
 	});
 
 	async function handleSubmit() {
@@ -48,7 +32,7 @@
 		console.log(submissions);
 	}
 
-	$: taskDescription = task && !errorCode ? task.task_description : undefined;
+	$: taskDescription = task != undefined ? task.task_description : undefined;
 </script>
 
 <div
@@ -67,33 +51,31 @@
 		out:fade={{ duration: 75, easing: linear }}
 		class="h-full box"
 	>
-		<div class="split h-full">
-			{#if errorCode == undefined || errorCode < 400}
-				<div class="h-full" id="split-0">
-					<div class="overflow-y-auto h-5/6 p-4" id="split-2">
-						{#if !isLoading}
-							<TaskDescription task={taskDescription} />
-						{/if}
-					</div>
-					<div class="overflow-y-auto h-1/6" id="split-3">
-						{#if !isLoading}
-							<Submissions {submissions} />
-						{/if}
-					</div>
-				</div>
-				<div id="split-1">
+		{#if task != undefined}
+			<Splitter>
+				{#if !isLoading}
+					<TaskDescription task={taskDescription} />
+				{/if}
+				<svelte:fragment slot="submissions">
+					{#if !isLoading}
+						<Submissions {submissions} />
+					{/if}
+				</svelte:fragment>
+				<svelte:fragment slot="editor">
 					{#if !isLoading}
 						<Editor {id} {task} courseId={$course.name} on:submit={handleSubmit} />
 					{/if}
-				</div>
-			{:else}
-				<div class="h-full w-full flex flex-wrap justify-center content-center">
-					<p class="text-xl font-bold">
-						Task {id} not found!
-					</p>
-				</div>
-			{/if}
-		</div>
+				</svelte:fragment>
+			</Splitter>
+		{:else if isLoading}
+			<div class="w-full h-full"><LoadingWrapper {isLoading} /></div>
+		{:else}
+			<div class="h-full w-full flex flex-wrap justify-center content-center">
+				<p class="text-xl font-bold">
+					Task {id} not found!
+				</p>
+			</div>
+		{/if}
 	</div>
 </div>
 
@@ -101,11 +83,6 @@
 	.box {
 		@apply shadow-md bg-gray-100 rounded;
 	}
-	.split {
-		display: flex;
-		flex-direction: row;
-	}
-
 	:global(.gutter) {
 		background-color: #eee;
 		background-repeat: no-repeat;

@@ -1,22 +1,3 @@
-<!-- <script context="module">
-	// Funktioniert nicht!
-	import { axiosInstance } from '$lib/auth/auth';
-
-	export async function load({ page }) {
-		if (!page.path.startsWith('/auth')) {
-			console.log(page)
-			return await axiosInstance()
-				.get('/user/meta')
-				.catch((err) => {
-					console.log(err.response.status);
-					if (err.response.status == 401) {
-						return { status: 302, redirect: '/auth/login' };
-					}
-				});
-		}
-		return { status: 200 };
-	}
-</script> -->
 <script>
 	import 'virtual:windi.css';
 
@@ -26,19 +7,27 @@
 	import TopBar from '$lib/components/ui/nav/TopBar.svelte';
 	if (browser) import('virtual:windi-devtools');
 
-	import { onMount } from 'svelte';
+	import {
+		user,
+		course,
+		character,
+		getUser,
+		updateToken,
+		userEmpty,
+		courseEmpty,
+		getCourse,
+		characterEmpty,
+		getCharacter
+	} from '$lib/stores/stores';
 	import Bean from '$lib/components/avatar/Bean.svelte';
-	import user from '$lib/stores/user';
-	import { load_course_meta, load_user_character, load_user_meta } from '$lib/api/calls';
-	import character from '$lib/stores/character';
-	import course from '$lib/stores/course';
+	import { onMount } from 'svelte';
 
 	onMount(async () => {
-		await load_user_meta();
-		await load_user_character();
-		await load_course_meta($user.activeCourse);
+		updateToken();
+		if (userEmpty()) await getUser();
+		if (courseEmpty()) await getCourse();
+		if (characterEmpty()) await getCharacter();
 	});
-
 	$: username = $user.username;
 	$: title = $user.activeCourse ? $course.title : '';
 	$: courseConfig = $course.config;

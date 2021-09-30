@@ -1,9 +1,9 @@
 <script>
 	import WardrobeShelf from './WardrobeShelf.svelte';
-	import character from '$lib/stores/character';
 
 	export let assets;
 	export let title;
+	export let character;
 
 	let types = Array.from(new Set(assets.map((x) => x.type)));
 	let selected = types[0];
@@ -20,8 +20,6 @@
 				return null;
 		}
 	}
-
-	$: console.log($character);
 </script>
 
 <div class="p-1 border-t-2 border-x-2 rounded-t-md">
@@ -48,7 +46,7 @@
 	<WardrobeShelf
 		{assets}
 		type={selected}
+		{character}
 		selectedItem={() => getSelectedAsset()}
-		on:change={() => console.log('change')}
 	/>
 </div>

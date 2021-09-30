@@ -3,7 +3,8 @@
 	import Icon from 'mdi-svelte';
 	import { mdiAccount, mdiCodeGreaterThanOrEqual, mdiMedal, mdiViewDashboard } from '@mdi/js';
 
-	export let courseConfig = {
+	export let courseConfig;
+	const standardConfig = {
 		gamification: {
 			leaderboard: {
 				active: false
@@ -20,6 +21,12 @@
 			}
 		}
 	};
+	$: config =
+		courseConfig &&
+		Object.keys(courseConfig).length > 0 &&
+		Object.getPrototypeOf(courseConfig) == Object.prototype
+			? courseConfig
+			: standardConfig;
 </script>
 
 <div
@@ -37,21 +44,21 @@
 			</span>
 			<span>Dashboard</span>
 		</NavigationItem>
-		{#if courseConfig.tasks.standardView.active}
+		{#if config.tasks.standardView.active}
 			<NavigationItem cls="group-hover:visible" link="/tasks"
 				><span slot="prepend">
 					<Icon path={mdiCodeGreaterThanOrEqual} />
-				</span><span>{courseConfig.tasks.standardView.title}</span></NavigationItem
+				</span><span>{config.tasks.standardView.title}</span></NavigationItem
 			>
 		{/if}
-		{#if courseConfig.tasks.complexView.active}
+		{#if config.tasks.complexView.active}
 			<NavigationItem cls="group-hover:visible" link="/tasks/graph"
 				><span slot="prepend">
 					<Icon path={mdiCodeGreaterThanOrEqual} />
-				</span><span>{courseConfig.tasks.complexView.title}</span></NavigationItem
+				</span><span>{config.tasks.complexView.title}</span></NavigationItem
 			>
 		{/if}
-		{#if courseConfig.gamification.leaderboard.active}
+		{#if config.gamification.leaderboard.active}
 			<NavigationItem cls="group-hover:visible" link="/scores"
 				><span slot="prepend">
 					<Icon path={mdiMedal} />

@@ -1,26 +1,32 @@
 <script>
 	import LoadingWrapper from '$lib/components/ui/LoadingWrapper.svelte';
-	import { onMount } from 'svelte';
-	import tasks from '$lib/stores/tasks';
 	import TransitionRootPageWrapper from '$lib/components/ui/transitions/TransitionRootPageWrapper.svelte';
-	import user from '$lib/stores/user';
-	import { load_course_meta, load_tasks, load_user_meta } from '$lib/api/calls';
 	import { page } from '$app/stores';
-	import course from '$lib/stores/course';
 	import TaskItemTitleBar from '$lib/components/tasks/TaskItemTitleBar.svelte';
 	import TaskItem from '$lib/components/tasks/TaskItem.svelte';
+	import {
+		course,
+		courseEmpty,
+		courseLoading,
+		getCourse,
+		getProgress,
+		getTasks,
+		progressEmpty,
+		progressLoading,
+		tasks,
+		tasksEmpty,
+		tasksLoading
+	} from '$lib/stores/stores';
+import { onMount } from 'svelte';
 
-	let isLoading = true;
+	onMount(async() => {
+		if (tasksEmpty()) await getTasks();
+		if (progressEmpty()) await getProgress();
+		if (courseEmpty()) await getCourse();
+	});
+	$: isLoading = $courseLoading || $progressLoading || $tasksLoading;
 	let groupedTasks = {};
 	let categories = [];
-
-	onMount(async () => {
-		if ($user.activeCourse == undefined) await load_user_meta();
-		if ($course.config == undefined) await load_course_meta($user.activeCourse);
-		if ($tasks.length == 0) await load_tasks($user.activeCourse);
-		// await load_progess($user.activeCourse)
-		isLoading = false;
-	});
 
 	$: if ($page.query.getAll('category').length > 0) {
 		categories = $page.query.getAll('category');

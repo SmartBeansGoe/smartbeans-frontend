@@ -2,12 +2,12 @@
 	import TransitionWrapper from '$lib/components/ui/transitions/TransitionWrapper.svelte';
 	import Login from '$lib/components/auth/Login.svelte';
 	import { page } from '$app/stores';
-	import { beforeUpdate } from 'svelte';
+	import { onMount } from 'svelte';
 	import Cookies from 'js-cookie';
 	import { goto } from '$app/navigation';
 
 	let render = false;
-	beforeUpdate(() => {
+	onMount(() => {
 		let token = $page.query.get('token');
 		if (token != null) {
 			Cookies.set('auth_token', token);
