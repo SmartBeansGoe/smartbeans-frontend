@@ -37,11 +37,20 @@
 			</span>
 			<span>Dashboard</span>
 		</NavigationItem>
-		<NavigationItem cls="group-hover:visible" link="/tasks"
-			><span slot="prepend">
-				<Icon path={mdiCodeGreaterThanOrEqual} />
-			</span><span>Aufgaben</span></NavigationItem
-		>
+		{#if courseConfig.tasks.standardView.active}
+			<NavigationItem cls="group-hover:visible" link="/tasks"
+				><span slot="prepend">
+					<Icon path={mdiCodeGreaterThanOrEqual} />
+				</span><span>{courseConfig.tasks.standardView.title}</span></NavigationItem
+			>
+		{/if}
+		{#if courseConfig.tasks.complexView.active}
+			<NavigationItem cls="group-hover:visible" link="/tasks/graph"
+				><span slot="prepend">
+					<Icon path={mdiCodeGreaterThanOrEqual} />
+				</span><span>{courseConfig.tasks.complexView.title}</span></NavigationItem
+			>
+		{/if}
 		{#if courseConfig.gamification.leaderboard.active}
 			<NavigationItem cls="group-hover:visible" link="/scores"
 				><span slot="prepend">
