@@ -43,11 +43,8 @@
 	}}
 	class="flex justify-between cursor-pointer hover:ring-2 hover:ring-indigo-300 p-2 rounded"
 >
-	<div class="flex w-full justify-between">
-		<div class="flex flex-wrap content-center">
-			{taskDescription.title}
-			<span class="pl-2 text-red-400"><Icon path={icon} /></span>
-		</div>
+	<div class="flex flex-wrap content-center w-full justify-between">
+		{taskDescription.title}
 		<div>
 			{#each task.tags as tag}
 				<div
@@ -72,5 +69,6 @@
 				<Icon path={mdiCheckboxBlankCircle} />
 			</div>
 		{/if}
+		<div class="text-red-400"><Icon path={icon} /></div>
 	</div>
 </div>
