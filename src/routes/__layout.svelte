@@ -51,6 +51,9 @@
 		<div class="grid grid-cols-12">
 			<div class="col-span-12 lg:col-span-10 viewport-height overflow-hidden"><slot /></div>
 			<div class="invisible lg:visible lg:col-span-2 box my-4 mr-4">
+				<p class="flex justify-center font-bold text-xl">
+					{$user.displayName ? $user.displayName : ''}
+				</p>
 				<Bean character={$character} />
 			</div>
 		</div>
