@@ -41,11 +41,11 @@
 
 	$: username = $user.username;
 	$: title = $user.activeCourse ? $course.title : '';
-	$: console.log($character);
+	$: courseConfig = $course.config;
 </script>
 
 <div class="relative min-h-screen flex overflow-hidden">
-	<Navigation />
+	<Navigation {courseConfig} />
 	<div class="flex-1 bg-gray-200 max-h-screen">
 		<TopBar {title} {username} />
 		<div class="grid grid-cols-12">

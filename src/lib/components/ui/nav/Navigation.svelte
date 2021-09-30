@@ -2,6 +2,24 @@
 	import NavigationItem from './NavigationItem.svelte';
 	import Icon from 'mdi-svelte';
 	import { mdiAccount, mdiCodeGreaterThanOrEqual, mdiMedal, mdiViewDashboard } from '@mdi/js';
+
+	export let courseConfig = {
+		gamification: {
+			leaderboard: {
+				active: false
+			}
+		},
+		tasks: {
+			standardView: {
+				active: true,
+				title: 'Aufgaben'
+			},
+			complexView: {
+				active: false,
+				title: 'Aufgabengraph'
+			}
+		}
+	};
 </script>
 
 <div
@@ -24,11 +42,13 @@
 				<Icon path={mdiCodeGreaterThanOrEqual} />
 			</span><span>Aufgaben</span></NavigationItem
 		>
-		<NavigationItem cls="group-hover:visible" link="/scores"
-			><span slot="prepend">
-				<Icon path={mdiMedal} />
-			</span><span>Leaderboard</span></NavigationItem
-		>
+		{#if courseConfig.gamification.leaderboard.active}
+			<NavigationItem cls="group-hover:visible" link="/scores"
+				><span slot="prepend">
+					<Icon path={mdiMedal} />
+				</span><span>Leaderboard</span></NavigationItem
+			>
+		{/if}
 		<div class="my-2 border-b-1 border-dotted border-gray-500" />
 		<NavigationItem cls="group-hover:visible" link="/account"
 			><span slot="prepend">
