@@ -12,6 +12,7 @@
 	} from '@mdi/js';
 
 	export let task;
+	export let solved;
 	let taskDescription = task.task_description;
 
 	let icon;
@@ -60,7 +61,7 @@
 		</div>
 	</div>
 	<div class="pl-2">
-		{#if task.solved}
+		{#if solved}
 			<div class="text-emerald-600">
 				<Icon path={mdiCheckCircle} />
 			</div>

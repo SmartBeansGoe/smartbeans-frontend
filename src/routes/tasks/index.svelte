@@ -11,6 +11,7 @@
 		getCourse,
 		getProgress,
 		getTasks,
+		progress,
 		progressEmpty,
 		progressLoading,
 		tasks,
@@ -63,20 +64,24 @@ import { onMount } from 'svelte';
 							<div class="box {categoriesShownLength > 1 ? '' : 'col-span-2'}">
 								<TaskItemTitleBar
 									title={category}
-									solvedNum={0}
+									solvedNum={groupedTasks[category]
+										.map((task) => ($progress.includes(task.taskid) ? 1 : 0))
+										.reduce((acc, val) => acc + val, 0)}
 									maxNum={groupedTasks[category].length}
 								/>
 								{#if categoriesShownLength > 1}
 									{#each groupedTasks[category] as task}
-										<TaskItem {task} />
+										<TaskItem {task} solved={$progress.includes(task.taskid)} />
 									{/each}
 								{:else}
 									<div class="grid xl:grid-cols-2 gap-x-2">
 										{#each groupedTasks[category] as task, i}
 											{#if i % 2 == 0}
-												<div class="xl:border-r-4 xl:pr-2"><TaskItem {task} /></div>
+												<div class="xl:border-r-4 xl:pr-2">
+													<TaskItem {task} solved={$progress.includes(task.taskid)} />
+												</div>
 											{:else}
-												<div><TaskItem {task} /></div>
+												<div><TaskItem {task} solved={$progress.includes(task.taskid)} /></div>
 											{/if}
 										{/each}
 									</div>
