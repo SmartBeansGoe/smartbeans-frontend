@@ -56,7 +56,7 @@
 	<div
 		class="flex flex-wrap content-center w-full justify-between {disabled ? 'text-gray-400' : ''}"
 	>
-		{taskDescription.title}
+		{taskDescription.shortname}
 		<div>
 			{#each task.tags as tag}
 				<div
