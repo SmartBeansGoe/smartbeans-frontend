@@ -7,7 +7,7 @@
 	let selected;
 	let active;
 	$: submissions.sort((a, b) => b.timestamp - a.timestamp);
-	if (submissions.length > 0) {
+	$: if (submissions.length > 0) {
 		active = 0;
 	}
 	function handleTabChange(id) {
