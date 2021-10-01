@@ -1,7 +1,13 @@
 <script>
 	import NavigationItem from './NavigationItem.svelte';
 	import Icon from 'mdi-svelte';
-	import { mdiAccount, mdiCodeGreaterThanOrEqual, mdiMedal, mdiViewDashboard } from '@mdi/js';
+	import {
+		mdiAccount,
+		mdiCodeGreaterThanOrEqual,
+		mdiGraph,
+		mdiMedal,
+		mdiViewDashboard
+	} from '@mdi/js';
 
 	export let courseConfig;
 	const standardConfig = {
@@ -54,7 +60,7 @@
 		{#if config.tasks.complexView.active}
 			<NavigationItem cls="group-hover:visible" link="/tasks/graph"
 				><span slot="prepend">
-					<Icon path={mdiCodeGreaterThanOrEqual} />
+					<Icon path={mdiGraph} />
 				</span><span>{config.tasks.complexView.title}</span></NavigationItem
 			>
 		{/if}
