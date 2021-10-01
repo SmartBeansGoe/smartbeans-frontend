@@ -4,7 +4,9 @@
 	export let id;
 
 	async function loadAsset(id) {
-		const res = await fetch(`${frontend_url}${staticAssetPath}/${id}.svg`);
+		const res = await fetch(`${frontend_url}${staticAssetPath}/${id}.svg`, {
+			'Cache-Control': 'public'
+		});
 		if (res.ok) {
 			return await res.text();
 		} else {
