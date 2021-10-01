@@ -7,7 +7,6 @@
 	export let key;
 
 	function hightlightLinksTo(target) {
-		hoveredTask = target;
 		const linkToHighlight = links.filter((link) => link.target == target);
 		linkToHighlight.forEach((link) => {
 			let linkPath = document.getElementById(`s${link.source}t${link.target}`);
@@ -20,7 +19,6 @@
 		});
 	}
 	function deHightlightLinksTo(target) {
-		hoveredTask = target;
 		const linkToDeHighlight = links.filter((link) => link.target == target);
 		linkToDeHighlight.forEach((link) => {
 			let linkPath = document.getElementById(`s${link.source}t${link.target}`);
@@ -33,7 +31,6 @@
 		});
 	}
 
-	let hoveredTask = null;
 </script>
 
 {#each tasks as task, i (task.taskid)}

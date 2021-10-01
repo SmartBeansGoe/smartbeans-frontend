@@ -15,7 +15,7 @@
 	import { onMount } from 'svelte';
 
 	$: isLoading = $progressLoading || $tasksLoading;
-	onMount(async() => {
+	onMount(async () => {
 		if (tasksEmpty()) await getTasks();
 		if (progressEmpty()) await getProgress();
 	});

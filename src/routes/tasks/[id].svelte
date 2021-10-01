@@ -28,7 +28,7 @@
 	let submissionsLoading = true;
 
 	$: isLoading = $userLoading || $tasksLoading || submissionsLoading;
-	
+
 	onMount(async () => {
 		if (tasksEmpty()) await getTasks();
 		id = $page.params.id;

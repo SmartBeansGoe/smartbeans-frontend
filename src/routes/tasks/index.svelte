@@ -18,9 +18,9 @@
 		tasksEmpty,
 		tasksLoading
 	} from '$lib/stores/stores';
-import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
 
-	onMount(async() => {
+	onMount(async () => {
 		if (tasksEmpty()) await getTasks();
 		if (progressEmpty()) await getProgress();
 		if (courseEmpty()) await getCourse();
