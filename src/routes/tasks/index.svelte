@@ -1,6 +1,6 @@
 <script>
 	import LoadingWrapper from '$lib/components/ui/LoadingWrapper.svelte';
-	import TransitionRootPageWrapper from '$lib/components/ui/transitions/TransitionRootPageWrapper.svelte';
+	import TransitionWrapper from '$lib/components/ui/transitions/TransitionWrapper.svelte';
 	import { page } from '$app/stores';
 	import TaskItemTitleBar from '$lib/components/tasks/TaskItemTitleBar.svelte';
 	import TaskItem from '$lib/components/tasks/TaskItem.svelte';
@@ -55,7 +55,7 @@
 </script>
 
 <LoadingWrapper {isLoading}>
-	<TransitionRootPageWrapper>
+	<TransitionWrapper>
 		<div class="h-full p-4">
 			<div class="pr-0.5 h-full overflow-y-auto">
 				<div class="grid grid-cols-1 md:grid-cols-2 content-around gap-4">
@@ -92,7 +92,7 @@
 				</div>
 			</div>
 		</div>
-	</TransitionRootPageWrapper>
+	</TransitionWrapper>
 </LoadingWrapper>
 
 <style lang="postcss">
