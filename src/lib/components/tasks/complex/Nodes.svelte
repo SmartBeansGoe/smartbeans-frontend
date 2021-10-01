@@ -37,8 +37,8 @@
 	<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 	<div
 		id="taskid:{task.taskid}"
-		class="absolute m-1 box w-96 max-w-96 max-h-24 z-index-1"
-		style="top: {7 * i}rem;left: {28 * key}rem;"
+		class="absolute m-1 box w-64 max-w-64 max-h-24 z-index-1"
+		style="top: {7 * i}rem;left: {21 * key}rem;"
 		on:mouseover={() => hightlightLinksTo(task.taskid)}
 		on:mouseout={() => deHightlightLinksTo(task.taskid)}
 	>
