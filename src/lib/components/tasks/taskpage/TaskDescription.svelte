@@ -10,7 +10,7 @@
 {#if task != undefined}
 	<div class="h-full">
 		<div class="flex justify-between">
-			<span class="text-xl font-semibold pb-3">{task.title ? task.title : ''}</span>
+			<span class="text-xl font-semibold pb-3">{@html marked(task.title ? task.title : '')}</span>
 			<span class="text-emerald-600">
 				{#if solved}
 					<Icon size={"32px"} path={mdiCheckBold} />
