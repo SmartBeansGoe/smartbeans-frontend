@@ -22,10 +22,14 @@
 
 	export let assets;
 
-	$: displayName = $user.displayName;
+	let displayName;
+	let passwordSet;
+	let password;
+	$: if (displayName == undefined) displayName = $user.displayName;
 	$: passwordSet = $user.passwordSet;
-	
-	let editDisplayName = true;
+
+	let editDisplayName = false;
+	let editPassword = false;
 
 	function putDisplayName(displayName) {
 		axiosInstance()
@@ -33,6 +37,20 @@
 			.catch((err) => {
 				// TODO: error notification message!
 			});
+	}
+
+	function putPassword(password) {
+		axiosInstance()
+			.put('/auth/password', { newPassword: password })
+			.catch((err) => {
+				// TODO: error notification message!
+			});
+		if (!passwordSet) {
+			user.update((x) => {
+				x.passwordSet = true;
+				return x;
+			});
+		}
 	}
 
 	function updateDisplayName(name) {
@@ -57,10 +75,10 @@
 						<div class="flex w-2/6">
 							<input
 								class="w-full rounded-l-md ring-1 disabled:cursor-not-allowed focus:outline-none focus:ring-blue-500 px-2 py-1 disabled:bg-gray-200 disabled:text-gray-500"
-								disabled={editDisplayName}
+								disabled={!editDisplayName}
 								bind:value={displayName}
 							/>
-							{#if editDisplayName}
+							{#if !editDisplayName}
 								<button
 									class="rounded-r-md ring-1 text-blue-500 shadow-sm border bg-white p-1 justify-center"
 									on:click={() => (editDisplayName = !editDisplayName)}
@@ -82,18 +100,36 @@
 					</div>
 					<div class="flex content-center w-full">
 						<p class="py-1 w-40">Passwort:</p>
-						{#if passwordSet}
-							<button
-								class="w-2/6 rounded-md ring-1 text-blue-500 shadow-sm border bg-white p-1 justify-center"
-								>Neues Passwort</button
-							>
-							<!-- TODO -->
+						{#if !editPassword}
+							{#if passwordSet}
+								<button
+									class="w-2/6 rounded-md ring-1 text-blue-500 shadow-sm border bg-white p-1 justify-center"
+									on:click={() => (editPassword = !editPassword)}>Neues Passwort</button
+								>
+							{:else}
+								<button
+									class="w-2/6 rounded-md ring-1 text-blue-500 shadow-sm border bg-white p-1 justify-center"
+									on:click={() => (editPassword = !editPassword)}>Passwort hinzufuegen</button
+								>
+							{/if}
 						{:else}
-							<button
-								class="w-2/6 rounded-md ring-1 text-blue-500 shadow-sm border bg-white p-1 justify-center"
-								>Passwort hinzufuegen</button
-							>
-							<!-- TODO -->
+							<div class="flex w-2/6">
+								<input
+									class="w-full rounded-l-md ring-1 disabled:cursor-not-allowed focus:outline-none focus:ring-blue-500 px-2 py-1 disabled:bg-gray-200 disabled:text-gray-500"
+									type="password"
+									bind:value={password}
+								/>
+								{#if !editDisplayName}
+									<button
+										class="rounded-r-md ring-1 text-blue-500 shadow-sm border bg-white p-1 justify-center"
+										on:click={() => {
+											editPassword = !editPassword;
+											putPassword(password);
+											password = '';
+										}}><Icon path={mdiContentSave} /></button
+									>
+								{/if}
+							</div>
 						{/if}
 					</div>
 				</div>
