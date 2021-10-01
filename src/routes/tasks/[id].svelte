@@ -8,7 +8,16 @@
 	import TaskDescription from '$lib/components/tasks/taskpage/TaskDescription.svelte';
 	import Submissions from '$lib/components/tasks/taskpage/Submissions.svelte';
 	import { activeCourse, load_task_submissions } from '$lib/api/calls';
-	import { user, tasks, userLoading, tasksLoading, course, tasksEmpty, getTasks } from '$lib/stores/stores';
+	import {
+		user,
+		tasks,
+		userLoading,
+		tasksLoading,
+		course,
+		tasksEmpty,
+		getTasks,
+		progress
+	} from '$lib/stores/stores';
 	import LoadingWrapper from '$lib/components/ui/LoadingWrapper.svelte';
 	import Splitter from '$lib/components/tasks/taskpage/Splitter.svelte';
 
@@ -54,7 +63,7 @@
 		{#if task != undefined}
 			<Splitter>
 				{#if !isLoading}
-					<TaskDescription task={taskDescription} />
+					<TaskDescription task={taskDescription} solved={$progress.includes(task.taskid)} />
 				{/if}
 				<svelte:fragment slot="submissions">
 					{#if !isLoading}
