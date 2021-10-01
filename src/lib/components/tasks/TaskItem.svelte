@@ -13,6 +13,9 @@
 
 	export let task;
 	export let solved;
+	export let graphItem = false;
+	export let disabled = false;
+
 	let taskDescription = task.task_description;
 
 	let icon;
@@ -42,14 +45,24 @@
 	on:click={() => {
 		goto(`/tasks/${task.taskid}`);
 	}}
-	class="flex justify-between cursor-pointer hover:ring-2 hover:ring-indigo-300 p-2 rounded"
+	class="flex justify-between cursor-pointer hover:ring-2 p-2 rounded {solved && graphItem
+		? ' ring-2 ring-emerald-500 '
+		: ''} {disabled
+		? ' hover:ring-red-300 bg-gray-200 '
+		: graphItem
+		? ' bg-white hover:ring-emerald-300 '
+		: ' hover:ring-indigo-400 '}"
 >
-	<div class="flex flex-wrap content-center w-full justify-between">
+	<div
+		class="flex flex-wrap content-center w-full justify-between {disabled ? 'text-gray-400' : ''}"
+	>
 		{taskDescription.title}
 		<div>
 			{#each task.tags as tag}
 				<div
-					class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-indigo-600 bg-indigo-200 uppercase last:mr-0 mr-1 hover:bg-indigo-300 hover: text-indigo-600 hover:cursor-pointer"
+					class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded {disabled
+						? 'text-indigo-400 bg-indigo-100 hover:bg-indigo-50'
+						: 'text-indigo-600 bg-indigo-200 hover:bg-indigo-300 hover:text-indigo-600'} uppercase last:mr-0 mr-1 hover:cursor-pointer"
 					on:click={(event) => {
 						event.stopPropagation();
 						goto(`/tasks?category=${tag.name}`);
@@ -70,6 +83,6 @@
 				<Icon path={mdiCheckboxBlankCircle} />
 			</div>
 		{/if}
-		<div class="text-red-400"><Icon path={icon} /></div>
+		<div class={disabled ? 'text-red-200' : 'text-red-400'}><Icon path={icon} /></div>
 	</div>
 </div>

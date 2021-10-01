@@ -45,12 +45,19 @@
 		on:mouseover={() => hightlightLinksTo(task.taskid)}
 		on:mouseout={() => deHightlightLinksTo(task.taskid)}
 	>
-		<TaskItem {task} />
+		<TaskItem
+			{task}
+			solved={progress.includes(task.taskid)}
+			disabled={!progress.includes(task.taskid) && task.prerequisites
+				.map((item) => !progress.includes(item))
+				.reduce((acc, val) => acc || val, false)}
+			graphItem={true}
+		/>
 	</div>
 {/each}
 
 <style lang="postcss">
 	.box {
-		@apply shadow-md bg-gray-100 rounded;
+		@apply shadow-md rounded;
 	}
 </style>
