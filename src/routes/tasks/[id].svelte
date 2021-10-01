@@ -16,6 +16,7 @@
 		course,
 		tasksEmpty,
 		getTasks,
+		getProgress,
 		progress
 	} from '$lib/stores/stores';
 	import LoadingWrapper from '$lib/components/ui/LoadingWrapper.svelte';
@@ -38,7 +39,7 @@
 
 	async function handleSubmit() {
 		submissions = await load_task_submissions($user.activeCourse, id);
-		console.log(submissions);
+		getProgress();
 	}
 
 	$: taskDescription = task != undefined ? task.task_description : undefined;
