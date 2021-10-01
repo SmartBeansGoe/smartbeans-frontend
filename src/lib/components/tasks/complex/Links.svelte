@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 
 	export let links;
+	export let progress;
 
 	onMount(() => {
 		links.forEach((link) => {
@@ -41,7 +42,8 @@
 		let posStart = { x: 0, y: from.offsetTop + from.offsetHeight / 2 - svgTop };
 		let posEnd = { x: svgWidth, y: to.offsetTop + to.offsetHeight / 2 - svgTop };
 
-		node.setAttribute('stroke', '#ccc');
+		let color = progress.includes(link.source) ? '#6EE7B7' : '#FCA5A5';
+		node.setAttribute('stroke', color);
 
 		if (svgWidth <= 64) {
 			node.setAttribute(

@@ -2,6 +2,7 @@
 	import TaskItem from '../TaskItem.svelte';
 
 	export let tasks;
+	export let progress;
 	export let links;
 	export let key;
 
@@ -11,7 +12,8 @@
 		linkToHighlight.forEach((link) => {
 			let linkPath = document.getElementById(`s${link.source}t${link.target}`);
 			linkPath.setAttribute('stroke-width', '5px');
-			linkPath.setAttribute('stroke', 'green');
+			let color = progress.includes(link.source) ? '#10B981' : '#EF4444';
+			linkPath.setAttribute('stroke', color);
 
 			let linkSVG = document.getElementById(`s${link.source}t${link.target}-svg`);
 			linkSVG.style['z-index'] = 2;
@@ -23,7 +25,8 @@
 		linkToDeHighlight.forEach((link) => {
 			let linkPath = document.getElementById(`s${link.source}t${link.target}`);
 			linkPath.setAttribute('stroke-width', '2px');
-			linkPath.setAttribute('stroke', '#ccc');
+			let color = progress.includes(link.source) ? '#6EE7B7' : '#FCA5A5';
+			linkPath.setAttribute('stroke', color);
 
 			let linkSVG = document.getElementById(`s${link.source}t${link.target}-svg`);
 			linkSVG.style['z-index'] = 0;

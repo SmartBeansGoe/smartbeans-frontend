@@ -3,6 +3,7 @@
 	import Nodes from './Nodes.svelte';
 
 	export let tasks;
+	export let progress;
 	let errorMsg;
 
 	let columnedTasks = { 0: [] };
@@ -62,7 +63,7 @@
 	} catch (error) {
 		errorMsg = error.message;
 	}
-  
+
 	let links = [];
 	tasks.forEach((task) => {
 		task.prerequisites.forEach((pre) => {
@@ -84,8 +85,8 @@
 		</div>
 	{:else}
 		{#each Object.keys(columnedTasks) as key}
-			<Nodes tasks={columnedTasks[key]} {links} {key} />
-			<Links {links} />
+			<Nodes tasks={columnedTasks[key]} {progress} {links} {key} />
+			<Links {links} {progress} />
 		{/each}
 	{/if}
 </div>

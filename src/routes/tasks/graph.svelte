@@ -24,8 +24,8 @@
 <LoadingWrapper {isLoading}>
 	<TransitionWrapper>
 		<div class="h-full p-4">
-			<div class="pt-1 border-2 rounded-md border-gray-300 h-full overflow-y-auto shadow-md">
-				<ComplexView tasks={$tasks} />
+			<div class="pt-1 border-2 rounded-md border-gray-300 bg-gray-100 h-full overflow-y-auto shadow-md">
+				<ComplexView tasks={$tasks} progress={$progress} />
 			</div>
 		</div>
 	</TransitionWrapper>
