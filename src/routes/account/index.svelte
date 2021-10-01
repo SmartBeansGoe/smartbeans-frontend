@@ -109,7 +109,7 @@
 							{:else}
 								<button
 									class="w-2/6 rounded-md ring-1 text-blue-500 shadow-sm border bg-white p-1 justify-center"
-									on:click={() => (editPassword = !editPassword)}>Passwort hinzufuegen</button
+									on:click={() => (editPassword = !editPassword)}>Passwort hinzufügen</button
 								>
 							{/if}
 						{:else}
