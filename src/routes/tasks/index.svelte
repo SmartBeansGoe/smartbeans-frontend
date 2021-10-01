@@ -6,25 +6,13 @@
 	import TaskItem from '$lib/components/tasks/TaskItem.svelte';
 	import {
 		course,
-		courseEmpty,
 		courseLoading,
-		getCourse,
-		getProgress,
-		getTasks,
 		progress,
-		progressEmpty,
 		progressLoading,
 		tasks,
-		tasksEmpty,
 		tasksLoading
 	} from '$lib/stores/stores';
-	import { onMount } from 'svelte';
 
-	onMount(async () => {
-		if (tasksEmpty()) await getTasks();
-		if (progressEmpty()) await getProgress();
-		if (courseEmpty()) await getCourse();
-	});
 	$: isLoading = $courseLoading || $progressLoading || $tasksLoading;
 	let groupedTasks = {};
 	let categories = [];

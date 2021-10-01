@@ -39,7 +39,7 @@
 
 	async function handleSubmit() {
 		submissions = await load_task_submissions($user.activeCourse, id);
-		getProgress();
+		await getProgress();
 	}
 
 	$: taskDescription = task != undefined ? task.task_description : undefined;

@@ -17,7 +17,11 @@
 		courseEmpty,
 		getCourse,
 		characterEmpty,
-		getCharacter
+		getCharacter,
+		getTasks,
+		tasksEmpty,
+		progressEmpty,
+		getProgress
 	} from '$lib/stores/stores';
 	import Bean from '$lib/components/avatar/Bean.svelte';
 	import { onMount } from 'svelte';
@@ -27,6 +31,8 @@
 		if (userEmpty()) await getUser();
 		if (courseEmpty()) await getCourse();
 		if (characterEmpty()) await getCharacter();
+		if (tasksEmpty()) await getTasks();
+		if (progressEmpty()) await getProgress();
 	});
 	$: username = $user.username;
 	$: title = $user.activeCourse ? $course.title : '';
