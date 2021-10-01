@@ -10,10 +10,10 @@
 <TransitionWrapper>
 	<LoadingWrapper {isLoading}>
 		<div class="h-full p-4">
-			<div
-				class="pt-1 border-2 rounded-md border-gray-300 bg-gray-100 h-full overflow-y-auto shadow-md"
-			>
-				<ComplexView tasks={$tasks} progress={$progress} />
+			<div class="border-2 rounded-md border-gray-300 bg-gray-100 h-full overflow-y-auto shadow-md">
+				<div class="h-full p-2">
+					<ComplexView tasks={$tasks} progress={$progress} />
+				</div>
 			</div>
 		</div>
 	</LoadingWrapper>

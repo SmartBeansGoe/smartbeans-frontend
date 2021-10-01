@@ -72,7 +72,7 @@
 	});
 </script>
 
-<div class="relative h-full overflow-auto">
+<div class="relative h-full">
 	{#if errorMsg != undefined}
 		<div class="p-4">
 			<p class="font-bold text-xl">
