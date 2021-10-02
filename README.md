@@ -1,38 +1,55 @@
-# create-svelte
+# SmartBeans Frontend
+This is the new upcoming frontend version 2. This works only with new upcoming backend >= v2.x.
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
+## Installation instructions
+### Prerequisites
+- Install `npm`.
 
-## Creating a project
+### Installation
+1. Clone the repository.
+2. Clone the smartbeans-content repository into the static folder. (WIP: in the future it will be a git submodule)
+3. Configure it:
+  Copy the `src/lib/config/config.sample.js` to `src/lib/config/config.js` and change the following:
 
-If you're seeing this, you've probably already done this step. Congrats!
+  ```js
+  export const backend_url = "change-this"; // e.g. https://your-url.tld/api
+  export const sessionDuration = 3600; // Must fit the time in the Backend configurations (session_duration)
+  export const staticAssetPath = "/img/assets" 
+  export const staticAssetFilePath = '/img/assets/assets.json';
+  export const frontend_url = 'change-this'; // e.g. https://your-url.tld/
+  ```
+4. Initialize the node_modules via running:
+  ```
+  npm install
+  ```
+5. Create a systemd service `smartbeans-frontend.service`:
+  ```
+  [Unit]
+  Description=The SmartBeans Backend
+  After=network.target
 
-```bash
-# create a new project in the current directory
-npm init svelte@next
+  [Service]
+  Type=simple
+  User=cloud
+  Group=cloud
+  WorkingDirectory=path-to-smartbeans-frontend-folder
+  ExecStart=/bin/bash -c "cd path-to-smartbeans-frontend-folder && npm run build && npx svelte-kit preview --port 8080"
+  Restart=on-failure
+  # Other restart options: always, on-abort, etc
 
-# create a new project in my-app
-npm init svelte@next my-app
-```
+  [Install]
+  WantedBy=multi-user.target
+  ```
+6. Start the service:
+  ```
+  systemctl start smartbeans-frontend.service
+  ```
+### Updates
+For updates call `git pull` and restart the service.
 
-> Note: the `@next` is temporary
+## Lisence
+Copyright (c) 2021 Ole Umlauft and other contributors
 
-## Developing
+All contents of this repository are provided under the MIT License. See [LICENSE](https://github.com/SmartBeansGoe/smartbeans-frontend/blob/main/LICENSE) for the full text.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment. Then:
-
-```bash
-npm run build
-```
-
-> You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
