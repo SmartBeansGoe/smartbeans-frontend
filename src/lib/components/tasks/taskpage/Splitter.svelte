@@ -1,13 +1,20 @@
 <script>
 	import Split from 'split.js';
 
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
+
+	let splitA;
+	let splitB;
 
 	onMount(() => {
-		Split(['#split-0', '#split-1']);
-		Split(['#split-2', '#split-3'], {
+		splitA = Split(['#split-0', '#split-1']);
+		splitB = Split(['#split-2', '#split-3'], {
 			direction: 'vertical'
 		});
+	});
+	onDestroy(() => {
+		splitA.destroy();
+		splitB.destroy();
 	});
 </script>
 
