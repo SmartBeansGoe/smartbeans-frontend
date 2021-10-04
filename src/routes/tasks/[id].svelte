@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
+	import { beforeUpdate, onMount } from 'svelte';
 	import { fade, scale } from 'svelte/transition';
 	import { linear } from 'svelte/easing';
 	import BezierEasing from 'bezier-easing';
@@ -21,6 +21,9 @@
 	} from '$lib/stores/stores';
 	import LoadingWrapper from '$lib/components/ui/LoadingWrapper.svelte';
 	import Splitter from '$lib/components/tasks/taskpage/Splitter.svelte';
+	import { toast } from '@zerodevx/svelte-toast';
+	import NextExercise from '$lib/components/ui/NextExercise.svelte';
+	import { getNextTask } from '$lib/utils/tasks';
 
 	let submissions = [];
 	let id;
@@ -37,12 +40,67 @@
 		submissionsLoading = false;
 	});
 
-	async function handleSubmit() {
-		submissions = await load_task_submissions($user.activeCourse, id);
-		await getProgress();
-	}
+	beforeUpdate(async () => {
+		if (id != $page.params.id && $page.params.id != undefined) {
+			id = $page.params.id;
+			task = { ...$tasks.find((task) => task.taskid == id) };
+			submissions = await load_task_submissions(await activeCourse(), id);
+		}
+	});
 
-	$: taskDescription = task != undefined ? task.task_description : undefined;
+	async function handleSubmit(event) {
+		if (!event.detail.isError) {
+			if (event.detail.score == 1) {
+				await getProgress();
+				let nextTask = getNextTask($progress, $tasks);
+				toast.push('Erfolgreiche Abgabe!<br/>Sehr gut! 👍', {
+					theme: {
+						'--toastBackground': '#10b981',
+						'--toastBarBackground': '#059669'
+					}
+				});
+				if (nextTask != undefined) {
+					toast.push({
+						component: {
+							src: NextExercise,
+							props: {
+								taskid: nextTask.taskid,
+								taskShortName: nextTask.task_description.shortname
+							},
+							duration: 4000
+						},
+						theme: {
+							'--toastBackground': '#10b981',
+							'--toastBarBackground': '#059669'
+						},
+						pausable: true,
+						duration: 6000
+					});
+				}
+			} else {
+				toast.push('Falsche Antwort', {
+					theme: {
+						'--toastBackground': '#F56565',
+						'--toastBarBackground': '#C53030'
+					}
+				});
+			}
+			submissions = await load_task_submissions($user.activeCourse, id);
+		} else {
+			let notificationText;
+			if (event.detail.error.response != undefined)
+				notificationText =
+					event.detail.error.response.status + ': ' + event.detail.error.response.statusText;
+			else notificationText = event.detail.error.message;
+
+			toast.push(notificationText, {
+				theme: {
+					'--toastBackground': '#F56565',
+					'--toastBarBackground': '#C53030'
+				}
+			});
+		}
+	}
 </script>
 
 <div
@@ -64,7 +122,7 @@
 		{#if task != undefined}
 			<Splitter>
 				{#if !isLoading}
-					<TaskDescription task={taskDescription} solved={$progress.includes(task.taskid)} />
+					<TaskDescription task={task.task_description} solved={$progress.includes(task.taskid)} />
 				{/if}
 				<svelte:fragment slot="submissions">
 					{#if !isLoading}
