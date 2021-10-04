@@ -22,6 +22,7 @@
 	let downloadDocumentDisabled = true;
 
 	let defaultEditorInput = task.task_description.defaultEditorInput;
+	$: defaultEditorInput = task.task_description.defaultEditorInput;
 
 	onMount(async () => {
 		// Uploads a document from user's computer into the editor.
@@ -81,13 +82,14 @@
 
 		await submit_code(courseId, task.taskid, editorValue)
 			.then((res) => {
-				isSubmitLoading = false;
-				dispatch('submit');
+				dispatch('submit', { isError: false, ...res.data });
 				return res.data;
 			})
 			.catch((err) => {
+				dispatch('submit', { isError: true, error: err });
 				return err;
 			});
+		isSubmitLoading = false;
 	}
 </script>
 
@@ -99,7 +101,7 @@
 		bind:editorValue
 	/>
 </div>
-<div class="mt-2 flex justify-between">
+<div class="mt-2 flex justify-between overflow-x-auto">
 	<div class="flex">
 		<span>
 			<button
