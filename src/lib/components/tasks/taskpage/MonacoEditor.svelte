@@ -4,14 +4,17 @@
 	export let language;
 	export let defaultEditorInput;
 	export let editorValue;
+	export let taskid;
 
 	let divEl;
 	let Monaco;
 	let editor;
-	let editorOldInput;
+	let oldTaskId;
 
-	$: if (editor && editorOldInput != defaultEditorInput) setValue(defaultEditorInput);
-
+	$: if (editor && taskid != oldTaskId) {
+		oldTaskId = taskid;
+		setValue(defaultEditorInput);
+	}
 	onMount(async () => {
 		Monaco = await import('monaco-editor');
 		editor = Monaco.editor.create(divEl, {
@@ -22,7 +25,6 @@
 			editorValue = editor.getModel().getValue();
 		});
 		editor.setValue(defaultEditorInput);
-		editorOldInput = defaultEditorInput;
 	});
 
 	export function setValue(value) {

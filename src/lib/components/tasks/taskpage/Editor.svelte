@@ -98,6 +98,7 @@
 		bind:this={editorComponent}
 		language={task.lang}
 		{defaultEditorInput}
+		taskid={task.taskid}
 		bind:editorValue
 	/>
 </div>
