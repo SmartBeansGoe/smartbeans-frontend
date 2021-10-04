@@ -67,14 +67,14 @@
 								taskid: nextTask.taskid,
 								taskShortName: nextTask.task_description.shortname
 							},
-							duration: 4000
+							duration: 2500
 						},
 						theme: {
 							'--toastBackground': '#10b981',
 							'--toastBarBackground': '#059669'
 						},
 						pausable: true,
-						duration: 6000
+						duration: 4000
 					});
 				}
 			} else {

@@ -57,15 +57,15 @@
 </div>
 
 <div class="toast-position">
-	<SvelteToast options={{ duration: 5000}} />
+	<SvelteToast options={{ duration: 2000 }} />
 </div>
 
 <style lang="postcss">
 	.toast-position {
-    --toastContainerTop: auto;
-    --toastContainerRight: 2rem;
-    --toastContainerBottom: 1rem;
-    --toastContainerLeft: auto;
+		--toastContainerTop: auto;
+		--toastContainerRight: 2rem;
+		--toastContainerBottom: 1rem;
+		--toastContainerLeft: auto;
 	}
 
 	.viewport-height {
