@@ -50,7 +50,7 @@
 
 	async function handleSubmit(event) {
 		if (!event.detail.isError) {
-			if (event.detail.score == 1) {
+			if (event.detail.score >= 0.9999) {
 				await getProgress();
 				let nextTask = getNextTask($progress, $tasks);
 				toast.push('Erfolgreiche Abgabe!<br/>Sehr gut! 👍', {
