@@ -18,6 +18,7 @@
 	import { frontend_url, staticAssetPath } from '$lib/config/config';
 	import { character, user } from '$lib/stores/stores';
 	import { mdiContentSave, mdiPencil } from '@mdi/js';
+	import { toast } from '@zerodevx/svelte-toast';
 	import Icon from 'mdi-svelte';
 
 	export let assets;
@@ -40,10 +41,27 @@
 	}
 
 	function putPassword(password) {
+		if (password == '' || password == undefined || password == null) {
+			toast.push('Passwort bleibt unverändert!', {
+				theme: { '--toastBackground': '#3B82F6', '--toastBarBackground': '#2563EB' },
+				duration: 1500
+			});
+			return;
+		}
 		axiosInstance()
 			.put('/auth/password', { newPassword: password })
+			.then(() => {
+				toast.push('Neues Passwort gesetzt!', {
+					theme: { '--toastBackground': '#3B82F6', '--toastBarBackground': '#2563EB' },
+					duration: 1500
+				});
+			})
 			.catch((err) => {
-				// TODO: error notification message!
+				let message = err.response ? err.response.statusText : err.message;
+				toast.push(`Fehler beim Passwort setzen: ${message}`, {
+					theme: { '--toastBackground': '#EF4444', '--toastBarBackground': '#DC2626' },
+					duration: 1500
+				});
 			});
 		if (!passwordSet) {
 			user.update((x) => {
