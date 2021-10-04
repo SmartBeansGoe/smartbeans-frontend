@@ -1,6 +1,7 @@
 <script>
 	import 'virtual:windi.css';
 
+	import { SvelteToast } from '@zerodevx/svelte-toast';
 	import { browser } from '$app/env';
 
 	import Navigation from '$lib/components/ui/nav/Navigation.svelte';
@@ -55,7 +56,18 @@
 	</div>
 </div>
 
+<div class="toast-position">
+	<SvelteToast options={{ duration: 5000}} />
+</div>
+
 <style lang="postcss">
+	.toast-position {
+    --toastContainerTop: auto;
+    --toastContainerRight: 2rem;
+    --toastContainerBottom: 1rem;
+    --toastContainerLeft: auto;
+	}
+
 	.viewport-height {
 		height: calc(100vh - 64px);
 	}
