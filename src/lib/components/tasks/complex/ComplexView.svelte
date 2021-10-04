@@ -1,4 +1,6 @@
 <script>
+	import Alert from '$lib/components/ui/Alert.svelte';
+
 	import Links from './Links.svelte';
 	import Nodes from './Nodes.svelte';
 
@@ -7,6 +9,35 @@
 	let errorMsg;
 
 	let columnedTasks = { 0: [] };
+	let filteredTasks = [];
+	let nonExistentPrerequisites = [];
+	$: [filteredTasks, nonExistentPrerequisites] = filterPrerequisites(tasks);
+	$: nonExistentPrerequisitesMessage = (
+		'Unfulfilled Prerequisites: ' +
+		nonExistentPrerequisites.map((x) => x.nonExistentPrerequisite + ' for ' + x.relatedTask)
+	).replaceAll(',', ' | ');
+
+	function checkPrerequisiteInTasks(id, taskIds) {
+		return taskIds.includes(id);
+	}
+
+	function filterPrerequisites(tasks) {
+		let filteredTasks = [];
+		let taskIds = tasks.map((task) => task.taskid);
+		let nonExistentPrerequisites = [];
+		tasks.forEach((task) => {
+			let newPrerequisites = [];
+			task.prerequisites.forEach((pre) => {
+				if (!checkPrerequisiteInTasks(pre, taskIds)) {
+					nonExistentPrerequisites.push({ nonExistentPrerequisite: pre, relatedTask: task.taskid });
+				} else {
+					newPrerequisites.push(pre);
+				}
+			});
+			filteredTasks.push({ ...task, prerequisites: newPrerequisites });
+		});
+		return [filteredTasks, nonExistentPrerequisites];
+	}
 
 	function divideTasks(nextColumnTasks) {
 		if (nextColumnTasks == []) {
@@ -24,11 +55,11 @@
 				columnedTasks[col].push(task);
 			}
 		});
-		if (nextColumnTasks.length == 0 || newNextColumnTasks == 0) {
+		if (nextColumnTasks.length == 0 || newNextColumnTasks.length == 0) {
 			return;
 		}
 		if (nextColumnTasks.length <= newNextColumnTasks.length) {
-			let errorMsg = `Unreachable precondition: <ul class="pl-4" style="list-style-type:square">${nextColumnTasks.map(
+			let errorMsg = `Unreachable precondition (cyclic graph): <ul class="pl-4" style="list-style-type:square">${nextColumnTasks.map(
 				(task) => `<li>[${task.prerequisites}] for task ${task.taskid}</li>`
 			)}</ul>`;
 			throw new Error(errorMsg);
@@ -58,14 +89,17 @@
 		return columnedTasks[col].map((task) => task.taskid);
 	}
 
-	try {
-		divideTasks(tasks);
+	$: try {
+		divideTasks(filteredTasks);
 	} catch (error) {
 		errorMsg = error.message;
 	}
 
 	let links = [];
-	tasks.forEach((task) => {
+	$: filteredTasks.forEach((task, i) => {
+		if (i == 0) {
+			links = [];
+		}
 		task.prerequisites.forEach((pre) => {
 			links.push({ source: pre, target: task.taskid });
 		});
@@ -88,5 +122,10 @@
 			<Nodes tasks={columnedTasks[key]} {progress} {links} {key} />
 			<Links {links} {progress} />
 		{/each}
+	{/if}
+	{#if nonExistentPrerequisites.length > 0}
+		<div class="z-index-100 w-full absolute inset-x-0 bottom-0">
+			<Alert message={nonExistentPrerequisitesMessage} />
+		</div>
 	{/if}
 </div>
