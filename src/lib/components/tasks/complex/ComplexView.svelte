@@ -14,8 +14,10 @@
 	$: [filteredTasks, nonExistentPrerequisites] = filterPrerequisites(tasks);
 	$: nonExistentPrerequisitesMessage = (
 		'Unfulfilled Prerequisites: ' +
-		nonExistentPrerequisites.map((x) => x.nonExistentPrerequisite + ' for ' + x.relatedTask)
-	).replaceAll(',', ' | ');
+		nonExistentPrerequisites.map((x) => x.nonExistentPrerequisite + ' for ' + x.relatedTask + ';')
+	)
+		.replaceAll(';,', ' | ')
+		.replace(';', '');
 
 	function checkPrerequisiteInTasks(id, taskIds) {
 		return taskIds.includes(id);
@@ -28,10 +30,28 @@
 		tasks.forEach((task) => {
 			let newPrerequisites = [];
 			task.prerequisites.forEach((pre) => {
-				if (!checkPrerequisiteInTasks(pre, taskIds)) {
-					nonExistentPrerequisites.push({ nonExistentPrerequisite: pre, relatedTask: task.taskid });
+				if (Array.isArray(pre)) {
+					let tmpNew = [];
+					pre.forEach((p) => {
+						if (!checkPrerequisiteInTasks(p, taskIds)) {
+							nonExistentPrerequisites.push({
+								nonExistentPrerequisite: p,
+								relatedTask: task.taskid
+							});
+						} else {
+							tmpNew.push(p);
+						}
+					});
+					newPrerequisites.push(tmpNew);
 				} else {
-					newPrerequisites.push(pre);
+					if (!checkPrerequisiteInTasks(pre, taskIds)) {
+						nonExistentPrerequisites.push({
+							nonExistentPrerequisite: pre,
+							relatedTask: task.taskid
+						});
+					} else {
+						newPrerequisites.push(pre);
+					}
 				}
 			});
 			filteredTasks.push({ ...task, prerequisites: newPrerequisites });
@@ -71,20 +91,28 @@
 		if (prerequisites.length == 0) {
 			return col;
 		}
-		let leftPrerequisites = [];
-		let columnPrerequisites = unwrapPrerequisites(col);
-		if (columnPrerequisites == undefined) {
+		let prerequisitesLeft = [];
+		let graphTaskIds = unwrapTaskIs(col);
+		if (graphTaskIds == undefined) {
 			return undefined;
 		}
 		prerequisites.forEach((pre) => {
-			if (!columnPrerequisites.includes(pre)) {
-				leftPrerequisites.push(pre);
+			if (Array.isArray(pre)) {
+				let subPres = [];
+				pre.forEach((p) => {
+					if (!graphTaskIds.includes(p)) {
+						subPres.push(p);
+					}
+				});
+				if (subPres.length > 0) prerequisitesLeft.push(subPres);
+			} else if (!graphTaskIds.includes(pre)) {
+				prerequisitesLeft.push(pre);
 			}
 		});
-		return findColumn(leftPrerequisites, col + 1);
+		return findColumn(prerequisitesLeft, col + 1);
 	}
 
-	function unwrapPrerequisites(col) {
+	function unwrapTaskIs(col) {
 		if (columnedTasks[col] == undefined) return undefined;
 		return columnedTasks[col].map((task) => task.taskid);
 	}
@@ -100,7 +128,7 @@
 		if (i == 0) {
 			links = [];
 		}
-		task.prerequisites.forEach((pre) => {
+		task.prerequisites.flat().forEach((pre) => {
 			links.push({ source: pre, target: task.taskid });
 		});
 	});

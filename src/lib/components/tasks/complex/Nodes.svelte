@@ -1,4 +1,5 @@
 <script>
+	import { taskPrerequisitesFulfilled } from '$lib/utils/tasks';
 	import TaskItem from '../TaskItem.svelte';
 
 	export let tasks;
@@ -30,7 +31,6 @@
 			linkSVG.style['z-index'] = 0;
 		});
 	}
-
 </script>
 
 {#each tasks as task, i (task.taskid)}
@@ -45,9 +45,7 @@
 		<TaskItem
 			{task}
 			solved={progress.includes(task.taskid)}
-			disabled={!progress.includes(task.taskid) && task.prerequisites
-				.map((item) => !progress.includes(item))
-				.reduce((acc, val) => acc || val, false)}
+			disabled={!progress.includes(task.taskid) && !taskPrerequisitesFulfilled(task, progress)}
 			graphItem={true}
 		/>
 	</div>
