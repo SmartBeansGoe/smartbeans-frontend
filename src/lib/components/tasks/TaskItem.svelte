@@ -41,7 +41,7 @@
 			break;
 	}
 
-	$: blocked = disabled && $course.config.tasks.blockedTaskClickableByUnfulfilledPrerequites;
+	$: blocked = disabled && $course.config.tasks.blockedTaskClickableByUnfulfilledPrerequisites;
 </script>
 
 <div
