@@ -84,5 +84,7 @@
 	}
 </script>
 
-<div class="text-2xl font-bold">Fähigkeiten</div>
-<div><canvas bind:this={chartCanvas} /></div>
+<div class="m-4">
+	<div class="text-2xl font-bold">Fähigkeiten</div>
+	<div class="p-4"><canvas bind:this={chartCanvas} /></div>
+</div>
