@@ -22,21 +22,18 @@
 	} else if ($course.config != undefined) {
 		categories = $course.config.tasks.standardView.categorizeByTags;
 	}
-	$: groupedTasks = $tasks.reduce((acc, value) => {
-		let tags = value.tags.filter((tag) => categories.includes(tag.name));
-		if (tags.length == 0) {
-			if (!acc['filtered-out']) {
-				acc['filtered-out'] = [];
-			}
-			acc['filtered-out'].push(value);
-			return acc;
-		}
-		if (!acc[tags[0].name]) {
-			acc[tags[0].name] = [];
-		}
-		acc[tags[0].name].push(value);
-		return acc;
-	}, {});
+	$: if ($tasks && categories) {
+		$tasks.forEach((task) => {
+			task.tags
+				.filter((tag) => categories.includes(tag.name))
+				.map((tag) => {
+					if (!groupedTasks[tag.name]) {
+						groupedTasks[tag.name] = [];
+					}
+					groupedTasks[tag.name].push(task);
+				});
+		});
+	}
 
 	$: categoriesShown = Object.keys(groupedTasks);
 	$: categoriesShownLength = categoriesShown.filter((c) => c != 'filtered-out').length;
