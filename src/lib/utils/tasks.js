@@ -12,19 +12,16 @@ export function taskPrerequisitesFulfilled(task, progress) {
 	if (task.prerequisites.length == 0) {
 		return true;
 	}
-	console.log(task.prerequisites);
-	let b = task.prerequisites
+	return task.prerequisites
 		.map((pre) => {
 			if (Array.isArray(pre)) {
 				let bo = pre
 					.map((p) => progress.includes(p))
 					.reduce((previousValue, currentValue) => previousValue || currentValue);
-				console.log(task, bo);
 				return bo;
 			} else {
 				return progress.includes(pre);
 			}
 		})
 		.reduce((previousValue, currentValue) => previousValue && currentValue);
-	return b;
 }
