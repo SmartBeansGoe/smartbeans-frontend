@@ -20,7 +20,7 @@
 	$: if ($page.query.getAll('category').length > 0) {
 		categories = $page.query.getAll('category');
 	} else if ($course.config != undefined) {
-		categories = $course.config.tasks.standardView.sortingByTags;
+		categories = $course.config.tasks.standardView.categorizeByTags;
 	}
 	$: groupedTasks = $tasks.reduce((acc, value) => {
 		let tags = value.tags.filter((tag) => categories.includes(tag.name));
