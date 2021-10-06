@@ -10,6 +10,7 @@
 		mdiLanguagePython,
 		mdiLanguageRust
 	} from '@mdi/js';
+	import { course } from '$lib/stores/stores';
 
 	export let task;
 	export let solved;
@@ -39,13 +40,19 @@
 			icon = mdiCodeTags;
 			break;
 	}
+
+	$: blocked = disabled && $course.config.tasks.blockedTaskClickableByUnfulfilledPrerequites;
 </script>
 
 <div
 	on:click={() => {
-		goto(`/tasks/${task.taskid}`);
+		if (!blocked) {
+			goto(`/tasks/${task.taskid}`);
+		}
 	}}
-	class="flex justify-between cursor-pointer hover:ring-2 p-2 rounded {solved && graphItem
+	class="flex justify-between {blocked
+		? 'cursor-not-allowed'
+		: 'cursor-pointer'}  hover:ring-2 p-2 rounded {solved && graphItem
 		? ' ring-2 ring-emerald-500 '
 		: ''} {disabled
 		? ' hover:ring-red-300 bg-gray-200 '
