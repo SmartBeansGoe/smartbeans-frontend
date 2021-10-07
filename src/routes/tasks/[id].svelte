@@ -103,7 +103,11 @@
 	}
 </script>
 
-<svelte:head><title>Aufgabe "{task.task_description.shortname}" - SmartBeans</title></svelte:head>
+<svelte:head>
+	{#if !isLoading}
+		<title>Aufgabe "{task.task_description.shortname}" - SmartBeans</title>
+	{/if}
+</svelte:head>
 
 <div
 	in:fade={{
