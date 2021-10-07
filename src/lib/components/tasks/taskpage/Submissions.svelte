@@ -1,5 +1,9 @@
 <script>
-	import { mdiClipboardCheck, mdiClipboardRemove } from '@mdi/js';
+	import { pad_url } from '$lib/config/config';
+
+	import { tasks, user } from '$lib/stores/stores';
+
+	import { mdiClipboardCheck, mdiClipboardRemove, mdiShare } from '@mdi/js';
 	import Icon from 'mdi-svelte';
 
 	export let submissions;
@@ -14,6 +18,41 @@
 		active = id;
 	}
 	$: selected = submissions[active];
+
+	function share() {
+		let task = $tasks.find((t) => t.taskid == selected.taskid);
+		let date = new Date(selected.timestamp * 1000);
+		let time = date.toLocaleString();
+		let body =
+			`# Aufgabe "${task.task_description.shortname}"" Id: ${selected.taskid}\n` +
+			`Abgabe von *${$user.username}* aus dem Kurs *${$user.activeCourse}*\n` +
+			`Datum: ${time}\n` +
+			`## Problembeschreibung:\n *Beschreibe dein Problem und teile den Link mit einem Tutor.*\n` +
+			`**WICHTIG**: *Speichere auch du dir den Link ab.*\n` +
+			`## Testergebnis\n` +
+			`Result: ${selected.result_type}\n\n` +
+			(selected.simplified.testCase.stdin != undefined
+				? `### Standardeingabe:\n\`\`\`\n${selected.simplified.testCase.stdin}\n\`\`\`\n`
+				: '') +
+			(selected.simplified.testCase.stdout != undefined
+				? `### Standardausgabe:\n\`\`\`\n${selected.simplified.testCase.stdout}\n\`\`\`\n`
+				: '') +
+			(selected.simplified.testCase.expectedStdout != undefined
+				? `### Geforderte Standardausgabe:\n\`\`\`\n${selected.simplified.testCase.expectedStdout}\`\`\`\n`
+				: '') +
+			`### Abgabe:\n\`\`\`${task.lang}\n${selected.content}\n\`\`\``;
+		fetch(`${pad_url}/new`, {
+			headers: { 'Content-Type': 'text/markdown' },
+			method: 'POST',
+			body: body
+		})
+			.then((response) => {
+				window.open(response.url + '?both');
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
 </script>
 
 <div class="h-full p-1">
@@ -43,9 +82,20 @@
 	</div>
 	{#if selected != undefined}
 		<div class="p-3">
-			{#if selected.score != undefined && selected.result_type != undefined}
-				<p class="font-bold">{selected.result_type} mit Score: {selected.score}</p>
-			{/if}
+			<div class="flex justify-between">
+				<div>
+					{#if selected.score != undefined && selected.result_type != undefined}
+						<p class="font-bold">{selected.result_type} mit Score: {selected.score}</p>
+					{/if}
+				</div>
+				<button
+					class="text-blue-500 hover:text-blue-700 focus:outline-none active:ring-2 active:ring-blue-300 rounded-sm"
+					title="Teile diese Abgabe mit einem Tutor."
+					on:click={share}
+				>
+					<Icon path={mdiShare} />
+				</button>
+			</div>
 			{#if selected.simplified != undefined}
 				{#if selected.simplified.compiler != undefined}
 					<p>Compiler Ausgabe: (Status Code: {selected.compiler.statusCode})</p>
