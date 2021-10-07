@@ -50,18 +50,18 @@
 			</span>
 			<span>Dashboard</span>
 		</NavigationItem>
-		{#if config.tasks.standardView.active}
-			<NavigationItem cls="group-hover:visible" link="/tasks"
-				><span slot="prepend">
-					<Icon path={mdiCodeGreaterThanOrEqual} />
-				</span><span>{config.tasks.standardView.title}</span></NavigationItem
-			>
-		{/if}
 		{#if config.tasks.complexView.active}
 			<NavigationItem cls="group-hover:visible" link="/tasks/graph"
 				><span slot="prepend">
 					<Icon path={mdiGraph} />
 				</span><span>{config.tasks.complexView.title}</span></NavigationItem
+			>
+		{/if}
+		{#if config.tasks.standardView.active}
+			<NavigationItem cls="group-hover:visible" link="/tasks"
+				><span slot="prepend">
+					<Icon path={mdiCodeGreaterThanOrEqual} />
+				</span><span>{config.tasks.standardView.title}</span></NavigationItem
 			>
 		{/if}
 		{#if config.gamification.leaderboard.active}
