@@ -7,6 +7,8 @@
 	$: isLoading = $progressLoading || $tasksLoading;
 </script>
 
+<svelte:head><title>Aufgabengraph - SmartBeans</title></svelte:head>
+
 <TransitionWrapper>
 	<LoadingWrapper {isLoading}>
 		<div class="h-full p-4">

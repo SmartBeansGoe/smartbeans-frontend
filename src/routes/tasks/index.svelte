@@ -39,6 +39,8 @@
 	$: categoriesShownLength = categoriesShown.filter((c) => c != 'filtered-out').length;
 </script>
 
+<svelte:head><title>Aufgaben - SmartBeans</title></svelte:head>
+
 <LoadingWrapper {isLoading}>
 	<TransitionWrapper>
 		<div class="h-full p-4">

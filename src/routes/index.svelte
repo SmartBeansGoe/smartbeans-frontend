@@ -22,6 +22,8 @@
 	});
 </script>
 
+<svelte:head><title>Dashboard - SmartBeans</title></svelte:head>
+
 <TransitionWrapper>
 	<div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
 		{#if levelActive}

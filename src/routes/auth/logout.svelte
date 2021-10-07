@@ -29,6 +29,8 @@
 	});
 </script>
 
+<svelte:head><title>SmartBeans</title></svelte:head>
+
 <TransitionWrapper>
 	<div class="flex flex-wrap justify-center content-center h-full">
 		<div class="flex flex-wrap justify-center box p-8 w-80">

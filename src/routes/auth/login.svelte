@@ -18,6 +18,8 @@
 	});
 </script>
 
+<svelte:head><title>Login - SmartBeans</title></svelte:head>
+
 <TransitionWrapper>
 	{#if render}
 		<Login />

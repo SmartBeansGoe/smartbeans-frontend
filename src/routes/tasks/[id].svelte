@@ -103,6 +103,8 @@
 	}
 </script>
 
+<svelte:head><title>Aufgabe "{task.task_description.shortname}" - SmartBeans</title></svelte:head>
+
 <div
 	in:fade={{
 		duration: 45,

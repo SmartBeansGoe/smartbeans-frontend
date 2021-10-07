@@ -40,6 +40,8 @@
 	$: courseConfig = $course.config;
 </script>
 
+<svelte:head><title>SmartBeans</title></svelte:head>
+
 <div class="relative min-h-screen flex overflow-hidden">
 	<Navigation {courseConfig} />
 	<div class="flex-1 bg-gray-200 max-h-screen">

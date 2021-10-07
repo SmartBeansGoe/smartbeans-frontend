@@ -79,6 +79,8 @@
 	}
 </script>
 
+<svelte:head><title>Profil - SmartBeans</title></svelte:head>
+
 <TransitionWrapper>
 	<div class="h-full p-4">
 		<div class="h-full overflow-y-auto">
