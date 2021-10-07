@@ -2,17 +2,17 @@
 	import { onMount } from 'svelte';
 	import MonacoEditor from './MonacoEditor.svelte';
 	import Icon from 'mdi-svelte';
-	import { mdiFileDownload, mdiFileUpload, mdiUpload } from '@mdi/js';
+	import { mdiFileDownload, mdiFileUpload, mdiReloadAlert, mdiUpload } from '@mdi/js';
 	import { submit_code } from '$lib/api/calls';
 	import { createEventDispatcher } from 'svelte';
+	import { browser } from '$app/env';
+	import { writable } from 'svelte/store';
 
 	export let task;
 	export let courseId;
 
 	let editorComponent;
 	let fileInputComponent;
-	let editorValue;
-	let lastEditorValue;
 
 	let uploadDocument;
 	let downloadDocument;
@@ -21,8 +21,22 @@
 	let submitDocumentDisabled = true;
 	let downloadDocumentDisabled = true;
 
-	let defaultEditorInput = task.task_description.defaultEditorInput;
-	$: defaultEditorInput = task.task_description.defaultEditorInput;
+	let editor;
+	let editorValueStore;
+	let defaultEditorInput;
+
+	$: if (browser && task) {
+		// Load code from localStorage when exists
+		defaultEditorInput = task.task_description.defaultEditorInput;
+		let localStorageName = `store-task-${task.taskid}`;
+		let stored = localStorage.getItem(localStorageName);
+		editorValueStore = writable(
+			stored == null || stored == undefined || stored == ''
+				? defaultEditorInput
+				: localStorage.getItem(localStorageName)
+		);
+		editorValueStore.subscribe((val) => localStorage.setItem(localStorageName, val));
+	}
 
 	onMount(async () => {
 		// Uploads a document from user's computer into the editor.
@@ -38,7 +52,7 @@
 		// Downloads the content of the editor into a document to user's computer.
 		downloadDocument = () => {
 			const element = document.createElement('a');
-			const file = new Blob([editorValue], {
+			const file = new Blob([$editorValueStore], {
 				type: 'text/plain'
 			});
 			element.href = URL.createObjectURL(file);
@@ -69,18 +83,16 @@
 	});
 
 	$: {
-		submitDocumentDisabled =
-			editorValue == defaultEditorInput || editorValue == lastEditorValue || editorValue == '';
-		downloadDocumentDisabled = editorValue == defaultEditorInput || editorValue == '';
+		submitDocumentDisabled = $editorValueStore == '';
+		downloadDocumentDisabled = $editorValueStore == '';
 	}
 
 	const dispatch = createEventDispatcher();
 
 	async function onSubmit() {
-		lastEditorValue = editorValue;
 		isSubmitLoading = true;
 
-		await submit_code(courseId, task.taskid, editorValue)
+		await submit_code(courseId, task.taskid, $editorValueStore)
 			.then((res) => {
 				dispatch('submit', { isError: false, ...res.data });
 				return res.data;
@@ -91,6 +103,11 @@
 			});
 		isSubmitLoading = false;
 	}
+
+	function reset() {
+		$editorValueStore = defaultEditorInput;
+		editor.getModel().setValue(defaultEditorInput);
+	}
 </script>
 
 <div class="editor-height">
@@ -99,14 +116,15 @@
 		language={task.lang}
 		{defaultEditorInput}
 		taskid={task.taskid}
-		bind:editorValue
+		bind:editorValue={$editorValueStore}
+		bind:editor
 	/>
 </div>
 <div class="mt-2 flex justify-between overflow-x-auto">
 	<div class="flex">
 		<span>
 			<button
-				class="flex items-center btn-outlined"
+				class="flex items-center btn-outlined blue-outlined-btn"
 				type="button"
 				on:click|preventDefault={() => {
 					fileInputComponent.click();
@@ -120,7 +138,7 @@
 		</span>
 		<span>
 			<button
-				class="flex items-center btn-outlined"
+				class="flex items-center btn-outlined blue-outlined-btn"
 				type="button"
 				disabled={downloadDocumentDisabled}
 				on:click|preventDefault={downloadDocument}
@@ -129,6 +147,19 @@
 					<Icon size="1.5rem" path={mdiFileDownload} />
 				</div>
 				<div>Download</div>
+			</button>
+		</span>
+		<span>
+			<button
+				class="flex items-center btn-outlined red-outlined-btn"
+				type="button"
+				title="Setzt den Editorinhalt auf den Ursprungscode zurück."
+				on:click|preventDefault={reset}
+			>
+				<div class="mr-2 -my-2 -ml-2">
+					<Icon size="1.5rem" path={mdiReloadAlert} />
+				</div>
+				<div>Reset</div>
 			</button>
 		</span>
 	</div>
@@ -165,7 +196,19 @@
 		@apply bg-emerald-500 text-white 'active:bg-emerald-600' 'disabled:cursor-not-allowed' 'disabled:bg-emerald-200' font-bold uppercase text-xs px-4 py-2 rounded ':not(:disabled):shadow' ':not(:disabled):hover:shadow-md' outline-none 'focus:outline-none' mr-1 mb-1 ease-linear transition-all duration-150;
 	}
 	.btn-outlined {
-		@apply text-light-blue-500 bg-transparent border border-solid 'disabled:text-light-blue-200' border-light-blue-500 'disabled:hover:bg-gray-100' 'disabled:cursor-not-allowed' 'hover:bg-light-blue-500' 'hover:text-white' 'active:bg-light-blue-600' font-bold uppercase text-xs px-4 py-2 rounded outline-none 'focus:outline-none' mr-1 mb-1 ease-linear transition-all duration-150;
+		@apply bg-transparent border border-solid 'disabled:hover:bg-gray-100' 'disabled:cursor-not-allowed' 'hover:text-white' 'active:bg-light-blue-600' font-bold uppercase text-xs px-4 py-2 rounded outline-none 'focus:outline-none' mr-1 mb-1 ease-linear transition-all duration-150;
+	}
+	.blue-outlined-btn {
+		@apply 'hover:bg-light-blue-500';
+		@apply text-light-blue-500;
+		@apply 'disabled:text-light-blue-200';
+		@apply border-light-blue-500;
+	}
+	.red-outlined-btn {
+		@apply 'hover:bg-red-500';
+		@apply text-red-500;
+		@apply 'disabled:text-red-200';
+		@apply border-red-500;
 	}
 
 	.editor-height {
