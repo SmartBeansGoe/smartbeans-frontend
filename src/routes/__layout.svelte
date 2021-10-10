@@ -40,6 +40,11 @@
 
 	onMount(async () => {
 		updateToken();
+		if (userEmpty()) await getUser();
+		if (courseEmpty()) await getCourse();
+		if (characterEmpty()) await getCharacter();
+		if (tasksEmpty()) await getTasks();
+		if (progressEmpty()) await getProgress();
 	});
 	$: username = $user.username;
 	$: title = $user.activeCourse ? $course.title : '';
