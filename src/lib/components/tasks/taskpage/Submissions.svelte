@@ -89,11 +89,13 @@
 					{/if}
 				</div>
 				<button
-					class="text-blue-500 hover:text-blue-700 focus:outline-none active:ring-2 active:ring-blue-300 rounded-sm"
+					class="btn-outlined blue-outlined-btn"
 					title="Teile diese Abgabe mit einem Tutor."
 					on:click={share}
 				>
-					<Icon path={mdiShare} />
+					<div class="-my-1 -mx-2.5">
+						<Icon size="1.5rem" path={mdiShare} />
+					</div>
 				</button>
 			</div>
 			{#if selected.simplified != undefined}
@@ -157,5 +159,15 @@
 	code {
 		@apply text-red-800 text-sm;
 		font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+	}
+
+	.btn-outlined {
+		@apply bg-transparent border border-solid 'disabled:hover:bg-gray-100' 'disabled:cursor-not-allowed' 'hover:text-white' 'active:bg-light-blue-600' font-bold uppercase text-xs px-4 py-2 rounded outline-none 'focus:outline-none' mr-1 mb-1 ease-linear transition-all duration-150;
+	}
+	.blue-outlined-btn {
+		@apply 'hover:bg-light-blue-500';
+		@apply text-light-blue-500;
+		@apply 'disabled:text-light-blue-200';
+		@apply border-light-blue-500;
 	}
 </style>
