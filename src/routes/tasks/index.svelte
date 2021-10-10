@@ -12,6 +12,7 @@
 		tasks,
 		tasksLoading
 	} from '$lib/stores/stores';
+	import { taskPrerequisitesFulfilled } from '$lib/utils/tasks';
 
 	$: isLoading = $courseLoading || $progressLoading || $tasksLoading;
 	let groupedTasks = {};
@@ -58,17 +59,36 @@
 								/>
 								{#if categoriesShownLength > 1}
 									{#each groupedTasks[category] as task}
-										<TaskItem {task} solved={$progress.includes(task.taskid)} />
+										<div class="pb-0.5">
+											<TaskItem
+												{task}
+												disabled={!$progress.includes(task.taskid) &&
+													!taskPrerequisitesFulfilled(task, $progress)}
+												solved={$progress.includes(task.taskid)}
+											/>
+										</div>
 									{/each}
 								{:else}
 									<div class="grid xl:grid-cols-2 gap-x-2">
 										{#each groupedTasks[category] as task, i}
 											{#if i % 2 == 0}
 												<div class="xl:border-r-4 xl:pr-2">
-													<TaskItem {task} solved={$progress.includes(task.taskid)} />
+													<TaskItem
+														{task}
+														disabled={!$progress.includes(task.taskid) &&
+															!taskPrerequisitesFulfilled(task, $progress)}
+														solved={$progress.includes(task.taskid)}
+													/>
 												</div>
 											{:else}
-												<div><TaskItem {task} solved={$progress.includes(task.taskid)} /></div>
+												<div>
+													<TaskItem
+														{task}
+														disabled={!$progress.includes(task.taskid) &&
+															!taskPrerequisitesFulfilled(task, $progress)}
+														solved={$progress.includes(task.taskid)}
+													/>
+												</div>
 											{/if}
 										{/each}
 									</div>
