@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import Chart from 'chart.js/auto/auto.js';
-	import { getTasks, tasks, progress, getProgress } from '$lib/stores/stores';
+	import { tasks, progress } from '$lib/stores/stores';
 
 	let ctx;
 	let chart;
@@ -9,8 +9,6 @@
 	let skills;
 
 	onMount(async () => {
-		if ($tasks.length == 0) await getTasks();
-		if ($progress.length == 0) await getProgress();
 		skills = getSkillsFrom($tasks);
 		ctx = chartCanvas.getContext('2d');
 		chart = new Chart(ctx, {

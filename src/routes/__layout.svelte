@@ -1,3 +1,14 @@
+<script context="module">
+	export async function load() {
+		if (userEmpty()) await getUser();
+		if (courseEmpty()) await getCourse();
+		if (characterEmpty()) await getCharacter();
+		if (tasksEmpty()) await getTasks();
+		if (progressEmpty()) await getProgress();
+		return { status: 200 };
+	}
+</script>
+
 <script>
 	import 'virtual:windi.css';
 
@@ -29,11 +40,6 @@
 
 	onMount(async () => {
 		updateToken();
-		if (userEmpty()) await getUser();
-		if (courseEmpty()) await getCourse();
-		if (characterEmpty()) await getCharacter();
-		if (tasksEmpty()) await getTasks();
-		if (progressEmpty()) await getProgress();
 	});
 	$: username = $user.username;
 	$: title = $user.activeCourse ? $course.title : '';
