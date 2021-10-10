@@ -66,15 +66,14 @@
 							props: {
 								taskid: nextTask.taskid,
 								taskShortName: nextTask.task_description.shortname
-							},
-							duration: 2500
+							}
 						},
 						theme: {
 							'--toastBackground': '#10b981',
 							'--toastBarBackground': '#059669'
 						},
 						pausable: true,
-						duration: 4000
+						duration: 10000
 					});
 				}
 			} else {
