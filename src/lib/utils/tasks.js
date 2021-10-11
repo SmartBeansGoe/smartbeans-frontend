@@ -15,10 +15,10 @@ export function taskPrerequisitesFulfilled(task, progress) {
 	return task.prerequisites
 		.map((pre) => {
 			if (Array.isArray(pre)) {
-				let bo = pre
+				if (pre.length == 0) return true
+				return pre
 					.map((p) => progress.includes(p))
 					.reduce((previousValue, currentValue) => previousValue || currentValue);
-				return bo;
 			} else {
 				return progress.includes(pre);
 			}
