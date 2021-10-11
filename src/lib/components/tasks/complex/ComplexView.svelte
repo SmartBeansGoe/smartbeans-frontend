@@ -146,9 +146,9 @@
 			{@html errorMsg}
 		</div>
 	{:else}
+		<Links {links} {progress} />
 		{#each Object.keys(columnedTasks) as key}
 			<Nodes tasks={columnedTasks[key]} {progress} {links} {key} />
-			<Links {links} {progress} />
 		{/each}
 	{/if}
 	{#if nonExistentPrerequisites.length > 0}
