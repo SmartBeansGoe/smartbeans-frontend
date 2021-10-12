@@ -1,5 +1,5 @@
 # SmartBeans Frontend
-This is the new upcoming frontend version 2. This works only with new upcoming backend >= v2.x.
+This is the new upcoming frontend version 2. This works only with the new upcoming backend >= v2.x.
 
 ## Installation instructions
 ### Prerequisites
