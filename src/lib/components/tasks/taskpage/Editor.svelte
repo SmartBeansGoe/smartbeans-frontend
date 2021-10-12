@@ -11,7 +11,6 @@
 	export let task;
 	export let courseId;
 
-	let editorComponent;
 	let fileInputComponent;
 
 	let uploadDocument;
@@ -46,7 +45,7 @@
 			reader.readAsText(file);
 			reader.onload = () => {
 				let uploadedCode = reader.result;
-				editorComponent.setValue(uploadedCode);
+				editor.getModel().setValue(uploadedCode);
 			};
 		};
 		// Downloads the content of the editor into a document to user's computer.
@@ -112,7 +111,6 @@
 
 <div class="editor-height">
 	<MonacoEditor
-		bind:this={editorComponent}
 		language={task.lang}
 		{defaultEditorInput}
 		taskid={task.taskid}
