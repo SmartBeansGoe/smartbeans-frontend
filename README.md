@@ -47,7 +47,7 @@ This is the new upcoming frontend version 2. This works only with the new upcomi
 ### Updates
 For updates call `git pull` and restart the service.
 
-## Lisence
+## License
 Copyright (c) 2021 Ole Umlauft and other contributors
 
 All contents of this repository are provided under the MIT License. See [LICENSE](https://github.com/SmartBeansGoe/smartbeans-frontend/blob/main/LICENSE) for the full text.
