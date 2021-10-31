@@ -23,24 +23,36 @@
 		let task = $tasks.find((t) => t.taskid == selected.taskid);
 		let date = new Date(selected.timestamp * 1000);
 		let time = date.toLocaleString();
+
 		let body =
 			`# Aufgabe "${task.task_description.shortname}"" Id: ${selected.taskid}\n` +
 			`Abgabe von *${$user.username}* aus dem Kurs *${$user.activeCourse}*\n` +
 			`Datum: ${time}\n` +
 			`## Problembeschreibung:\n *Beschreibe dein Problem und teile den Link mit einem Tutor.*\n` +
-			`**WICHTIG**: *Speichere auch du dir den Link ab.*\n` +
-			`## Testergebnis\n` +
-			`Result: ${selected.result_type}\n\n` +
-			(selected.simplified.testCase.stdin != undefined
-				? `### Standardeingabe:\n\`\`\`\n${selected.simplified.testCase.stdin}\n\`\`\`\n`
-				: '') +
-			(selected.simplified.testCase.stdout != undefined
-				? `### Standardausgabe:\n\`\`\`\n${selected.simplified.testCase.stdout}\n\`\`\`\n`
-				: '') +
-			(selected.simplified.testCase.expectedStdout != undefined
-				? `### Geforderte Standardausgabe:\n\`\`\`\n${selected.simplified.testCase.expectedStdout}\`\`\`\n`
-				: '') +
-			`### Abgabe:\n\`\`\`${task.lang}\n${selected.content}\n\`\`\``;
+			`**WICHTIG**: *Speichere auch du dir den Link ab.*\n`;
+		if (selected.result_type === 'COMPILE_ERROR') {
+			body +=
+				`## Compiler-Output\n` +
+				`Result: ${selected.result_type}\n\n` +
+				(selected.simplified.compiler.stdout != undefined
+					? `### Standardausgabe:\n\`\`\`\n${selected.simplified.compiler.stdout}\n\`\`\`\n`
+					: '') +
+				`### Abgabe:\n\`\`\`${task.lang}\n${selected.content}\n\`\`\``;
+		} else {
+			body +=
+				`## Testergebnis\n` +
+				`Result: ${selected.result_type}\n\n` +
+				(selected.simplified.testCase.stdin != undefined
+					? `### Standardeingabe:\n\`\`\`\n${selected.simplified.testCase.stdin}\n\`\`\`\n`
+					: '') +
+				(selected.simplified.testCase.stdout != undefined
+					? `### Standardausgabe:\n\`\`\`\n${selected.simplified.testCase.stdout}\n\`\`\`\n`
+					: '') +
+				(selected.simplified.testCase.expectedStdout != undefined
+					? `### Geforderte Standardausgabe:\n\`\`\`\n${selected.simplified.testCase.expectedStdout}\`\`\`\n`
+					: '') +
+				`### Abgabe:\n\`\`\`${task.lang}\n${selected.content}\n\`\`\``;
+		}
 		fetch(`${pad_url}/new`, {
 			headers: { 'Content-Type': 'text/markdown' },
 			method: 'POST',
@@ -100,7 +112,7 @@
 			</div>
 			{#if selected.simplified != undefined}
 				{#if selected.simplified.compiler != undefined}
-					<p>Compiler Ausgabe: (Status Code: {selected.compiler.statusCode})</p>
+					<p>Compiler Ausgabe: (Status Code: {selected.simplified.compiler.statusCode})</p>
 					<pre>
 						<code>{selected.simplified.compiler.stdout}</code>
 				</pre>
