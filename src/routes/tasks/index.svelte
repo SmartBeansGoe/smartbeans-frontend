@@ -38,7 +38,6 @@
 	}
 
 	$: categoriesShown = Object.keys(groupedTasks);
-	$: categoriesShownLength = categoriesShown.filter((c) => c != 'filtered-out').length;
 </script>
 
 <svelte:head><title>Aufgaben - SmartBeans</title></svelte:head>
@@ -47,10 +46,10 @@
 	<TransitionWrapper>
 		<div class="h-full p-4">
 			<div class="pr-0.5 h-full overflow-y-auto">
-				<div class="grid grid-cols-1 md:grid-cols-2 content-around gap-4">
+				<div class="grid grid-cols-1 content-around gap-4">
 					{#each categoriesShown as category}
 						{#if category != 'filtered-out'}
-							<div class="box {categoriesShownLength > 1 ? '' : 'col-span-2'}">
+							<div class="box p-2 col-span-2">
 								<TaskItemTitleBar
 									title={category}
 									solvedNum={groupedTasks[category]
@@ -58,42 +57,29 @@
 										.reduce((acc, val) => acc + val, 0)}
 									maxNum={groupedTasks[category].length}
 								/>
-								{#if categoriesShownLength > 1}
-									{#each groupedTasks[category] as task}
-										<div class="pb-0.5">
-											<TaskItem
-												{task}
-												disabled={!$progress.includes(task.taskid) &&
-													!taskPrerequisitesFulfilled(task, $progress)}
-												solved={$progress.includes(task.taskid)}
-											/>
-										</div>
+								<div class="grid xl:grid-cols-2 gap-x-2">
+									{#each groupedTasks[category] as task, i}
+										{#if i % 2 == 0}
+											<div class="xl:border-r-4 xl:pr-2">
+												<TaskItem
+													{task}
+													disabled={!$progress.includes(task.taskid) &&
+														!taskPrerequisitesFulfilled(task, $progress)}
+													solved={$progress.includes(task.taskid)}
+												/>
+											</div>
+										{:else}
+											<div>
+												<TaskItem
+													{task}
+													disabled={!$progress.includes(task.taskid) &&
+														!taskPrerequisitesFulfilled(task, $progress)}
+													solved={$progress.includes(task.taskid)}
+												/>
+											</div>
+										{/if}
 									{/each}
-								{:else}
-									<div class="grid xl:grid-cols-2 gap-x-2">
-										{#each groupedTasks[category] as task, i}
-											{#if i % 2 == 0}
-												<div class="xl:border-r-4 xl:pr-2">
-													<TaskItem
-														{task}
-														disabled={!$progress.includes(task.taskid) &&
-															!taskPrerequisitesFulfilled(task, $progress)}
-														solved={$progress.includes(task.taskid)}
-													/>
-												</div>
-											{:else}
-												<div>
-													<TaskItem
-														{task}
-														disabled={!$progress.includes(task.taskid) &&
-															!taskPrerequisitesFulfilled(task, $progress)}
-														solved={$progress.includes(task.taskid)}
-													/>
-												</div>
-											{/if}
-										{/each}
-									</div>
-								{/if}
+								</div>
 							</div>
 						{/if}
 					{/each}
