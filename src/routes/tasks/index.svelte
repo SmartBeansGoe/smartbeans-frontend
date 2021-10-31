@@ -24,6 +24,7 @@
 		categories = $course.config.tasks.standardView.categorizeByTags;
 	}
 	$: if ($tasks && categories) {
+		groupedTasks = {};
 		$tasks.forEach((task) => {
 			task.tags
 				.filter((tag) => categories.includes(tag.name))
