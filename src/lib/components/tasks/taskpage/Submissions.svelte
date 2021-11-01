@@ -67,7 +67,7 @@
 	}
 </script>
 
-<div class="h-full p-1">
+<div class="h-full">
 	<div class="bg-white tabs">
 		{#each submissions as submission, i}
 			<button

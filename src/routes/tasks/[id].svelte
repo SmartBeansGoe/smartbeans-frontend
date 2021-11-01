@@ -20,15 +20,19 @@
 		progress
 	} from '$lib/stores/stores';
 	import LoadingWrapper from '$lib/components/ui/LoadingWrapper.svelte';
-	import Splitter from '$lib/components/tasks/taskpage/Splitter.svelte';
 	import { toast } from '@zerodevx/svelte-toast';
 	import NextExercise from '$lib/components/ui/NextExercise.svelte';
 	import { getNextTask } from '$lib/utils/tasks';
+	import SplitterB from '$lib/components/tasks/taskpage/SplitterB.svelte';
+	import SplitterA from '$lib/components/tasks/taskpage/Splitter.svelte';
+	import NonEditorUpload from '$lib/components/tasks/taskpage/NonEditorUpload.svelte';
 
 	let submissions = [];
 	let id;
 	let task;
 	let submissionsLoading = true;
+
+	$: editorActivated = $course.tasks ? $course.tasks.editor : false;
 
 	$: isLoading = $userLoading || $tasksLoading || submissionsLoading;
 
@@ -125,21 +129,45 @@
 		class="h-full box"
 	>
 		{#if task != undefined}
-			<Splitter>
-				{#if !isLoading}
-					<TaskDescription task={task.task_description} solved={$progress.includes(task.taskid)} />
-				{/if}
-				<svelte:fragment slot="submissions">
+			{#if editorActivated}
+				<SplitterA>
 					{#if !isLoading}
-						<Submissions {submissions} />
+						<TaskDescription
+							task={task.task_description}
+							solved={$progress.includes(task.taskid)}
+						/>
 					{/if}
-				</svelte:fragment>
-				<svelte:fragment slot="editor">
+					<svelte:fragment slot="submissions">
+						{#if !isLoading}
+							<div class="h-full p-1">
+								<Submissions {submissions} />
+							</div>
+						{/if}
+					</svelte:fragment>
+					<svelte:fragment slot="editor">
+						{#if !isLoading}
+							<Editor {id} {task} courseId={$course.name} on:submit={handleSubmit} />
+						{/if}
+					</svelte:fragment>
+				</SplitterA>
+			{:else}
+				<SplitterB>
 					{#if !isLoading}
-						<Editor {id} {task} courseId={$course.name} on:submit={handleSubmit} />
+						<TaskDescription
+							task={task.task_description}
+							solved={$progress.includes(task.taskid)}
+						/>
 					{/if}
-				</svelte:fragment>
-			</Splitter>
+					<svelte:fragment slot="file-upload">
+						<NonEditorUpload {id} {task} courseId={$course.name} on:submit={handleSubmit} />
+					</svelte:fragment>
+					<svelte:fragment slot="submissions">
+						{#if !isLoading}
+							<Submissions {submissions} />
+						{/if}
+					</svelte:fragment>
+				</SplitterB>
+			{/if}
 		{:else if isLoading}
 			<div class="w-full h-full"><LoadingWrapper {isLoading} /></div>
 		{:else}
