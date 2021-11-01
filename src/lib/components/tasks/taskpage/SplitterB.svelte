@@ -15,7 +15,7 @@
 </script>
 
 <div class="split h-full">
-	<div class="h-full p-4" id="split-4">
+	<div class="overflow-y-auto h-full p-4" id="split-4">
 		<slot />
 	</div>
 	<div id="split-5" class="h-full">
