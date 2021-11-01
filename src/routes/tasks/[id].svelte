@@ -81,7 +81,7 @@
 					});
 				}
 			} else {
-				toast.push('Falsche Antwort', {
+				toast.push('Deine Lösung wurde vom System als falsch gewertet!', {
 					theme: {
 						'--toastBackground': '#F56565',
 						'--toastBarBackground': '#C53030'
