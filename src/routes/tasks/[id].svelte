@@ -32,7 +32,7 @@
 	let task;
 	let submissionsLoading = true;
 
-	$: editorActivated = $course.tasks ? $course.tasks.editor : false;
+	$: editorActivated = $course.config ? $course.config.tasks.editor : false;
 
 	$: isLoading = $userLoading || $tasksLoading || submissionsLoading;
 
